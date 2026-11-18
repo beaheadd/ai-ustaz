@@ -50,3 +50,7 @@ test-results/
 playwright-report/
 app/test-artifacts/
 coverage/
+
+# Байткод Python (проверки контента запускать с -B: python3 -I -B tools/…)
+__pycache__/
+*.py[cod]

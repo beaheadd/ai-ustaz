@@ -11,6 +11,7 @@
     "build:web": "npm run export:web && npm run check:dist",
     "serve:test": "node scripts/serve-test.mjs",
     "test:web": "node scripts/smoke-test.mjs",
+    "test:e2e": "node scripts/e2e.mjs",
     "licenses": "node scripts/gen-licenses.mjs",
     "typecheck": "tsc --noEmit"
   },

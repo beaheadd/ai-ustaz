@@ -10,8 +10,12 @@
  * - плашка: «урок» — ОБЯЗАТЕЛЬНО на каждом экране урока (черновик, проходит проверку устаза).
  * - низ: кнопки, прижатые к низу (например «Далее»).
  * - На вебе ставит document.title = «заголовок — AI Ustaz».
+ * - Прокручивается вся ширина окна (на десктопе колесо мыши работает и над полями), а содержимое —
+ *   колонка ШИРИНА_КОЛОНКИ по центру (contentContainerStyle). Шапка и низ — в той же колонке.
+ * - useПрокрутка() → { вКонец() } — прокрутить содержимое экрана вниз (например, к обратной связи
+ *   после ответа, чтобы она не пряталась под нижней панелью). Вне <Экран> — пустая функция.
  */
-import { useEffect, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, type ComponentRef, type ReactNode } from 'react';
 import { Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { useНавигация } from '../engine/navigation';
 import { useПеревод } from '../i18n';
@@ -30,7 +34,15 @@ export type СвойстваЭкрана = {
   testID?: string;
 };
 
-export function Экран({ заголовок, children, плашка = 'нет', назад, справа, низ, прокрутка = true, testID }: СвойстваЭкрана) {
+type Прокрутка = { вКонец: () => void };
+const КонтекстПрокрутки = createContext<Прокрутка>({ вКонец: () => {} });
+
+/** Прокрутка содержимого текущего экрана (см. шапку). */
+export function useПрокрутка(): Прокрутка {
+  return useContext(КонтекстПрокрутки);
+}
+
+export function Экран({ заголовок, children, плашка = 'нет', назад, справа, низ, прокрутка: прокрутка_ = true, testID }: СвойстваЭкрана) {
   const { цвет, отступ, шрифт } = useТема();
   const { t } = useПеревод();
   const навигация = useНавигация();
@@ -42,11 +54,18 @@ export function Экран({ заголовок, children, плашка = 'не�
     }
   }, [заголовок]);
 
+  const свиток = useRef<ComponentRef<typeof ScrollView>>(null);
+  const вКонец = useCallback(() => {
+    // После отрисовки нового блока (ответ, пояснение): ждём раскладку, потом едем вниз.
+    setTimeout(() => свиток.current?.scrollToEnd({ animated: true }), 60);
+  }, []);
+  const прокрутка = useMemo(() => ({ вКонец }), [вКонец]);
+
   const содержимое = <View style={{ padding: отступ.l, gap: отступ.l }}>{children}</View>;
 
   return (
     <View testID={testID} style={[стили.фон, { backgroundColor: цвет.фон }]}>
-      <View style={стили.колонка}>
+      <View style={стили.колонкаВерх}>
         <View
           style={[
             стили.шапка,
@@ -78,28 +97,38 @@ export function Экран({ заголовок, children, плашка = 'не�
           {справа ? <View style={[стили.слот, { alignItems: 'flex-end' }]}>{справа}</View> : null}
         </View>
         {плашка !== 'нет' ? <ПлашкаПрототипа вид={плашка} /> : null}
-        {прокрутка ? (
-          <ScrollView style={стили.тело} contentContainerStyle={{ paddingBottom: отступ.xxl }} keyboardShouldPersistTaps="handled">
+      </View>
+      <КонтекстПрокрутки.Provider value={прокрутка}>
+        {прокрутка_ ? (
+          <ScrollView
+            ref={свиток}
+            style={стили.тело}
+            contentContainerStyle={[стили.колонкаСодержимого, { paddingBottom: отступ.xxl }]}
+            keyboardShouldPersistTaps="handled"
+          >
             {содержимое}
           </ScrollView>
         ) : (
-          <View style={стили.тело}>{содержимое}</View>
+          <View style={[стили.тело, стили.колонкаСодержимого]}>{содержимое}</View>
         )}
-        {низ ? (
+      </КонтекстПрокрутки.Provider>
+      {низ ? (
+        <View style={стили.колонкаВерх}>
           <View style={[стили.низ, { borderTopColor: цвет.граница, padding: отступ.l, gap: отступ.s, backgroundColor: цвет.фон }]}>{низ}</View>
-        ) : null}
-      </View>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const стили = StyleSheet.create({
   фон: { flex: 1, alignItems: 'center' },
-  колонка: { flex: 1, width: '100%', maxWidth: ШИРИНА_КОЛОНКИ },
+  колонкаВерх: { width: '100%', maxWidth: ШИРИНА_КОЛОНКИ },
+  колонкаСодержимого: { width: '100%', maxWidth: ШИРИНА_КОЛОНКИ, alignSelf: 'center' },
   шапка: { flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingHorizontal: 8, gap: 4, borderBottomWidth: StyleSheet.hairlineWidth },
   слот: { justifyContent: 'center' },
   назад: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: 8, paddingHorizontal: 6 },
   заголовок: { flex: 1, paddingHorizontal: 8 },
-  тело: { flex: 1 },
+  тело: { flex: 1, width: '100%' },
   низ: { borderTopWidth: StyleSheet.hairlineWidth },
 });

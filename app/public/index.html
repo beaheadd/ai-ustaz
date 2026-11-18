@@ -1,13 +1,17 @@
 <!doctype html>
-<!--
-  Шаблон веб-страницы AI Ustaz для `expo export` (web.output "single"; %LANG_ISO_CODE% и %WEB_TITLE% подставляет Expo).
-  Источник: шаблон Expo CLI, пакет @expo/cli@58.1.21 static/template/index.html (MIT).
-  Изменено: язык из app.json, встроенный SVG-значок вместо favicon.png, фон до загрузки (светлая/тёмная),
-  noscript по-русски и по-казахски, referrer. CSP добавляет scripts/after-export.mjs (не здесь — мешала бы дев-серверу).
--->
+<!-- Шаблон страницы AI Ustaz для `expo export`; описание — сразу после <meta charset> (кодировка — в первых 1024 байтах). -->
 <html lang="%LANG_ISO_CODE%">
   <head>
     <meta charset="utf-8" />
+    <!--
+      Шаблон веб-страницы AI Ustaz для `expo export` (web.output "single"; язык и заголовок подставляет Expo из app.json —
+      метки в этом комментарии писать нельзя: Expo заменяет только первое вхождение).
+      Источник: expo/expo packages/@expo/cli/static/template/index.html, опубликован как @expo/cli@58.1.21 (MIT);
+      коммит в npm-пакете не указан (нет gitHead) — запись в docs/источники-кода.md делает ведущий.
+      Изменено: язык из app.json, встроенный SVG-значок вместо favicon.png, фон до загрузки (светлая/тёмная),
+      строка «загружается» в #root до загрузки JS, noscript по-русски и по-казахски, referrer.
+      CSP добавляет scripts/after-export.mjs (не здесь — мешала бы дев-серверу).
+    -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>%WEB_TITLE%</title>
@@ -36,11 +40,24 @@
         height: 100%;
         flex: 1;
       }
+      /* Строка до загрузки JS и шрифта; react-native-web заменит её при монтировании. */
+      #aiustaz-zagruzka {
+        margin: auto;
+        padding: 16px;
+        text-align: center;
+        font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: #4f5f5a;
+      }
+      @media (prefers-color-scheme: dark) {
+        #aiustaz-zagruzka {
+          color: #b9c6c1;
+        }
+      }
     </style>
   </head>
 
   <body>
     <noscript>Для AI Ustaz нужен JavaScript. / AI Ustaz үшін JavaScript қажет.</noscript>
-    <div id="root"></div>
+    <div id="root"><p id="aiustaz-zagruzka" role="status">AI Ustaz загружается…<br />AI Ustaz жүктелуде…</p></div>
   </body>
 </html>

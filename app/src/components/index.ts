@@ -10,5 +10,5 @@ export { ПрогрессУрока } from './LessonProgress';
 export { ПояснениеМикрофона } from './MicPrivacyNotice';
 export { ПлашкаПрототипа, type ВидПлашки } from './PrototypeBanner';
 export { ПанельЗаписи, type СвойстваПанелиЗаписи } from './RecordPanel';
-export { Экран, type СвойстваЭкрана } from './Screen';
+export { Экран, useПрокрутка, type СвойстваЭкрана } from './Screen';
 export { Текст, type ВидТекста, type СвойстваТекста } from './Text';

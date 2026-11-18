@@ -9,7 +9,8 @@
  *     (service worker batr.kz кэширует файлы по URL навсегда); у assets/ хэш = md5 содержимого.
  *     Карт исходников (.map) в сборке нет.
  *  3. Пути в index.html (src/href) начинаются с /aiustaz/ (или data:); есть <script> бандла;
- *     есть Content-Security-Policy (scripts/after-export.mjs).
+ *     есть Content-Security-Policy (scripts/after-export.mjs); нет неподставленных меток %ИМЯ%,
+ *     есть <html lang="ru|kk"> и <title>; <meta charset="utf-8"> — в первых 1024 байтах.
  *  4. Нет внешних URL http(s) в index.html и бандле, кроме разрешённых строк (ниже, с причиной)
  *     и URL из текстов лицензий (src/legal/licenses.json). Это строки в коде, не запросы;
  *     запросы наружу дополнительно запрещает CSP.
@@ -49,6 +50,7 @@ const ТОЧНЫЕ_URL = new Map([
   ['http://', 'схема без адреса (разбор URL)'],
   ['https://', 'схема без адреса (разбор URL)'],
   ['https://e', "expo-asset: фиктивная база new URL(путь, 'https://e') для разбора имени файла"],
+  ['http://tanzil.net/updates/', 'блок копирайта Tanzil (content/sources.json) — по условиям Tanzil воспроизводится дословно; только текст'],
 ]);
 
 /** Встроенная копия опасных правил .gitignore batr-world (на случай, если репозитория рядом нет). */
@@ -101,6 +103,14 @@ for (const с of ссылки) {
 if (!/<script[^>]+src="\/aiustaz\/_expo\/static\/js\/web\/index-[0-9a-f]+\.js"/i.test(html)) ошибка('в index.html нет <script> основного бандла /aiustaz/_expo/static/js/web/index-<хэш>.js');
 if (!html.includes('http-equiv="Content-Security-Policy"')) ошибка('в index.html нет CSP (запускать сборку через npm run export:web)');
 if (/<link[^>]+rel="[^"]*icon[^"]*"[^>]+href="\/aiustaz\/[^"]+\.(png|ico)"/i.test(html)) ошибка('растровый значок в index.html');
+for (const м of html.matchAll(/%[A-Z_]+%/g)) ошибка(`неподставленная метка шаблона в index.html: ${м[0]}`);
+{
+  // Кодировку браузер ищет в первых 1024 байтах (если сервер не прислал charset) — иначе кириллица в чанках «поедет».
+  const позиция = Buffer.from(html, 'utf8').indexOf(Buffer.from('<meta charset="utf-8"'));
+  if (позиция < 0 || позиция > 1000) ошибка(`<meta charset="utf-8"> не в первых 1024 байтах index.html (байт ${позиция})`);
+}
+if (!/<html[^>]*\slang="(ru|kk)"/i.test(html)) ошибка('в index.html нет <html lang="ru"> (язык из app.json)');
+if (!/<title>[^<%]+<\/title>/i.test(html)) ошибка('в index.html нет заголовка <title> (из app.json)');
 
 // 4. Внешние URL.
 const urlЛицензий = new Set();

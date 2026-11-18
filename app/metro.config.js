@@ -7,6 +7,10 @@
  *     import версия from '@content/version.json';
  * - Плоские пути ассетов при веб-экспорте — scripts/metro-asset-paths.js
  *   (причина: .gitignore batr-world отбрасывает каталоги node_modules/, dist/ …).
+ * - Минификатор пишет не-ASCII как есть (UTF-8), а не \uXXXX: кириллица и арабский в уроках
+ *   иначе раздуваются в 3 раза (бюджет check-dist). Скрипты и чанки декодируются по кодировке
+ *   страницы — <meta charset="utf-8"> в public/index.html; nginx batr не добавляет charset к .js.
+ *   Целостность аятов в рантайме дополнительно сверяется по sha256 (engine/lessonEngine.ts).
  */
 const path = require('path');
 const { getDefaultConfig } = require('expo/metro-config');
@@ -21,5 +25,10 @@ const конфиг = getDefaultConfig(корень);
   ...(конфиг.transformer.assetPlugins || []),
   path.resolve(корень, 'scripts', 'metro-asset-paths.js'),
 ];
+
+конфиг.transformer.minifierConfig = {
+  ...(конфиг.transformer.minifierConfig || {}),
+  output: { ...((конфиг.transformer.minifierConfig || {}).output || {}), ascii_only: false },
+};
 
 module.exports = конфиг;
