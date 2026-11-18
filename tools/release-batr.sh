@@ -30,7 +30,7 @@ mkdir -p "$BATR/web/public/aiustaz"
 cp -r "$MUG/app/dist/." "$BATR/web/public/aiustaz/"
 printf '{"source":"beaheadd/mugalim","branch":"%s","commit":"%s","note":"собранная версия; исходники — в mugalim/app, не править здесь"}\n' \
   "$(git -C "$MUG" rev-parse --abbrev-ref HEAD)" "$COMMIT" > "$BATR/web/public/aiustaz/version.json"
-if git -C "$BATR" check-ignore -q $(cd "$BATR" && find web/public/aiustaz -type f); then
+if [ -n "$(cd "$BATR" && git check-ignore $(find web/public/aiustaz -type f) || true)" ]; then
   echo "ОШИБКА: часть файлов сборки игнорируется .gitignore batr-world"; exit 1
 fi
 git -C "$BATR" add -A web/public/aiustaz
