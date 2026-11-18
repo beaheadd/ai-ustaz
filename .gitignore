@@ -1,0 +1,29 @@
+# Зависимости и сборки
+node_modules/
+**/node_modules/
+app/dist/
+app/.expo/
+app/web-build/
+*.tsbuildinfo
+# Логи и временное
+*.log
+*.tmp
+.DS_Store
+# Секреты
+.env
+.env.*
+*.key
+*.pem
+*.p8
+*.p12
+*.keystore
+*.jks
+# Записи голоса и тестовые наборы с персональными данными
+*.wav
+*.webm
+*.m4a
+*.ogg
+recordings/
+# Тестовые артефакты
+test-results/
+playwright-report/
