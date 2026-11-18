@@ -1,0 +1,13 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@content/*": ["../content/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../content/**/*.json"],
+  "exclude": ["node_modules", "dist", ".expo", "scripts"]
+}

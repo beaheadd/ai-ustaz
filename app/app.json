@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "AI Ustaz",
+    "slug": "aiustaz",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "web": {
+      "output": "single",
+      "bundler": "metro"
+    },
+    "experiments": {
+      "baseUrl": "/aiustaz"
+    },
+    "plugins": ["expo-font"]
+  }
+}
