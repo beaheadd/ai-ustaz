@@ -7,7 +7,13 @@
     "userInterfaceStyle": "automatic",
     "web": {
       "output": "single",
-      "bundler": "metro"
+      "bundler": "metro",
+      "lang": "ru",
+      "name": "AI Ustaz",
+      "shortName": "AI Ustaz",
+      "description": "Бесплатный тренер правильного чтения Корана по методике «Муаллим сани». Прототип.",
+      "themeColor": "#1F5E57",
+      "backgroundColor": "#F6F1E7"
     },
     "experiments": {
       "baseUrl": "/aiustaz"

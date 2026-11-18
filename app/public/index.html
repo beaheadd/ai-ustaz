@@ -1,0 +1,46 @@
+<!doctype html>
+<!--
+  Шаблон веб-страницы AI Ustaz для `expo export` (web.output "single"; %LANG_ISO_CODE% и %WEB_TITLE% подставляет Expo).
+  Источник: шаблон Expo CLI, пакет @expo/cli@58.1.21 static/template/index.html (MIT).
+  Изменено: язык из app.json, встроенный SVG-значок вместо favicon.png, фон до загрузки (светлая/тёмная),
+  noscript по-русски и по-казахски, referrer. CSP добавляет scripts/after-export.mjs (не здесь — мешала бы дев-серверу).
+-->
+<html lang="%LANG_ISO_CODE%">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>%WEB_TITLE%</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="no-referrer" />
+    <!-- Значок — встроенный SVG (растровых файлов в сборке нет: .gitignore batr-world их отбрасывает). -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F5E57'/%3E%3Cpath d='M12 20c7-3 14-3 20 2 6-5 13-5 20-2v26c-7-3-14-3-20 2-6-5-13-5-20-2z' fill='none' stroke='%23F3E6C9' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M32 22v26' stroke='%23F3E6C9' stroke-width='3'/%3E%3C/svg%3E" />
+    <!-- Сброс стилей react-native-web (рекомендация из документации RNW «root element»). -->
+    <style id="expo-reset">
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        overflow: hidden;
+        margin: 0;
+        background: #f6f1e7;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #121917;
+        }
+      }
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>Для AI Ustaz нужен JavaScript. / AI Ustaz үшін JavaScript қажет.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

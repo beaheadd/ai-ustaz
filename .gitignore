@@ -1,29 +1,52 @@
+# AI Ustaz (mugalim) — что НЕ коммитим: зависимости, сборки, секреты, записи голоса, тестовые артефакты.
+
 # Зависимости и сборки
 node_modules/
 **/node_modules/
 app/dist/
 app/.expo/
 app/web-build/
+app/expo-env.d.ts
+.metro-health-check*
 *.tsbuildinfo
+# Нативные папки генерирует Expo (prebuild) — в git не храним
+app/ios/
+app/android/
+app/.kotlin/
+
 # Логи и временное
 *.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 *.tmp
 .DS_Store
-# Секреты
+
+# Секреты, ключи, подписи (keystore — вне git, CLAUDE.md)
 .env
 .env.*
+*.env
+secrets*
 *.key
 *.pem
 *.p8
 *.p12
 *.keystore
 *.jks
+*.mobileprovision
+service-account*.json
+
 # Записи голоса и тестовые наборы с персональными данными
 *.wav
 *.webm
 *.m4a
 *.ogg
+*.3gp
+*.caf
 recordings/
-# Тестовые артефакты
+
+# Тестовые артефакты (Playwright, скриншоты прогонов, покрытие)
 test-results/
 playwright-report/
+app/test-artifacts/
+coverage/

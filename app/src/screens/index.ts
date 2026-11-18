@@ -1,0 +1,26 @@
+/**
+ * Реестр экранов: имя маршрута (engine/routes.ts) → компонент.
+ * Каждый экран — отдельный файл; компонент получает { параметры } своего маршрута.
+ * Новый экран: маршрут в routes.ts → файл здесь → строка в ЭКРАНЫ (typecheck проверит полноту).
+ */
+import type { ComponentType } from 'react';
+import type { ИмяЭкрана, ПропсыЭкрана } from '../engine/routes';
+import { ОПроекте } from './AboutScreen';
+import { КартаКурса } from './CourseMapScreen';
+import { Главная } from './HomeScreen';
+import { КакОбъясняем } from './HowWeExplainScreen';
+import { Урок0 } from './Lesson0Screen';
+import { Урок } from './LessonScreen';
+import { Лицензии } from './LicensesScreen';
+import { Онбординг } from './OnboardingScreen';
+
+export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
+  главная: Главная,
+  онбординг: Онбординг,
+  урок0: Урок0,
+  картаКурса: КартаКурса,
+  урок: Урок,
+  какОбъясняем: КакОбъясняем,
+  оПроекте: ОПроекте,
+  лицензии: Лицензии,
+};
