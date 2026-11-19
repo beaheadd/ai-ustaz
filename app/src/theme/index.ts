@@ -12,7 +12,8 @@
  *   useУменьшитьДвижение(): boolean — системная настройка «уменьшить движение» (prefers-reduced-motion).
  *   Веб: ПоставщикТемы ставит общий стиль кольца фокуса клавиатуры (:focus-visible — только с клавиатуры, не от
  *     касания): 2 px цвета «фокус» с отступом 2 px, на поверхности «герой» (data-surface="hero") — светлое кольцо
- *     геройТекст. Цвета берутся из токенов текущей темы (WCAG 2.4.7; контраст ≥ 3:1 проверяет test-theme).
+ *     геройТекст; у пунктов нижнего меню (data-focus="inside") — внутри пункта, offset −3 px. Цвета берутся из
+ *     токенов текущей темы (WCAG 2.4.7; контраст ≥ 3:1 проверяет test-theme).
  *   Константы и шкалы — из tokens.ts (реэкспорт), шрифты — из fonts(.web).ts.
  *   <ПоставщикАрабскогоШрифта готов> / useАрабскийШрифтГотов() — загружен ли Amiri Quran (ставит App.tsx).
  *     Экраны не ждут шрифтов (на вебе у Inter font-display: swap); <АрабскийТекст> до загрузки Amiri держит
@@ -80,7 +81,11 @@ function СтильФокуса() {
     стиль.textContent =
       // Поля ввода показывают фокус своей рамкой (ВыборГорода) — кольцо им не ставим.
       `:focus-visible:not(input):not(textarea){outline:2px solid ${цвет.фокус}!important;outline-offset:2px}` +
-      `[data-surface="hero"] :focus-visible:not(input):not(textarea){outline-color:${цвет.геройТекст}!important}`;
+      `[data-surface="hero"] :focus-visible:not(input):not(textarea){outline-color:${цвет.геройТекст}!important}` +
+      // Пункты нижнего меню: кольцо внутри (у края окна снаружи оно обрезалось бы).
+      `[data-focus="inside"]:focus-visible{outline-offset:-3px}` +
+      // Заголовок экрана получает фокус программно (смена экрана, для диктора) — это не элемент управления.
+      `[data-focus="heading"]:focus{outline:none!important}`;
   }, [цвет.фокус, цвет.геройТекст]);
   return null;
 }

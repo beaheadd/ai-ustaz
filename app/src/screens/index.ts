@@ -8,14 +8,17 @@ import type { ИмяЭкрана, ПропсыЭкрана } from '../engine/rou
 import { ОПроекте } from './AboutScreen';
 import { КартаКурса } from './CourseMapScreen';
 import { Главная } from './HomeScreen';
+import { Хадисы } from './HadithScreen';
 import { КакОбъясняем } from './HowWeExplainScreen';
 import { Урок0 } from './Lesson0Screen';
 import { Урок } from './LessonScreen';
 import { Лицензии } from './LicensesScreen';
+import { Ещё } from './MoreScreen';
 import { Онбординг } from './OnboardingScreen';
 import { ГородНамаза } from './PrayerCityScreen';
 import { ВремяНамаза } from './PrayerTimesScreen';
 import { Кибла } from './QiblaScreen';
+import { Коран } from './QuranScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -29,4 +32,7 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   кибла: Кибла,
   намаз: ВремяНамаза,
   городНамаза: ГородНамаза,
+  коран: Коран,
+  хадисы: Хадисы,
+  ещё: Ещё,
 };

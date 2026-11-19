@@ -3,10 +3,12 @@
  *
  * Контракт:
  *   <Вкладки вкладки={[{ ключ, надпись, значок?, testID? }]} выбрана="ключ" приВыборе={(ключ) => …}
- *            подпись? testID? />
+ *            подпись? роль?="вкладки|выбор" testID? />
  * - Выбранная — светлая «таблетка» на дорожке, текст акцентом; остальные — текстВторой.
- * - Доступность: tablist / tab, accessibilityState.selected; подпись — название группы для диктора.
- * - Высота сегмента ≥ 44 px (дорожка — 52): удобно пальцем. Без анимации переключения.
+ * - Доступность: tablist / tab с aria-selected (react-native-web переносит в DOM только aria-*, не accessibilityState);
+ *   роль="выбор" — radiogroup / radio с aria-checked (выбор настройки без панелей, например тема); подпись —
+ *   название группы для диктора.
+ * - Высота сегмента ≥ 48 px (дорожка — 56): цель касания по брифу. Без анимации переключения.
  * - значок — имя значка из набора (18 px) слева от надписи; надпись — до 2 строк по центру (на 320 px и при
  *   увеличенном шрифте не режется многоточием).
  * Пример: «Объяснение · Видео · Аудио» в уроке; «Как в системе · Светлая · Тёмная» в настройках темы.
@@ -23,15 +25,17 @@ export type СвойстваВкладок = {
   выбрана: string;
   приВыборе: (ключ: string) => void;
   подпись?: string;
+  роль?: 'вкладки' | 'выбор';
   testID?: string;
 };
 
-export function Вкладки({ вкладки, выбрана, приВыборе, подпись, testID }: СвойстваВкладок) {
+export function Вкладки({ вкладки, выбрана, приВыборе, подпись, роль = 'вкладки', testID }: СвойстваВкладок) {
+  const выбор = роль === 'выбор';
   const { цвет, радиус, тень } = useТема();
   return (
     <View
       testID={testID}
-      accessibilityRole="tablist"
+      accessibilityRole={выбор ? 'radiogroup' : 'tablist'}
       accessibilityLabel={подпись}
       style={{ flexDirection: 'row', padding: 4, gap: 4, borderRadius: радиус.m + 2, backgroundColor: цвет.поверхностьВторая }}
     >
@@ -41,14 +45,14 @@ export function Вкладки({ вкладки, выбрана, приВыбо�
         return (
           <Pressable
             key={в.ключ}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: активна }}
+            accessibilityRole={выбор ? 'radio' : 'tab'}
+            {...(выбор ? { 'aria-checked': активна } : { 'aria-selected': активна })}
             onPress={() => приВыборе(в.ключ)}
             testID={в.testID}
             style={({ pressed }) => [
               {
                 flex: 1,
-                minHeight: 44,
+                minHeight: 48,
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',

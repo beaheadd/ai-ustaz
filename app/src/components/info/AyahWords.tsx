@@ -8,12 +8,14 @@
  *   (разбиение Tanzil), и куски выводятся подряд с теми же пробелами: склейка равна исходной
  *   строке, ничего не меняется и не нормализуется.
  * - Номер аята — отдельно от текста Корана (кружок справа, цвета темы), в сам текст ничего не вставляется.
- * - Подсвеченное слово — нажимаемое (на вебе — span с role="button"); выбор дублирует список
+ * - Подсвеченное слово — нажимаемое (на вебе — span с role="button", aria-pressed); выбор дублирует список
  *   примеров на экране, чтобы всё было доступно с клавиатуры.
+ * - Пока Amiri Quran не загружен (useАрабскийШрифтГотов, как у <АрабскийТекст>), текст прозрачен и держит место:
+ *   Коран не мелькает системным шрифтом (вкладка «Коран» при прямом входе по #/quran на медленной сети).
  */
 import { Platform, Text, View } from 'react-native';
 import type { ФрагментКорана } from '../../content/types';
-import { ШРИФТ_АРАБСКИЙ, useТема } from '../../theme';
+import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов, useТема } from '../../theme';
 import { Текст } from '../Text';
 import { словаАята } from './data';
 
@@ -36,6 +38,7 @@ export function АятСоСловами({
   testID?: string;
 }) {
   const { цвет, отступ, радиус } = useТема();
+  const шрифтГотов = useАрабскийШрифтГотов();
   const слова = словаАята(фрагмент.текст);
   return (
     <View style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
@@ -68,6 +71,7 @@ export function АятСоСловами({
           color: цвет.арабский,
           textAlign: 'right',
           writingDirection: 'rtl',
+          opacity: шрифтГотов ? 1 : 0,
         }}
       >
         {слова.map((слово, i) => {
@@ -81,7 +85,7 @@ export function АятСоСловами({
               key={номер}
               accessibilityRole="button"
               accessibilityLabel={подпись(номер)}
-              accessibilityState={{ selected: выбрано }}
+              aria-pressed={выбрано}
               onPress={() => приВыборе(id)}
               testID={`слово-${фрагмент.сура}-${фрагмент.аят}-${номер}`}
               style={{

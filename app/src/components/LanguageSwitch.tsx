@@ -2,7 +2,8 @@
  * Переключатель языка интерфейса: «Русский / Қазақша».
  *
  * Контракт: <ПереключательЯзыка /> — меняет язык сразу и сохраняет его локально (прогресс).
- * Вид — как <Вкладки> (сегменты на утопленной дорожке), роль — radiogroup/radio; testID язык-ru, язык-kk.
+ * Вид — как <Вкладки> (сегменты на утопленной дорожке), роль — radiogroup/radio с aria-checked (react-native-web
+ * accessibilityState не переносит в DOM — только aria-*); сегмент ≥ 48 px; testID язык-ru, язык-kk.
  */
 import { Pressable, View } from 'react-native';
 import { ЯЗЫКИ, useПеревод } from '../i18n';
@@ -24,11 +25,11 @@ export function ПереключательЯзыка() {
           <Pressable
             key={код}
             accessibilityRole="radio"
-            accessibilityState={{ checked: выбран }}
+            aria-checked={выбран}
             onPress={() => установитьЯзык(код)}
             testID={'язык-' + код}
             style={[
-              { flex: 1, minHeight: 44, justifyContent: 'center', alignItems: 'center', borderRadius: радиус.m - 2, backgroundColor: выбран ? цвет.выбрано : 'transparent' },
+              { flex: 1, minHeight: 48, justifyContent: 'center', alignItems: 'center', borderRadius: радиус.m - 2, backgroundColor: выбран ? цвет.выбрано : 'transparent' },
               выбран ? тень(1) : null,
             ]}
           >

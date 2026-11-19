@@ -65,7 +65,7 @@ export function Кнопка({
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityState={{ disabled: отключена }}
+      aria-disabled={отключена}
       accessibilityHint={подсказка}
       disabled={отключена}
       onPress={приНажатии}

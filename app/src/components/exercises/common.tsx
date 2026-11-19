@@ -294,7 +294,8 @@ export function КнопкаВарианта({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={т('вариант', { номер, что: подписьДоступности ?? подписьВарианта(вариант, язык) }) + пометка}
-      accessibilityState={{ disabled: отключена, selected: выбрана || состояние === 'выбранНеверный' }}
+      aria-disabled={отключена}
+      aria-pressed={выбрана || состояние === 'выбранНеверный'}
       disabled={отключена}
       onPress={приНажатии}
       testID={testID}

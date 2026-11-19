@@ -231,7 +231,7 @@ function Выбор({ надпись, выбран, приНажатии, testID
   return (
     <Pressable
       accessibilityRole="radio"
-      accessibilityState={{ checked: выбран }}
+      aria-checked={выбран}
       accessibilityLabel={надпись}
       onPress={приНажатии}
       testID={testID}
