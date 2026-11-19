@@ -2,6 +2,9 @@
 
 Запуск:  python3 -I -B tools/check_content.py [--tanzil ПУТЬ_К_XML] [--content ПАПКА]  (по умолчанию — content/)
 Код возврата: 0 — всё чисто; 1 — есть ошибки (список в отчёте); 2 — не найден файл Tanzil.
+Tanzil по умолчанию — копия ДЛЯ ПОКАЗА со знаками остановки, саджды и руб‘ аль-хизба, лежит в репозитории:
+content/quran/quran-uthmani-marks.xml (с 19.11.2026). Всё, что показывается как Коран, сверяется с ней; фонетическая
+копия без знаков (quran-transcript) — только речевому сервису, здесь не нужна. Без сети.
 
 Что проверяется:
   (а) Коран: каждый объект с полями «сура», «аят», «текст» совпадает побайтно с Tanzil Uthmani v1.1
@@ -21,6 +24,10 @@
       голос кари везде null (синтез и чужие записи запрещены); статус «черновик» без подписи.
   (е) фрагменты Корана с полем «файл» — из того же файла, что записан в sources.json (tanzil.файл);
       казахские названия букв в текстах — как в глоссарии letters.json (одно имя у буквы).
+  (з) полный Коран для показа — tools/quran/check_quran.py: sha256 XML = sources.json (запись «tanzil»), 114 сур и
+      6236 аятов, индекс и файлы сур app/public/quran (хэш в имени = sha256), КАЖДЫЙ аят каждой производной побайтно
+      = XML, блок условий Tanzil в каждом файле, производные = свежей сборке tools/quran/build_quran.py.
+      Пропускается, если указан чужой --tanzil или --content (проверяется только копия в репозитории).
   (ж) media.json — видео и аудио учителей-партнёров: tools/media/check_media.py (youtube_id есть в плейлистах,
       основное видео у уроков уровней 1–2, ничего не показывается без «разрешено» автора, только свои
       относительные файлы media/…).
@@ -32,7 +39,9 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'media'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
 import check_media  # noqa: E402
+import check_quran  # noqa: E402
 import content_common as об  # noqa: E402
 
 КОРЕНЬ = pathlib.Path(__file__).resolve().parent.parent
@@ -295,6 +304,14 @@ def main():
                               False, тексты_аятов, отчёт)
         if имя == 'course.json':
             проверить_курс(данные, отчёт)
+
+    if pathlib.Path(путь).resolve() == pathlib.Path(об.ПУТЬ_TANZIL_ПО_УМОЛЧАНИЮ).resolve() and КОНТЕНТ == КОРЕНЬ / 'content':
+        ошибки_корана, счёт_корана = check_quran.проверить(tanzil.get('sha256Файла'), tanzil.get('файл'))
+        отчёт.ошибки.extend(ошибки_корана)
+        for к, в in счёт_корана.items():
+            отчёт.счёт(к, в)
+    else:
+        print('  (полный Коран app/public/quran не сверялся: указан другой --tanzil или --content)')
 
     ошибки_медиа, счёт_медиа = check_media.проверить(КОНТЕНТ)
     отчёт.ошибки.extend(ошибки_медиа)

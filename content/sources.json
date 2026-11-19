@@ -4,16 +4,33 @@
   "источники": [
     {
       "id": "tanzil",
-      "что": "Текст Корана: аль-Фатиха 1:1–7 (fatiha-demo.json) и слова в примерах объяснений",
+      "что": "Текст Корана для показа: 114 сур (app/public/quran — tools/quran/build_quran.py), аль-Фатиха 1:1–7 (fatiha-demo.json) и слова в примерах объяснений",
       "название": "Tanzil Quran Text (Uthmani, Version 1.1)",
       "лицензия": "CC BY 3.0",
       "ссылка": "tanzil.net",
       "лицензияСсылка": "creativecommons.org/licenses/by/3.0/",
+      "атрибуция": "Tanzil Quran Text (Uthmani, Version 1.1). Copyright (C) 2007-2026 Tanzil Project. License: Creative Commons Attribution 3.0. tanzil.net",
+      "условия": "\n\n# PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK\n#====================================================================\n#\n#  Tanzil Quran Text (Uthmani, Version 1.1)\n#  Copyright (C) 2007-2026 Tanzil Project\n#  License: Creative Commons Attribution 3.0\n#\n#  This copy of the Quran text is carefully produced, highly \n#  verified and continuously monitored by a group of specialists \n#  at Tanzil Project.\n#\n#  TERMS OF USE:\n#\n#  - Permission is granted to copy and distribute verbatim copies \n#    of this text, but CHANGING IT IS NOT ALLOWED.\n#\n#  - This Quran text can be used in any website or application, \n#    provided that its source (Tanzil Project) is clearly indicated, \n#    and a link is made to tanzil.net to enable users to keep\n#    track of changes.\n#\n#  - This copyright notice shall be included in all verbatim copies \n#    of the text, and shall be reproduced appropriately in all files \n#    derived from or containing substantial portion of this text.\n#\n#  Please check updates at: http://tanzil.net/updates/\n#\n#====================================================================\n\t\n",
+      "файл": "quran-uthmani-marks.xml",
+      "путь": "content/quran/quran-uthmani-marks.xml",
+      "sha256Файла": "33f4113df84c1bab0ee2eb69616139fda619bdd56fc163a72532daaf0431bf57",
+      "копия": "показ",
+      "загружено": "2026-11-19",
+      "параметрыЗагрузки": "tanzil.net/download: quranType=uthmani, outType=xml, marks=true, sajdah=true, rub=true",
+      "примечание": "Копия ДЛЯ ПОКАЗА (правило 1 CLAUDE.md): со знаками остановки (вакф), саджды ۩ и руб‘ аль-хизба ۞. Файл quran-uthmani-marks.xml хранится побайтно, текст не меняется и не нормализуется. Производные (по файлу на суру, индекс) собирает tools/quran/build_quran.py, сверяет tools/check_content.py: sha256 файла, 114 сур и 6236 аятов, каждый аят побайтно. Блок условий Tanzil — в каждом производном файле. Татвиль перед надстрочным алифом и малые мимы после танвина в этой копии есть не везде, где они есть в фонетической копии (параметры загрузки tanzil.net) — для показа используется только эта копия."
+    },
+    {
+      "id": "tanzil-phonetic",
+      "что": "Только фонетика и выравнивание: эталон проверки голосом в речевом сервисе (speech/, свой домен). На экран не выводится",
+      "название": "Tanzil Quran Text (Uthmani, Version 1.1) — копия без знаков остановки, саджды и хизба",
+      "лицензия": "CC BY 3.0",
+      "ссылка": "tanzil.net",
+      "лицензияСсылка": "creativecommons.org/licenses/by/3.0/",
       "атрибуция": "Tanzil Quran Text (Uthmani, Version 1.1). Copyright (C) 2007-2024 Tanzil Project. License: Creative Commons Attribution 3.0. tanzil.net",
-      "условия": "\n\n# PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK\n#====================================================================\n#\n#  Tanzil Quran Text (Uthmani, Version 1.1)\n#  Copyright (C) 2007-2024 Tanzil Project\n#  License: Creative Commons Attribution 3.0\n#\n#  This copy of the Quran text is carefully produced, highly \n#  verified and continuously monitored by a group of specialists \n#  at Tanzil Project.\n#\n#  TERMS OF USE:\n#\n#  - Permission is granted to copy and distribute verbatim copies \n#    of this text, but CHANGING IT IS NOT ALLOWED.\n#\n#  - This Quran text can be used in any website or application, \n#    provided that its source (Tanzil Project) is clearly indicated, \n#    and a link is made to tanzil.net to enable users to keep\n#    track of changes.\n#\n#  - This copyright notice shall be included in all verbatim copies \n#    of the text, and shall be reproduced appropriately in all files \n#    derived from or containing substantial portion of this text.\n#\n#  Please check updates at: http://tanzil.net/updates/\n#\n#====================================================================\n\t\n",
       "файл": "quran-uthmani-without-pause-sajda-hizb-marks.xml",
       "sha256Файла": "dc4e68cb5a6645c5d938517ceb4c3d2c0373adb84cc514874f30d7bc22cb3f07",
-      "примечание": "Файл quran-uthmani-without-pause-sajda-hizb-marks.xml — копия Tanzil из quran-transcript без знаков остановки, саджды и хизба (ПЛАН §8: эта копия — для фонетики, для показа — копия со знаками). Временно, до решения владельца: копии со знаками в окружении сборки нет, поэтому 1:1–7 показываются из этой копии (Tanzil Uthmani v1.1, текст не меняется). Перед показом других сур перейти на копию со знаками и записать её имя и sha256. Строки извлекает tools/build_content.py, сверяет tools/check_content.py."
+      "копия": "фонетика",
+      "примечание": "Лежит в пакете quran-transcript 0.6.4 (speech/requirements.txt), quran_transcript/quran-script/quran-uthmani-without-pause-sajda-hizb-marks.xml; в репозитории и сборке приложения её нет. Только для фонетики и выравнивания (ПЛАН §8), не для показа. Слова (без знаков-токенов) совпадают с копией для показа по числу и порядку во всех 6236 аятах; в начертании есть татвиль перед надстрочным алифом и малые мимы после танвина. Нумерация слов речевого сервиса (word_from, words) — по imlaey-словам quran-transcript (docs/дизайн/05-коран-чтение-и-плеер.md, «Контракт»). Условия Tanzil — как у копии для показа."
     },
     {
       "id": "quran-muaalem-notice",

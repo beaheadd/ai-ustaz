@@ -497,9 +497,10 @@ export async function навигацияСквозной(браузер, баз�
     let подменено = 0;
     await контекст.route(/\/_expo\/static\/js\/web\/fatiha-demo-[0-9a-f]+\.js$/, async (маршрут) => {
       const ответ = await маршрут.fetch();
-      const тело = (await ответ.text()).replace(/(хеш"?:")1ad501ee/, (_, н) => {
+      // Первый «хеш» в чанке — аят 1:1 (копия для показа с 19.11.2026): меняем первую цифру, не завися от значения.
+      const тело = (await ответ.text()).replace(/(хеш"?:")([0-9a-f])/, (_, н, ц) => {
         подменено += 1;
-        return н + '0ad501ee';
+        return н + (ц === '0' ? '1' : '0');
       });
       await маршрут.fulfill({ response: ответ, body: тело });
     });

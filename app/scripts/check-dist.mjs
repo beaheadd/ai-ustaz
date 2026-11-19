@@ -30,6 +30,13 @@
  *       ни <iframe; CSP: frame-src 'none', media-src только 'self' (+ blob: для своей записи), без youtube;
  *     — метка <meta name="aiustaz-media-preview" content="on|off">: «on» (сборка с EXPO_PUBLIC_MEDIA_PREVIEW=1,
  *       видео без разрешения авторов) — ошибка, если не сказано MUGALIM_TARGET=preview.
+ *  9. Полный Коран для показа (решение владельца 19.11.2026; tools/quran/build_quran.py → app/public/quran → dist/quran):
+ *     — индекс из манифеста src/quran/manifest.generated.ts есть, его sha256 = манифесту; 114 файлов сур из индекса есть,
+ *       sha256 каждого = индексу, хэш в имени = началу sha256; других файлов в quran/ нет;
+ *     — в каждом файле — блок копирайта Tanzil (условие Tanzil: в каждом производном файле);
+ *     — текста Корана нет в JS-чанках: ни один арабский отрезок JS длиной ≥ 25 символов не входит в текст сур 2–114,
+ *       кроме отрезков аль-Фатихи (чанк fatiha-demo по замыслу; 1:1 дословно есть и в 27:30). Суры грузятся fetch'ем
+ *       по одной (src/quran/data.ts).
  * Запуск: npm run check:dist  [папка-сборки=dist]
  */
 import { execFileSync } from 'node:child_process';
@@ -47,7 +54,11 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // 19.11.2026: 1200 → 1250 КБ — задача владельца расширила приложение (время намаза, кибла, дизайн-система,
 // главная). Поднял интегратор после сжатия Terser в два прохода (−20 КБ); ждёт подтверждения ведущего/владельца.
 const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1250);
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 3000);
+// Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
+// Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
+// + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
+// 3 193 691 (+1 728 236 байт = 1688 КБ). JS-бюджет не менялся (1249 из 1250 КБ). Плеер и запись добавят своё отдельно.
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 4688);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
@@ -223,6 +234,60 @@ if (!меткаПредпросмотра) ошибка('в index.html нет м
 else if (меткаПредпросмотра === 'on' && !ПРЕДПРОСМОТР_РАЗРЕШЁН)
   ошибка('сборка с предпросмотром видео и аудио без разрешения авторов (EXPO_PUBLIC_MEDIA_PREVIEW=1) — только для владельца, не для batr.kz. Для batr.kz соберите без флага; для показа владельцу — MUGALIM_TARGET=preview');
 
+// 9. Полный Коран для показа: файлы dist/quran по манифесту, sha256, условия Tanzil, Корана нет в JS.
+const ПАПКА_КОРАНА = path.join(папка, 'quran');
+let строкаКорана = 'нет папки quran/';
+{
+  const путьМанифеста = path.join(корень, 'src', 'quran', 'manifest.generated.ts');
+  const манифест = fs.existsSync(путьМанифеста) ? fs.readFileSync(путьМанифеста, 'utf8') : '';
+  const индексМ = манифест.match(/индекс: '([^']+)'/)?.[1];
+  const shaМ = манифест.match(/sha256Индекса: '([0-9a-f]{64})'/)?.[1];
+  const sha = (б) => crypto.createHash('sha256').update(б).digest('hex');
+  if (!индексМ || !shaМ) ошибка('нет src/quran/manifest.generated.ts (python3 -I -B tools/quran/build_quran.py)');
+  else if (!fs.existsSync(path.join(папка, индексМ))) ошибка(`нет индекса Корана ${индексМ} в сборке (app/public/quran → dist/quran)`);
+  else {
+    const байтыИндекса = fs.readFileSync(path.join(папка, индексМ));
+    if (sha(байтыИндекса) !== shaМ) ошибка(`sha256 ${индексМ} ≠ манифесту`);
+    const индекс = JSON.parse(байтыИндекса.toString('utf8'));
+    const нужные = new Set([индексМ]);
+    let байт = байтыИндекса.length;
+    const тексты = [];
+    const фатиха = [];
+    if (индекс.суры?.length !== 114) ошибка(`в индексе Корана ${индекс.суры?.length} сур, нужно 114`);
+    for (const з of индекс.суры ?? []) {
+      нужные.add(з.файл);
+      const п = path.join(папка, з.файл);
+      if (!fs.existsSync(п)) {
+        ошибка(`нет файла суры ${з.файл}`);
+        continue;
+      }
+      const б = fs.readFileSync(п);
+      байт += б.length;
+      const хэш = sha(б);
+      if (хэш !== з.sha256) ошибка(`sha256 ${з.файл} ≠ индексу`);
+      if (!path.basename(з.файл).includes('.' + хэш.slice(0, 20) + '.')) ошибка(`хэш в имени ${з.файл} ≠ началу sha256`);
+      const д = JSON.parse(б.toString('utf8'));
+      if (!/PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK/.test(д.копирайт ?? '')) ошибка(`в ${з.файл} нет блока условий Tanzil`);
+      for (const а of д.аяты ?? []) (д.сура === 1 ? фатиха : тексты).push(а.текст);
+    }
+    for (const { отн } of файлы) if (отн.startsWith('quran/') && !нужные.has(отн)) ошибка(`лишний файл в quran/: ${отн}`);
+    const коран = тексты.join('\n');
+    const текстФатихи = фатиха.join('\n');
+    for (const { абс, отн } of файлы) {
+      if (!отн.endsWith('.js')) continue;
+      for (const м of fs.readFileSync(абс, 'utf8').matchAll(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF ]{25,}/g)) {
+        const отрезок = м[0].trim();
+        // аль-Фатиха (чанк fatiha-demo) разрешена; 1:1 дословно входит и в 27:30 — поэтому сначала сверяем с ней.
+        if (отрезок.length >= 25 && !текстФатихи.includes(отрезок) && коран.includes(отрезок)) {
+          ошибка(`текст Корана (сура 2–114) в JS-чанке ${отн}: «${отрезок.slice(0, 40)}…» — только статические файлы quran/`);
+          break;
+        }
+      }
+    }
+    строкаКорана = `${индекс.суры?.length ?? 0} сур + индекс, ${кб(байт)} КБ, sha256 сверены, условия Tanzil в каждом файле`;
+  }
+}
+
 // 7. Проверка голосом.
 const СВОЙ_ДОМЕН = process.env.MUGALIM_TARGET === 'own-domain';
 const меткаПроверки = html.match(/<meta name="aiustaz-speech-check" content="(on|off)"/)?.[1];
@@ -238,6 +303,7 @@ for (const { абс, отн } of файлы) {
 console.log(`Сборка: ${path.relative(корень, папка)} — файлов ${файлы.length}, всего ${кб(всего)} КБ; JS ${кб(js)} КБ (gzip ≈ ${кб(jsGzip)} КБ)`);
 for (const { абс, отн } of файлы) console.log(`  ${отн}  ${кб(fs.statSync(абс).size)} КБ`);
 console.log(`batr-world .gitignore: ${проверкаGit}`);
+console.log(`Коран (dist/quran): ${строкаКорана}`);
 console.log(`Проверка голосом: ${меткаПроверки === 'on' ? 'ВКЛЮЧЕНА в сборке' + (СВОЙ_ДОМЕН ? ' (MUGALIM_TARGET=own-domain)' : '') : 'выключена (сборка для batr.kz)'}`);
 console.log(`Предпросмотр видео и аудио партнёров: ${меткаПредпросмотра === 'on' ? 'ВКЛЮЧЁН (только для владельца' + (ПРЕДПРОСМОТР_РАЗРЕШЁН ? ', MUGALIM_TARGET=preview)' : ')') : 'выключен'}`);
 if (встреченоРазрешённых.size) {

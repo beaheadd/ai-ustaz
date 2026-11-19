@@ -9,11 +9,13 @@
   транскрипция(строка) -> str                        — «ра ри ру», «қуль», «х̣асан»
   слоги(слово) -> [str]; лестница(слово) -> [str]    — ступени начинаются с огласованной буквы
   прочитать_tanzil(путь) -> ({(сура, аят): текст}, шапка, sha256 файла)
-  ПУТЬ_TANZIL — путь к XML: аргумент --tanzil, иначе MUGALIM_TANZIL_XML, иначе путь по умолчанию.
+  путь_tanzil(аргументы) — путь к XML: аргумент --tanzil, иначе MUGALIM_TANZIL_XML, иначе копия для показа
+    content/quran/quran-uthmani-marks.xml (Tanzil Uthmani v1.1 со знаками; с 19.11.2026).
 Текст Корана здесь не меняется и не нормализуется: строки берутся из XML как есть.
 """
 import hashlib
 import os
+import pathlib
 import re
 import unicodedata
 import xml.etree.ElementTree as ET
@@ -32,10 +34,11 @@ import xml.etree.ElementTree as ET
     'ه': 'һ', 'و': 'в', 'ي': 'й',
 }
 
-ПУТЬ_TANZIL_ПО_УМОЛЧАНИЮ = (
-    '/tmp/claude-0/-home-user-mugalim/05163200-2e5b-58a3-9eae-5cc9aaf91f4b/scratchpad/'
-    'tz_cat/quran_transcript/quran-script/quran-uthmani-without-pause-sajda-hizb-marks.xml'
-)
+# Копия Tanzil Uthmani v1.1 ДЛЯ ПОКАЗА — со знаками остановки, саджды и руб‘ аль-хизба, лежит в репозитории
+# (загружена с tanzil.net 19.11.2026, sha256 — в content/sources.json). Фонетическая копия без знаков
+# (quran-transcript) — только речевому сервису для фонетики и выравнивания; здесь не используется.
+ПУТЬ_TANZIL_ПО_УМОЛЧАНИЮ = str(
+    pathlib.Path(__file__).resolve().parent.parent / 'content' / 'quran' / 'quran-uthmani-marks.xml')
 АРАБСКИЙ_ОТРЕЗОК = re.compile('[؀-ۿݐ-ݿࢠ-ࣿ]+')
 
 
