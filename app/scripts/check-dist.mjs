@@ -23,6 +23,13 @@
  *     на batr.kz проверка голосом запрещена (QML). Код страницы и сам выключает её на batr.kz (speech/flag.ts).
  *     Адрес сервиса — относительный /api/speech/… (не http(s), п. 4 его не трогает; CSP connect-src 'self');
  *     абсолютных адресов речевого сервиса в бандле быть не должно.
+ *  8. Видео и аудио партнёров (решение владельца 19.11.2026; content/media.json):
+ *     — свои файлы — только в media/ с расширением аудио/видео и хэшем в имени (относительные пути из данных);
+ *     — ссылки https://www.youtube.com/watch?v=… — только как текст в данных (кнопка «Смотреть на YouTube»
+ *       открывает внешнее приложение); встраивания нет: ни youtube.com/embed, ни youtube-nocookie, ни ytimg,
+ *       ни <iframe; CSP: frame-src 'none', media-src только 'self' (+ blob: для своей записи), без youtube;
+ *     — метка <meta name="aiustaz-media-preview" content="on|off">: «on» (сборка с EXPO_PUBLIC_MEDIA_PREVIEW=1,
+ *       видео без разрешения авторов) — ошибка, если не сказано MUGALIM_TARGET=preview.
  * Запуск: npm run check:dist  [папка-сборки=dist]
  */
 import { execFileSync } from 'node:child_process';
@@ -40,6 +47,9 @@ const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 
 const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 3000);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
+/** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
+const МЕДИА = /\.(m4a|mp3|ogg|opus|webm|mp4|wav)$/i;
+const ВСТРАИВАНИЕ = /youtube\.com\/embed|youtube-nocookie\.com|ytimg\.com|googlevideo\.com|<iframe/i;
 const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json']);
 const ХЭШ_В_ИМЕНИ = /[.-]([0-9a-f]{20,})\.[a-z0-9]+$/i;
 
@@ -49,6 +59,7 @@ const РАЗРЕШЁННЫЕ_URL = [
   ['https://react.dev/errors/', 'ссылка в тексте ошибки React (production) — только текст'],
   ['https://expo.dev', 'expo-asset: адрес по умолчанию для ассетов-чисел; на вебе ассеты — строки, ветка не используется'],
   ['https://classic-assets.eascdn.net/~assets/', 'expo-asset: ветка только для Expo Go (ExponentKernel); на вебе не выполняется'],
+  ['https://www.youtube.com/watch?v=', 'content/media.json: ссылка на урок учителя — текст для кнопки «Смотреть на YouTube» (внешнее приложение); не загрузка, не встраивание'],
 ];
 /** Точные строки (не префиксы): схемы без адреса и фиктивные базы для new URL(). */
 const ТОЧНЫЕ_URL = new Map([
@@ -85,6 +96,8 @@ for (const { абс, отн } of файлы) {
   const имя = path.basename(отн);
   if (РАСТР.test(имя)) ошибка(`растровый файл (потеряется в batr-world): ${отн}`);
   if (имя.endsWith('.map')) ошибка(`карта исходников в сборке: ${отн}`);
+  if (МЕДИА.test(имя) && !отн.startsWith('media/')) ошибка(`медиафайл вне media/: ${отн}`);
+  if (отн.startsWith('media/') && !МЕДИА.test(имя)) ошибка(`в media/ — только аудио и видео: ${отн}`);
   if (БЕЗ_ХЭША.has(отн)) continue;
   const хэш = имя.match(ХЭШ_В_ИМЕНИ)?.[1];
   if (!хэш) {
@@ -188,6 +201,25 @@ if (js / 1024 > БЮДЖЕТ_JS_КБ) ошибка(`JS ${кб(js)} КБ боль
 if (всего / 1024 > БЮДЖЕТ_ВСЕГО_КБ) ошибка(`сборка ${кб(всего)} КБ больше бюджета ${БЮДЖЕТ_ВСЕГО_КБ} КБ`);
 if (js / 1024 > БЮДЖЕТ_JS_КБ * 0.8) предупреждения.push(`JS близко к бюджету: ${кб(js)} из ${БЮДЖЕТ_JS_КБ} КБ`);
 
+// 8. Видео и аудио партнёров: без встраивания YouTube, CSP закрыта, предпросмотр — не для batr.kz.
+for (const { абс, отн } of файлы) {
+  if (!/\.(html|js|css|json|svg|txt)$/i.test(отн)) continue;
+  const м = fs.readFileSync(абс, 'utf8').match(ВСТРАИВАНИЕ);
+  if (м) ошибка(`встраивание YouTube/iframe в ${отн}: «${м[0]}» — только ссылка youtube.com/watch во внешнее приложение`);
+}
+{
+  const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/)?.[1] ?? '';
+  const директива = (имя) => csp.split(';').map((ч) => ч.trim()).find((ч) => ч.startsWith(имя + ' ')) ?? '';
+  if (/youtube|google/i.test(csp)) ошибка('CSP открыта для youtube/google — видео партнёров только ссылкой или своим файлом');
+  if (директива('frame-src') !== "frame-src 'none'") ошибка(`CSP: нужен frame-src 'none', сейчас «${директива('frame-src')}»`);
+  if (!/^media-src 'self'( blob:)?$/.test(директива('media-src'))) ошибка(`CSP: media-src только 'self' (+ blob:), сейчас «${директива('media-src')}»`);
+}
+const ПРЕДПРОСМОТР_РАЗРЕШЁН = process.env.MUGALIM_TARGET === 'preview';
+const меткаПредпросмотра = html.match(/<meta name="aiustaz-media-preview" content="(on|off)"/)?.[1];
+if (!меткаПредпросмотра) ошибка('в index.html нет метки aiustaz-media-preview (запускать сборку через npm run export:web)');
+else if (меткаПредпросмотра === 'on' && !ПРЕДПРОСМОТР_РАЗРЕШЁН)
+  ошибка('сборка с предпросмотром видео и аудио без разрешения авторов (EXPO_PUBLIC_MEDIA_PREVIEW=1) — только для владельца, не для batr.kz. Для batr.kz соберите без флага; для показа владельцу — MUGALIM_TARGET=preview');
+
 // 7. Проверка голосом.
 const СВОЙ_ДОМЕН = process.env.MUGALIM_TARGET === 'own-domain';
 const меткаПроверки = html.match(/<meta name="aiustaz-speech-check" content="(on|off)"/)?.[1];
@@ -204,6 +236,7 @@ console.log(`Сборка: ${path.relative(корень, папка)} — фай
 for (const { абс, отн } of файлы) console.log(`  ${отн}  ${кб(fs.statSync(абс).size)} КБ`);
 console.log(`batr-world .gitignore: ${проверкаGit}`);
 console.log(`Проверка голосом: ${меткаПроверки === 'on' ? 'ВКЛЮЧЕНА в сборке' + (СВОЙ_ДОМЕН ? ' (MUGALIM_TARGET=own-domain)' : '') : 'выключена (сборка для batr.kz)'}`);
+console.log(`Предпросмотр видео и аудио партнёров: ${меткаПредпросмотра === 'on' ? 'ВКЛЮЧЁН (только для владельца' + (ПРЕДПРОСМОТР_РАЗРЕШЁН ? ', MUGALIM_TARGET=preview)' : ')') : 'выключен'}`);
 if (встреченоРазрешённых.size) {
   console.log('Разрешённые URL-строки в коде (не запросы):');
   for (const [п, причина] of встреченоРазрешённых) console.log(`  ${п} — ${причина}`);
@@ -214,7 +247,13 @@ if (ошибки.length) {
   for (const о of ошибки) console.error(`  ✗ ${о}`);
   process.exit(1);
 }
-console.log(меткаПроверки === 'on' ? '\nOK: сборка для СВОЕГО домена (проверка голосом включена) — НЕ выкладывать в batr-world' : '\nOK: сборка готова к выкладке в batr-world/web/public/aiustaz/');
+console.log(
+  меткаПредпросмотра === 'on'
+    ? '\nOK: сборка ПРЕДПРОСМОТРА для владельца (видео без разрешения авторов) — НЕ выкладывать в batr-world'
+    : меткаПроверки === 'on'
+      ? '\nOK: сборка для СВОЕГО домена (проверка голосом включена) — НЕ выкладывать в batr-world'
+      : '\nOK: сборка готова к выкладке в batr-world/web/public/aiustaz/',
+);
 
 function обойти(каталог) {
   return fs.readdirSync(каталог, { withFileTypes: true }).flatMap((з) => {

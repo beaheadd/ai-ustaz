@@ -3,7 +3,7 @@
  * источники контента — с проверкой формы. То, что проверку не прошло, НЕ показывается.
  *
  * Контракт:
- *   useДанные('course' | 'lesson0' | 'fatiha-demo' | 'sources')
+ *   useДанные('course' | 'lesson0' | 'fatiha-demo' | 'sources' | 'media')
  *     → { состояние: 'загрузка' } | { состояние: 'нет' } | { состояние: 'есть'; данные }
  *   загрузитьДанные(имя) → Promise<данные | null> — то же без React (кэш на время страницы).
  *   Чистые проверки (для тестов): проверитьКурс, проверитьУрок0, проверитьДемо, проверитьИсточники,
@@ -34,6 +34,8 @@ import type {
   ФрагментКорана,
 } from '../../content/types';
 import { проверитьЗадание, проверитьФрагментКорана } from '../../engine/lessonEngine';
+import { проверитьМедиа } from '../../media/media';
+import type { МедиаДанные } from '../../content/types';
 
 // ───────────────────────── Источники контента (типа в content/types.ts нет) ─────────────────────────
 
@@ -63,6 +65,8 @@ export type ДанныеПоИмени = {
   lesson0: Урок0Данные;
   'fatiha-demo': ДемоФатихи;
   sources: ИсточникиДанные;
+  /** Видео и аудио учителей-партнёров (проверка формы — media/media.ts). */
+  media: МедиаДанные;
 };
 export type ИмяДанных = keyof ДанныеПоИмени;
 
@@ -300,10 +304,11 @@ const ПРОВЕРКИ: { [И in ИмяДанных]: (сырые: unknown) => �
   lesson0: проверитьУрок0,
   'fatiha-demo': проверитьДемо,
   sources: проверитьИсточники,
+  media: проверитьМедиа,
 };
 
 /** /content (корень репозитория), без подпапок; каждый файл — отдельный ленивый чанк. */
-const КОНТЕНТ = require.context('../../../../content', false, /(^|\/)(course|lesson0|fatiha-demo|sources)\.json$/, 'lazy');
+const КОНТЕНТ = require.context('../../../../content', false, /(^|\/)(course|lesson0|fatiha-demo|sources|media)\.json$/, 'lazy');
 
 const кэш = new Map<ИмяДанных, Promise<unknown>>();
 

@@ -21,6 +21,7 @@ import { useТема } from '../../theme';
 import { АрабскийТекст } from '../ArabicText';
 import { Кнопка } from '../Button';
 import { Карточка } from '../Card';
+import { ПослушатьКари } from '../LessonMaterials';
 import { ПанельЗаписи } from '../RecordPanel';
 import { Текст } from '../Text';
 import { СЛОВАРЬ_УПРАЖНЕНИЙ, ТекстДляЧтения, useГотовоСразу, type СвойстваУпражнения } from './common';
@@ -47,6 +48,7 @@ export function СкажиВслух({ задание, приГотово }: С�
       <Карточка стиль={{ alignItems: 'center', paddingVertical: отступ.l }}>
         <ТекстДляЧтения читать={задание.читать} testID="текст-для-чтения" />
       </Карточка>
+      {'учебный' in задание.читать ? <ПослушатьКари тексты={[задание.читать.учебный]} /> : null}
       {слоги ? (
         <>
           <Кнопка

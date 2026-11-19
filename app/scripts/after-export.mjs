@@ -2,7 +2,7 @@
 /**
  * Доводка веб-экспорта (запускается из `npm run export:web` после `expo export`).
  *
- * Делает две вещи:
+ * Делает три вещи:
  * 1) вставляет в dist/index.html Content-Security-Policy (meta), которая
  * запрещает браузеру ЛЮБЫЕ внешние запросы — скрипты, стили, шрифты, картинки, звук,
  * fetch/XHR/WebSocket только с того же сайта. Это страховка правила «без аналитики,
@@ -12,6 +12,11 @@
  * 2) ставит метку сборки <meta name="aiustaz-speech-check" content="on|off"> — была ли сборка с флагом
  *    проверки голосом (EXPO_PUBLIC_SPEECH_CHECK=1 в том же окружении, что и `expo export`). check-dist не
  *    пропустит сборку «on» для batr.kz (проверка голосом — только на своём домене, QML).
+ * 3) ставит метку <meta name="aiustaz-media-preview" content="on|off"> — была ли сборка с флагом предпросмотра
+ *    видео и аудио партнёров без разрешения авторов (EXPO_PUBLIC_MEDIA_PREVIEW=1, только для владельца).
+ *    check-dist не пропустит «on» без MUGALIM_TARGET=preview (на batr.kz — никогда).
+ * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
+ * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
  * Контракт: node scripts/after-export.mjs [папка-сборки=dist]; повторный запуск ничего не меняет.
  */
@@ -29,7 +34,7 @@ export const ПОЛИТИКА = [
   "style-src 'self' 'unsafe-inline'", // react-native-web вставляет стили через <style>
   "img-src 'self' data: blob:", // значок — встроенный SVG (data:)
   "font-src 'self' data:",
-  "media-src 'self' blob:", // прослушивание своей записи (object URL)
+  "media-src 'self' blob:", // своя запись (object URL); видео и аудио партнёров — только свои файлы media/…
   "connect-src 'self'",
   "worker-src 'none'",
   "frame-src 'none'",
@@ -59,4 +64,16 @@ const проверка = process.env.EXPO_PUBLIC_SPEECH_CHECK === '1' ? 'on' : '
   if (!новый.includes(мета)) throw new Error('не удалось поставить метку проверки голосом в index.html');
   fs.writeFileSync(файл, новый);
   console.log(`Проверка голосом в сборке: ${проверка === 'on' ? 'ВКЛЮЧЕНА (только для своего домена, не batr.kz)' : 'выключена'}`);
+}
+
+export const МЕТКА_ПРЕДПРОСМОТРА = 'aiustaz-media-preview';
+const предпросмотр = process.env.EXPO_PUBLIC_MEDIA_PREVIEW === '1' ? 'on' : 'off';
+{
+  const текущий = fs.readFileSync(файл, 'utf8');
+  const мета = `<meta name="${МЕТКА_ПРЕДПРОСМОТРА}" content="${предпросмотр}" />`;
+  const образец = new RegExp(`<meta name="${МЕТКА_ПРЕДПРОСМОТРА}"[^>]*>`);
+  const новый = образец.test(текущий) ? текущий.replace(образец, мета) : текущий.replace(/(<meta name="aiustaz-speech-check"[^>]*>)/i, `$1\n    ${мета}`);
+  if (!новый.includes(мета)) throw new Error('не удалось поставить метку предпросмотра медиа в index.html');
+  fs.writeFileSync(файл, новый);
+  console.log(`Предпросмотр видео и аудио партнёров: ${предпросмотр === 'on' ? 'ВКЛЮЧЁН (только для владельца, не batr.kz)' : 'выключен'}`);
 }
