@@ -7,8 +7,8 @@
  * Читает content/makharij.json, content/letters.json, app/public/makharij/*.svg; шрифт — app/node_modules/
  * @expo-google-fonts/amiri-quran. Пишет PNG шириной 1200 px (и рядом .html). В репозиторий результат не кладём.
  * Playwright — предустановленный (require('playwright'), как в app/scripts/e2e.mjs).
- * Решение владельца 19.11.2026: «картинку произношения каждой буквы…»; схемы свои (docs/дизайн/06), черновик —
- * правило 11 CLAUDE.md, плашка «черновик» на доске.
+ * Решение владельца 19.11.2026: «картинку произношения каждой буквы…»; «рисуй как реальный рот человека» — схемы свои,
+ * реалистичный разрез (docs/дизайн/06); черновик — правило 11 CLAUDE.md, плашка «черновик» на доске. Сетка — 3 колонки.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -58,15 +58,15 @@ const html = `<!doctype html><html lang="ru"><meta charset="utf-8"><title>Мах
 header{display:flex;align-items:baseline;gap:16px;margin-bottom:6px}h1{font-size:24px;margin:0}
 .плашка{background:var(--плашка);color:var(--плашкаТекст);border-radius:8px;padding:3px 10px;font-weight:600;font-size:13px}
 .легенда{color:var(--второй);margin:0 0 16px;font-size:13px}
-.сетка{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.сетка{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .к{background:var(--карта);border:1px solid var(--граница);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}
-.в{display:flex;align-items:center;gap:8px}.н{flex:none;width:26px;height:26px;border-radius:50%;background:var(--акцент);color:var(--акцентТекст);display:grid;place-items:center;font-weight:700;font-size:13px}
-.б{font-family:AmiriQuran,serif;font-size:30px;line-height:1.2;margin-inline-start:auto;direction:rtl}
-.ар{font-family:AmiriQuran,serif;font-size:17px;direction:rtl;text-align:right;color:var(--второй)}
-.имя{font-weight:600}img{width:100%;height:auto;display:block}.п{color:var(--второй);font-size:12px}
+.в{display:flex;align-items:center;gap:10px}.н{flex:none;width:32px;height:32px;border-radius:50%;background:var(--акцент);color:var(--акцентТекст);display:grid;place-items:center;font-weight:700;font-size:16px}
+.б{font-family:AmiriQuran,serif;font-size:44px;line-height:1.25;margin-inline-start:auto;direction:rtl;white-space:nowrap}
+.ар{font-family:AmiriQuran,serif;font-size:20px;direction:rtl;text-align:right;color:var(--второй)}
+.имя{font-weight:700;font-size:19px;line-height:1.2}img{width:100%;height:auto;display:block}.п{color:var(--второй);font-size:13px}
 </style><body>
-<header><h1>Махраджи букв: свои схемы</h1><span class="плашка">Черновик — проверяет устаз</span></header>
-<p class="легенда">17 махраджей по Ибн аль-Джазари. Сплошная изумрудная линия — что работает; золотые точки или золотая заливка — куда; пунктир со стрелкой — воздух. Рисунки свои, с нуля; без лиц. Буквы — шрифтом Amiri Quran.</p>
+<header><h1>Махраджи букв: реалистичные схемы (версия 2)</h1><span class="плашка">Черновик — проверяет устаз</span></header>
+<p class="легенда">17 махраджей по Ибн аль-Джазари. Разрез головы от носа и ниже (без глаз, лба, ушей). Оранжевая линия — что работает (язык, губа), жёлтая — куда касается, золотое свечение — место; пунктир со стрелкой — воздух; круг — то же место крупно. Вид сверху: синие бусины — опора с давлением, жёлтые — касание без давления. Рисунки свои, с нуля. Буквы — шрифтом Amiri Quran.</p>
 <div class="сетка">${карточки.map((к) => `<div class="к"><div class="в"><span class="н">${к.n}</span><span class="имя">${экр(к.имя)}</span><span class="б">${экр(к.буквы)}</span></div>
 <div class="ар">${экр(к.ар)}</div><img src="${pathToFileURL(path.join(папка, к.файл)).href}" alt="${экр(подпись[к.файл] ?? '')}">
 <div class="п">${экр(подпись[к.файл] ?? '')}</div><div class="п">Выделено: ${экр(к.что)}</div></div>`).join('')}</div></body></html>`;
