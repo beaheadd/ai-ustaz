@@ -74,6 +74,14 @@ console.log('flag');
 тест('с флагом: свой домен и localhost/127.0.0.1 — включено; похожие на batr имена — не batr', () => {
   for (const х of ['localhost', '127.0.0.1', 'aiustaz.kz', 'www.aiustaz.kz', 'notbatr.kz', 'batr.kz.example.org']) assert.equal(проверкаРазрешенаДля(х, '1'), true, х);
 });
+тест('aiustaz.pro и www — включено и без флага (та же сборка, что batr.kz/aiustaz); похожие имена — нет', () => {
+  for (const х of ['aiustaz.pro', 'www.aiustaz.pro', 'AIUSTAZ.PRO', 'aiustaz.pro.']) {
+    assert.equal(проверкаРазрешенаДля(х, undefined), true, х);
+    assert.equal(проверкаРазрешенаДля(х, '1'), true, х);
+  }
+  for (const х of ['aiustaz.pro.batr.kz', 'evil-aiustaz.pro', 'aiustaz.pro.example.org', 'm.aiustaz.pro']) assert.equal(проверкаРазрешенаДля(х, undefined), false, х);
+  assert.equal(проверкаРазрешенаДля('aiustaz.pro.batr.kz', '1'), false, 'поддомен batr.kz — никогда');
+});
 
 console.log('answer');
 const ТЕКСТ = 'خَلَقَ، مِثْلُ، صَبْرْ';

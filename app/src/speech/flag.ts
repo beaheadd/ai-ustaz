@@ -4,7 +4,11 @@
  * Решение владельца и лицензия QML (CLAUDE.md, «Чужие зоны»; speech/README.md): проверка голосом моделью
  * quran-muaalem работает ТОЛЬКО на своём домене AI Ustaz, НИКОГДА на batr.kz (там реклама и платное вокруг).
  *
- * Включена, только если ОДНОВРЕМЕННО:
+ * Свой домен aiustaz.pro (и www) — включена ВСЕГДА, без флага сборки (владелец 19.11.2026: «купил домен aiustaz.pro»,
+ * «Сразу сажай проверку голоса ИИ, для которой нужен был домен»): batr.kz/aiustaz и aiustaz.pro отдают одну и ту же
+ * сборку (nginx aiustaz.pro → /opt/world/web/dist/aiustaz/), поэтому решает адрес страницы.
+ *
+ * На других адресах включена, только если ОДНОВРЕМЕННО:
  *   (а) сборка с флагом: EXPO_PUBLIC_SPEECH_CHECK=1 в окружении `expo export` (Expo вшивает переменные
  *       EXPO_PUBLIC_* в бандл при сборке; без флага — обычная сборка для batr.kz/aiustaz);
  *   (б) страница открыта НЕ на batr.kz и не на его поддоменах (www.batr.kz, analytics.batr.kz, …) —
@@ -17,12 +21,15 @@
  * Без импортов: файл проверяется в node.
  */
 
+/** Свой домен AI Ustaz: здесь проверка голосом включена всегда (сайт без рекламы и платного вокруг — QML). */
+export const СВОИ_ДОМЕНЫ = ['aiustaz.pro', 'www.aiustaz.pro'];
+
 export function проверкаРазрешенаДля(хост: string, флаг: string | undefined): boolean {
-  if (флаг !== '1') return false;
   const х = String(хост ?? '').trim().toLowerCase().replace(/\.+$/, '');
   if (!х) return false;
   if (х === 'batr.kz' || х.endsWith('.batr.kz')) return false;
-  return true;
+  if (СВОИ_ДОМЕНЫ.includes(х)) return true;
+  return флаг === '1';
 }
 
 /** Флаг сборки. Обращение — строго `process.env.EXPO_PUBLIC_SPEECH_CHECK`: Expo заменяет именно это выражение. */
