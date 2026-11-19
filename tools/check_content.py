@@ -21,6 +21,9 @@
       голос кари везде null (синтез и чужие записи запрещены); статус «черновик» без подписи.
   (е) фрагменты Корана с полем «файл» — из того же файла, что записан в sources.json (tanzil.файл);
       казахские названия букв в текстах — как в глоссарии letters.json (одно имя у буквы).
+  (ж) media.json — видео и аудио учителей-партнёров: tools/media/check_media.py (youtube_id есть в плейлистах,
+      основное видео у уроков уровней 1–2, ничего не показывается без «разрешено» автора, только свои
+      относительные файлы media/…).
 """
 import json
 import pathlib
@@ -28,6 +31,8 @@ import re
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'media'))
+import check_media  # noqa: E402
 import content_common as об  # noqa: E402
 
 КОРЕНЬ = pathlib.Path(__file__).resolve().parent.parent
@@ -290,6 +295,11 @@ def main():
                               False, тексты_аятов, отчёт)
         if имя == 'course.json':
             проверить_курс(данные, отчёт)
+
+    ошибки_медиа, счёт_медиа = check_media.проверить(КОНТЕНТ)
+    отчёт.ошибки.extend(ошибки_медиа)
+    for к, в in счёт_медиа.items():
+        отчёт.счёт('медиа: ' + к, в)
 
     print('Проверка контента AI Ustaz')
     print(f'  Tanzil: {путь}')

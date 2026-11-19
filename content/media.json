@@ -1,0 +1,2028 @@
+{
+ "версия": "2026.11.19-черновик",
+ "статус": "черновик",
+ "утверждено": {
+  "кем": null,
+  "дата": null
+ },
+ "источник": "tools/media/youtube-playlists.json — официальные плейлисты авторов (проверено 19.11.2026); сборка — tools/media/build_media.py",
+ "источники": {
+  "alijon_muallimi_soniy": {
+   "имя": {
+    "ru": "шейх Алижон кари",
+    "kk": "шейх Әлижон қари"
+   },
+   "канал": "AlQuranuz — Shayx Alijon qori sahifasi",
+   "канал_id": "UCfLQuhJsVgpgpkIz-BnVa_w",
+   "ссылка_канала": "youtube.com/channel/UCfLQuhJsVgpgpkIz-BnVa_w",
+   "плейлист": "PL7AEFfKAwqe5-rEkqEULQl-j2kg6MeJK9",
+   "курс": "Muallimi soniy",
+   "язык": "uz",
+   "разрешено": false,
+   "дата_разрешения": null,
+   "условия": "",
+   "атрибуция": {
+    "ru": "Видео: шейх Алижон кари, канал AlQuranuz, курс «Muallimi soniy». Используется с разрешения автора.",
+    "kk": "Бейне: шейх Әлижон қари, AlQuranuz арнасы, «Muallimi soniy» курсы. Автордың рұқсатымен қолданылады."
+   }
+  },
+  "shokay_tajvid": {
+   "имя": {
+    "ru": "устаз Еркінбек Шоқай",
+    "kk": "ұстаз Еркінбек Шоқай"
+   },
+   "канал": "Ұстаз Еркінбек Шоқай",
+   "канал_id": "UCQDge2vG-ZZzF2LmxdIVp7g",
+   "ссылка_канала": "youtube.com/channel/UCQDge2vG-ZZzF2LmxdIVp7g",
+   "плейлист": "PLobpktYzGGo8SOMsR7i__X5bXuHHwdZ53",
+   "курс": "Тәжуид ғылымы",
+   "язык": "kk",
+   "разрешено": false,
+   "дата_разрешения": null,
+   "условия": "",
+   "атрибуция": {
+    "ru": "Видео: устаз Еркінбек Шоқай, канал «Ұстаз Еркінбек Шоқай», курс таджвида на казахском языке. Используется с разрешения автора.",
+    "kk": "Бейне: ұстаз Еркінбек Шоқай, «Ұстаз Еркінбек Шоқай» арнасы, қазақ тіліндегі тәжуид курсы. Автордың рұқсатымен қолданылады."
+   }
+  },
+  "suwaid_tajwid_musawwar": {
+   "имя": {
+    "ru": "д-р Айман Рушди Сувайд",
+    "kk": "доктор Айман Рушди Сувайд"
+   },
+   "канал": "د. أيمن سويد Dr. Ayman Swaid",
+   "канал_id": "UCKtLDrh3IgxwcZtxiTvOQAA",
+   "ссылка_канала": "youtube.com/channel/UCKtLDrh3IgxwcZtxiTvOQAA",
+   "плейлист": "PLJi21Zen45zQ-p3e38-Wb94LhDKIZ7sac",
+   "курс": "شرح كتاب التجويد المصور",
+   "язык": "ar",
+   "разрешено": false,
+   "дата_разрешения": null,
+   "условия": "",
+   "атрибуция": {
+    "ru": "Видео: д-р Айман Рушди Сувайд, канал «Dr. Ayman Swaid», разбор книги «التجويد المصور» («Көрнекі тәжуид»). Используется с разрешения автора.",
+    "kk": "Бейне: доктор Айман Рушди Сувайд, «Dr. Ayman Swaid» арнасы, «التجويد المصور» («Көрнекі тәжуид») кітабының түсіндірмесі. Автордың рұқсатымен қолданылады."
+   }
+  }
+ },
+ "уроки": [
+  {
+   "номер": 0,
+   "id": "L00",
+   "уровень": 0,
+   "видео": [],
+   "аудио": [],
+   "сверить": "Видео к уроку 0 нет: вход и ИИ-предупреждение — своё, у авторов такого урока нет."
+  },
+  {
+   "номер": 1,
+   "id": "L01",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "bBWaxNasua4",
+     "название": "Muallimi soniy | 1-dars | Alifbo",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=bBWaxNasua4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "UWUtA7P0xCE",
+     "название": "Muallimi soniy | 2-dars | Mahrajlar",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=UWUtA7P0xCE",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "DhbimE6IrSE",
+     "название": "Muallimi soniy | 3-dars | Harakatlar",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=DhbimE6IrSE",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 2,
+   "id": "L02",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "FZzftaWQTyI",
+     "название": "Muallimi soniy | 4-dars | ز harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=FZzftaWQTyI",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "2QmOIb2ccsQ",
+     "название": "Muallimi soniy | 5-dars | م harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=2QmOIb2ccsQ",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 3,
+   "id": "L03",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "KyO6eXGA6R8",
+     "название": "Muallimi soniy | 6-dars | ت harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=KyO6eXGA6R8",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "XLjL7clkdHQ",
+     "название": "Muallimi soniy | 7-dars | ن  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=XLjL7clkdHQ",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 4,
+   "id": "L04",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "8W6RCdU2Gic",
+     "название": "Muallimi soniy | 8-dars | ي  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=8W6RCdU2Gic",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Zt3sm6OVVKA",
+     "название": "Muallimi soniy | 9-dars | ب  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Zt3sm6OVVKA",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 5,
+   "id": "L05",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "U9rvJqgDNdo",
+     "название": "Muallimi soniy | 10-dars | ك  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=U9rvJqgDNdo",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "sqixgyn0Gwg",
+     "название": "Muallimi soniy | 11-dars | ل  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=sqixgyn0Gwg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 6,
+   "id": "L06",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "L4VMO_quJpw",
+     "название": "Muallimi soniy | 12-dars | و  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=L4VMO_quJpw",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Tokv5xaAlv8",
+     "название": "Muallimi soniy | 13-dars | ه  harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Tokv5xaAlv8",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 7,
+   "id": "L07",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "3Xlmtj-EWIU",
+     "название": "Muallimi soniy | 14-dars | ف harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=3Xlmtj-EWIU",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "DsDgGa_2wAc",
+     "название": "Muallimi soniy | 15-dars | ق harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=DsDgGa_2wAc",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 8,
+   "id": "L08",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "VNGn5wk3elg",
+     "название": "Muallimi soniy | 16-dars | ش harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=VNGn5wk3elg",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "1XXwwlnkWrg",
+     "название": "Muallimi soniy | 17-dars | س harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=1XXwwlnkWrg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 9,
+   "id": "L09",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "7AaBhJZBvWw",
+     "название": "Muallimi soniy | 18-dars | ث harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=7AaBhJZBvWw",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "4B1yxXu9hN4",
+     "название": "Muallimi soniy | 19-dars |ص harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=4B1yxXu9hN4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 10,
+   "id": "L10",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "jqOX4E9syoY",
+     "название": "Muallimi soniy | 20-dars | ط harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=jqOX4E9syoY",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 11,
+   "id": "L11",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "x9N8mj2y2WA",
+     "название": "Muallimi soniy | 21-dars | ج harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=x9N8mj2y2WA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "-BLPANWCGS0",
+     "название": "Muallimi soniy | 22-dars | خ harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=-BLPANWCGS0",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 12,
+   "id": "L12",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "7yC9HbSjatQ",
+     "название": "Muallimi soniy | 23-dars |  ح harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=7yC9HbSjatQ",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 13,
+   "id": "L13",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "mHQlHvVJqJk",
+     "название": "Muallimi soniy | 24-dars | غ harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=mHQlHvVJqJk",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "he4ARple3Ik",
+     "название": "Muallimi soniy | 25-dars | ع harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=he4ARple3Ik",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 14,
+   "id": "L14",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "eyE2G0zbg_Y",
+     "название": "Muallimi soniy | 26-dars | د harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=eyE2G0zbg_Y",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "79aOWJrV3Mc",
+     "название": "Muallimi soniy | 27-dars | ض harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=79aOWJrV3Mc",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 15,
+   "id": "L15",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "qcUSKykCKBE",
+     "название": "Muallimi soniy | 28-dars | ذ harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=qcUSKykCKBE",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "aFHmynG8vQ0",
+     "название": "Muallimi soniy | 29-dars | ظ harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=aFHmynG8vQ0",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 16,
+   "id": "L16",
+   "уровень": 1,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "bBWaxNasua4",
+     "название": "Muallimi soniy | 1-dars | Alifbo",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=bBWaxNasua4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "В «Muallimi soniy» нет отдельного урока о формах и соединениях букв; взят урок 1 «Alifbo» (таблица алфавита). Проверить, показывает ли он формы."
+  },
+  {
+   "номер": 101,
+   "id": "K1",
+   "уровень": 1,
+   "видео": [],
+   "аудио": [],
+   "сверить": "К1 — повторение буквенного блока; отдельного видео нет (можно дать уроки 1–29 Алижона кари из уроков 1–15)."
+  },
+  {
+   "номер": 17,
+   "id": "L17",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "1i1LRB6ixr4",
+     "название": "Muallimi soniy | 30-dars | Mad tabiiy",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=1i1LRB6ixr4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "d_W1cbLbwM0",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 29 ) || المدود ـ المد الطبيعي ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=d_W1cbLbwM0",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 18,
+   "id": "L18",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "1i1LRB6ixr4",
+     "название": "Muallimi soniy | 30-dars | Mad tabiiy",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=1i1LRB6ixr4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Урок 30 «Mad tabiiy» — общий для ا ي و; отдельного видео о лине (أَيْ، أَوْ) в плейлисте нет."
+  },
+  {
+   "номер": 19,
+   "id": "L19",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "1i1LRB6ixr4",
+     "название": "Muallimi soniy | 30-dars | Mad tabiiy",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=1i1LRB6ixr4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Отдельного видео о беглости длинных слов нет; дан урок 30 «Mad tabiiy»."
+  },
+  {
+   "номер": 20,
+   "id": "L20",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "PXcdBw2Ycx4",
+     "название": "Muallimi soniy | 31-dars | Tashdidli harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=PXcdBw2Ycx4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 21,
+   "id": "L21",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "PXcdBw2Ycx4",
+     "название": "Muallimi soniy | 31-dars | Tashdidli harfi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=PXcdBw2Ycx4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Гунны в книге нет; дан урок 31 «Tashdidli harfi» (шадда). Видео о гунне — у Шоқая/Сувайда искать по договору."
+  },
+  {
+   "номер": 22,
+   "id": "L22",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "3Xqv9Lo0h88",
+     "название": "Muallimi soniy | 32-dars | Tanvinli tashdid",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=3Xqv9Lo0h88",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Урок 32 «Tanvinli tashdid» — танвин с шаддой; отдельного видео о простом танвине и об ‘ивад в плейлисте Алижона кари нет."
+  },
+  {
+   "номер": 23,
+   "id": "L23",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "gP4bbsDG1C8",
+     "название": "Второй учитель | Урок 33 | Хамза",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=gP4bbsDG1C8",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 24,
+   "id": "L24",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "39lT-YwueM4",
+     "название": "Muallimi soniy | 34-dars | Ta marbuta (ة)",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=39lT-YwueM4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "2XYApww_2Rc",
+     "название": "Muallimi soniy | 35-dars | Muqaddar alif",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=2XYApww_2Rc",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "9PaZg6TDoxY",
+     "название": "Muallimi soniy | 36-dars | Muqaddar  ي  va  و",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=9PaZg6TDoxY",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "MNa1l40wV8E",
+     "название": "Muallimi soniy | 37-dars | ي li aliflar",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=MNa1l40wV8E",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 25,
+   "id": "L25",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "iATPBMSWfe4",
+     "название": "Muallimi soniy | 38-dars | Yozuvda bo‘lib o‘qilmaydigan harflar",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=iATPBMSWfe4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "53UiqNRUuHs",
+     "название": "Muallimi soniy | 39-dars | Qamariyya harflari va vasliya hamzasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=53UiqNRUuHs",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 26,
+   "id": "L26",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "15M6Z7zcEXI",
+     "название": "Muallimi soniy | 40-dars | Shamsiya harflari",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=15M6Z7zcEXI",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "HDtdqQkJNn8",
+     "название": "Muallimi soniy | 46-dars | Alloh lafzi o'qilish qoidasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=HDtdqQkJNn8",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Vlms7i490M0",
+     "название": "Muallimi soniy | 41-dars | Qamariya, shamsiya harflari va vasliya hamzalari",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=Vlms7i490M0",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 27,
+   "id": "L27",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Vlms7i490M0",
+     "название": "Muallimi soniy | 41-dars | Qamariya, shamsiya harflari va vasliya hamzalari",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Vlms7i490M0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "MEuYX35zBEc",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 35 ) || التقاء الحرفين الساكنين بكلمة و كلمتين || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=MEuYX35zBEc",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Урок 41 Алижона кари — «Qamariya, shamsiya harflari va vasliya hamzalari» (хамзат-васль вместе с лунными и солнечными буквами); он же дополнительно в уроке 26."
+  },
+  {
+   "номер": 28,
+   "id": "L28",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "sDfqDF8hOxA",
+     "название": "Muallimi soniy | 42-dars | Kalimalar so‘ngida to‘xtash qoidalari",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=sDfqDF8hOxA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "YQrroHDxPKc",
+     "название": "Muallimi soniy | 43-dars | So‘z so‘ngida madlik kalimalarga to‘xtash",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=YQrroHDxPKc",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 102,
+   "id": "K2",
+   "уровень": 2,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "9w7E9COL-ck",
+     "название": "Muallimi soniy | 48-dars | Fotiha surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=9w7E9COL-ck",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "qf95Xp_hWYg",
+     "название": "Muallimi soniy | 70-dars | Ixlos surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=qf95Xp_hWYg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 29,
+   "id": "L29",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ybSsdxnQa4E",
+     "название": "МӘД ҒАРИД  - 17 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ybSsdxnQa4E",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "lbDV5QSj_vY",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 33 ) || المدود ـ المد العارض للسكون ـ مد اللين ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=lbDV5QSj_vY",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Видео об исти‘азе и басмале нет; даны видео о мадде ‘арид («МӘД ҒАРИД» = ‘арид — по казахской записи ع как ғ)."
+  },
+  {
+   "номер": 30,
+   "id": "L30",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "9w7E9COL-ck",
+     "название": "Muallimi soniy | 48-dars | Fotiha surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=9w7E9COL-ck",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 31,
+   "id": "L31",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "9w7E9COL-ck",
+     "название": "Muallimi soniy | 48-dars | Fotiha surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=9w7E9COL-ck",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Отдельного видео о мадде лязим нет (кандидаты: Шоқай «ҚОСЫМША МӘД», Сувайд 31–32 о мукатта‘ат)."
+  },
+  {
+   "номер": 32,
+   "id": "L32",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ZMAS-FrCZ_E",
+     "название": "Сукунді нун мен тәнуинүкімдері  - 12 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ZMAS-FrCZ_E",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "LYOO-6f3s0U",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 25 ) || أحكام النون الساكنة والتنوين || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=LYOO-6f3s0U",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 33,
+   "id": "L33",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ZMAS-FrCZ_E",
+     "название": "Сукунді нун мен тәнуинүкімдері  - 12 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ZMAS-FrCZ_E",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "LYOO-6f3s0U",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 25 ) || أحكام النون الساكنة والتنوين || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=LYOO-6f3s0U",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "ZGvFRcB5g1M",
+     "название": "Muallimi soniy | 44-dars | Idg‘om qoidasi",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=ZGvFRcB5g1M",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 34,
+   "id": "L34",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "XmFZlnkMkY0",
+     "название": "ИҚЛАБ  - 13 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=XmFZlnkMkY0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "LYOO-6f3s0U",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 25 ) || أحكام النون الساكنة والتنوين || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=LYOO-6f3s0U",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "xLK-lvetVlg",
+     "название": "Muallimi soniy | 45-dars | Iqlob qoidasi",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=xLK-lvetVlg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 35,
+   "id": "L35",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ZMAS-FrCZ_E",
+     "название": "Сукунді нун мен тәнуинүкімдері  - 12 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ZMAS-FrCZ_E",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "1mydlMCh9eg",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 26 ) || أحكام النون الساكنة والتنوين ـ الإخفاء ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=1mydlMCh9eg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 36,
+   "id": "L36",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "oMysmWOtPRI",
+     "название": "СУКУНДІ МИМ ҮКІМДЕРІ  - 14 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=oMysmWOtPRI",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "gyrtmirqn_M",
+     "название": "كتاب التجويد المصور|| الحلقة ( 24 ) أحكام الميم الساكنة ( الإدغام والإخفاء والإظهار) || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=gyrtmirqn_M",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 37,
+   "id": "L37",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "KgotHP9a7-o",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 13 ) || باب صفات الحروف ـ القلقلة ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=KgotHP9a7-o",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "У Шоқая калькаля, вероятно, в уроке 10 «АНТОНИМІ жоқ СИПАТТАР», но в названии её нет — не привязано, только Сувайд 13."
+  },
+  {
+   "номер": 38,
+   "id": "L38",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ue6AMATTqaQ",
+     "название": "ҚОСЫМША МӘД  - 16 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ue6AMATTqaQ",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "VVoZxsr8uiQ",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 30 ) || المدود ـ المد الجائز المنفصل ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=VVoZxsr8uiQ",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "«ҚОСЫМША МӘД» — общее название (мадд фар‘и); муттасиль и мунфасиль в названии не указаны. Тот же ролик — в уроке 40."
+  },
+  {
+   "номер": 39,
+   "id": "L39",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ybSsdxnQa4E",
+     "название": "МӘД ҒАРИД  - 17 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ybSsdxnQa4E",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "p95Qqhvbu1A",
+     "название": "МӘД ҒИУАД  - 15 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=p95Qqhvbu1A",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "lbDV5QSj_vY",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 33 ) || المدود ـ المد العارض للسكون ـ مد اللين ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=lbDV5QSj_vY",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Сыли в названиях нет. «МӘД ҒИУАД» = мадд ‘ивад (по казахской записи ع как ғ)."
+  },
+  {
+   "номер": 40,
+   "id": "L40",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "ue6AMATTqaQ",
+     "название": "ҚОСЫМША МӘД  - 16 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=ue6AMATTqaQ",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "5za4w-bg6-U",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 31 ) || الحروف المقطَّعة في القرآن الكريم || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=5za4w-bg6-U",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "JWjyU5irlF4",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 32 ) || الحروف المقطَّعة في القرآن الكريم ـ 2 ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=JWjyU5irlF4",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "«ҚОСЫМША МӘД» — общее название (мадд фар‘и); мадд лязим в названии не указан."
+  },
+  {
+   "номер": 41,
+   "id": "L41",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "MTkmsbjK0Tc",
+     "название": "شرح التجويد المصور || الحلقة ( 11 ) || باب صفات الحروف ـ حكم الألف واللام والراء ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=MTkmsbjK0Tc",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Видео о ра у Шоқая в плейлисте нет (в плейлисте нет его уроков 8 и 18); только Сувайд 11 (алиф, лям, ра)."
+  },
+  {
+   "номер": 42,
+   "id": "L42",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "_P5RaxzCgBw",
+     "название": "\"ЛӘМ\" әріпінің үкімдері  - 19 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=_P5RaxzCgBw",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "xh_MHe1YOdA",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 10 ) || باب صفات الحروف ـ الاستعلاء والاستفال ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=xh_MHe1YOdA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "MTkmsbjK0Tc",
+     "название": "شرح التجويد المصور || الحلقة ( 11 ) || باب صفات الحروف ـ حكم الألف واللام والراء ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=MTkmsbjK0Tc",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "HDtdqQkJNn8",
+     "название": "Muallimi soniy | 46-dars | Alloh lafzi o'qilish qoidasi",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=HDtdqQkJNn8",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "«\"ЛӘМ\" әріпінің үкімдері» (Шоқай 19) — правила буквы лям; возможно, подходит и к уроку 26 (лям шамсийя)."
+  },
+  {
+   "номер": 103,
+   "id": "K3",
+   "уровень": 3,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "9w7E9COL-ck",
+     "название": "Muallimi soniy | 48-dars | Fotiha surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=9w7E9COL-ck",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "qf95Xp_hWYg",
+     "название": "Muallimi soniy | 70-dars | Ixlos surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=qf95Xp_hWYg",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "d5sHlSWa8-w",
+     "название": "Muallimi soniy | 71-dars | Falaq surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=d5sHlSWa8-w",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "pOZFVYVbuGc",
+     "название": "Muallimi soniy | 72-dars | Nas surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=pOZFVYVbuGc",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "2_26ubDV-vo",
+     "название": "Muallimi soniy | 66-dars | Kavsar surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=2_26ubDV-vo",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "cueFhFyY9jg",
+     "название": "Muallimi soniy | 61-dars | Asr surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=cueFhFyY9jg",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 111,
+   "id": "N1",
+   "уровень": 3,
+   "видео": [],
+   "аудио": []
+  },
+  {
+   "номер": 112,
+   "id": "N2",
+   "уровень": 3,
+   "видео": [],
+   "аудио": []
+  },
+  {
+   "номер": 113,
+   "id": "N3",
+   "уровень": 3,
+   "видео": [],
+   "аудио": []
+  },
+  {
+   "номер": 114,
+   "id": "N4",
+   "уровень": 3,
+   "видео": [],
+   "аудио": []
+  },
+  {
+   "номер": 43,
+   "id": "L43",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "OENFQaWsOSs",
+     "название": "МӘД ӘРІПТЕРІНІҢ МАХРАЖЫ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=OENFQaWsOSs",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "n4Qez0rH1HE",
+     "название": "ЖҰТҚЫНШАҚ ӘРІПТЕРІ [Ұстаз Еркінбек Шоқай]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=n4Qez0rH1HE",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "En37wPe18cY",
+     "название": "ТІЛ МАХРАЖЫ - 4 сабақ [Еркінбек Шоқай ұстаз]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=En37wPe18cY",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "CvAIxjgF9P0",
+     "название": "ТІЛ МАХРАЖЫ ӘРІПТЕРІНЕ ҚАТЫСТЫ ЕСКЕРТПЕЛЕР - 5 сабақ [Еркінбек Шоқай ұстаз]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=CvAIxjgF9P0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "B_Rc8V6ONBk",
+     "название": "ЕКІ ЕРІНГЕ ҚАТЫСТЫ ӘРІПТЕР - 6 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=B_Rc8V6ONBk",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "Q-3lnnJ6m8o",
+     "название": "ӘРІПТЕРДІҢ СИПАТТАРЫ - 7 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Q-3lnnJ6m8o",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "99g-6JoGuRY",
+     "название": "АНТОНИМІ БАР СИПАТТАРДЫҢ жалғасы - 9 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=99g-6JoGuRY",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "60w67laseFM",
+     "название": "АНТОНИМІ жоқ СИПАТТАР - 10 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=60w67laseFM",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "A6rA16QXLs0",
+     "название": "АНТОНИМІ жоқ СИПАТТАР (Тәкрир, тәфәшши, истиТала) - 11 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=A6rA16QXLs0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "Es_a0IGHofc",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 3 ) || باب مخارج الحروف ـ الجوف ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=Es_a0IGHofc",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "2BFpfzbBBVo",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 4 ) || باب مخارج الحروف ـ الحلق ـ  || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=2BFpfzbBBVo",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "vwaWWcV0Z5M",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 5 ) || باب مخارج الحروف ـ اللسان ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=vwaWWcV0Z5M",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "8zIZQkaySyQ",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 6 ) || باب مخارج الحروف ـ اللسان  ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=8zIZQkaySyQ",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "aYO2mrrHqPo",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 7 ) || باب صفات الحروف ـ الصفات المتضادَّة ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=aYO2mrrHqPo",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "5q5rI3qBLx0",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 8 ) باب صفات الحروف ـ الشدة والرخاوة والبينية ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=5q5rI3qBLx0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "xh_MHe1YOdA",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 10 ) || باب صفات الحروف ـ الاستعلاء والاستفال ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=xh_MHe1YOdA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "Ydo53V1V1V8",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 12 ) || باب صفات الحروف ـ الإطباق والانفتاح ـ  || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=Ydo53V1V1V8",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "KgotHP9a7-o",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 13 ) || باب صفات الحروف ـ القلقلة ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=KgotHP9a7-o",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "OJDGrpOFyw8",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 15 ) || باب صفات الحروف ـ اللين ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=OJDGrpOFyw8",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "I3-IOD49WgE",
+     "название": "كتاب التجويد المصور || الحلقة ( 16 ) || باب صفات الحروف ـ الغنة من حيث كونها صفة ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=I3-IOD49WgE",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "_2RZIEq0t6s",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 17 ) || أبرز الأخطاء عند نطق حروف الهجاء || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=_2RZIEq0t6s",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 44,
+   "id": "L44",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "5iqZdIfflWk",
+     "название": "ИДҒАМ МУТӘМӘСИЛӘЙНИ - 20 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=5iqZdIfflWk",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "VDVAYHiK4Qk",
+     "название": "ИДҒАМ МУТӘҚАРИБӘЙНИ - 21 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=VDVAYHiK4Qk",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "shokay_tajvid",
+     "youtube_id": "vCrYyF5a71w",
+     "название": "ИДҒАМ ИХТИБӘРИ- 22 сабақ [Ұстаз ЕРКІНБЕК ШОҚАЙ]",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=vCrYyF5a71w",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "Z9hDuv7DYMQ",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 22 ) || الحرفان الملتقيان || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=Z9hDuv7DYMQ",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "LMtDtKjEAzI",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 23 ) || الحرفان المتقاربان || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=LMtDtKjEAzI",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "«ИДҒАМ ИХТИБӘРИ» (Шоқай 22) — тема по названию не ясна; взят по ряду уроков 20–22 об идгамах."
+  },
+  {
+   "номер": 45,
+   "id": "L45",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "tOW9ZVAI0eU",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 19 ) || باب الوقف والابتداء || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=tOW9ZVAI0eU",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "bteuCHz-mRM",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 20 ) || باب الوقف والابتداء ـ تنبيهات ـ || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=bteuCHz-mRM",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "9MS2pHBYU_s",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 38 ) || الرَّوم والإشمام || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=9MS2pHBYU_s",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "QBa2UXeN-TE",
+     "название": "شرح كتاب التجويد المصور|| الحلقة ( 39 ) ما لا يدخله الرَّوم ولا الإشمام || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=QBa2UXeN-TE",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 46,
+   "id": "L46",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "qBWCZZWsz7I",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 37 ) || كلمات قرآنية لها وضع خاص على رواية حفص || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=qBWCZZWsz7I",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "hLbqfHzw_kI",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 36 ) || أبحاث متفرقة ( الإمالة ـ النبر ) || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=hLbqfHzw_kI",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": []
+  },
+  {
+   "номер": 47,
+   "id": "L47",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "AZSlZoUfS9Y",
+     "название": "شرح كتاب التجويد المصور|| الحلقة ( 9 ) ـ قياس أزمنة الحروف الصحيحة الساكنة والمتحركة || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=AZSlZoUfS9Y",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "suwaid_tajwid_musawwar",
+     "youtube_id": "bfbB-YxuDpw",
+     "название": "شرح كتاب التجويد المصور || الحلقة ( 28 ) || قياس أزمنة المدود || د. أيمن سويد",
+     "роль": "дополнительно",
+     "ссылка": "https://www.youtube.com/watch?v=bfbB-YxuDpw",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Видео о темпе нет; даны выпуски Сувайда 9 и 28 об измерении длительности звуков и маддов."
+  },
+  {
+   "номер": 48,
+   "id": "L48",
+   "уровень": 4,
+   "видео": [
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "pOZFVYVbuGc",
+     "название": "Muallimi soniy | 72-dars | Nas surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=pOZFVYVbuGc",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "d5sHlSWa8-w",
+     "название": "Muallimi soniy | 71-dars | Falaq surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=d5sHlSWa8-w",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "qf95Xp_hWYg",
+     "название": "Muallimi soniy | 70-dars | Ixlos surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=qf95Xp_hWYg",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Amw4yhQN3k0",
+     "название": "Muallimi soniy | 69-dars | Masad surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Amw4yhQN3k0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "lP3c9nDVObA",
+     "название": "Muallimi soniy | 68-dars | Nasr surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=lP3c9nDVObA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "0xfUFdTN-oA",
+     "название": "Muallimi soniy | 67-dars | Kafirun surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=0xfUFdTN-oA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "2_26ubDV-vo",
+     "название": "Muallimi soniy | 66-dars | Kavsar surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=2_26ubDV-vo",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "wOWoP9GFw8g",
+     "название": "Muallimi soniy | 65-dars | Maa'uun surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=wOWoP9GFw8g",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "Ab2Tf9Hta-U",
+     "название": "Muallimi soniy | 64-dars | Quraysh surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=Ab2Tf9Hta-U",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "W6qqV4LwEa0",
+     "название": "Muallimi soniy | 63-dars | Fil surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=W6qqV4LwEa0",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "BlRlQd-bD3c",
+     "название": "Muallimi soniy | 62-dars | Humaza surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=BlRlQd-bD3c",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "cueFhFyY9jg",
+     "название": "Muallimi soniy | 61-dars | Asr surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=cueFhFyY9jg",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "zW4-1hzoYuk",
+     "название": "Muallimi soniy | 60-dars | Takasur surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=zW4-1hzoYuk",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "5Dsjw1NJj8A",
+     "название": "Muallimi soniy | 59-dars | Qoria surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=5Dsjw1NJj8A",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "GMCr8UJfhs4",
+     "название": "Muallimi soniy | 58-dars | Adiyat surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=GMCr8UJfhs4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "M4dT61QDqRA",
+     "название": "Muallimi soniy | 57-dars | Zalzala surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=M4dT61QDqRA",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "B2l63G1Hj04",
+     "название": "Muallimi soniy | 56-dars | Bayyina surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=B2l63G1Hj04",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "BLu2hq4mits",
+     "название": "Muallimi soniy | 55-dars | Qadr surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=BLu2hq4mits",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "b7W67MmN6DI",
+     "название": "Muallimi soniy | 54-dars | Alaq surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=b7W67MmN6DI",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "3N19nL1nwp4",
+     "название": "Muallimi soniy | 53-dars | Tiyn surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=3N19nL1nwp4",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "uVtRXANmflY",
+     "название": "Muallimi soniy | 52-dars | Sharh surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=uVtRXANmflY",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "STf87ZkdM9A",
+     "название": "Muallimi soniy | 51-dars | Layl surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=STf87ZkdM9A",
+     "файл_видео": null,
+     "показывать": false
+    },
+    {
+     "источник": "alijon_muallimi_soniy",
+     "youtube_id": "vBCB6el2vPU",
+     "название": "Muallimi soniy | 50-dars | Shams surasi",
+     "роль": "основное",
+     "ссылка": "https://www.youtube.com/watch?v=vBCB6el2vPU",
+     "файл_видео": null,
+     "показывать": false
+    }
+   ],
+   "аудио": [],
+   "сверить": "Суры 91–114 по названиям; суры 93 (ад-Духа) в плейлисте нет, суры 78–90 Алижон кари не разбирал."
+  },
+  {
+   "номер": 104,
+   "id": "FINAL",
+   "уровень": 4,
+   "видео": [],
+   "аудио": []
+  }
+ ],
+ "суры": [
+  {
+   "номер_суры": 1,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "9w7E9COL-ck",
+   "название": "Muallimi soniy | 48-dars | Fotiha surasi"
+  },
+  {
+   "номер_суры": 2,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "uwOvz2AqIdA",
+   "название": "Muallimi soniy | 49-dars | Baqara surasi (1-5)"
+  },
+  {
+   "номер_суры": 91,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "vBCB6el2vPU",
+   "название": "Muallimi soniy | 50-dars | Shams surasi"
+  },
+  {
+   "номер_суры": 92,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "STf87ZkdM9A",
+   "название": "Muallimi soniy | 51-dars | Layl surasi"
+  },
+  {
+   "номер_суры": 94,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "uVtRXANmflY",
+   "название": "Muallimi soniy | 52-dars | Sharh surasi"
+  },
+  {
+   "номер_суры": 95,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "3N19nL1nwp4",
+   "название": "Muallimi soniy | 53-dars | Tiyn surasi"
+  },
+  {
+   "номер_суры": 96,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "b7W67MmN6DI",
+   "название": "Muallimi soniy | 54-dars | Alaq surasi"
+  },
+  {
+   "номер_суры": 97,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "BLu2hq4mits",
+   "название": "Muallimi soniy | 55-dars | Qadr surasi"
+  },
+  {
+   "номер_суры": 98,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "B2l63G1Hj04",
+   "название": "Muallimi soniy | 56-dars | Bayyina surasi"
+  },
+  {
+   "номер_суры": 99,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "M4dT61QDqRA",
+   "название": "Muallimi soniy | 57-dars | Zalzala surasi"
+  },
+  {
+   "номер_суры": 100,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "GMCr8UJfhs4",
+   "название": "Muallimi soniy | 58-dars | Adiyat surasi"
+  },
+  {
+   "номер_суры": 101,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "5Dsjw1NJj8A",
+   "название": "Muallimi soniy | 59-dars | Qoria surasi"
+  },
+  {
+   "номер_суры": 102,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "zW4-1hzoYuk",
+   "название": "Muallimi soniy | 60-dars | Takasur surasi"
+  },
+  {
+   "номер_суры": 103,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "cueFhFyY9jg",
+   "название": "Muallimi soniy | 61-dars | Asr surasi"
+  },
+  {
+   "номер_суры": 104,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "BlRlQd-bD3c",
+   "название": "Muallimi soniy | 62-dars | Humaza surasi"
+  },
+  {
+   "номер_суры": 105,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "W6qqV4LwEa0",
+   "название": "Muallimi soniy | 63-dars | Fil surasi"
+  },
+  {
+   "номер_суры": 106,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "Ab2Tf9Hta-U",
+   "название": "Muallimi soniy | 64-dars | Quraysh surasi"
+  },
+  {
+   "номер_суры": 107,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "wOWoP9GFw8g",
+   "название": "Muallimi soniy | 65-dars | Maa'uun surasi"
+  },
+  {
+   "номер_суры": 108,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "2_26ubDV-vo",
+   "название": "Muallimi soniy | 66-dars | Kavsar surasi"
+  },
+  {
+   "номер_суры": 109,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "0xfUFdTN-oA",
+   "название": "Muallimi soniy | 67-dars | Kafirun surasi"
+  },
+  {
+   "номер_суры": 110,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "lP3c9nDVObA",
+   "название": "Muallimi soniy | 68-dars | Nasr surasi"
+  },
+  {
+   "номер_суры": 111,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "Amw4yhQN3k0",
+   "название": "Muallimi soniy | 69-dars | Masad surasi"
+  },
+  {
+   "номер_суры": 112,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "qf95Xp_hWYg",
+   "название": "Muallimi soniy | 70-dars | Ixlos surasi"
+  },
+  {
+   "номер_суры": 113,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "d5sHlSWa8-w",
+   "название": "Muallimi soniy | 71-dars | Falaq surasi"
+  },
+  {
+   "номер_суры": 114,
+   "источник": "alijon_muallimi_soniy",
+   "youtube_id": "pOZFVYVbuGc",
+   "название": "Muallimi soniy | 72-dars | Nas surasi"
+  }
+ ],
+ "без_урока": {
+  "alijon_muallimi_soniy": [
+   "Muallimi soniy | 47-dars | Iymon kalimalari",
+   "Muallimi soniy | 49-dars | Baqara surasi (1-5)"
+  ],
+  "shokay_tajvid": [
+   "ТӘЖУИД ҒЫЛЫМЫНА КІРІСПЕ {Ұстаз Еркінбек Шоқай}"
+  ],
+  "suwaid_tajwid_musawwar": [
+   "شرح كتاب التجويد المصور || الحلقة ( 1 ) || مقدمة في علم التجويد || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 2 ) || مقدمة في علم التجويد ـ 2 ـ  || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 14 ) || نصائح لأهل القرآن الكريم || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 18 ) || إتمام الحركات || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 21 ) || مقدمة القسم الثاني من الدورة || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 27 ) || المدود ـ تعريف المد ـ || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 34 ) || قاعدة أقوى السببين || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 40 ) || الألفات السبعة || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 41 ) || همزة القطع || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 42 ) || مراحل تطور وكتابة المصحف الشريف || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 43 ) || مراحل تطور وكتابة المصحف الشريف ـ 2 ـ || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 44 ) || مراحل تطور وكتابة المصحف الشريف ـ 3 ـ || د. أيمن سويد",
+   "شرح كتاب التجويد المصور || الحلقة ( 45 ) || حفظ القرآن الكريم || د. أيمن سويد"
+  ]
+ }
+}
