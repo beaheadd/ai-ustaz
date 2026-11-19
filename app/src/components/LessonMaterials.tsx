@@ -257,10 +257,12 @@ function Объяснение({ урок }: { урок: Урок }) {
         <Карточка заголовок={т('буквы')} testID="материалы-буквы">
           {буквы.map((б, i) => (
             <View key={i} style={{ flexDirection: 'row', gap: отступ.m, alignItems: 'flex-start', paddingTop: i ? отступ.s : 0, borderTopWidth: i ? 1 : 0, borderColor: цвет.граница }}>
-              <АрабскийТекст размер="крупный" стиль={{ minWidth: 44, lineHeight: 64 }}>
-                {б.знак}
-              </АрабскийТекст>
-              <View style={{ flex: 1, gap: отступ.xs, paddingTop: отступ.s }}>
+              <View style={{ width: 56, alignItems: 'center', marginTop: -отступ.l }}>
+                <АрабскийТекст размер="крупный" выбираемый={false}>
+                  {б.знак}
+                </АрабскийТекст>
+              </View>
+              <View style={{ flex: 1, gap: отступ.xs }}>
                 <Текст вид="подзаголовок">{локально(б.название, язык)}</Текст>
                 {б.подсказка ? (
                   <>
