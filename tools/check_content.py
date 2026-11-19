@@ -31,6 +31,9 @@ content/quran/quran-uthmani-marks.xml (с 19.11.2026). Всё, что показ
   (ж) media.json — видео и аудио учителей-партнёров: tools/media/check_media.py (youtube_id есть в плейлистах,
       основное видео у уроков уровней 1–2, ничего не показывается без «разрешено» автора, только свои
       относительные файлы media/…).
+  (и) audio-sources.json — источники чтения Корана для плеера: tools/audio/check_audio.py («разрешено» — только с датой,
+      условиями и базой на своём домене; без разрешения база пустая; шаблон с {sura3}{aya3}; аудиофайлов Корана
+      в app/public, app/src и content нет).
 """
 import json
 import pathlib
@@ -40,6 +43,8 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'media'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
+import check_audio  # noqa: E402
 import check_media  # noqa: E402
 import check_quran  # noqa: E402
 import content_common as об  # noqa: E402
@@ -317,6 +322,11 @@ def main():
     отчёт.ошибки.extend(ошибки_медиа)
     for к, в in счёт_медиа.items():
         отчёт.счёт('медиа: ' + к, в)
+
+    ошибки_аудио, счёт_аудио = check_audio.проверить(КОНТЕНТ)
+    отчёт.ошибки.extend(ошибки_аудио)
+    for к, в in счёт_аудио.items():
+        отчёт.счёт('чтение кари: ' + к, в)
 
     print('Проверка контента AI Ustaz')
     print(f'  Tanzil: {путь}')
