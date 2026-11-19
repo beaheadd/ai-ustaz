@@ -1,46 +1,109 @@
 <!doctype html>
 <!-- Баннер превью ссылки AI Ustaz (WhatsApp, Telegram и др.), 1200×630.
-     Рендер: node app/og/render-og.mjs → JPEG. Без лиц, без текста Корана (только буквы алфавита и учебные слоги).
-     Шрифты: Inter (системный), Amiri Quran (OFL) — путь передаётся рендером. -->
+     Владелец 19.11.2026: «Баннера нету. Создай. Чтобы там была информация: время намаза, Коран, хадис, ИИ-наставник
+     по чтению Корана». Рендер: node app/og/render-og.mjs <выход.jpg> → JPEG.
+     Правила: без лиц (эмблема — фонарь-шырақ из app/src/design/emblem.ts, вариант «полный», поверхность «герой»),
+     без текста Корана и без арабских слов, без рейтингов и наград. Шрифт — Inter (системный). -->
 <html lang="ru"><head><meta charset="utf-8">
 <style>
   @font-face { font-family: 'AmiriQuran'; src: url('AMIRI_URL'); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 1200px; height: 630px; }
-  body { background: #1d5a4f; color: #fbf6ec; font-family: Inter, 'DejaVu Sans', sans-serif; position: relative; overflow: hidden; }
+  body { background: #0F4C45; color: #F7F2E8; font-family: Inter, 'DejaVu Sans', sans-serif; position: relative; overflow: hidden; }
   .фон { position: absolute; inset: 0; background:
-      radial-gradient(900px 500px at 105% -10%, rgba(244,226,190,.22), transparent 60%),
-      radial-gradient(700px 420px at -10% 120%, rgba(0,0,0,.25), transparent 60%); }
-  .узор { position: absolute; right: -40px; top: -60px; font-family: AmiriQuran; font-size: 520px; line-height: 1; color: rgba(251,246,236,.06); }
-  .лево { position: absolute; left: 72px; top: 70px; width: 640px; }
-  .метка { display: inline-block; padding: 8px 16px; border-radius: 999px; background: rgba(251,246,236,.14); font-size: 22px; font-weight: 600; letter-spacing: .02em; }
-  h1 { font-size: 104px; font-weight: 800; letter-spacing: -.02em; margin-top: 26px; line-height: 1; }
-  h1 span { color: #f1d9a6; }
-  .под { font-size: 38px; font-weight: 600; margin-top: 22px; line-height: 1.2; }
-  .каз { font-size: 26px; margin-top: 10px; color: rgba(251,246,236,.75); }
-  .пункты { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .пункты div { background: #f1d9a6; color: #1d4a41; font-weight: 700; font-size: 24px; padding: 10px 18px; border-radius: 14px; }
-  .карта { position: absolute; right: 80px; top: 92px; width: 340px; height: 420px; border-radius: 36px; background: #fbf6ec; color: #1d4a41;
-           box-shadow: 0 30px 60px rgba(0,0,0,.25); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .буква { font-family: AmiriQuran; font-size: 210px; line-height: 1.05; }
-  .слоги { font-family: AmiriQuran; font-size: 64px; direction: rtl; margin-top: 4px; letter-spacing: .1em; }
-  .подпись { font-size: 22px; color: #5f7d75; margin-top: 10px; font-weight: 600; }
-  .низ { position: absolute; left: 72px; bottom: 44px; font-size: 26px; font-weight: 700; color: rgba(251,246,236,.85); }
+      radial-gradient(560px 460px at 960px 300px, rgba(244,195,94,.20), transparent 70%),
+      radial-gradient(800px 500px at -10% 115%, rgba(0,0,0,.28), transparent 60%); }
+  .узор { position: absolute; inset: 0; opacity: .07; }
+  .лево { position: absolute; left: 68px; top: 54px; width: 700px; }
+  .метка { display: inline-block; padding: 8px 18px; border-radius: 999px; background: rgba(247,242,232,.14);
+           font-size: 22px; font-weight: 600; letter-spacing: .02em; }
+  h1 { font-size: 96px; font-weight: 800; letter-spacing: -.02em; margin-top: 22px; line-height: 1; }
+  h1 span { color: #E3C27A; }
+  .под { font-size: 40px; font-weight: 700; margin-top: 18px; line-height: 1.15; }
+  .каз { font-size: 24px; margin-top: 8px; color: rgba(247,242,232,.72); }
+  .пункты { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 680px; }
+  .пункт { display: flex; align-items: center; gap: 14px; background: #F7F2E8; color: #0F4C45; border-radius: 18px;
+           padding: 14px 18px; font-size: 26px; font-weight: 700; line-height: 1.1; }
+  .пункт svg { flex: none; width: 40px; height: 40px; }
+  .фонарь { position: absolute; right: 70px; top: 96px; width: 380px; height: 380px; }
+  .низ { position: absolute; left: 68px; bottom: 36px; font-size: 28px; font-weight: 800; letter-spacing: .01em; }
+  .низ span { color: rgba(247,242,232,.7); font-weight: 600; font-size: 22px; margin-left: 14px; }
 </style></head>
 <body>
   <div class="фон"></div>
-  <div class="узор">ع</div>
+  <!-- Фоновый узор: решётка восьмиконечных звёзд (геометрия, без надписей) -->
+  <svg class="узор" width="1200" height="630" viewBox="0 0 1200 630" aria-hidden="true">
+    <defs>
+      <pattern id="звёзды" width="90" height="90" patternUnits="userSpaceOnUse">
+        <path d="M45 20 52 32 66 31 63 45 70 52 58 58 59 72 45 68 31 72 32 58 20 52 27 45 24 31 38 32Z"
+              fill="none" stroke="#F7F2E8" stroke-width="1.5"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="630" fill="url(#звёзды)"/>
+  </svg>
+
   <div class="лево">
     <div class="метка">Бесплатно · без рекламы</div>
     <h1>AI <span>Ustaz</span></h1>
-    <div class="под">Учимся правильно читать Коран</div>
+    <div class="под">ИИ-наставник по чтению Корана</div>
     <div class="каз">Құранды дұрыс оқуды үйренеміз</div>
-    <div class="пункты"><div>Буквы → слоги → слова</div><div>«Муаллим сани»</div><div>Запись голоса</div></div>
+    <div class="пункты">
+      <div class="пункт">
+        <!-- время намаза: часы и полумесяц -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F4C45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/><path d="M8 3.5 5.5 5.5M16 3.5l2.5 2"/>
+        </svg>Время намаза
+      </div>
+      <div class="пункт">
+        <!-- Коран: раскрытая книга на подставке -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F4C45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 7c-2-1.6-4.8-2.2-8.5-1.9v11.2c3.7-.3 6.5.3 8.5 1.9 2-1.6 4.8-2.2 8.5-1.9V5.1C16.8 4.8 14 5.4 12 7Z"/>
+          <path d="M12 7v11.2"/><path d="M6 21l6-3 6 3"/>
+        </svg>Коран
+      </div>
+      <div class="пункт">
+        <!-- хадисы: свиток со строками -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F4C45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 4h11a2 2 0 0 1 2 2v1h-4"/><path d="M16 7v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1h10"/>
+          <path d="M7 4a2 2 0 0 0-2 2v11"/><path d="M8.5 9h4.5M8.5 12.5h4.5"/>
+        </svg>Хадисы
+      </div>
+      <div class="пункт">
+        <!-- проверка чтения голосом: микрофон -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F4C45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/>
+        </svg>Проверка чтения голосом
+      </div>
+    </div>
   </div>
-  <div class="карта">
-    <div class="буква">ب</div>
-    <div class="слоги">بَ بِ بُ</div>
-    <div class="подпись">урок 4 · ба, би, бу</div>
-  </div>
-  <div class="низ">batr.kz/aiustaz</div>
+
+  <!-- Эмблема AI Ustaz: фонарь-шырақ (app/src/design/emblem.ts, «полный», поверхность «герой», тело сдвинуто на 4) -->
+  <svg class="фонарь" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <radialGradient id="сияние" gradientUnits="userSpaceOnUse" cx="60" cy="64" r="56">
+        <stop offset="0" stop-color="#F4C35E" stop-opacity=".7"/><stop offset=".45" stop-color="#F4C35E" stop-opacity=".22"/>
+        <stop offset="1" stop-color="#F4C35E" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="стекло" gradientUnits="userSpaceOnUse" cx="60" cy="64" r="30">
+        <stop offset="0" stop-color="#F4C35E" stop-opacity=".95"/><stop offset=".55" stop-color="#F4C35E" stop-opacity=".4"/>
+        <stop offset="1" stop-color="#0F4C45" stop-opacity="1"/>
+      </radialGradient>
+    </defs>
+    <circle cx="60" cy="68" r="56" fill="url(#сияние)"/>
+    <g transform="translate(0 4)" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="60" cy="9" r="4.5" fill="none" stroke="#F7F2E8" stroke-width="3"/>
+      <circle cx="60" cy="17" r="3" fill="#F7F2E8"/>
+      <path d="M41 34C41 25 49 19.5 60 19.5S79 25 79 34Z" fill="#F7F2E8"/>
+      <rect x="37" y="32.5" width="46" height="6.5" rx="2" fill="#F7F2E8"/>
+      <path d="M41 39H79L86 64L79 89H41L34 64Z" fill="url(#стекло)" stroke="#F7F2E8" stroke-width="3"/>
+      <path d="M48 39.5V88.5M72 39.5V88.5" fill="none" stroke="#F7F2E8" stroke-width="2"/>
+      <path d="M60 43.3L63.2 46.5L60 49.7L56.8 46.5ZM60 78.3L63.2 81.5L60 84.7L56.8 81.5Z" fill="#E3A73F" opacity=".85"/>
+      <path d="M41.3 61L44.3 64L41.3 67L38.3 64ZM78.7 61L81.7 64L78.7 67L75.7 64Z" fill="#E3A73F" opacity=".6"/>
+      <rect x="37" y="89" width="46" height="6.5" rx="2" fill="#F7F2E8"/>
+      <path d="M45 95.5H75L70 103H50Z" fill="#F7F2E8"/>
+      <path d="M60 53.5 63.1 56.6 67.4 56.6 67.4 60.9 70.5 64 67.4 67.1 67.4 71.4 63.1 71.4 60 74.5 56.9 71.4 52.6 71.4 52.6 67.1 49.5 64 52.6 60.9 52.6 56.6 56.9 56.6Z" fill="#E3A73F"/>
+    </g>
+  </svg>
+
+  <div class="низ">aiustaz.pro<span>Таджвид по методике «Муаллим сани»</span></div>
 </body></html>
