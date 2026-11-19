@@ -15,6 +15,8 @@
  * 3) ставит метку <meta name="aiustaz-media-preview" content="on|off"> — была ли сборка с флагом предпросмотра
  *    видео и аудио партнёров без разрешения авторов (EXPO_PUBLIC_MEDIA_PREVIEW=1, только для владельца).
  *    check-dist не пропустит «on» без MUGALIM_TARGET=preview (на batr.kz — никогда).
+ * 4) ставит <link rel="preload" as="font" type="font/woff2" crossorigin> на оба начертания Inter (имена с хэшем —
+ *    из dist/assets): шрифт интерфейса начинает грузиться вместе с JS, а не после его выполнения (CSP font-src 'self').
  * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
@@ -76,4 +78,18 @@ const предпросмотр = process.env.EXPO_PUBLIC_MEDIA_PREVIEW === '1' ?
   if (!новый.includes(мета)) throw new Error('не удалось поставить метку предпросмотра медиа в index.html');
   fs.writeFileSync(файл, новый);
   console.log(`Предпросмотр видео и аудио партнёров: ${предпросмотр === 'on' ? 'ВКЛЮЧЁН (только для владельца, не batr.kz)' : 'выключен'}`);
+}
+
+export const МЕТКА_ПРЕДЗАГРУЗКИ = 'aiustaz-preload';
+{
+  const текущий = fs.readFileSync(файл, 'utf8');
+  const ресурсы = path.join(папка, 'assets');
+  const шрифты = fs.existsSync(ресурсы) ? fs.readdirSync(ресурсы).filter((и) => /^inter-(400|600)\.[0-9a-f]+\.woff2$/.test(и)).sort() : [];
+  if (шрифты.length !== 2) throw new Error(`ожидались 2 файла Inter woff2 в dist/assets, найдено: ${шрифты.join(', ') || 'ни одного'}`);
+  const ссылки = шрифты.map((и) => `<link rel="preload" as="font" type="font/woff2" crossorigin href="/aiustaz/assets/${и}" data-${МЕТКА_ПРЕДЗАГРУЗКИ} />`).join('\n    ');
+  const без = текущий.replace(new RegExp(`\\s*<link rel="preload"[^>]*data-${МЕТКА_ПРЕДЗАГРУЗКИ}[^>]*>`, 'g'), '');
+  const новый = без.replace(/(<meta name="aiustaz-media-preview"[^>]*>)/i, `$1\n    ${ссылки}`);
+  if (!шрифты.every((и) => новый.includes(и))) throw new Error('не удалось поставить preload шрифтов в index.html');
+  fs.writeFileSync(файл, новый);
+  console.log('Предзагрузка шрифтов интерфейса:', шрифты.join(', '));
 }

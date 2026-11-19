@@ -15,10 +15,11 @@
  * - орнамент — узор в арке героя (по умолчанию true; false — без узора).
  * - приНажатии: вся карточка — кнопка (accessibilityRole="button").
  * Правила: арку ставить только на «главное на экране» (одна-две на экран), не на кнопки и мелочи;
- * узор — не под временем намаза и арабским текстом (он только в верхней полосе арки).
+ * узор — не под текстом: только в вершине арки над содержимым (высота подъём + отступ.m), 5 % (ОРНАМЕНТ.фонГерой).
+ * На вебе у героя — data-surface="hero": кольцо фокуса клавиатуры там светлое (theme/index.ts, стиль фокуса).
  */
 import { useState, type ReactNode } from 'react';
-import { Pressable, View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, Pressable, View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
 import { Path, Svg } from './primitives/svg';
 import { путьАрки } from '../design/geometry';
 import { ОРНАМЕНТ, ПоверхностьГероя, useТема } from '../theme';
@@ -78,13 +79,14 @@ export function Карточка({ children, вид: вид_, заголовок
 
   const арка =
     арочная && размер ? (
-      <View style={{ position: 'absolute', left: 0, top: 0, width: размер.ш, height: размер.в, pointerEvents: 'none' }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+      <View style={{ position: 'absolute', left: 0, top: 0, width: размер.ш, height: размер.в, pointerEvents: 'none' }} aria-hidden>
         <Svg width={размер.ш} height={размер.в}>
           <Path d={путьАрки(размер.ш, размер.в, подъём, радиус.l)} fill={фон} stroke={вид === 'герой' ? 'none' : рамка} strokeWidth={1} />
         </Svg>
         {вид === 'герой' && орнамент ? (
-          // Узор — только в верхней части арки (над временем намаза его нет).
-          <View style={{ position: 'absolute', left: 0, top: 0, right: 0, height: Math.min(размер.в, подъём + 56), overflow: 'hidden' }}>
+          // Узор — только в вершине арки, выше содержимого (оно начинается с подъём + отступ.m): не под городом,
+          // мелким текстом и временем намаза (бриф §2.2, 4–6 %).
+          <View style={{ position: 'absolute', left: 0, top: 0, right: 0, height: Math.min(размер.в, подъём + отступ.m), overflow: 'hidden' }}>
             <Орнамент вид="хатам" цвет={цвет.геройТекст} прозрачность={ОРНАМЕНТ.фонГерой} контур={путьАрки(размер.ш, размер.в, подъём, радиус.l)} />
           </View>
         ) : null}
@@ -112,15 +114,17 @@ export function Карточка({ children, вид: вид_, заголовок
   );
   const обёрнуто = вид === 'герой' ? <ПоверхностьГероя>{содержимое}</ПоверхностьГероя> : содержимое;
 
+  // Веб: метка поверхности для стиля фокуса (на тёмной шапке кольцо светлое).
+  const метка = вид === 'герой' && Platform.OS === 'web' ? ({ dataSet: { surface: 'hero' } } as object) : null;
   if (приНажатии) {
     return (
-      <Pressable accessibilityRole="button" onPress={приНажатии} testID={testID} onLayout={приРаскладке} style={({ pressed }) => [оформление, { opacity: pressed ? 0.85 : 1 }, стиль]}>
+      <Pressable accessibilityRole="button" onPress={приНажатии} testID={testID} onLayout={приРаскладке} {...метка} style={({ pressed }) => [оформление, { opacity: pressed ? 0.85 : 1 }, стиль]}>
         {обёрнуто}
       </Pressable>
     );
   }
   return (
-    <View testID={testID} onLayout={приРаскладке} style={[оформление, стиль]}>
+    <View testID={testID} onLayout={приРаскладке} {...метка} style={[оформление, стиль]}>
       {обёрнуто}
     </View>
   );

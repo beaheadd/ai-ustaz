@@ -11,9 +11,11 @@
  *   браузер изолирует направление; нативно — writingDirection).
  * - Строку выводит как есть: ничего не нормализует и не меняет. Текст Корана передавать
  *   только из ФрагментКорана (content/types.ts) — дословно из Tanzil.
+ * - Пока Amiri Quran не загружен (useАрабскийШрифтГотов), текст прозрачен и держит место: Коран и буквы не
+ *   мелькают системным шрифтом (экраны больше не ждут шрифтов — App.tsx).
  */
 import { Platform, Text, type StyleProp, type TextStyle } from 'react-native';
-import { ШРИФТ_АРАБСКИЙ, useТема } from '../theme';
+import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов, useТема } from '../theme';
 
 export type РазмерАрабского = 'малый' | 'средний' | 'крупный' | 'огромный';
 
@@ -46,6 +48,7 @@ export function АрабскийТекст({
   стиль,
 }: СвойстваАрабского) {
   const тема = useТема();
+  const готов = useАрабскийШрифтГотов();
   const кегль = РАЗМЕРЫ[размер];
   const базовый: TextStyle = {
     fontFamily: ШРИФТ_АРАБСКИЙ,
@@ -60,7 +63,7 @@ export function АрабскийТекст({
       accessibilityLanguage="ar"
       selectable={выбираемый}
       testID={testID}
-      style={[базовый, блочный, стиль]}
+      style={[базовый, блочный, стиль, готов ? null : { opacity: 0 }]}
     >
       {children}
     </Text>

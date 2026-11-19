@@ -10,6 +10,7 @@ export { КарточкаОбъяснения, ЧипУровня } from './Expl
 export { СмешанныйТекст, разбитьНаКуски } from './MixedText';
 export { онбордингПредлагался, отметитьОнбордингПредложен } from './firstVisit';
 export { ЧтоЕстьЧтоБудет } from './Roadmap';
+export { ОбзорЭтапов, статусПункта, статусыЭтапов, сводкаПути, type СводкаПути, type Статус } from './CourseOverview';
 export { Нукта, УзелПути, ШагПути, type ВидУзла } from './Path';
 export { ДниЗанятий, последниеДни } from './StudyDays';
 export {

@@ -331,8 +331,7 @@ export function КнопкаВарианта({
       )}
       {состояние === 'верный' ? (
         <View
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
+          aria-hidden
           style={{
             position: 'absolute',
             top: 6,

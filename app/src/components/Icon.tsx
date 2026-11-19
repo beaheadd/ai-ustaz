@@ -10,7 +10,8 @@
  * - цвет: по умолчанию цвет.текст текущей поверхности (на «герое» — светлый).
  * - толщина — в единицах сетки 24 (при размере 24 это пиксели).
  * - подпись: если задана — значок «картинка» с этим названием для экранного диктора;
- *   без подписи значок декоративный и скрыт от диктора (смысл несёт текст рядом).
+ *   без подписи значок декоративный и скрыт от диктора (aria-hidden — понимают и react-native-web, и RN ≥ 0.71;
+ *   смысл несёт текст рядом).
  * Правила: без лиц и людей; звезда «хатам» — геометрия, не оценка и не награда.
  */
 import { View, type StyleProp, type ViewStyle } from 'react-native';
@@ -37,7 +38,7 @@ export function Значок({ имя, размер = 24, цвет, толщин
   const фигуры: readonly ФигураЗначка[] = ЗНАЧКИ[имя] ?? [];
   const доступность = подпись
     ? { accessible: true, accessibilityRole: 'image' as const, accessibilityLabel: подпись }
-    : { accessibilityElementsHidden: true, importantForAccessibility: 'no-hide-descendants' as const };
+    : { 'aria-hidden': true as const };
   return (
     <View testID={testID} {...доступность} style={[{ width: размер, height: размер, pointerEvents: 'none' }, стиль]}>
       <Svg width={размер} height={размер} viewBox="0 0 24 24">

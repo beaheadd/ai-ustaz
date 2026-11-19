@@ -157,7 +157,7 @@ export async function киблаСквозной(браузер, база, { с�
     await android(стр, 200);
     await кадр(стр);
     await ждать(стр, 'кибла-поворот');
-    проверить((await поворотРозы(стр)) === 'rotate(-210.1 100 100)', 'курс 200° + склонение 10,1° → роза повёрнута на −210,1°');
+    проверить((await поворотРозы(стр)) === 'rotate(-210 100 100)', 'курс 200° + склонение 10,1° = 210,1° → роза повёрнута на −210° (курс на экране — до 1°, без дрожи)');
     проверить(/Повернитесь правее на 21°/.test(await текстИд(стр, 'кибла-поворот')), '«Повернитесь правее на 21°»');
     проверить(!(await виден(стр, 'кибла-нет-компаса')) && !(await виден(стр, 'кибла-ищем')), 'режим компаса: нет «ищем» и «компаса нет»');
     проверить(!(await виден(стр, 'кибла-включить')), 'Android: курс пришёл без нажатия — кнопки «Включить компас» нет');
@@ -222,6 +222,38 @@ export async function киблаСквозной(браузер, база, { с�
     проверить(/перезагрузите страницу/.test(await текстИд(отказ.стр, 'кибла-отказ')), 'iOS: отказ → «перезагрузите страницу и снова нажмите»');
     await безПроблем(отказ.стр, отказ.проблемы, 'iOS отказ');
     await отказ.контекст.close();
+
+    // Короткий экран (iPhone SE в Safari, 375×560): кнопка видна, после курса — прокрутка к циферблату.
+    const се = await открыть({ viewport: { width: 375, height: 560 }, isMobile: true, hasTouch: true, userAgent: devices['iPhone SE']?.userAgent }, { ios: 'granted' });
+    await ждать(се.стр, 'кибла-включить');
+    const размер = await се.стр.evaluate(() => document.querySelector('[data-testid="кибла-циферблат"]').getBoundingClientRect().height);
+    проверить(размер <= 0.42 * 560 + 1, `375×560: циферблат не выше 0,42 окна (${Math.round(размер)} px)`);
+    проверить(
+      await се.стр.evaluate(() => {
+        const ц = document.querySelector('[data-testid="кибла-циферблат"] svg');
+        return !!ц && [...ц.querySelectorAll('circle')].every((к) => Number(к.getAttribute('r')) > 5);
+      }),
+      'центр циферблата — звезда хатам без круга (не знак руб‘ аль-хизба)',
+    );
+    await се.стр.getByTestId('кибла-включить').first().click();
+    await се.стр.waitForFunction(() => window.__запросовРазрешения === 1);
+    await се.стр.evaluate(() => {
+      const е = new Event('deviceorientation');
+      Object.defineProperty(е, 'webkitCompassHeading', { value: 190 });
+      Object.defineProperty(е, 'webkitCompassAccuracy', { value: 10 });
+      window.dispatchEvent(е);
+    });
+    await кадр(се.стр);
+    await ждать(се.стр, 'кибла-поворот');
+    await се.стр.waitForTimeout(700);
+    const верх = await се.стр.evaluate(() => {
+      const к = document.querySelector('[data-testid="кибла-карточка"]').getBoundingClientRect();
+      const ц = document.querySelector('[data-testid="кибла-циферблат"]').getBoundingClientRect();
+      return { карточка: к.top, низЦиферблата: ц.bottom, окно: window.innerHeight };
+    });
+    проверить(верх.карточка >= 40 && верх.карточка <= 140 && верх.низЦиферблата <= верх.окно, `после курса экран прокручен к циферблату: верх карточки ${Math.round(верх.карточка)} px, циферблат целиком`);
+    await безПроблем(се.стр, се.проблемы, 'iPhone SE');
+    await се.контекст.close();
   }
 
   // 4. Казахский, тёмная тема, узкий телефон

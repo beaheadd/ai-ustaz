@@ -59,8 +59,7 @@ export function СтрокаСписка({
       {значок ? (
         <View
           style={{ width: 40, height: 40, borderRadius: радиус.m, backgroundColor: цвет.поверхностьАкцент, alignItems: 'center', justifyContent: 'center' }}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
+          aria-hidden
         >
           {этоЗначок(значок) ? (
             <Значок имя={значок} размер={22} цвет={цвет.акцент} />

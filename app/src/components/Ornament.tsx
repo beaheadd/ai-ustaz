@@ -44,8 +44,7 @@ export function Орнамент({ вид = 'хатам', цвет, прозра
   return (
     <View
       testID={testID}
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
+      aria-hidden
       style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, pointerEvents: 'none', opacity: прозрачность }}
     >
       <Svg width="100%" height="100%">
@@ -87,8 +86,7 @@ export function ОрнаментПолоса({ цвет, прозрачност�
   return (
     <View
       testID={testID}
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
+      aria-hidden
       onLayout={(е: LayoutChangeEvent) => установитьШирину(е.nativeEvent.layout.width)}
       style={{ height: высота, alignSelf: 'stretch', opacity: прозрачность, pointerEvents: 'none' }}
     >

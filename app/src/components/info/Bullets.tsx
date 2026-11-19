@@ -38,7 +38,7 @@ export function Пункты({ пункты, вид = 'обычный', знач
         const свой = typeof пункт === 'string' ? undefined : пункт.значок;
         return (
           <View key={i} style={{ flexDirection: 'row', gap: отступ.m, alignItems: 'flex-start' }}>
-            <View style={{ width: 20, minHeight: строка, alignItems: 'center', justifyContent: 'center' }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+            <View style={{ width: 20, minHeight: строка, alignItems: 'center', justifyContent: 'center' }} aria-hidden>
               {указатель(свой)}
             </View>
             <СмешанныйТекст вид={вид} стиль={{ flex: 1 }}>

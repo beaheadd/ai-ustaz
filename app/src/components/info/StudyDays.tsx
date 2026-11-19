@@ -66,7 +66,7 @@ export function ДниЗанятий() {
             </View>
           ))}
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} aria-hidden>
           <Текст вид="мелкий">{т('давно')}</Текст>
           <Текст вид="мелкий">{т('сегодня')}</Текст>
         </View>

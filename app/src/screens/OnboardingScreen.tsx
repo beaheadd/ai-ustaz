@@ -245,7 +245,7 @@ function Ход({ шаг, т }: { шаг: number; т: Т }) {
           />
         ))}
       </View>
-      <Текст вид="мелкий" accessibilityElementsHidden importantForAccessibility="no">
+      <Текст вид="мелкий" aria-hidden>
         {подпись}
       </Текст>
     </View>

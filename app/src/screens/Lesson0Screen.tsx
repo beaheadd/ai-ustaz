@@ -287,7 +287,7 @@ function ТеорияУрока0({ задание }: { задание: Зада�
       {примеры.length > 0 ? (
         <Карточка вид="арка" стиль={{ alignItems: 'stretch', paddingBottom: отступ.l }}>
           {/* Направление чтения: стрелка справа налево над учебными слогами. */}
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: отступ.xs }} accessibilityElementsHidden importantForAccessibility="no">
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: отступ.xs }} aria-hidden>
             <Значок имя="назад" размер={22} цвет={цвет.акцент} толщина={2.25} />
             <Текст вид="метка" цвет={цвет.акцент}>
               {т('справаНалево')}

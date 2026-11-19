@@ -76,7 +76,7 @@ export function УзелПути({
     </View>
   );
   return (
-    <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={{ pointerEvents: 'none' }}>
+    <View aria-hidden style={{ pointerEvents: 'none' }}>
       {вид === 'текущий' ? (
         // Текущий шаг: тонкое золотое кольцо вокруг (фон экрана в зазоре закрывает линию пути).
         <View style={{ padding: 3, borderRadius: скругление, borderWidth: 1.5, borderColor: цвет.золотоДекор, backgroundColor: подложка ?? цвет.фон }}>{внутри}</View>
@@ -112,7 +112,7 @@ export function ШагПути({
   const прозрачность = ОРНАМЕНТ.полоса;
   return (
     <View testID={testID} style={{ flexDirection: 'row', gap: отступ.m }}>
-      <View style={{ width: ширина, alignItems: 'center' }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+      <View style={{ width: ширина, alignItems: 'center' }} aria-hidden>
         {!первый ? (
           <View style={{ position: 'absolute', top: 0, height: центр, width: 2, borderRadius: 1, backgroundColor: цвет.золотоДекор, opacity: прозрачность }} />
         ) : null}
@@ -141,8 +141,7 @@ export function Нукта({ размер = 8, цвет, контур = false }:
   const ц = цвет ?? тема.цвет.акцент;
   return (
     <View
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
+      aria-hidden
       style={{
         width: размер,
         height: размер,

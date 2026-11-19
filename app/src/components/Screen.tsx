@@ -15,14 +15,16 @@
  * - На вебе ставит document.title = «заголовок — AI Ustaz».
  * - Прокручивается вся ширина окна (на десктопе колесо мыши работает и над полями), а содержимое —
  *   колонка ШИРИНА_КОЛОНКИ по центру (contentContainerStyle). Шапка и низ — в той же колонке.
- * - useПрокрутка() → { вКонец() } — прокрутить содержимое экрана вниз (например, к обратной связи
- *   после ответа, чтобы она не пряталась под нижней панелью). Вне <Экран> — пустая функция.
+ * - useПрокрутка() → { вКонец(), к(y) } — прокрутить содержимое экрана вниз (например, к обратной связи
+ *   после ответа, чтобы она не пряталась под нижней панелью) или к точке y содержимого (y из onLayout прямого
+ *   потомка экрана; например, кибла после включения компаса — к циферблату). При системном «уменьшить
+ *   движение» — без плавной прокрутки. Вне <Экран> — пустые функции.
  */
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, type ComponentRef, type ReactNode } from 'react';
 import { Platform, Pressable, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { useНавигация } from '../engine/navigation';
 import { useПеревод } from '../i18n';
-import { ШИРИНА_КОЛОНКИ, useТема } from '../theme';
+import { ШИРИНА_КОЛОНКИ, useТема, useУменьшитьДвижение } from '../theme';
 import { Значок } from './Icon';
 import { ПлашкаПрототипа, type ВидПлашки } from './PrototypeBanner';
 import { Текст } from './Text';
@@ -40,8 +42,8 @@ export type СвойстваЭкрана = {
   testID?: string;
 };
 
-type Прокрутка = { вКонец: () => void };
-const КонтекстПрокрутки = createContext<Прокрутка>({ вКонец: () => {} });
+type Прокрутка = { вКонец: () => void; к: (y: number) => void };
+const КонтекстПрокрутки = createContext<Прокрутка>({ вКонец: () => {}, к: () => {} });
 
 /** Прокрутка содержимого текущего экрана (см. шапку). */
 export function useПрокрутка(): Прокрутка {
@@ -61,11 +63,19 @@ export function Экран({ заголовок, children, плашка = 'не�
   }, [заголовок]);
 
   const свиток = useRef<ComponentRef<typeof ScrollView>>(null);
+  const уменьшить = useУменьшитьДвижение();
   const вКонец = useCallback(() => {
     // После отрисовки нового блока (ответ, пояснение): ждём раскладку, потом едем вниз.
-    setTimeout(() => свиток.current?.scrollToEnd({ animated: true }), 60);
-  }, []);
-  const прокрутка = useMemo(() => ({ вКонец }), [вКонец]);
+    setTimeout(() => свиток.current?.scrollToEnd({ animated: !уменьшить }), 60);
+  }, [уменьшить]);
+  const к = useCallback(
+    (y: number) => {
+      // y — onLayout прямого потомка экрана (поле сверху уже учтено); оставляем зазор 8 px над ним.
+      setTimeout(() => свиток.current?.scrollTo({ y: Math.max(0, y - отступ.s), animated: !уменьшить }), 60);
+    },
+    [уменьшить, отступ.s],
+  );
+  const прокрутка = useMemo(() => ({ вКонец, к }), [вКонец, к]);
 
   const содержимое = <View style={{ padding: отступ.l, gap: отступ.l }}>{children}</View>;
 
