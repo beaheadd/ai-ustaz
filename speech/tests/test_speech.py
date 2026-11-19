@@ -62,6 +62,14 @@ class ПодставноеЯдро:
         return [0.0 for _ in гипотезы]
 
 
+def test_не_то_и_отбор():
+    from aiustaz_speech.explain import не_то_прочитано, отобрать
+    assert не_то_прочитано('بَ', 'قَاالُۥۥلَااعِلمَلَنَااءِننننَكَ') and не_то_прочитано('بَاا', '')
+    assert not не_то_прочитано('قَاالُۥۥلَاا', 'قَالُۥۥلَاا')
+    з = [{'уверенность': у, 'позиция': [п, п + 1]} for у, п in ((3, 5), (9, 1), (5, 9), (2, 0))]
+    assert [x['позиция'][0] for x in отобрать(з, 3)] == [1, 5, 9]
+
+
 def test_api_подставное_ядро():
     from fastapi.testclient import TestClient
     from aiustaz_speech.app import создать

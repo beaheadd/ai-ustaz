@@ -13,6 +13,8 @@
 """
 from __future__ import annotations
 
+from difflib import SequenceMatcher
+
 from quran_transcript.phonetics.error_explainer import explain_error
 
 from .envnum import число_из_окружения
@@ -102,3 +104,16 @@ def разобрать(ядро, эталон, распознано, виды: s
             'уверенность': round(float(уверенность), 2),
         })
     return замечания
+
+
+def не_то_прочитано(эталон: str, услышано: str, порог: float = 0.5) -> bool:
+    """Прочитано другое (не тот слог или аят): не разбираем по буквам, а просим повторить задание."""
+    if not услышано:
+        return True
+    return SequenceMatcher(None, эталон, услышано, autojunk=False).ratio() < порог
+
+
+def отобрать(замечания: list[dict], сколько: int) -> list[dict]:
+    """Не больше N подсказок за раз — самые уверенные, в порядке текста (новичка не заваливаем)."""
+    лучшие = sorted(замечания, key=lambda з: -з['уверенность'])[:сколько]
+    return sorted(лучшие, key=lambda з: з['позиция'][0])
