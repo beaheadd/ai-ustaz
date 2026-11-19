@@ -29,16 +29,10 @@ import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
 import данныеИсточников from '@content/audio-sources.json';
 import { загрузитьИндексСур, индексИзКэша } from '../quran/data';
-import {
-  создатьПлеер,
-  type ЭлементЗвука,
-  type СессияМедиа,
-  type СнимокПлеера,
-  type Шаг,
-  type ХранилищеПлеера,
-} from './core';
+import { создатьПлеер, type СнимокПлеера, type Шаг } from './core';
 import { выбратьИсточник, проверитьИсточникиЧтения, type ИсточникЧтения, type ПричинаБезЗвука } from './sources';
 import { ТЕКСТЫ_ПЛЕЕРА, названиеДляСессии, type ЯзыкПлеера } from './texts';
+import { естьЗвукВеба, зависимостиВеба } from './web';
 
 export { адресАята, ПОВТОРЫ_АЯТА, АЯТОВ_В_СУРЕ, аятовВСуре } from './core';
 export type { Очередь, ЗапросОчереди, СнимокПлеера, СостояниеПлеера, ОшибкаПлеера, ТекущийАят, ПоследнийАят } from './core';
@@ -49,7 +43,7 @@ const ВЕБ = Platform.OS === 'web';
 
 function среда() {
   const хост = ВЕБ && typeof window !== 'undefined' ? String(window.location?.hostname ?? '') : '';
-  const естьЗвук = ВЕБ && typeof window !== 'undefined' && typeof window.HTMLAudioElement === 'function';
+  const естьЗвук = ВЕБ && естьЗвукВеба();
   return { хост, естьЗвук };
 }
 
@@ -102,56 +96,11 @@ function подписи(сура: number, ш: Шаг, из: number) {
   };
 }
 
-const хранилище: ХранилищеПлеера = {
-  прочитать(ключ) {
-    try {
-      return globalThis.localStorage?.getItem(ключ) ?? null;
-    } catch {
-      return null;
-    }
-  },
-  записать(ключ, значение) {
-    try {
-      globalThis.localStorage?.setItem(ключ, значение);
-    } catch {
-      // приватный режим или переполнено — без памяти
-    }
-  },
-};
-
-/** Скачать следующий аят заранее (свой адрес, без cookie): blob: URL или null — тогда играет прямой адрес. */
-async function предзагрузить(адрес: string): Promise<string | null> {
-  if (typeof fetch !== 'function' || typeof URL?.createObjectURL !== 'function') return null;
-  try {
-    const ответ = await fetch(адрес, { credentials: 'omit', referrerPolicy: 'no-referrer' });
-    if (!ответ.ok) return null;
-    const тип = (ответ.headers.get('content-type') ?? '').toLowerCase();
-    // Чужой ответ (например, index.html сайта вместо файла) не играем.
-    if (!тип.startsWith('audio/')) return null;
-    return URL.createObjectURL(await ответ.blob());
-  } catch {
-    return null;
-  }
-}
-
-type ОкноСМедиа = { MediaMetadata?: new (данные: { title: string; artist: string; album: string }) => unknown };
-
 export const плеер = создатьПлеер<ИсточникЧтения>({
   источник: доступныйИсточник,
-  создатьЭлемент: () => (среда().естьЗвук ? (new Audio() as unknown as ЭлементЗвука) : null),
-  сессия: () =>
-    ВЕБ && typeof navigator !== 'undefined' && 'mediaSession' in navigator
-      ? (navigator.mediaSession as unknown as СессияМедиа)
-      : null,
-  метаданные: (данные) => {
-    const Конструктор = (globalThis as unknown as ОкноСМедиа).MediaMetadata;
-    return Конструктор ? new Конструктор({ ...данные }) : null;
-  },
   подписи,
-  хранилище: ВЕБ ? хранилище : null,
-  предзагрузить: ВЕБ ? предзагрузить : undefined,
-  освободить: (url) => URL.revokeObjectURL(url),
-  вСети: () => (typeof navigator !== 'undefined' && typeof navigator.onLine === 'boolean' ? navigator.onLine : true),
+  // Веб: <audio>, Media Session, localStorage, предзагрузка (audio/web.ts). Нативно — пока без звука (expo-audio — план).
+  ...(ВЕБ ? зависимостиВеба() : { создатьЭлемент: () => null }),
 });
 
 /** Снимок плеера для экранов: перерисовка при каждой смене состояния или аята (не по времени). */

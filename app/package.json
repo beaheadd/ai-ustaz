@@ -17,6 +17,7 @@
     "test:prayer": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-prayer.mjs",
     "test:qibla": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-qibla.mjs",
     "test:quran": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-quran.mjs",
+    "test:audio": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-audio.mjs && node --disable-warning=ExperimentalWarning scripts/e2e-audio.mjs",
     "licenses": "node scripts/gen-licenses.mjs",
     "typecheck": "tsc --noEmit"
   },
