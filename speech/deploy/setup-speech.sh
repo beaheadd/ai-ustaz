@@ -32,12 +32,18 @@ chown -R mugalim:mugalim /opt/mugalim
 if [ ! -f /etc/mugalim.env ]; then
   cat > /etc/mugalim.env <<ENV
 MUGALIM_SPEECH_MODEL_DIR=$MODEL_DIR
-MUGALIM_SPEECH_THREADS=2
+MUGALIM_SPEECH_THREADS=4
 MUGALIM_SPEECH_MAX_SEC=20
-MUGALIM_SPEECH_QUEUE=4
+MUGALIM_SPEECH_QUEUE=8
 ENV
   chmod 600 /etc/mugalim.env
 fi
+# Нагрузка — по решению владельца 19.11.2026 (сервер BATR: 8 ядер, 16 ГБ): 4 потока, очередь 8. Эти два ключа
+# выкатка ведёт сама и в уже созданном файле; остальные настройки не трогает.
+for kv in MUGALIM_SPEECH_THREADS=4 MUGALIM_SPEECH_QUEUE=8; do
+  k="${kv%%=*}"
+  if grep -q "^$k=" /etc/mugalim.env; then sed -i "s/^$k=.*/$kv/" /etc/mugalim.env; else echo "$kv" >> /etc/mugalim.env; fi
+done
 
 install -m 644 "$APP/deploy/mugalim-speech.service" /etc/systemd/system/mugalim-speech.service
 systemctl daemon-reload
