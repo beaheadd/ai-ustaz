@@ -43,7 +43,10 @@ const корень = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 
 const папка = path.resolve(корень, process.argv[2] ?? 'dist');
 const БАЗА = '/aiustaz/';
 const ПУТЬ_В_BATR = 'web/public/aiustaz/';
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1200);
+// Бюджет JS — все чанки вместе (сырые байты; основной чанк ≈ 880 КБ, gzip всей сборки ≈ 320 КБ).
+// 19.11.2026: 1200 → 1250 КБ — задача владельца расширила приложение (время намаза, кибла, дизайн-система,
+// главная). Поднял интегратор после сжатия Terser в два прохода (−20 КБ); ждёт подтверждения ведущего/владельца.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1250);
 const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 3000);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
