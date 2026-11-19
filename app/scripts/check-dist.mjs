@@ -18,6 +18,11 @@
  *     есть репозиторий batr-world (переменная BATR_WORLD или /home/user/batr-world), точная
  *     проверка `git check-ignore` (только чтение).
  *  6. Размер: бюджет JS и всей сборки (переменные MUGALIM_БЮДЖЕТ_JS_КБ, MUGALIM_БЮДЖЕТ_ВСЕГО_КБ).
+ *  7. Проверка голосом: метка <meta name="aiustaz-speech-check" content="on|off"> (scripts/after-export.mjs).
+ *     «on» (сборка с EXPO_PUBLIC_SPEECH_CHECK=1) — ошибка, если не сказано MUGALIM_TARGET=own-domain:
+ *     на batr.kz проверка голосом запрещена (QML). Код страницы и сам выключает её на batr.kz (speech/flag.ts).
+ *     Адрес сервиса — относительный /api/speech/… (не http(s), п. 4 его не трогает; CSP connect-src 'self');
+ *     абсолютных адресов речевого сервиса в бандле быть не должно.
  * Запуск: npm run check:dist  [папка-сборки=dist]
  */
 import { execFileSync } from 'node:child_process';
@@ -183,10 +188,22 @@ if (js / 1024 > БЮДЖЕТ_JS_КБ) ошибка(`JS ${кб(js)} КБ боль
 if (всего / 1024 > БЮДЖЕТ_ВСЕГО_КБ) ошибка(`сборка ${кб(всего)} КБ больше бюджета ${БЮДЖЕТ_ВСЕГО_КБ} КБ`);
 if (js / 1024 > БЮДЖЕТ_JS_КБ * 0.8) предупреждения.push(`JS близко к бюджету: ${кб(js)} из ${БЮДЖЕТ_JS_КБ} КБ`);
 
+// 7. Проверка голосом.
+const СВОЙ_ДОМЕН = process.env.MUGALIM_TARGET === 'own-domain';
+const меткаПроверки = html.match(/<meta name="aiustaz-speech-check" content="(on|off)"/)?.[1];
+if (!меткаПроверки) ошибка('в index.html нет метки aiustaz-speech-check (запускать сборку через npm run export:web)');
+else if (меткаПроверки === 'on' && !СВОЙ_ДОМЕН)
+  ошибка('сборка с проверкой голосом (EXPO_PUBLIC_SPEECH_CHECK=1) — только для своего домена, не для batr.kz. Для batr.kz соберите без флага; для своего домена — MUGALIM_TARGET=own-domain');
+for (const { абс, отн } of файлы) {
+  if (!отн.endsWith('.js')) continue;
+  if (/https?:\/\/[^"'`\s]*\/api\/speech/i.test(fs.readFileSync(абс, 'utf8'))) ошибка(`абсолютный адрес речевого сервиса в ${отн} — только относительный /api/speech/…`);
+}
+
 // Итог.
 console.log(`Сборка: ${path.relative(корень, папка)} — файлов ${файлы.length}, всего ${кб(всего)} КБ; JS ${кб(js)} КБ (gzip ≈ ${кб(jsGzip)} КБ)`);
 for (const { абс, отн } of файлы) console.log(`  ${отн}  ${кб(fs.statSync(абс).size)} КБ`);
 console.log(`batr-world .gitignore: ${проверкаGit}`);
+console.log(`Проверка голосом: ${меткаПроверки === 'on' ? 'ВКЛЮЧЕНА в сборке' + (СВОЙ_ДОМЕН ? ' (MUGALIM_TARGET=own-domain)' : '') : 'выключена (сборка для batr.kz)'}`);
 if (встреченоРазрешённых.size) {
   console.log('Разрешённые URL-строки в коде (не запросы):');
   for (const [п, причина] of встреченоРазрешённых) console.log(`  ${п} — ${причина}`);
@@ -197,7 +214,7 @@ if (ошибки.length) {
   for (const о of ошибки) console.error(`  ✗ ${о}`);
   process.exit(1);
 }
-console.log('\nOK: сборка готова к выкладке в batr-world/web/public/aiustaz/');
+console.log(меткаПроверки === 'on' ? '\nOK: сборка для СВОЕГО домена (проверка голосом включена) — НЕ выкладывать в batr-world' : '\nOK: сборка готова к выкладке в batr-world/web/public/aiustaz/');
 
 function обойти(каталог) {
   return fs.readdirSync(каталог, { withFileTypes: true }).flatMap((з) => {
