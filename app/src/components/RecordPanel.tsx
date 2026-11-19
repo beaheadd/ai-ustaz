@@ -29,7 +29,7 @@ import { useЗаписьГолоса } from '../speech/useRecorder';
 import { useТема } from '../theme';
 import { Кнопка } from './Button';
 import { Карточка } from './Card';
-import { Значок } from './Icon';
+import { СтрокаСоЗначком } from './exercises/common';
 import { ПояснениеМикрофона } from './MicPrivacyNotice';
 import { Орнамент } from './Ornament';
 import { Текст } from './Text';
@@ -220,13 +220,11 @@ export function ПанельЗаписи({ максДлительностьМс,
         />
       ) : null}
 
-      <View style={{ flexDirection: 'row', gap: отступ.s, alignItems: 'flex-start', paddingTop: отступ.xs }}>
-        <Значок имя="инфо" размер={16} цвет={цвет.текстВторой} стиль={{ marginTop: 1 }} />
-        <View style={{ flex: 1, gap: 2 }}>
-          {проверка && проверкаВключена ? null : <Текст вид="мелкий">{t('запись.безОценки')}</Текст>}
-          <Текст вид="мелкий">{t('запись.голосКари')}</Текст>
-        </View>
-      </View>
+      <СтрокаСоЗначком
+        значок="инфо"
+        вид="мелкий"
+        текст={(проверка && проверкаВключена ? '' : t('запись.безОценки') + '\n') + t('запись.голосКари')}
+      />
     </Карточка>
   );
 }
