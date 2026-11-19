@@ -1,0 +1,33 @@
+# AI Ustaz — речевой сервис (проверка чтения), только 127.0.0.1:8032.
+# Решение владельца 19.11.2026: на старте живёт на сервере BATR (CPU) — поэтому жёсткий потолок нагрузки,
+# чтобы не мешать batr.kz и голосовому роботу: CPUQuota, MemoryMax, низкий приоритет, одна запись за раз.
+# Настройки — /etc/mugalim.env (права 600): MUGALIM_SPEECH_MODEL_DIR, MUGALIM_SPEECH_THREADS и др.
+[Unit]
+Description=AI Ustaz speech service (quran-muaalem, CPU)
+After=network.target
+
+[Service]
+Type=simple
+User=mugalim
+Group=mugalim
+WorkingDirectory=/opt/mugalim/speech
+EnvironmentFile=/etc/mugalim.env
+Environment=HF_HUB_OFFLINE=1
+Environment=TRANSFORMERS_OFFLINE=1
+ExecStart=/opt/mugalim/speech/.venv/bin/uvicorn aiustaz_speech.app:app --host 127.0.0.1 --port 8032 --workers 1 --no-access-log
+Restart=on-failure
+RestartSec=5
+CPUQuota=200%
+MemoryMax=4G
+Nice=10
+IOSchedulingClass=idle
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/mugalim
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

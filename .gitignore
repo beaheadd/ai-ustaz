@@ -54,3 +54,10 @@ coverage/
 # Байткод Python (проверки контента запускать с -B: python3 -I -B tools/…)
 __pycache__/
 *.py[cod]
+
+# Речевой сервис: окружение и веса модели (2,3 ГБ) — не в git
+speech/.venv/
+speech/.hf/
+__pycache__/
+*.pyc
+.pytest_cache/
