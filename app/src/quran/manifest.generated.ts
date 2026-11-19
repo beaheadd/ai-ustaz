@@ -5,11 +5,11 @@
  */
 export const МАНИФЕСТ_КОРАНА = {
   формат: 1,
-  индекс: 'quran/index.47f420faabc318ba6cfc.json',
-  sha256Индекса: '47f420faabc318ba6cfce7e031b901b7576a81e018c59f531f4f18a59d15416c',
+  индекс: 'quran/index.b867ef21b74e7a9ab248.json',
+  sha256Индекса: 'b867ef21b74e7a9ab248f046b141690f20e744fdcbb7afe3ffee97e4fab3370b',
   сур: 114,
   аятов: 6236,
   источник: 'tanzil-uthmani-1.1',
   файлИсточника: 'quran-uthmani-marks.xml',
-  sha256Источника: '33f4113df84c1bab0ee2eb69616139fda619bdd56fc163a72532daaf0431bf57',
+  sha256Источника: 'af9311c521b5dadab01ea1ef259c281ffa83cf224bad24ee89469ce1c3c72916',
 } as const;

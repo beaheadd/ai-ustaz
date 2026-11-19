@@ -1,7 +1,8 @@
 """Проверка производных Корана для показа (её вызывает tools/check_content.py; отдельно — python3 -I -B tools/quran/check_quran.py).
 
 Без сети и сторонних пакетов. Что сверяется (любое расхождение — ошибка):
-  (а) sha256 XML копии для показа (content/quran/quran-uthmani-marks.xml) = записи «tanzil» в content/sources.json,
+  (а) sha256 XML копии для показа (content/quran/quran-uthmani-marks.xml) = внешнему якорю quran_common.ЭТАЛОН_SHA256_ПОКАЗА
+      (значение при загрузке с tanzil.net) = записи «tanzil» в content/sources.json,
       имя файла = её «файл»; в XML 114 сур подряд и 6236 аятов, у каждой суры аяты 1…n подряд;
   (б) манифест app/src/quran/manifest.generated.ts → индекс app/public/quran/index.<хэш>.json: sha256 содержимого =
       манифесту, хэш в имени = началу sha256; индекс: 114 записей 1…114, имя и число аятов = XML, файл суры есть,
@@ -33,6 +34,11 @@ def проверить(sha_в_sources, файл_в_sources):
         ош(str(к.ПУТЬ_XML.relative_to(к.КОРЕНЬ)), 'нет копии Tanzil для показа')
         return ошибки, счёт
     копия = к.прочитать_xml(к.ПУТЬ_XML)
+    if копия.sha256 != к.ЭТАЛОН_SHA256_ПОКАЗА:
+        ош(str(к.ПУТЬ_XML.relative_to(к.КОРЕНЬ)), f'sha256 {копия.sha256} ≠ эталону загрузки с tanzil.net '
+           f'({к.ЭТАЛОН_ЗАГРУЖЕН}) {к.ЭТАЛОН_SHA256_ПОКАЗА} (quran_common.ЭТАЛОН_SHA256_ПОКАЗА)')
+    if sha_в_sources != к.ЭТАЛОН_SHA256_ПОКАЗА:
+        ош('sources.json', f'sha256 копии для показа в sources.json {sha_в_sources} ≠ эталону {к.ЭТАЛОН_SHA256_ПОКАЗА}')
     if копия.sha256 != sha_в_sources:
         ош('sources.json', f'sha256 копии для показа {копия.sha256} не совпадает с записанным {sha_в_sources}')
     if файл_в_sources != к.ПУТЬ_XML.name:
@@ -107,6 +113,9 @@ def проверить(sha_в_sources, файл_в_sources):
         тр = з.get('транслит') or {}
         if not isinstance(тр.get('ru'), str) or not тр['ru'].strip() or not (тр.get('kk') is None or isinstance(тр.get('kk'), str)):
             ош(где, 'транслитерация: ru — непустая строка, kk — строка или null')
+        син = з.get('синонимы')
+        if not isinstance(син, list) or not син or not all(isinstance(x, str) and x.strip() and not any('\u0600' <= ch <= '\u06ff' for ch in x) for x in син):
+            ош(где, 'синонимы для поиска: непустой список строк без арабских букв')
         отн = з.get('файл') or ''
         байты = файл_с_хэшем(отн, з.get('sha256'), где)
         if байты is None:

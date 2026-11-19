@@ -40,6 +40,19 @@ from dataclasses import dataclass, field
 ДЛИНА_ХЭША = 20                         # check-dist: [.-]([0-9a-f]{20,})\.[a-z0-9]+$
 ИМЯ_ФАЙЛА = re.compile(r'^(index|\d{3})\.([0-9a-f]{20})\.json$')
 
+# Внешний якорь копии для показа (ревью 19.11.2026): sha256 файла, полученного с tanzil.net при загрузке, записан
+# ЗДЕСЬ, отдельно от content/sources.json. check_quran сверяет с ним и файл, и sources.json: подмена XML вместе с
+# sources.json и производными не пройдёт. Менять — только при новой загрузке с tanzil.net, с датой и параметрами.
+# Загрузка 19.11.2026: tanzil.net/pub/download/index.php?quranType=uthmani&outType=xml&marks=true&sajdah=true&rub=true
+#   &alef=true&tatweel=true&stanween=true (значения формы tanzil.net/download: знаки остановки, саджда ۩, руб‘ ۞,
+#   надстрочный алиф, татвиль перед ним — как по умолчанию на сайте, и «sequential tanweens» — малые мимы
+#   U+06ED/U+06E2 после танвина: начертание икляба, идгама и ихфы танвина, как в мусхафе Медины).
+#   Без знаков-токенов эта копия побайтно равна фонетической копии quran-transcript во всех 6236 аятах и бисмиллах.
+ЭТАЛОН_SHA256_ПОКАЗА = 'af9311c521b5dadab01ea1ef259c281ffa83cf224bad24ee89469ce1c3c72916'
+ЭТАЛОН_ЗАГРУЖЕН = '2026-11-19'
+ЭТАЛОН_ПАРАМЕТРЫ = ('tanzil.net/download: quranType=uthmani, outType=xml, marks=true, sajdah=true, rub=true, '
+                    'alef=true, tatweel=true, stanween=true')
+
 # Транслитерация арабских имён сур (как в Tanzil) кириллицей — ЧЕРНОВИК, не перевод смыслов.
 ТРАНСЛИТ_RU = (
     'аль-Фатиха', 'аль-Бакара', 'Аль Имран', 'ан-Ниса', 'аль-Маида', 'аль-Анам', 'аль-Араф', 'аль-Анфаль',
@@ -58,6 +71,16 @@ from dataclasses import dataclass, field
     'аль-Ихлас', 'аль-Фаляк', 'ан-Нас',
 )
 assert len(ТРАНСЛИТ_RU) == СУР
+
+# Только для ПОИСКА (на экран не выводится; ревью 19.11.2026: «Ясин», «Baqara» не находились). Черновик.
+# Латиница — распространённое написание без диакритики; синонимы — привычные другие имена сур.
+ТРАНСЛИТ_LAT = tuple('Al-Fatihah|Al-Baqarah|Al-Imran|An-Nisa|Al-Maidah|Al-Anam|Al-Araf|Al-Anfal|At-Tawbah|Yunus|Hud|Yusuf|Ar-Rad|Ibrahim|Al-Hijr|An-Nahl|Al-Isra|Al-Kahf|Maryam|Ta-Ha|Al-Anbiya|Al-Hajj|Al-Muminun|An-Nur|Al-Furqan|Ash-Shuara|An-Naml|Al-Qasas|Al-Ankabut|Ar-Rum|Luqman|As-Sajdah|Al-Ahzab|Saba|Fatir|Ya-Sin|As-Saffat|Sad|Az-Zumar|Ghafir|Fussilat|Ash-Shura|Az-Zukhruf|Ad-Dukhan|Al-Jathiyah|Al-Ahqaf|Muhammad|Al-Fath|Al-Hujurat|Qaf|Adh-Dhariyat|At-Tur|An-Najm|Al-Qamar|Ar-Rahman|Al-Waqiah|Al-Hadid|Al-Mujadilah|Al-Hashr|Al-Mumtahanah|As-Saff|Al-Jumuah|Al-Munafiqun|At-Taghabun|At-Talaq|At-Tahrim|Al-Mulk|Al-Qalam|Al-Haqqah|Al-Maarij|Nuh|Al-Jinn|Al-Muzzammil|Al-Muddaththir|Al-Qiyamah|Al-Insan|Al-Mursalat|An-Naba|An-Naziat|Abasa|At-Takwir|Al-Infitar|Al-Mutaffifin|Al-Inshiqaq|Al-Buruj|At-Tariq|Al-Ala|Al-Ghashiyah|Al-Fajr|Al-Balad|Ash-Shams|Al-Layl|Ad-Duha|Ash-Sharh|At-Tin|Al-Alaq|Al-Qadr|Al-Bayyinah|Az-Zalzalah|Al-Adiyat|Al-Qariah|At-Takathur|Al-Asr|Al-Humazah|Al-Fil|Quraysh|Al-Maun|Al-Kawthar|Al-Kafirun|An-Nasr|Al-Masad|Al-Ikhlas|Al-Falaq|An-Nas'.split('|'))
+assert len(ТРАНСЛИТ_LAT) == СУР
+СИНОНИМЫ = {
+    1: ('Альхамд',), 9: ('Бараа',), 17: ('Бану Исраиль',), 36: ('Ясин',), 40: ('Мумин',), 41: ('Ха Мим Саджда',),
+    47: ('Кыталь',), 67: ('Табарак',), 76: ('Дахр',), 94: ('Инширах', 'Алам нашрах'), 108: ('Каусар',),
+    111: ('Лахаб', 'Tabbat'), 112: ('Ахад', 'Тавхид'),
+}
 
 
 @dataclass
@@ -128,7 +151,8 @@ def собрать(путь_xml=ПУТЬ_XML, имя_xml=None):
         файлы[f'{ПОДПАПКА}/{имя}'] = байты
         записи.append({'сура': с.номер, 'имя': с.имя, 'аятов': len(с.аяты), 'файл': f'{ПОДПАПКА}/{имя}',
                        'sha256': sha256_байтов(байты),
-                       'транслит': {'ru': ТРАНСЛИТ_RU[с.номер - 1], 'kk': None}})
+                       'транслит': {'ru': ТРАНСЛИТ_RU[с.номер - 1], 'kk': None},
+                       'синонимы': [ТРАНСЛИТ_LAT[с.номер - 1], *СИНОНИМЫ.get(с.номер, ())]})
     индекс = {**общее, 'сур': СУР, 'аятов': АЯТОВ,
               'статусТранслита': 'черновик',
               'транслитПримечание': 'Транслитерация арабского имени суры, не перевод смыслов. ru — черновик для '
