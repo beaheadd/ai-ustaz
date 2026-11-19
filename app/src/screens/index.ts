@@ -19,6 +19,7 @@ import { ГородНамаза } from './PrayerCityScreen';
 import { ВремяНамаза } from './PrayerTimesScreen';
 import { Кибла } from './QiblaScreen';
 import { Коран } from './QuranScreen';
+import { Установка } from './InstallScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -35,4 +36,5 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   коран: Коран,
   хадисы: Хадисы,
   ещё: Ещё,
+  установка: Установка,
 };

@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "pro.aiustaz.app",
+      "sha256_cert_fingerprints": [
+        "ЗАМЕНИТЬ:SHA-256 сертификата ключа подписи приложения (Google Play Console → Целостность приложения)",
+        "ЗАМЕНИТЬ:SHA-256 вашего ключа загрузки (keytool -list -v, alias aiustaz)"
+      ]
+    }
+  }
+]

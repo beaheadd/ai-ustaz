@@ -51,6 +51,10 @@
  *      hash-адреса и перезагрузка, «назад», скрытие в уроке, урок 0 и онбординге, доступность (nav, ссылки, aria-current,
  *      Tab и Enter), 320/360 px — подписи не обрезаны (ru, kk, обе темы), «Коран» — только сверенный текст, «Хадисы» —
  *      ни одного хадиса;
+ *  15. (один раз) установка на экран «Домой» — scripts/e2e-install.mjs (E2E_INSTALL=0 — пропустить): manifest и
+ *      apple-touch-icon в index.html, манифест и значки; Android Chrome (beforeinstallprompt → «Установить», шаги ⋮),
+ *      iPhone Safari («Поделиться» → «На экран „Домой“»), Instagram («откройте в браузере», копирование ссылки),
+ *      компьютер, batr.kz (ставить с aiustaz.pro, манифест убран), «уже установлено»; ru и kk;
  * и всё время: ни одной ошибки в консоли/исключения, ни одного запроса на другой адрес, ни одного
  * нарушения CSP; в localStorage — только ключи aiustaz:* без аудио.
  *
@@ -72,6 +76,7 @@ import { главнаяСквозной } from './e2e-home.mjs';
 import { времяНамаза } from './e2e-prayer.mjs';
 import { киблаСквозной } from './e2e-qibla.mjs';
 import { навигацияСквозной } from './e2e-nav.mjs';
+import { установкаСквозной } from './e2e-install.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require('playwright');
@@ -1142,6 +1147,17 @@ try {
       итоги.push(['нижнее меню (разделы, стек, «назад», доступность, 320/360 px)', 'OK']);
     } catch (е) {
       итоги.push(['нижнее меню (разделы, стек, «назад», доступность, 320/360 px)', 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_INSTALL !== '0') {
+    try {
+      console.log('\n══ Установка на экран «Домой» (PWA, TWA) ══');
+      всегоПроверок += await установкаСквозной(браузер, сервер.адрес);
+      итоги.push(['установка (манифест, Android, iPhone, Instagram, компьютер, batr.kz)', 'OK']);
+    } catch (е) {
+      итоги.push(['установка (манифест, Android, iPhone, Instagram, компьютер, batr.kz)', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
     }
