@@ -61,3 +61,6 @@ speech/.hf/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Рендер баннера: временный файл
+app/og/.og-tmp.html
