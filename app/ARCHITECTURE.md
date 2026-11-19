@@ -25,6 +25,8 @@ app/
                        проверка голосом: flag.ts, check.ts, wav(.web|.native).ts, wavEncode.ts, answer.ts, hints.ts
     quran/             полный Коран: data.ts (загрузка, хуки), loader.ts (чистая часть), text.ts (слова и знаки аята),
                        manifest.generated.ts (генерируется) — раздел «Коран: полный текст»
+    audio/             плеер чтения кари: core.ts (очередь, повтор, Media Session; чистое ядро), web.ts (<audio>, предзагрузка),
+                       sources.ts (audio-sources.json, можно ли играть), texts.ts, player.ts (синглтон, useПлеер) — раздел «Коран»
     media/             видео и аудио партнёров: media.ts (проверка media.json, правила показа), flag.ts (предпросмотр)
     qibla/             кибла: qibla.ts (расчёт, чистые функции), compass.ts (датчики), useCompass.ts, place.ts (город),
                        QiblaDial.tsx (циферблат) — раздел «Кибла»
@@ -238,6 +240,10 @@ type Прогресс = { версия: 1; язык: 'ru'|'kk'|null; преду�
 - **Производные** — `python3 -I -B tools/quran/build_quran.py`: `app/public/quran/NNN.<хэш>.json` (114 сур) и `index.<хэш>.json`, `src/quran/manifest.generated.ts` (имя и sha256 индекса). Expo копирует `public/` в `dist/` как есть → `/aiustaz/quran/…`. Текста Корана в JS нет (check-dist п. 9). Руками не править.
 - **Загрузка** — `src/quran/data.ts`: `useИндексСур()`, `useСура(н)`, `загрузитьСуру(н)` → `{ ок, данные } | { ок: false, причина }`, кэш, «нет связи» без кэширования, сверка sha256 манифест → индекс → сура (непрошедшее не показывается). Чистая часть — `loader.ts`; слова и знаки аята — `text.ts` (`разборАята`, `частиПоОстановкам`; номер слова — без знаков-токенов).
 - **Проверки** — `tools/check_content.py` (каждый аят производных побайтно = XML), `npm run test:quran` (данные, разбор, загрузчик, HTTP по dist, покрытие шрифта Amiri Quran), `check-dist` п. 9.
+- **Плеер чтения кари** — `src/audio/` и `components/quran/PlayerBar.tsx` (`<МиниПлеер />`, `<КнопкаСлушать />`, `<СтрокаБезЗвука />`); контракт и «как работает при выключенном экране» — docs/дизайн/05, §2.3.
+  - Синглтон, один `<audio>`, следующий аят — по `ended`, без таймеров; предзагрузка `fetch → blob:`; Media Session без арабского текста (правило 9).
+  - Источник — `content/audio-sources.json`: аль-Афаси `разрешено: false`, база пустая → не играет, строка «Аудио появится после разрешения кари». На batr.kz не играет никогда (файлов там нет).
+  - `localStorage` `aiustaz:quran-player.v1` — сура, аят, повтор. Проверки — `npm run test:audio` (node и Chromium), `tools/audio/check_audio.py`.
 
 ## Материалы урока (видео, аудио, объяснение)
 

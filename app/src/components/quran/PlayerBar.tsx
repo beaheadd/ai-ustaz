@@ -30,7 +30,7 @@ import {
   type СнимокПлеера,
   type ИсточникЧтения,
 } from '../../audio/player';
-import { ТЕКСТЫ_ПЛЕЕРА, названиеДляСессии, type КлючПлеера } from '../../audio/texts';
+import { ТЕКСТЫ_ПЛЕЕРА, названиеДляСессии, языкПлеера, type КлючПлеера } from '../../audio/texts';
 import type { ИмяЗначка } from '../../design/icons';
 import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
 import { useИндексСур } from '../../quran/data';
@@ -49,7 +49,7 @@ function следующийПовтор(сейчас: number): number {
 }
 
 function useЯзыкПлеера() {
-  const { язык } = useПеревод();
+  const язык = языкПлеера(useПеревод().язык);
   useEffect(() => {
     установитьЯзыкПлеера(язык);
   }, [язык]);
