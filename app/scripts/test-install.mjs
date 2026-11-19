@@ -8,7 +8,9 @@
  *   app/public/pwa — значки PNG нужных размеров (заголовок PNG), md5 в имени;
  *   twa/twa-manifest.json — пакет pro.aiustaz.app, host aiustaz.pro, startUrl /aiustaz/?source=twa, значки и
  *     манифест — те же имена, что даст сборка; Play Billing и уведомления выключены; ярлыков ≤ 2, без #/quran;
- *   twa/assetlinks.template.json — валидный JSON с пакетом pro.aiustaz.app.
+ *   twa/assetlinks.template.json — валидный JSON с пакетом pro.aiustaz.app;
+ *   app/public/privacy.html — политика для Google Play (ru, kk, en): без скриптов и внешних адресов, CSP, ключевые
+ *     обещания (без рекламы, аудио удаляется, сервер в Казахстане, 16+, до 13 — нет).
  * Решение владельца 19.11.2026: TWA и установка на экран «Домой».
  */
 import assert from 'node:assert/strict';
@@ -213,6 +215,19 @@ const twa = JSON.parse(fs.readFileSync(path.join(корень, '..', 'twa', 'twa
   const а = JSON.parse(fs.readFileSync(path.join(корень, '..', 'twa', 'assetlinks.template.json'), 'utf8'));
   assert.equal(а[0].target.package_name, 'pro.aiustaz.app');
   assert.deepEqual(а[0].relation, ['delegate_permission/common.handle_all_urls']);
+});
+
+console.log('установка: политика конфиденциальности (Google Play)');
+тест('privacy.html: ru/kk/en, без скриптов и чужих адресов, CSP default-src none, главные обещания', () => {
+  const html = fs.readFileSync(path.join(корень, 'public', 'privacy.html'), 'utf8');
+  assert.ok(html.startsWith('<!doctype html>') && html.indexOf('<meta charset="utf-8"') < 200);
+  assert.ok(html.includes(`content="default-src 'none'`), 'CSP default-src none');
+  assert.ok(!/<script/i.test(html), 'без скриптов');
+  const адреса = [...html.matchAll(/https?:\/\/[^\s"'<>]+/gi)].map((м) => м[0]);
+  assert.ok(адреса.every((а) => а.startsWith('https://aiustaz.pro/')), 'только свой домен: ' + адреса.join(', '));
+  for (const я of ['ru', 'kk', 'en']) assert.ok(html.includes(`<section id="${я}" lang="${я}">`), 'раздел ' + я);
+  for (const фраза of ['Рекламы нет', 'в Казахстане', 'удаляется сразу после разбора', 'от 16 лет', 'до 13 лет', 'ИИ-предупреждение', 'не продаём'])
+    assert.ok(html.includes(фраза), 'нет фразы: ' + фраза);
 });
 
 console.log(`OK: установка — ${проверок} проверок`);

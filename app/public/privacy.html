@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="light dark" />
+    <title>AI Ustaz — политика конфиденциальности</title>
+    <!--
+      Политика конфиденциальности AI Ustaz (сайт aiustaz.pro и Android-приложение pro.aiustaz.app в Google Play).
+      Постоянный адрес для Google Play: https://aiustaz.pro/aiustaz/privacy.html (имя без хэша — узкое исключение
+      в app/scripts/check-dist.mjs). Статический файл: без скриптов, без внешних запросов (CSP default-src 'none').
+      Основание — раздел «Данные и приватность» CLAUDE.md. Решение владельца 19.11.2026: «Сразу нужно подготовить
+      файлы, чтобы загрузить на Play Market». Казахский текст — черновик для редактора-носителя; английский — для Google.
+      [контакт] и [оператор] — заполнить владельцу до публикации в Play. Версия меняется при каждой правке.
+    -->
+    <style>
+      :root { --фон: #f7f2e8; --текст: #1b2623; --второй: #55625e; --акцент: #0f4c45; --граница: #e2d9c8; --плашка: #f3e6c9; }
+      @media (prefers-color-scheme: dark) {
+        :root { --фон: #0c1715; --текст: #ede6d6; --второй: #a7b4af; --акцент: #7cc4b6; --граница: #2e423d; --плашка: #3a3120; }
+      }
+      html { background: var(--фон); color: var(--текст); }
+      body { margin: 0 auto; max-width: 720px; padding: 16px 16px 48px; font: 16px/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+      h1 { font-size: 26px; line-height: 1.25; margin: 8px 0 4px; }
+      h2 { font-size: 19px; margin: 28px 0 6px; }
+      p, li { margin: 6px 0; }
+      ul { padding-left: 22px; }
+      a { color: var(--акцент); }
+      nav { display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0 12px; border-bottom: 1px solid var(--граница); }
+      .мелко { color: var(--второй); font-size: 14px; }
+      .черновик { background: var(--плашка); padding: 8px 12px; border-radius: 8px; font-size: 14px; }
+      section { border-bottom: 1px solid var(--граница); padding-bottom: 16px; }
+    </style>
+  </head>
+  <body>
+    <nav aria-label="Язык / Тіл / Language"><a href="#ru" hreflang="ru">Русский</a><a href="#kk" hreflang="kk">Қазақша</a><a href="#en" hreflang="en">English</a></nav>
+
+    <section id="ru" lang="ru">
+      <h1>Политика конфиденциальности AI Ustaz</h1>
+      <p class="мелко">Версия 1.0 от 19.11.2026. Действует для сайта aiustaz.pro и приложения AI Ustaz для Android (pro.aiustaz.app).</p>
+
+      <h2>1. Кто мы</h2>
+      <p>AI Ustaz — бесплатный ИИ-наставник для обучения правильному чтению Корана по методике «Муаллим сани». Проект финансирует бизнес владельца. Оператор: [оператор]. Связь по вопросам данных: [контакт].</p>
+
+      <h2>2. Коротко</h2>
+      <ul>
+        <li>Регистрации и аккаунтов нет. Имя, телефон, почту мы не спрашиваем.</li>
+        <li>Рекламы нет. Рекламного идентификатора, аналитики, счётчиков и трекеров нет.</li>
+        <li>Данные пользователей мы не продаём и не передаём третьим лицам.</li>
+        <li>Прогресс уроков и настройки хранятся только на вашем устройстве.</li>
+        <li>Запись голоса уходит на наш сервер только по вашему нажатию «Проверить», обрабатывается на сервере в Казахстане и удаляется сразу после разбора.</li>
+      </ul>
+
+      <h2>3. Что хранится на устройстве</h2>
+      <p>Пройденные уроки, дни занятий, выбранный язык, оформление и город для времени намаза хранятся в памяти браузера на вашем устройстве. На наш сервер они не отправляются. Удалить их можно, очистив данные сайта aiustaz.pro в настройках браузера или удалив приложение.</p>
+
+      <h2>4. Запись голоса</h2>
+      <ul>
+        <li>Запись начинается только после вашего нажатия. Перед первым запросом микрофона приложение объясняет, что происходит. Доступ к микрофону — это разрешение сайта aiustaz.pro в браузере (в приложении для Android — в Chrome); его можно отозвать в настройках.</li>
+        <li>Обычная запись («Послушайте себя») живёт только в памяти страницы и никуда не отправляется.</li>
+        <li>Проверка чтения голосом: только когда вы нажали «Проверить», запись отправляется по защищённому соединению (HTTPS) на наш сервер в Казахстане. Распознавание идёт на нашем сервере; запись не передаётся во внешние сервисы и ИИ-системы. После разбора запись сразу удаляется; в ответ приходят только подсказки «Проверьте себя».</li>
+        <li>Мы не создаём голосовых отпечатков, не делаем вход по голосу и не определяем по голосу эмоции, пол или возраст.</li>
+        <li>Записи не используются для обучения моделей. Если такая возможность появится, — только по отдельному согласию взрослого, выключенному по умолчанию; записи детей для этого не используются никогда.</li>
+      </ul>
+
+      <h2>5. Местоположение</h2>
+      <p>Для времени намаза и направления киблы можно выбрать город вручную. Если вы нажмёте «Определить по геолокации», браузер спросит разрешение; координаты используются только на устройстве, чтобы найти ближайший город, и на сервер не отправляются.</p>
+
+      <h2>6. Технический журнал сервера</h2>
+      <p>Как любой сайт, сервер aiustaz.pro может вести технический журнал запросов (IP-адрес, время, запрошенный адрес страницы, тип браузера) — для защиты от атак и поиска сбоев. Журнал хранится ограниченный срок ([срок]), не используется для рекламы и не передаётся третьим лицам. Содержимое записей голоса в журнал не попадает.</p>
+
+      <h2>7. Возраст</h2>
+      <p>AI Ustaz рассчитан на пользователей от 16 лет. Подросткам 13–17 лет — только с согласия родителя или иного законного представителя. Детям до 13 лет приложение не предназначено.</p>
+
+      <h2>8. ИИ-предупреждение</h2>
+      <p>AI Ustaz использует искусственный интеллект. Подсказки ИИ могут быть неточными: это помощь в учёбе, а не оценка и не замена учителя (устаза); приложение не выдаёт иджазу и не даёт фетв. Полный текст ИИ-предупреждения — на арабском и на языке интерфейса — показывается до первого использования и всегда доступен в приложении: «Ещё» → «ИИ-предупреждение».</p>
+
+      <h2>9. Ваши права</h2>
+      <p>Вы можете узнать, какие данные о вас есть, попросить исправить или удалить их и отозвать согласие (Закон Республики Казахстан «О персональных данных и их защите»). Поскольку аккаунтов нет, а записи голоса удаляются сразу после разбора, на сервере обычно нет данных, связанных с вами. Запросы — [контакт]; ответ — в течение 30 дней.</p>
+
+      <h2>10. Изменения</h2>
+      <p>Новую версию политики мы публикуем по этому адресу с датой. Если изменения существенные — сообщим в приложении.</p>
+    </section>
+
+    <section id="kk" lang="kk">
+      <h1>AI Ustaz құпиялылық саясаты</h1>
+      <p class="черновик">Қазақша мәтін — редактордың тексеруіне арналған жоба. Даулы жағдайда орысша мәтін басым.</p>
+      <p class="мелко">1.0 нұсқа, 19.11.2026. aiustaz.pro сайтына және Android-қа арналған AI Ustaz қолданбасына (pro.aiustaz.app) қолданылады.</p>
+
+      <h2>1. Біз кімбіз</h2>
+      <p>AI Ustaz — «Муаллим сани» әдістемесі бойынша Құранды дұрыс оқуды үйрететін тегін ЖИ-тәлімгер. Жобаны иесінің бизнесі қаржыландырады. Оператор: [оператор]. Деректер бойынша байланыс: [контакт].</p>
+
+      <h2>2. Қысқаша</h2>
+      <ul>
+        <li>Тіркелу мен аккаунт жоқ. Аты-жөніңізді, телефоныңызды, поштаңызды сұрамаймыз.</li>
+        <li>Жарнама жоқ. Жарнамалық идентификатор, аналитика, санауыштар мен трекерлер жоқ.</li>
+        <li>Пайдаланушы деректерін сатпаймыз және үшінші тұлғаларға бермейміз.</li>
+        <li>Сабақ прогресі мен баптаулар тек сіздің құрылғыңызда сақталады.</li>
+        <li>Дауыс жазбасы біздің серверге тек сіз «Тексеру» басқанда жіберіледі, Қазақстандағы серверде өңделеді және талдаудан кейін бірден жойылады.</li>
+      </ul>
+
+      <h2>3. Құрылғыда не сақталады</h2>
+      <p>Өткен сабақтар, сабақ күндері, таңдалған тіл, безендіру және намаз уақытына арналған қала құрылғыңыздағы браузер жадында сақталады. Олар біздің серверге жіберілмейді. Оларды браузер баптауларында aiustaz.pro сайтының деректерін тазалап немесе қолданбаны жойып өшіруге болады.</p>
+
+      <h2>4. Дауыс жазбасы</h2>
+      <ul>
+        <li>Жазба тек сіз басқаннан кейін басталады. Микрофонға алғашқы сұраудың алдында қолданба не болатынын түсіндіреді. Микрофонға рұқсат — браузердегі aiustaz.pro сайтының рұқсаты (Android қолданбасында — Chrome-да); оны баптауларда қайтарып алуға болады.</li>
+        <li>Қарапайым жазба («Өзіңізді тыңдаңыз») тек бет жадында болады және ешқайда жіберілмейді.</li>
+        <li>Дауыспен тексеру: тек сіз «Тексеру» басқанда жазба қорғалған байланыс (HTTPS) арқылы Қазақстандағы біздің серверге жіберіледі. Тану біздің серверде жүреді; жазба сыртқы қызметтерге және ЖИ жүйелеріне берілмейді. Талдаудан кейін жазба бірден жойылады; жауап ретінде тек «Өзіңізді тексеріңіз» кеңестері келеді.</li>
+        <li>Біз дауыс іздерін жасамаймыз, дауыспен кіруді қолданбаймыз және дауыс бойынша эмоцияны, жынысты немесе жасты анықтамаймыз.</li>
+        <li>Жазбалар модельдерді үйретуге пайдаланылмайды. Мұндай мүмкіндік пайда болса — тек ересектің әдепкі бойынша өшірулі жеке келісімімен; балалардың жазбалары бұған ешқашан пайдаланылмайды.</li>
+      </ul>
+
+      <h2>5. Орналасқан жер</h2>
+      <p>Намаз уақыты мен құбыла бағыты үшін қаланы қолмен таңдауға болады. «Геолокация бойынша анықтау» бассаңыз, браузер рұқсат сұрайды; координаттар тек құрылғыда ең жақын қаланы табу үшін пайдаланылады және серверге жіберілмейді.</p>
+
+      <h2>6. Сервердің техникалық журналы</h2>
+      <p>Кез келген сайт сияқты, aiustaz.pro сервері шабуылдардан қорғау және ақауларды іздеу үшін сұраулардың техникалық журналын (IP-мекенжай, уақыт, сұралған бет мекенжайы, браузер түрі) жүргізуі мүмкін. Журнал шектеулі мерзім ([мерзім]) сақталады, жарнамаға пайдаланылмайды және үшінші тұлғаларға берілмейді. Дауыс жазбаларының мазмұны журналға түспейді.</p>
+
+      <h2>7. Жас</h2>
+      <p>AI Ustaz 16 жастан асқан пайдаланушыларға арналған. 13–17 жастағы жасөспірімдерге — тек ата-анасының немесе өзге заңды өкілінің келісімімен. 13 жасқа толмаған балаларға арналмаған.</p>
+
+      <h2>8. ЖИ туралы ескерту</h2>
+      <p>AI Ustaz жасанды интеллектіні пайдаланады. ЖИ кеңестері дәл болмауы мүмкін: бұл оқудағы көмек, баға емес және мұғалімді (ұстазды) алмастырмайды; қолданба ижаза бермейді және пәтуа шығармайды. ЖИ туралы ескертудің толық мәтіні — арабша және интерфейс тілінде — алғашқы пайдаланудан бұрын көрсетіледі және қолданбада әрдайым қолжетімді: «Тағы» → «ЖИ туралы ескерту».</p>
+
+      <h2>9. Сіздің құқықтарыңыз</h2>
+      <p>Сіз туралы қандай деректер бар екенін білуге, оларды түзетуді немесе жоюды сұрауға және келісімді қайтарып алуға құқығыңыз бар (Қазақстан Республикасының «Дербес деректер және оларды қорғау туралы» Заңы). Аккаунт болмағандықтан және дауыс жазбалары талдаудан кейін бірден жойылатындықтан, серверде әдетте сізге байланысты деректер болмайды. Сұраулар — [контакт]; жауап — 30 күн ішінде.</p>
+
+      <h2>10. Өзгерістер</h2>
+      <p>Саясаттың жаңа нұсқасын осы мекенжайда күнімен жариялаймыз. Өзгерістер елеулі болса — қолданбада хабарлаймыз.</p>
+    </section>
+
+    <section id="en" lang="en">
+      <h1>AI Ustaz Privacy Policy</h1>
+      <p class="мелко">Version 1.0, 19 November 2026. Applies to the website aiustaz.pro and the AI Ustaz app for Android (pro.aiustaz.app).</p>
+
+      <h2>1. Who we are</h2>
+      <p>AI Ustaz is a free AI tutor that teaches correct Quran reading using the “Muallim Sani” method. The project is funded by the owner’s business. Operator: [operator]. Contact for data questions: [contact].</p>
+
+      <h2>2. In short</h2>
+      <ul>
+        <li>No sign-up and no accounts. We do not ask for your name, phone number or email.</li>
+        <li>No ads. No advertising ID, no analytics, counters or trackers.</li>
+        <li>We do not sell user data or share it with third parties.</li>
+        <li>Lesson progress and settings are stored only on your device.</li>
+        <li>A voice recording is sent to our server only when you tap “Check”; it is processed on our server in Kazakhstan and deleted immediately after analysis.</li>
+      </ul>
+
+      <h2>3. What is stored on your device</h2>
+      <p>Completed lessons, study days, interface language, theme and the city for prayer times are kept in the browser storage on your device. They are not sent to our server. You can delete them by clearing site data for aiustaz.pro in your browser settings or by uninstalling the app.</p>
+
+      <h2>4. Voice recordings</h2>
+      <ul>
+        <li>Recording starts only after you tap the button. Before the first microphone request the app explains what will happen. Microphone access is a site permission for aiustaz.pro in your browser (in the Android app — in Chrome); you can revoke it in settings.</li>
+        <li>A regular recording (“Listen to yourself”) stays in the page memory only and is never sent anywhere.</li>
+        <li>Voice reading check: only when you tap “Check”, the recording is sent over an encrypted connection (HTTPS) to our server in Kazakhstan. Recognition runs on our own server; the recording is not shared with external services or AI systems. It is deleted immediately after analysis; you receive only gentle “Check yourself” hints.</li>
+        <li>We do not create voiceprints, offer voice login, or infer emotions, gender or age from your voice.</li>
+        <li>Recordings are not used to train models. If this ever becomes possible, it will require a separate adult opt-in, off by default; children’s recordings will never be used for this.</li>
+      </ul>
+
+      <h2>5. Location</h2>
+      <p>For prayer times and the qibla direction you can pick a city manually. If you tap “Detect by geolocation”, the browser asks for permission; coordinates are used on the device only to find the nearest city and are not sent to the server.</p>
+
+      <h2>6. Server technical log</h2>
+      <p>Like any website, the aiustaz.pro server may keep a technical request log (IP address, time, requested page address, browser type) to protect against attacks and troubleshoot failures. The log is kept for a limited period ([period]), is not used for advertising and is not shared with third parties. The content of voice recordings never goes into the log.</p>
+
+      <h2>7. Age</h2>
+      <p>AI Ustaz is intended for users aged 16 and over. Teenagers aged 13–17 may use it only with the consent of a parent or other legal guardian. It is not intended for children under 13.</p>
+
+      <h2>8. AI notice</h2>
+      <p>AI Ustaz uses artificial intelligence. AI hints may be inaccurate: they are a study aid, not a grade and not a replacement for a teacher (ustaz); the app does not grant ijazah and does not issue fatwas. The full AI notice — in Arabic and in the interface language — is shown before first use and is always available in the app: “More” → “AI notice”.</p>
+
+      <h2>9. Your rights</h2>
+      <p>You may ask what data we hold about you, request correction or deletion, and withdraw consent (Law of the Republic of Kazakhstan “On Personal Data and Their Protection”). Since there are no accounts and voice recordings are deleted right after analysis, the server normally holds no data linked to you. Requests: [contact]; we reply within 30 days.</p>
+
+      <h2>10. Changes</h2>
+      <p>We publish new versions of this policy at this address with a date. If changes are significant, we will tell you in the app.</p>
+    </section>
+  </body>
+</html>

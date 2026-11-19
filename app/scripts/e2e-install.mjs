@@ -156,6 +156,8 @@ export async function установкаСквозной(браузер, баз�
     проверить(['any', 'maskable', 'monochrome'].every((п) => ман.icons.some((и) => и.purpose === п)) && ман.icons.some((и) => и.sizes === '192x192'), 'манифест: значки 192 и 512, any + maskable + monochrome');
     const а = await размерPNG(apple);
     проверить(а.png && а.ш === 180 && а.в === 180, 'apple-touch-icon: PNG 180×180');
+    const политика = await fetch(база + '/aiustaz/privacy.html');
+    проверить(политика.status === 200 && (await политика.text()).includes('Политика конфиденциальности AI Ustaz'), 'политика конфиденциальности: /aiustaz/privacy.html (постоянный адрес для Google Play)');
   }
 
   // ── 1. Android Chrome на aiustaz.pro ──

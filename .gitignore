@@ -64,3 +64,6 @@ __pycache__/
 
 # Рендер баннера: временный файл
 app/og/.og-tmp.html
+
+# Графика Google Play (twa/play/make-graphics.mjs) — растры не в git
+play-graphics/
