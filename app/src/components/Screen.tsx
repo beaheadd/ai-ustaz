@@ -3,10 +3,13 @@
  * необязательный закреплённый низ. На десктопе — колонка по центру (ШИРИНА_КОЛОНКИ).
  *
  * Контракт:
- *   <Экран заголовок="Урок 3" плашка="урок|общая|нет" назад? справа? низ? прокрутка? testID?>
+ *   <Экран заголовок="Урок 3" плашка="урок|общая|нет" назад? эмблема? справа? низ? прокрутка? testID?>
  *     …содержимое…
  *   </Экран>
  * - назад: показывать ли «назад» (по умолчанию — если в стеке есть куда); вызывает useНавигация().назад().
+ *   Кнопка — значок «назад» и слово «Назад» (testID кнопка-назад).
+ * - эмблема: малая эмблема AI Ustaz (фонарь-шырақ, 24 px) слева от заголовка, когда «назад» нет
+ *   (по умолчанию true — главная и первые экраны).
  * - плашка: «урок» — ОБЯЗАТЕЛЬНО на каждом экране урока (черновик, проходит проверку устаза).
  * - низ: кнопки, прижатые к низу (например «Далее»).
  * - На вебе ставит document.title = «заголовок — AI Ustaz».
@@ -16,18 +19,21 @@
  *   после ответа, чтобы она не пряталась под нижней панелью). Вне <Экран> — пустая функция.
  */
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, type ComponentRef, type ReactNode } from 'react';
-import { Platform, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import { useНавигация } from '../engine/navigation';
 import { useПеревод } from '../i18n';
 import { ШИРИНА_КОЛОНКИ, useТема } from '../theme';
+import { Значок } from './Icon';
 import { ПлашкаПрототипа, type ВидПлашки } from './PrototypeBanner';
 import { Текст } from './Text';
+import { ЭмблемаУстаза } from './UstazEmblem';
 
 export type СвойстваЭкрана = {
   заголовок: string;
   children?: ReactNode;
   плашка?: ВидПлашки | 'нет';
   назад?: boolean;
+  эмблема?: boolean;
   справа?: ReactNode;
   низ?: ReactNode;
   прокрутка?: boolean;
@@ -42,8 +48,8 @@ export function useПрокрутка(): Прокрутка {
   return useContext(КонтекстПрокрутки);
 }
 
-export function Экран({ заголовок, children, плашка = 'нет', назад, справа, низ, прокрутка: прокрутка_ = true, testID }: СвойстваЭкрана) {
-  const { цвет, отступ, шрифт } = useТема();
+export function Экран({ заголовок, children, плашка = 'нет', назад, эмблема = true, справа, низ, прокрутка: прокрутка_ = true, testID }: СвойстваЭкрана) {
+  const { цвет, отступ } = useТема();
   const { t } = useПеревод();
   const навигация = useНавигация();
   const показатьНазад = назад ?? навигация.можноНазад;
@@ -86,9 +92,15 @@ export function Экран({ заголовок, children, плашка = 'не�
                 hitSlop={8}
                 style={({ pressed }) => [стили.назад, { opacity: pressed ? 0.6 : 1 }]}
               >
-                <Text style={{ color: цвет.акцент, fontSize: шрифт.заголовок, lineHeight: 28 }}>‹</Text>
-                <Text style={{ color: цвет.акцент, fontSize: шрифт.обычный }}>{t('общее.назад')}</Text>
+                <Значок имя="назад" размер={22} цвет={цвет.акцент} толщина={2} />
+                <Текст цвет={цвет.акцент} стиль={{ fontWeight: '600' }}>
+                  {t('общее.назад')}
+                </Текст>
               </Pressable>
+            </View>
+          ) : эмблема ? (
+            <View style={[стили.слот, { paddingLeft: 8 }]} testID="шапка-эмблема">
+              <ЭмблемаУстаза размер={28} />
             </View>
           ) : null}
           <Текст вид="подзаголовок" numberOfLines={1} accessibilityRole="header" стиль={стили.заголовок}>
@@ -127,7 +139,7 @@ const стили = StyleSheet.create({
   колонкаСодержимого: { width: '100%', maxWidth: ШИРИНА_КОЛОНКИ, alignSelf: 'center' },
   шапка: { flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingHorizontal: 8, gap: 4, borderBottomWidth: StyleSheet.hairlineWidth },
   слот: { justifyContent: 'center' },
-  назад: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: 8, paddingHorizontal: 6 },
+  назад: { flexDirection: 'row', alignItems: 'center', gap: 2, minHeight: 44, paddingVertical: 8, paddingRight: 8, paddingLeft: 2 },
   заголовок: { flex: 1, paddingHorizontal: 8 },
   тело: { flex: 1, width: '100%' },
   низ: { borderTopWidth: StyleSheet.hairlineWidth },

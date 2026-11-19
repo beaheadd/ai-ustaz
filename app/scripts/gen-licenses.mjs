@@ -7,6 +7,8 @@
  * все файлы node_modules, реально попавшие в бандл, и для каждого пакета читает
  * package.json (имя, версия, лицензия) и файлы LICENSE…, LICENCE…, COPYING…, NOTICE….
  * Шрифт Amiri Quran идёт ассетом — его пакет добавляется по ассетам экспорта.
+ * Свои файлы не из npm (подмножество шрифта Inter, app/src/assets/fonts; координаты GeoNames) — из ЛОКАЛЬНЫЕ_ФАЙЛЫ:
+ * имя, версия, лицензия и текст из licenses/fonts/ (строки «# …» — шапка с источником, в экран не идут).
  *
  * Выход:
  *   app/src/legal/licenses.json            — для экрана (грузится отдельным чанком);
@@ -40,6 +42,30 @@ const ЗАПАСНЫЕ_ТЕКСТЫ = {
   '@react-native/normalize-colors': 'react-native-LICENSE.txt',
   'metro-runtime': 'metro-LICENSE.txt',
 };
+
+/**
+ * Свои файлы в бандле не из npm (запись — вручную, при смене файла — здесь же).
+ * Inter: подмножество tools/fonts/subset_ui_font.py из @expo-google-fonts/inter@0.4.2 (OFL-1.1, без Reserved Font Name).
+ * ассет — по имени файла в dist/assets; модуль — по пути исходника в source map (данные внутри JS-чанка).
+ * GeoNames: координаты мест для времени намаза (CC BY 4.0 — атрибуция на экране «Лицензии»), 19.11.2026.
+ */
+const ЛОКАЛЬНЫЕ_ФАЙЛЫ = [
+  {
+    пакет: 'Inter (шрифт интерфейса, подмножество: app/src/assets/fonts/inter-400, inter-600)',
+    версия: '4.001',
+    лицензия: 'OFL-1.1',
+    файлЛицензии: 'licenses/fonts/Inter-OFL.txt',
+    ассет: /^inter-(400|600)\.[0-9a-f]+\.woff2$/,
+  },
+  {
+    // Данные в JS-чанке (не ассет): запись — если модуль попал в source map экспорта.
+    пакет: 'GeoNames (координаты мест РК для времени намаза и киблы: app/src/prayer/places-kz.json)',
+    версия: 'cities1000, 2026',
+    лицензия: 'CC-BY-4.0',
+    файлЛицензии: 'licenses/data/GeoNames-CC-BY-4.0.txt',
+    модуль: /src\/prayer\/places-kz\.json$/,
+  },
+];
 
 // 0. Прямые зависимости (быстро, без экспорта).
 {
@@ -83,12 +109,14 @@ try {
 
   // 1. Исходники из source maps → каталоги пакетов.
   const пакеты = new Map(); // каталог пакета → true
+  const своиМодули = new Set(); // пути исходников из source maps (для своих данных в ЛОКАЛЬНЫЕ_ФАЙЛЫ)
   const папкаJS = path.join(врем, '_expo', 'static', 'js', 'web');
   for (const файл of fs.readdirSync(папкаJS).filter((ф) => ф.endsWith('.map'))) {
     const карта = JSON.parse(fs.readFileSync(path.join(папкаJS, файл), 'utf8'));
     // Metro пишет индексную карту (sections); пути — от корня проекта, с ведущим «/».
     const источники = [...(карта.sources ?? []), ...(карта.sections ?? []).flatMap((с) => с.map?.sources ?? [])];
     for (const источник of источники) {
+      своиМодули.add(источник);
       const абсолютный = fs.existsSync(источник) ? источник : path.join(корень, источник);
       const каталог = каталогПакета(path.normalize(абсолютный));
       if (каталог) пакеты.set(каталог, true);
@@ -121,6 +149,20 @@ try {
     }
     const лицензия = typeof pkg.license === 'string' ? pkg.license : pkg.license?.type ?? 'не указана';
     записи.set(ключ, { пакет: pkg.name, версия: pkg.version, лицензия, тексты });
+  }
+
+  // 2б. Свои файлы (шрифт Inter) — если их ассет есть в экспорте.
+  const ассеты = fs.existsSync(path.join(врем, 'assets')) ? fs.readdirSync(path.join(врем, 'assets')) : [];
+  for (const л of ЛОКАЛЬНЫЕ_ФАЙЛЫ) {
+    const есть = л.ассет ? ассеты.some((а) => л.ассет.test(а)) : [...своиМодули].some((м) => л.модуль.test(м));
+    if (!есть) continue;
+    const строки = fs.readFileSync(path.join(репозиторий, л.файлЛицензии), 'utf8').split('\n');
+    записи.set(`${л.пакет}@${л.версия}`, {
+      пакет: л.пакет,
+      версия: л.версия,
+      лицензия: л.лицензия,
+      тексты: [{ файл: л.файлЛицензии, текст: строки.filter((с) => !с.startsWith('#')).join('\n').trim() }],
+    });
   }
 
   const список = [...записи.values()].sort((а, б) => а.пакет.localeCompare(б.пакет));

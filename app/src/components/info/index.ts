@@ -4,12 +4,13 @@
  */
 export { АятСоСловами } from './AyahWords';
 export { КарточкаПредупрежденияИИ, ПредупреждениеИИИзКонтента } from './AiNotice';
-export { Пункты } from './Bullets';
+export { Пункты, type Пункт } from './Bullets';
 export { ПунктМеню } from './MenuRow';
 export { КарточкаОбъяснения, ЧипУровня } from './ExplanationCard';
 export { СмешанныйТекст, разбитьНаКуски } from './MixedText';
 export { онбордингПредлагался, отметитьОнбордингПредложен } from './firstVisit';
 export { ЧтоЕстьЧтоБудет } from './Roadmap';
+export { Нукта, УзелПути, ШагПути, type ВидУзла } from './Path';
 export { ДниЗанятий, последниеДни } from './StudyDays';
 export {
   загрузитьДанные,

@@ -5,6 +5,8 @@
 
 - `app-web-bundle.txt` — каждый пакет, попавший в веб-бандл, с версией и полным текстом лицензии.
   Создаёт `app/scripts/gen-licenses.mjs` (`npm run licenses` в `app/`), руками не править.
+- `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`; источник — в первой строке «# …»).
+- `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник).
 - `upstream/` — тексты MIT для пакетов, у которых в npm нет файла LICENSE (источник с тегом — в шапке файла):
   - `react-native-LICENSE.txt` — facebook/react-native@v0.88.1, для `@react-native/js-polyfills`, `@react-native/normalize-colors`;
   - `metro-LICENSE.txt` — facebook/metro@v0.87.1, для `metro-runtime`.
@@ -12,13 +14,16 @@
 
 Состояние на 18.11.2026 (прототип v0, веб-сборка для batr.kz/aiustaz).
 
-## Пакеты в веб-бандле (24)
+## Пакеты в веб-бандле (27)
 
 | Лицензия | Пакеты |
 |---|---|
-| MIT (22) | react, react-dom, scheduler, react-native-web, @react-native/js-polyfills, @react-native/normalize-colors, metro-runtime, expo, expo-asset, expo-font, expo-modules-core, @expo/cli (шаблон страницы и рантайм), @react-native-async-storage/async-storage, @babel/runtime, fbjs, invariant, inline-style-prefixer, css-in-js-utils, postcss-value-parser, styleq, merge-options, is-plain-obj |
+| MIT (23) | react, react-dom, scheduler, react-native-web, @react-native/js-polyfills, @react-native/normalize-colors, metro-runtime, expo, expo-asset, expo-font, expo-modules-core, @expo/cli (шаблон страницы и рантайм), @react-native-async-storage/async-storage, @babel/runtime, fbjs, invariant, inline-style-prefixer, css-in-js-utils, postcss-value-parser, styleq, merge-options, is-plain-obj, adhan 4.4.6 (batoulapps/adhan-js — расчёт времени намаза на устройстве, без изменений; 19.11.2026) |
 | BSD-3-Clause (1) | hyphenate-style-name |
 | MIT (пакет) + SIL OFL 1.1 (шрифт) (1) | @expo-google-fonts/amiri-quran — шрифт Amiri Quran идёт в сборку файлом `.ttf` |
+| SIL OFL 1.1 (1) | Inter 4.001 — шрифт интерфейса, своё подмножество (`app/src/assets/fonts/inter-400/600.woff2`, нативно `.ttf`) из `@expo-google-fonts/inter@0.4.2`; без Reserved Font Name, поэтому подмножество без переименования. Текст — `licenses/fonts/Inter-OFL.txt`, скрипт — `tools/fonts/subset_ui_font.py` (дизайн-система 19.11.2026) |
+
+Только в нативной сборке (в веб-бандл не попадает): `react-native-svg` 15.16.0 (MIT) — SVG значков, эмблемы и орнамента на iOS/Android; на вебе те же компоненты рисуют обычные `<svg>` браузера (`app/src/components/primitives/svg.web.tsx`).
 
 Только для сборки (в бандл не попадают): TypeScript (Apache-2.0), @types/react (MIT), сборщик Metro (MIT).
 
@@ -34,6 +39,9 @@
 | Шрифт Amiri Quran | @expo-google-fonts/amiri-quran 0.4.1 | SIL Open Font License 1.1 |
 | Методика и порядок уроков | «Муаллим сани», Ахмадхади Максуди (1868–1941) | Берём метод и структуру, не тексты и не вёрстку изданий. Название в интерфейсе — нейтральное («по методике Ахмадхади Максуди»), пока не проверены товарные знаки (программа курса §16, вопрос 1). |
 | Уроки, подсказки, примеры объяснений | `docs/программа-курса.md`, `docs/каталог-ошибок.md` (свои документы) | Свой контент проекта, статус — черновик (проверка устаза и подпись совета ещё впереди). |
+| Координаты 168 мест РК (время намаза и кибла) | GeoNames (geonames.org), выгрузка cities1000 через npm `cities.json` 1.1.66 — 162 места; 6 мест — точка из общедоступного списка мест ДУМК (Алатау, Қаскелең, Жем, Қордай, Байқоңыр, Казталов). Файл — `app/src/prayer/places-kz.json` | GeoNames — CC BY 4.0: атрибуция на экране «Лицензии» (`licenses/data/GeoNames-CC-BY-4.0.txt`, генератор лицензий) и на экране «Время намаза». Пакет `cities.json` в бандл не входит (только выборка при сборке списка). |
+| Магнитное склонение мест (компас киблы) | Модель WMM2025, NOAA NCEI / NGA, на 01.01.2027 (расчёт при сборке списка, npm `geomagnetism` 0.2.0, Apache-2.0 — в бандл не входит) | Общественное достояние. Модель действует до 13.11.2029 — пересобрать список с WMM2030. |
+| Время намаза | Свой расчёт на устройстве библиотекой adhan 4.4.6 (MIT) по методу ДУМК: ISNA 15°/15°, аср ханафи, правило высоких широт TwilightAngle, поправки ДУМК ±3/±5 мин, UTC+5. Метод — из исходника muftyat.kz и сверки с таблицами api.muftyat.kz (исследование 13) | Таблицы ДУМК в репозиторий и бандл не кладём (письменного разрешения нет): подпись «Расчёт по методу ДУМК (±1 мин)», не «по данным ДУМК». |
 
 Голоса кари в прототипе нет; синтез арабской речи и чужие записи не используются.
 

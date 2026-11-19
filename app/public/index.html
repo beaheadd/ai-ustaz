@@ -8,7 +8,8 @@
       метки в этом комментарии писать нельзя: Expo заменяет только первое вхождение).
       Источник: expo/expo packages/@expo/cli/static/template/index.html, опубликован как @expo/cli@58.1.21 (MIT);
       коммит в npm-пакете не указан (нет gitHead) — запись в docs/источники-кода.md делает ведущий.
-      Изменено: язык из app.json, встроенный SVG-значок вместо favicon.png, фон до загрузки (светлая/тёмная),
+      Изменено: язык из app.json, встроенный SVG-значок вместо favicon.png, фон до загрузки (светлая/тёмная — токен «фон»
+      дизайн-системы, app/src/theme/tokens.ts),
       строка «загружается» в #root до загрузки JS, noscript по-русски и по-казахски, referrer.
       CSP добавляет scripts/after-export.mjs (не здесь — мешала бы дев-серверу).
     -->
@@ -28,11 +29,11 @@
       body {
         overflow: hidden;
         margin: 0;
-        background: #f6f1e7;
+        background: #f7f2e8;
       }
       @media (prefers-color-scheme: dark) {
         body {
-          background: #121917;
+          background: #0c1715;
         }
       }
       #root {

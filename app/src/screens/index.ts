@@ -13,6 +13,9 @@ import { Урок0 } from './Lesson0Screen';
 import { Урок } from './LessonScreen';
 import { Лицензии } from './LicensesScreen';
 import { Онбординг } from './OnboardingScreen';
+import { ГородНамаза } from './PrayerCityScreen';
+import { ВремяНамаза } from './PrayerTimesScreen';
+import { Кибла } from './QiblaScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -23,4 +26,7 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   какОбъясняем: КакОбъясняем,
   оПроекте: ОПроекте,
   лицензии: Лицензии,
+  кибла: Кибла,
+  намаз: ВремяНамаза,
+  городНамаза: ГородНамаза,
 };

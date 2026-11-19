@@ -20,6 +20,9 @@ export type Маршруты = {
   какОбъясняем: undefined;
   оПроекте: undefined;
   лицензии: undefined;
+  кибла: undefined;
+  намаз: undefined;
+  городНамаза: undefined;
 };
 
 export type ИмяЭкрана = keyof Маршруты;
@@ -42,6 +45,9 @@ const ПУТИ: { [K in ИмяЭкрана]: string } = {
   какОбъясняем: 'how',
   оПроекте: 'about',
   лицензии: 'licenses',
+  кибла: 'qibla',
+  намаз: 'prayer',
+  городНамаза: 'prayer-city',
 };
 
 type Разбор<P> = { вСтроку: (п: P) => string; изСтроки: (с: string) => P | null };
