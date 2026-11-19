@@ -27,6 +27,10 @@
 
 Только для сборки (в бандл не попадают): TypeScript (Apache-2.0), @types/react (MIT), сборщик Metro (MIT).
 
+Значки приложения (PWA, экран «Домой», 19.11.2026) — свои PNG из своей эмблемы (`tools/icons/make-icons.mjs`, Playwright только рисует, в сборку не входит). Новых пакетов в веб-бандле нет.
+
+**Android-приложение (TWA, `twa/`, Google Play)** собирает владелец Bubblewrap (`@bubblewrap/cli`, Apache-2.0) на своём компьютере. В APK попадают библиотеки Google `com.google.androidbrowserhelper:androidbrowserhelper` и `androidx.browser` (обе Apache-2.0) — они только открывают сайт aiustaz.pro в Chrome; рекламы и аналитики в них нет, `AD_ID` проверяется перед загрузкой (`twa/README.md`, шаг 4). Сам сайт внутри — тот же веб-бандл (лицензии — на экране «Лицензии»).
+
 Копилефта (GPL, AGPL, LGPL, SSPL), некоммерческих лицензий и NPL в бандле нет — генератор это проверяет.
 Аналитики, рекламы и трекеров в зависимостях нет.
 

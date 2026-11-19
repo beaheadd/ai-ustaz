@@ -4,8 +4,13 @@
  *
  * Проверяет (любая ошибка → код выхода 1):
  *  1. Нет растровых файлов (png jpg jpeg webp gif ico bmp avif tif tiff) — .gitignore batr-world
- *     их отбрасывает, в выкладке они бы потерялись.
- *  2. У всех файлов, кроме index.html и metadata.json, в имени есть хэш содержимого
+ *     их отбрасывает, в выкладке они бы потерялись. УЗКОЕ ИСКЛЮЧЕНИЕ (владелец 19.11.2026: TWA и установка на экран):
+ *     PNG-значки приложения — только в pwa/, только имена из scripts/pwa.mjs (<вид>.<md5>.png), не больше пяти,
+ *     каждый ≤ 128 КБ, вместе ≤ 320 КБ, размер картинки — как в имени. В batr-world для них нужно исключение
+ *     `!web/public/aiustaz/pwa/*.png` в .gitignore (без него п. 5 — предупреждение здесь; tools/release-batr.sh
+ *     выкладку не пропустит). Манифест pwa/manifest.<md5>.json: ссылка в index.html, scope и start_url в /aiustaz/,
+ *     standalone, значки 192/512/maskable/monochrome существуют и нужного размера; apple-touch-icon 180×180.
+ *  2. У всех файлов, кроме index.html, metadata.json и privacy.html, в имени есть хэш содержимого
  *     (service worker batr.kz кэширует файлы по URL навсегда); у assets/ хэш = md5 содержимого.
  *     Карт исходников (.map) в сборке нет.
  *  3. Пути в index.html (src/href) начинаются с /aiustaz/ (или data:); есть <script> бандла;
@@ -45,6 +50,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
+import { ИМЯ_ЗНАЧКА, ИМЯ_МАНИФЕСТА, ПАПКА_PWA, ПРЕДЕЛ_ЗНАЧКА, ПРЕДЕЛ_ЗНАЧКОВ, ЗНАЧКИ_PWA } from './pwa.mjs';
 
 const корень = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const папка = path.resolve(корень, process.argv[2] ?? 'dist');
@@ -73,7 +79,9 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // других агентов) — 1 364 060 байт, с правками — 1 381 086. Состав: <ТекстАята> (знак остановки не отрывается от слова),
 // размер арабского текста А−/А+, свёрнутый мини-плеер и значок «по кругу», кружок-кнопка аята, ссылки и поиск по
 // синонимам в списке сур, «Весь аят» и текущая часть в панели записи, фокус и live-регионы, состояние «файл не найден».
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1350);
+// Владелец 19.11.2026: установка приложения (ветка install-pwa, слита с Кораном): +33 641 байт JS — экран #/install (ru + kk,
+// шаги для Android, iPhone, встроенных браузеров), строка на главной и в «Ещё», шесть значков: 1350 → 1383 КБ.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1383);
 // Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
 // Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
 // + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
@@ -81,13 +89,17 @@ const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 
 // Плеер чтения кари: всего 4688 → 4718 КБ — тот же прирост JS (+30 111 байт); аудиофайлов в сборке нет (п. 1: медиа — только media/).
 // Запись и проверка аята: всего 4718 → 4736 КБ — тот же прирост JS (+17 969 байт); записей голоса в сборке нет.
 // Экраны Корана: всего 4736 → 4770 КБ — тот же прирост JS (+34 879 байт); новых статических файлов нет.
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 4770);
+// Установка приложения: значки pwa/, манифест, privacy.html и тот же прирост JS — всего 4770 → ВСЕГО_ПОСЛЕ_ЗАМЕРА КБ.
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 4930);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
 const МЕДИА = /\.(m4a|mp3|ogg|opus|webm|mp4|wav)$/i;
 const ВСТРАИВАНИЕ = /youtube\.com\/embed|youtube-nocookie\.com|ytimg\.com|googlevideo\.com|<iframe/i;
-const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json']);
+// privacy.html — политика конфиденциальности для Google Play: нужен постоянный адрес
+// https://aiustaz.pro/aiustaz/privacy.html (владелец 19.11.2026: «подготовить файлы, чтобы загрузить на Play Market»).
+// На aiustaz.pro SW нет, nginx отдаёт её с no-cache; на batr.kz её может закэшировать SW сайта — для Play адрес aiustaz.pro.
+const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json', 'privacy.html']);
 const ХЭШ_В_ИМЕНИ = /[.-]([0-9a-f]{20,})\.[a-z0-9]+$/i;
 
 /** Разрешённые URL-строки в коде зависимостей: префикс → почему это не запрос. */
@@ -96,6 +108,7 @@ const РАЗРЕШЁННЫЕ_URL = [
   ['https://react.dev/errors/', 'ссылка в тексте ошибки React (production) — только текст'],
   ['https://expo.dev', 'expo-asset: адрес по умолчанию для ассетов-чисел; на вебе ассеты — строки, ветка не используется'],
   ['https://classic-assets.eascdn.net/~assets/', 'expo-asset: ветка только для Expo Go (ExponentKernel); на вебе не выполняется'],
+  ['https://aiustaz.pro/', 'свой домен AI Ustaz: ссылка «ставить с aiustaz.pro» на экране установки (#/install) — переход по нажатию, не загрузка'],
   ['https://www.youtube.com/watch?v=', 'content/media.json: ссылка на урок учителя — текст для кнопки «Смотреть на YouTube» (внешнее приложение); не загрузка, не встраивание'],
 ];
 /** Точные строки (не префиксы): схемы без адреса и фиктивные базы для new URL(). */
@@ -131,7 +144,8 @@ const файлы = обойти(папка).map((абс) => ({ абс, отн: p
 // 1–2. Растровые файлы, хэши, карты.
 for (const { абс, отн } of файлы) {
   const имя = path.basename(отн);
-  if (РАСТР.test(имя)) ошибка(`растровый файл (потеряется в batr-world): ${отн}`);
+  if (РАСТР.test(имя) && !(отн.startsWith(ПАПКА_PWA + '/') && отн.split('/').length === 2 && ИМЯ_ЗНАЧКА.test(имя)))
+    ошибка(`растровый файл (потеряется в batr-world): ${отн}` + (РАСТР.test(имя) && отн.startsWith(ПАПКА_PWA + '/') ? ' — в pwa/ только значки <вид>.<md5>.png из scripts/pwa.mjs' : ''));
   if (имя.endsWith('.map')) ошибка(`карта исходников в сборке: ${отн}`);
   if (МЕДИА.test(имя) && !отн.startsWith('media/')) ошибка(`медиафайл вне media/: ${отн}`);
   if (отн.startsWith('media/') && !МЕДИА.test(имя)) ошибка(`в media/ — только аудио и видео: ${отн}`);
@@ -157,7 +171,8 @@ for (const с of ссылки) {
 }
 if (!/<script[^>]+src="\/aiustaz\/_expo\/static\/js\/web\/index-[0-9a-f]+\.js"/i.test(html)) ошибка('в index.html нет <script> основного бандла /aiustaz/_expo/static/js/web/index-<хэш>.js');
 if (!html.includes('http-equiv="Content-Security-Policy"')) ошибка('в index.html нет CSP (запускать сборку через npm run export:web)');
-if (/<link[^>]+rel="[^"]*icon[^"]*"[^>]+href="\/aiustaz\/[^"]+\.(png|ico)"/i.test(html)) ошибка('растровый значок в index.html');
+// Значок вкладки — только встроенный SVG; PNG — только apple-touch-icon из pwa/ (ниже, п. 1, исключение 19.11.2026).
+if (/<link[^>]+rel="(?:shortcut )?icon"[^>]+href="\/aiustaz\/[^"]+\.(png|ico)"/i.test(html)) ошибка('растровый значок вкладки в index.html');
 for (const м of html.matchAll(/%[A-Z_]+%/g)) ошибка(`неподставленная метка шаблона в index.html: ${м[0]}`);
 {
   // Кодировку браузер ищет в первых 1024 байтах (если сервер не прислал charset) — иначе кириллица в чанках «поедет».
@@ -166,6 +181,59 @@ for (const м of html.matchAll(/%[A-Z_]+%/g)) ошибка(`неподставл
 }
 if (!/<html[^>]*\slang="(ru|kk)"/i.test(html)) ошибка('в index.html нет <html lang="ru"> (язык из app.json)');
 if (!/<title>[^<%]+<\/title>/i.test(html)) ошибка('в index.html нет заголовка <title> (из app.json)');
+
+// 1б. PWA: значки (исключение из п. 1) и манифест.
+const pwaЗначки = {};
+{
+  let сумма = 0;
+  for (const { абс, отн } of файлы) {
+    if (!отн.startsWith(ПАПКА_PWA + '/') || !РАСТР.test(отн)) continue;
+    const м = path.basename(отн).match(ИМЯ_ЗНАЧКА);
+    if (!м) continue;
+    const байты = fs.readFileSync(абс);
+    сумма += байты.length;
+    if (байты.length > ПРЕДЕЛ_ЗНАЧКА) ошибка(`значок больше ${ПРЕДЕЛ_ЗНАЧКА / 1024} КБ: ${отн}`);
+    const png = байты.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+    const ширина = png ? байты.readUInt32BE(16) : 0;
+    const высота = png ? байты.readUInt32BE(20) : 0;
+    const нужно = ЗНАЧКИ_PWA.find((з) => з.вид === м[1]).размер;
+    if (!png || ширина !== нужно || высота !== нужно) ошибка(`значок ${отн}: нужен PNG ${нужно}×${нужно}, а это ${png ? ширина + '×' + высота : 'не PNG'}`);
+    if (crypto.createHash('md5').update(байты).digest('hex') !== м[2]) ошибка(`хэш в имени значка не совпадает с md5 содержимого: ${отн}`);
+    if (pwaЗначки[м[1]]) ошибка(`два значка ${м[1]} в ${ПАПКА_PWA}/`);
+    pwaЗначки[м[1]] = '/aiustaz/' + отн;
+  }
+  if (сумма > ПРЕДЕЛ_ЗНАЧКОВ) ошибка(`значки PWA вместе ${кбЗначков(сумма)} КБ — больше ${ПРЕДЕЛ_ЗНАЧКОВ / 1024} КБ`);
+  for (const з of ЗНАЧКИ_PWA) if (!pwaЗначки[з.вид]) ошибка(`нет значка ${з.вид} в ${ПАПКА_PWA}/ (node tools/icons/make-icons.mjs)`);
+  const манифесты = файлы.filter((ф) => ф.отн.startsWith(ПАПКА_PWA + '/') && ИМЯ_МАНИФЕСТА.test(path.basename(ф.отн)));
+  if (манифесты.length !== 1) ошибка(`в ${ПАПКА_PWA}/ должен быть ровно один manifest.<md5>.json, найдено ${манифесты.length}`);
+  else {
+    const м = манифесты[0];
+    if (!html.includes(`<link rel="manifest" href="/aiustaz/${м.отн}"`)) ошибка(`index.html не ссылается на манифест /aiustaz/${м.отн}`);
+    let ман = null;
+    try {
+      ман = JSON.parse(fs.readFileSync(м.абс, 'utf8'));
+    } catch (е) {
+      ошибка(`манифест ${м.отн} — не JSON: ${е.message}`);
+    }
+    if (ман) {
+      if (ман.scope !== '/aiustaz/' || !String(ман.start_url).startsWith('/aiustaz/') || ман.id !== '/aiustaz/') ошибка('манифест: scope, id и start_url — в /aiustaz/');
+      if (ман.display !== 'standalone') ошибка('манифест: display standalone');
+      if (!ман.name || !ман.short_name) ошибка('манифест: нет name/short_name');
+      for (const з of ЗНАЧКИ_PWA.filter((з) => з.purpose)) {
+        const есть = (ман.icons ?? []).some((и) => и.src === pwaЗначки[з.вид] && и.sizes === `${з.размер}x${з.размер}` && и.purpose === з.purpose);
+        if (!есть) ошибка(`манифест: нет значка ${з.вид} (${з.размер}, ${з.purpose})`);
+      }
+    }
+  }
+  if (pwaЗначки['apple-touch-icon-180'] && !html.includes(`<link rel="apple-touch-icon" sizes="180x180" href="${pwaЗначки['apple-touch-icon-180']}"`))
+    ошибка('index.html: нет <link rel="apple-touch-icon" sizes="180x180"> на значок из pwa/');
+  for (const мета of ['apple-mobile-web-app-capable', 'apple-mobile-web-app-title', 'apple-mobile-web-app-status-bar-style'])
+    if (!html.includes(`<meta name="${мета}"`)) ошибка(`index.html: нет <meta name="${мета}"> (scripts/after-export.mjs)`);
+  if ((html.match(/<meta name="theme-color" media=/g) ?? []).length !== 2) ошибка('index.html: нужны два theme-color (светлая и тёмная)');
+}
+function кбЗначков(б) {
+  return (б / 1024).toFixed(0);
+}
 
 // 4. Внешние URL.
 const urlЛицензий = new Set();
@@ -217,7 +285,12 @@ if (fs.existsSync(path.join(batr, '.git')) && fs.existsSync(path.join(batr, '.gi
     вывод = е.stdout ?? '';
   }
   const игнорируемые = вывод.split('\n').filter(Boolean);
-  for (const п of игнорируемые) ошибка(`batr-world/.gitignore отбросит: ${п}`);
+  // Значки PWA (исключение 19.11.2026): пока в batr-world/.gitignore нет `!web/public/aiustaz/pwa/*.png` — предупреждение
+  // (сборка для aiustaz.pro годна); выкладку в batr-world (tools/release-batr.sh) без исключения не пропустит своя проверка.
+  const значкиPwa = игнорируемые.filter((п) => п.startsWith(ПУТЬ_В_BATR + ПАПКА_PWA + '/') && ИМЯ_ЗНАЧКА.test(path.basename(п)));
+  for (const п of игнорируемые) if (!значкиPwa.includes(п)) ошибка(`batr-world/.gitignore отбросит: ${п}`);
+  if (значкиPwa.length)
+    предупреждения.push(`batr-world/.gitignore отбросит значки PWA (${значкиPwa.length}) — добавьте в batr-world/.gitignore строку \`!${ПУТЬ_В_BATR}${ПАПКА_PWA}/*.png\` до выкладки`);
   проверкаGit = `git check-ignore в ${batr}: ${игнорируемые.length ? 'есть отброшенные' : 'все пути попадут в git'}`;
 }
 

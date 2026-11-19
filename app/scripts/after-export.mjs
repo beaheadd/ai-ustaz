@@ -17,6 +17,12 @@
  *    check-dist не пропустит «on» без MUGALIM_TARGET=preview (на batr.kz — никогда).
  * 4) ставит <link rel="preload" as="font" type="font/woff2" crossorigin> на оба начертания Inter (имена с хэшем —
  *    из dist/assets): шрифт интерфейса начинает грузиться вместе с JS, а не после его выполнения (CSP font-src 'self').
+ * 5) PWA и экран «Домой» (владелец 19.11.2026: «TWA приложение для загрузки из сайта и объяснение в APPLE»):
+ *    из значков dist/pwa/*.<md5>.png (рисует tools/icons/make-icons.mjs в app/public/pwa, Expo копирует) собирает
+ *    манифест dist/pwa/manifest.<md5>.json (scripts/pwa.mjs) и ставит в <head>: <link rel="manifest">,
+ *    <link rel="apple-touch-icon" sizes="180x180">, apple-mobile-web-app-capable / -title / -status-bar-style,
+ *    mobile-web-app-capable, два <meta name="theme-color"> (светлая и тёмная — фон экрана) вместо одного от Expo.
+ *    Помечены data-aiustaz-pwa — повторный запуск заменяет их. Манифест — того же сайта (CSP default-src 'self').
  * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
@@ -24,7 +30,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { ИМЯ_МАНИФЕСТА, ПАПКА_PWA, ЦВЕТ_ТЕМЫ_СВЕТЛАЯ, ЦВЕТ_ТЕМЫ_ТЁМНАЯ, найтиЗначки, построитьМанифест } from './pwa.mjs';
 
 const корень = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const папка = path.resolve(корень, process.argv[2] ?? 'dist');
@@ -92,4 +100,35 @@ export const МЕТКА_ПРЕДЗАГРУЗКИ = 'aiustaz-preload';
   if (!шрифты.every((и) => новый.includes(и))) throw new Error('не удалось поставить preload шрифтов в index.html');
   fs.writeFileSync(файл, новый);
   console.log('Предзагрузка шрифтов интерфейса:', шрифты.join(', '));
+}
+
+export const МЕТКА_PWA = 'aiustaz-pwa';
+{
+  const папкаPwa = path.join(папка, ПАПКА_PWA);
+  if (!fs.existsSync(папкаPwa)) throw new Error(`нет ${ПАПКА_PWA}/ в сборке — значки лежат в app/public/pwa (node tools/icons/make-icons.mjs)`);
+  for (const и of fs.readdirSync(папкаPwa)) if (ИМЯ_МАНИФЕСТА.test(и)) fs.unlinkSync(path.join(папкаPwa, и));
+  const значки = найтиЗначки(fs.readdirSync(папкаPwa));
+  const json = JSON.stringify(построитьМанифест(значки), null, 2) + '\n';
+  const имяМанифеста = `manifest.${crypto.createHash('md5').update(json).digest('hex')}.json`;
+  fs.writeFileSync(path.join(папкаPwa, имяМанифеста), json);
+  const д = `data-${МЕТКА_PWA}`;
+  const теги = [
+    `<link rel="manifest" href="/aiustaz/${ПАПКА_PWA}/${имяМанифеста}" ${д} />`,
+    `<link rel="apple-touch-icon" sizes="180x180" href="/aiustaz/${ПАПКА_PWA}/${значки['apple-touch-icon-180']}" ${д} />`,
+    `<meta name="apple-mobile-web-app-capable" content="yes" ${д} />`,
+    `<meta name="mobile-web-app-capable" content="yes" ${д} />`,
+    `<meta name="apple-mobile-web-app-title" content="AI Ustaz" ${д} />`,
+    `<meta name="apple-mobile-web-app-status-bar-style" content="default" ${д} />`,
+    `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${ЦВЕТ_ТЕМЫ_СВЕТЛАЯ}" ${д} />`,
+    `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${ЦВЕТ_ТЕМЫ_ТЁМНАЯ}" ${д} />`,
+  ];
+  const текущий = fs.readFileSync(файл, 'utf8');
+  const без = текущий
+    .replace(new RegExp(`\\s*<(?:link|meta)[^>]*${д}[^>]*>`, 'g'), '')
+    .replace(/\s*<meta name="theme-color"[^>]*>/g, ''); // одиночный theme-color от Expo (app.json) — заменяем парой
+  const после = /(<meta name="aiustaz-media-preview"[^>]*>)/i;
+  if (!после.test(без)) throw new Error('не нашёл место для тегов PWA в index.html');
+  const новый = без.replace(после, `$1\n    ${теги.join('\n    ')}`);
+  fs.writeFileSync(файл, новый);
+  console.log('PWA:', `${ПАПКА_PWA}/${имяМанифеста};`, 'значки:', Object.values(значки).join(', '));
 }

@@ -55,6 +55,10 @@
  *      9, 114 (текст побайтно = Tanzil, бисмилла, ۞ и ۩), порции и замер на 360×640, «Продолжить чтение», «Прочитать и
  *      записать» (части, запись, без «Проверить»), плеер с тестовым источником (тоны), геометрия, kk; в сборке п. 9 —
  *      «Проверить» на экране аята (uthmani_from/uthmani_words, подсветка слова);
+ *  16. (один раз) установка на экран «Домой» — scripts/e2e-install.mjs (E2E_INSTALL=0 — пропустить): manifest и
+ *      apple-touch-icon в index.html, манифест и значки; Android Chrome (beforeinstallprompt → «Установить», шаги ⋮),
+ *      iPhone Safari («Поделиться» → «На экран „Домой“»), Instagram («откройте в браузере», копирование ссылки),
+ *      компьютер, batr.kz (ставить с aiustaz.pro, манифест убран), «уже установлено»; ru и kk;
  * и всё время: ни одной ошибки в консоли/исключения, ни одного запроса на другой адрес, ни одного
  * нарушения CSP; в localStorage — только ключи aiustaz:* без аудио.
  *
@@ -77,6 +81,7 @@ import { времяНамаза } from './e2e-prayer.mjs';
 import { киблаСквозной } from './e2e-qibla.mjs';
 import { навигацияСквозной } from './e2e-nav.mjs';
 import { коранПроверкаГолосом, коранСквозной } from './e2e-quran.mjs';
+import { установкаСквозной } from './e2e-install.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require('playwright');
@@ -1158,6 +1163,17 @@ try {
       итоги.push(['Коран (114 сур, сура, запись аята, плеер, 412/360 px, kk)', 'OK']);
     } catch (е) {
       итоги.push(['Коран (114 сур, сура, запись аята, плеер, 412/360 px, kk)', 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_INSTALL !== '0') {
+    try {
+      console.log('\n══ Установка на экран «Домой» (PWA, TWA) ══');
+      всегоПроверок += await установкаСквозной(браузер, сервер.адрес);
+      итоги.push(['установка (манифест, Android, iPhone, Instagram, компьютер, batr.kz)', 'OK']);
+    } catch (е) {
+      итоги.push(['установка (манифест, Android, iPhone, Instagram, компьютер, batr.kz)', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
     }

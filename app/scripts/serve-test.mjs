@@ -30,6 +30,7 @@ const ТИПЫ = {
   '.woff2': 'font/woff2',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
+  '.png': 'image/png', // значки PWA (pwa/, исключение 19.11.2026)
 };
 
 export const ЗАГЛУШКА_BATR = `<!doctype html>

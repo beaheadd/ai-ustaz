@@ -21,6 +21,7 @@ import { Кибла } from './QiblaScreen';
 import { Коран } from './QuranScreen';
 import { ПроверкаАята } from './AyahCheckScreen';
 import { Сура } from './SuraScreen';
+import { Установка } from './InstallScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -39,4 +40,5 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   проверкаАята: ПроверкаАята,
   хадисы: Хадисы,
   ещё: Ещё,
+  установка: Установка,
 };

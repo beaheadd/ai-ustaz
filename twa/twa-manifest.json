@@ -1,0 +1,53 @@
+{
+  "packageId": "pro.aiustaz.app",
+  "host": "aiustaz.pro",
+  "name": "AI Ustaz",
+  "launcherName": "AI Ustaz",
+  "display": "standalone",
+  "themeColor": "#F7F2E8",
+  "themeColorDark": "#0C1715",
+  "navigationColor": "#F7F2E8",
+  "navigationColorDark": "#0C1715",
+  "navigationDividerColor": "#E2D9C8",
+  "navigationDividerColorDark": "#2E423D",
+  "backgroundColor": "#F7F2E8",
+  "enableNotifications": false,
+  "startUrl": "/aiustaz/?source=twa",
+  "iconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-512.3ff1b0d24ea109ac4248186160db1965.png",
+  "maskableIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-maskable-512.7f48982dfa012cde0b34a71a65ca69b6.png",
+  "monochromeIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-mono-512.e846a2f0056bddb5b0506a81ad76b9a3.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "C:/aiustaz-build/twa/signing.keystore",
+    "alias": "aiustaz"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Таджвид",
+      "shortName": "Таджвид",
+      "url": "/aiustaz/?source=twa#/course",
+      "chosenIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-192.60c90efa3478d9f36bcc87a5ebc113c0.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://aiustaz.pro/aiustaz/pwa/manifest.6e35d0ea3dff25b2b887db184aa3405e.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://aiustaz.pro/aiustaz/",
+  "minSdkVersion": 23,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "appVersion": "1.0.0"
+}
