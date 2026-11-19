@@ -1,8 +1,9 @@
 # AI Ustaz — речевой сервис (проверка чтения), только 127.0.0.1:8032.
 # Решение владельца 19.11.2026: на старте живёт на сервере BATR (CPU) — поэтому жёсткий потолок нагрузки,
 # чтобы не мешать batr.kz и голосовому роботу: CPUQuota, MemoryMax, низкий приоритет, одна запись за раз.
-# Владелец 19.11.2026: «Batr 8 ядер 16 ГБ ОЗУ 200 ГБ — смело хватит, используй» — потолок 4 ядра из 8 и 6 ГБ из 16
-# (половина ядер и памяти остаётся batr.kz и голосовому роботу).
+# Владелец 19.11.2026: сервер BATR (8 ядер, 16 ГБ) почти свободен — «смело можно его полностью использовать, только
+# чуть-чуть пусть оставит место для нашей работы». Поэтому: 2 процесса по 3 потока (две проверки разом), потолок
+# 6 ядер из 8 и 10 ГБ из 16; Nice=10 и idle-диск — batr.kz, аналитика и генерация видео всегда впереди.
 # Настройки — /etc/mugalim.env (права 600): MUGALIM_SPEECH_MODEL_DIR, MUGALIM_SPEECH_THREADS и др.
 [Unit]
 Description=AI Ustaz speech service (quran-muaalem, CPU)
@@ -16,11 +17,11 @@ WorkingDirectory=/opt/mugalim/speech
 EnvironmentFile=/etc/mugalim.env
 Environment=HF_HUB_OFFLINE=1
 Environment=TRANSFORMERS_OFFLINE=1
-ExecStart=/opt/mugalim/speech/.venv/bin/uvicorn aiustaz_speech.app:app --host 127.0.0.1 --port 8032 --workers 1 --no-access-log
+ExecStart=/opt/mugalim/speech/.venv/bin/uvicorn aiustaz_speech.app:app --host 127.0.0.1 --port 8032 --workers 2 --no-access-log
 Restart=on-failure
 RestartSec=5
-CPUQuota=400%
-MemoryMax=6G
+CPUQuota=600%
+MemoryMax=10G
 Nice=10
 IOSchedulingClass=idle
 NoNewPrivileges=true
