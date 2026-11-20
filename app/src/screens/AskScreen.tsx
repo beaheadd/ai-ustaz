@@ -31,7 +31,7 @@ import { АрабскийТекст, Плашка, Текст, Значок, Э�
 import { ТекстАята } from '../components/quran/AyahText';
 import { МАКС_ВОПРОС, МИН_ВОПРОС, спросить, спроситьВключено, ссылкаАята, type ИсточникОтвета, type ОтветУстаза, type ПричинаОтказа } from '../ask/api';
 import { useНавигация } from '../engine/navigation';
-import type { ПропсыЭкрана } from '../engine/routes';
+import { УСТАЗ_В_МЕНЮ, type ПропсыЭкрана } from '../engine/routes';
 import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useСура } from '../quran/data';
 import { ШИРИНА_КОЛОНКИ, ШРИФТ_ИНТЕРФЕЙСА, useТема, useУменьшитьДвижение } from '../theme';
@@ -178,7 +178,8 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
   const [вопрос, установитьВопрос] = useState('');
   const [ждём, установитьЖдём] = useState(false);
   const [ошибка, установитьОшибку] = useState<ПричинаОтказа | null>(null);
-  const включено = спроситьВключено();
+  // Пока AI Ustaz не выкачен (сборка без EXPO_PUBLIC_ASK_MENU=1, владелец 20.11.2026) — экран по прямой ссылке выключен.
+  const включено = УСТАЗ_В_МЕНЮ && спроситьВключено();
   const свиток = useRef<ComponentRef<typeof ScrollView>>(null);
   const отмена = useRef<AbortController | null>(null);
 
