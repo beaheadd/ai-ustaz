@@ -23,6 +23,7 @@ import { ПроверкаАята } from './AyahCheckScreen';
 import { Сура } from './SuraScreen';
 import { Установка } from './InstallScreen';
 import { Уведомления } from './NotificationsScreen';
+import { СпроситьУстаза } from './AskScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -40,6 +41,7 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   сура: Сура,
   проверкаАята: ПроверкаАята,
   хадисы: Хадисы,
+  устаз: СпроситьУстаза,
   ещё: Ещё,
   установка: Установка,
   уведомления: Уведомления,

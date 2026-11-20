@@ -73,6 +73,9 @@
  *      20.11.2026: «бери из официальных источников… один в один»): aiustaz.pro, Алматы и Ташкент — «По данным ДУМК» /
  *      «По правилу Управления мусульман Узбекистана», время = таблица, запрос только с id пункта, второй раз из памяти;
  *      нет сети, 404, шафиитский аср, batr.kz — свой расчёт;
+ *  19. (один раз) «Спросить AI Ustaz» — scripts/e2e-ask.mjs (E2E_ASK=0 — пропустить; владелец 20.11.2026: «AI Ustaz —
+ *      значок посередине нижнего меню … только с нашей базы данных»): центр меню, вопросы с подменённым сервером, аят
+ *      источника из своей копии Tanzil, «к-имаму», защита от арабского письма и хадиса без степени, 360 px, kk, чужой домен;
  * и всё время: ни одной ошибки в консоли/исключения, ни одного запроса на другой адрес, ни одного
  * нарушения CSP; в localStorage — только ключи aiustaz:* без аудио.
  *
@@ -98,6 +101,7 @@ import { коранПроверкаГолосом, коранСквозной } 
 import { установкаСквозной } from './e2e-install.mjs';
 import { уведомленияСквозной } from './e2e-notify.mjs';
 import { официальноеСквозной } from './e2e-official.mjs';
+import { спроситьСквозной } from './e2e-ask.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require('playwright');
@@ -1315,6 +1319,21 @@ try {
       итоги.push(['официальное время намаза (ДУМК, УМУз, без координат, офлайн — расчёт, batr.kz)', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_ASK !== '0') {
+    // aiustaz.pro → 127.0.0.1: «Спросить» включено только на своём домене (src/ask/api.ts).
+    const сХостом = await chromium.launch({ args: [`--host-resolver-rules=MAP aiustaz.pro 127.0.0.1`] });
+    try {
+      console.log('\n══ Спросить AI Ustaz ══');
+      всегоПроверок += await спроситьСквозной(сХостом, new URL(сервер.адрес).port, process.env.DIST ? path.resolve(process.env.DIST) : undefined);
+      итоги.push(['AI Ustaz (центр меню, вопросы, источники, к имаму, 360 px, kk, чужой домен)', 'OK']);
+    } catch (е) {
+      итоги.push(['AI Ustaz (центр меню, вопросы, источники, к имаму, 360 px, kk, чужой домен)', 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    } finally {
+      await сХостом.close();
     }
   }
 } finally {
