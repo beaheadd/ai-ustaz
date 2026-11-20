@@ -28,6 +28,10 @@ content/quran/quran-uthmani-marks.xml (с 19.11.2026). Всё, что показ
       6236 аятов, индекс и файлы сур app/public/quran (хэш в имени = sha256), КАЖДЫЙ аят каждой производной побайтно
       = XML, блок условий Tanzil в каждом файле, производные = свежей сборке tools/quran/build_quran.py.
       Пропускается, если указан чужой --tanzil или --content (проверяется только копия в репозитории).
+      Там же — tools/quran/check_tajweed.py (виды чтения, владелец 20.11.2026): метаданные страниц Tanzil (sha256 =
+      sources.json «tanzil-metadata», 604 страницы, 30 джузов, 240 четвертей), разметка таджвида app/public/quran/tajweed:
+      привязка к sha256 файлов сур, склейка кусков = аяту побайтно для всех 6236 аятов и бисмилл, отрезки не режут
+      букву и её знаки, разметка = свежему расчёту tools/quran/tajweed_rules.py.
   (ж) media.json — видео и аудио учителей-партнёров: tools/media/check_media.py (youtube_id есть в плейлистах,
       основное видео у уроков уровней 1–2, ничего не показывается без «разрешено» автора, только свои
       относительные файлы media/…).
@@ -47,6 +51,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
 import check_audio  # noqa: E402
 import check_media  # noqa: E402
 import check_quran  # noqa: E402
+import check_tajweed  # noqa: E402
 import content_common as об  # noqa: E402
 
 КОРЕНЬ = pathlib.Path(__file__).resolve().parent.parent
@@ -314,6 +319,12 @@ def main():
         ошибки_корана, счёт_корана = check_quran.проверить(tanzil.get('sha256Файла'), tanzil.get('файл'))
         отчёт.ошибки.extend(ошибки_корана)
         for к, в in счёт_корана.items():
+            отчёт.счёт(к, в)
+        # Виды чтения (владелец 20.11.2026): страницы мусхафа (Tanzil Metadata) и разметка таджвида поверх того же текста.
+        мета = next((и for и in источники['источники'] if и['id'] == 'tanzil-metadata'), {})
+        ошибки_т, счёт_т = check_tajweed.проверить(мета.get('sha256Файла'))
+        отчёт.ошибки.extend(ошибки_т)
+        for к, в in счёт_т.items():
             отчёт.счёт(к, в)
     else:
         print('  (полный Коран app/public/quran не сверялся: указан другой --tanzil или --content)')

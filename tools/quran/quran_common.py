@@ -39,6 +39,8 @@ from dataclasses import dataclass, field
 СУР, АЯТОВ = 114, 6236
 ДЛИНА_ХЭША = 20                         # check-dist: [.-]([0-9a-f]{20,})\.[a-z0-9]+$
 ИМЯ_ФАЙЛА = re.compile(r'^(index|\d{3})\.([0-9a-f]{20})\.json$')
+# Подпапки app/public/quran, которые пишут другие генераторы: tajweed/ — tools/quran/build_tajweed.py (виды чтения).
+ПОДПАПКИ_ДРУГИХ = ('tajweed',)
 
 # Внешний якорь копии для показа (ревью 19.11.2026): sha256 файла, полученного с tanzil.net при загрузке, записан
 # ЗДЕСЬ, отдельно от content/sources.json. check_quran сверяет с ним и файл, и sources.json: подмена XML вместе с

@@ -1,0 +1,13 @@
+# Источник: Tanzil Quran Metadata (ver 1.0), tanzil.net/res/text/metadata/quran-data.js — загружен 20.11.2026,
+# sha256 9e9930c592aaa34b5c7a79ff4e99ffdc782263a266090bfe2c49e4ed4bac4ca4, копия — content/quran/quran-data.js (побайтно).
+# Где в приложении: виды чтения Корана — страницы мединского мусхафа (604), джузы и четверти хизба
+# (app/public/quran/tajweed/index.<хэш>.json, tools/quran/build_tajweed.py). Только номера «сура:аят», текста Корана нет.
+# Разметку таджвида этот файл не содержит: её строят свои правила tools/quran/tajweed_rules.py.
+
+Quran Metadata (ver 1.0)
+Copyright (C) 2008-2009 Tanzil.info
+License: Creative Commons Attribution 3.0
+
+Атрибуция (CC BY 3.0, creativecommons.org/licenses/by/3.0/): Tanzil Quran Metadata (ver 1.0). Copyright (C) 2008-2009
+Tanzil.info. License: Creative Commons Attribution 3.0. tanzil.net — на экране «Лицензии» (content/sources.json,
+запись «tanzil-metadata») и в строке источника под страницей мусхафа.

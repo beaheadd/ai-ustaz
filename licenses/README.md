@@ -6,7 +6,7 @@
 - `app-web-bundle.txt` — каждый пакет, попавший в веб-бандл, с версией и полным текстом лицензии.
   Создаёт `app/scripts/gen-licenses.mjs` (`npm run licenses` в `app/`), руками не править.
 - `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`; источник — в первой строке «# …»).
-- `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник).
+- `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник), `Tanzil-Metadata-CC-BY-3.0.txt` (страницы мусхафа, 20.11.2026).
 - `server/` — тексты лицензий пакетов сервера уведомлений (раздел «Сервер AI Ustaz» ниже).
 - `upstream/` — тексты MIT для пакетов, у которых в npm нет файла LICENSE (источник с тегом — в шапке файла):
   - `react-native-LICENSE.txt` — facebook/react-native@v0.88.1, для `@react-native/js-polyfills`, `@react-native/normalize-colors`;
@@ -62,6 +62,7 @@ VAPID создаются только на сервере (`/etc/mugalim.env`, �
 | Что | Источник | Лицензия и условия |
 |---|---|---|
 | Текст Корана для показа — весь Коран, 114 сур (вкладка «Коран», `app/public/quran`), аль-Фатиха 1:1–7 и слова в примерах объяснений | Tanzil Quran Text (Uthmani, Version 1.1), tanzil.net — копия со знаками остановки, саджды ۩ и руб‘ аль-хизба ۞, татвилем и малыми мимами после танвина (`content/quran/quran-uthmani-marks.xml`, загружена 19.11.2026, sha256 `af9311c5…2916`; параметры загрузки и полный sha — `content/sources.json` и `tools/quran/quran_common.py`) | CC BY 3.0 (creativecommons.org/licenses/by/3.0/). Только дословные копии, текст менять нельзя; указан источник и ссылка на tanzil.net; блок копирайта воспроизводится на экране «Лицензии» и лежит в каждом производном файле суры и индекса. |
+| Страницы мединского мусхафа (604), джузы и четверти хизба — виды чтения Корана (`app/public/quran/tajweed/index`) | Tanzil Quran Metadata (ver 1.0), tanzil.net/res/text/metadata/quran-data.js (`content/quran/quran-data.js`, загружен 20.11.2026, sha256 `9e9930c5…4ca4`; только `Page`, `Juz`, `HizbQaurter` — номера «сура:аят») | CC BY 3.0. Атрибуция — `licenses/data/Tanzil-Metadata-CC-BY-3.0.txt`, экран «Лицензии» (`sources.json` «tanzil-metadata») и строка источника под страницей. Разметка таджвида — своя (`tools/quran/tajweed_rules.py`), чужих данных нет. |
 | Текст Корана для фонетики (только речевой сервис, на экран не выводится) | Tanzil Quran Text (Uthmani, Version 1.1) из пакета quran-transcript 0.6.4 (без знаков остановки) | CC BY 3.0, те же условия. В приложении и сборке его нет. |
 | ИИ-предупреждение (урок 0 и «О проекте») | файл NOTICE пакета quran-muaalem (github.com/obadx/quran-muaalem) | QML-1.0. Тексты ar и ru — официальные, kk — наш перевод (черновик). Модель quran-muaalem в прототипе не используется. |
 | Шрифт Amiri Quran | @expo-google-fonts/amiri-quran 0.4.1 | SIL Open Font License 1.1 |

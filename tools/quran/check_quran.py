@@ -149,6 +149,8 @@ def проверить(sha_в_sources, файл_в_sources):
 
     # (г) лишние файлы и совпадение со свежей сборкой
     for путь in sorted(папка.glob('*')):
+        if путь.is_dir() and путь.name in к.ПОДПАПКИ_ДРУГИХ:
+            continue  # tajweed/ сверяет tools/quran/check_tajweed.py
         if путь not in нужные_имена:
             ош('app/public/quran', f'лишний файл {путь.name}')
     свежие, свежий_манифест = к.собрать(к.ПУТЬ_XML)

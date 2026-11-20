@@ -33,6 +33,21 @@
       "примечание": "Лежит в пакете quran-transcript 0.6.4 (speech/requirements.txt), quran_transcript/quran-script/quran-uthmani-without-pause-sajda-hizb-marks.xml; в репозитории и сборке приложения её нет. Только для фонетики и выравнивания (ПЛАН §8), не для показа. Слова (без знаков-токенов) совпадают с копией для показа по числу и порядку во всех 6236 аятах; в начертании есть татвиль перед надстрочным алифом и малые мимы после танвина. Нумерация слов речевого сервиса (word_from, words) — по imlaey-словам quran-transcript (docs/дизайн/05-коран-чтение-и-плеер.md, «Контракт»). Условия Tanzil — как у копии для показа."
     },
     {
+      "id": "tanzil-metadata",
+      "что": "Страницы мединского мусхафа (604), джузы и четверти хизба — только номера «сура:аят» для видов чтения «Страница мусхафа» (app/public/quran/tajweed/index — tools/quran/build_tajweed.py). Текста Корана в файле нет.",
+      "название": "Tanzil Quran Metadata (ver 1.0)",
+      "лицензия": "CC BY 3.0",
+      "ссылка": "tanzil.net/docs/quran_metadata",
+      "лицензияСсылка": "creativecommons.org/licenses/by/3.0/",
+      "атрибуция": "Tanzil Quran Metadata (ver 1.0). Copyright (C) 2008-2009 Tanzil.info. License: Creative Commons Attribution 3.0. tanzil.net",
+      "файл": "quran-data.js",
+      "путь": "content/quran/quran-data.js",
+      "sha256Файла": "9e9930c592aaa34b5c7a79ff4e99ffdc782263a266090bfe2c49e4ed4bac4ca4",
+      "загружено": "2026-11-20",
+      "параметрыЗагрузки": "tanzil.net/res/text/metadata/quran-data.js",
+      "примечание": "Файл хранится побайтно (sha256 — tools/quran/build_tajweed.py ЭТАЛОН_SHA256_МЕТАДАННЫХ). Берём только Page, Juz, HizbQaurter; Sajda (с пометками фикха) не используем — знак ۩ есть в самом тексте. Разметку таджвида не содержит: её строят свои правила tools/quran/tajweed_rules.py."
+    },
+    {
       "id": "quran-muaalem-notice",
       "что": "ИИ-предупреждение (lesson0.json): ar и ru — официальные тексты; kk — наш перевод, черновик",
       "название": "quran-muaalem NOTICE",
