@@ -1,0 +1,34 @@
+# AI Ustaz — API (пока: уведомления о времени намаза), только 127.0.0.1:8031; снаружи — nginx aiustaz.pro /api/push/.
+# Владелец 20.11.2026: «правильные, красивые уведомления время намаза приходило к клиенту».
+# Настройки и секреты — /etc/mugalim.env (root, 600): MUGALIM_VAPID_PUBLIC/PRIVATE/SUBJECT, MUGALIM_DATABASE_URL (по
+# умолчанию своя база mugalim через unix-сокет, вход peer — пароля нет). Страж server/boot.py останавливает процесс
+# (код 78, без перезапуска), если база не mugalim или в ней таблицы BATR. Журнал доступа выключен (IP не пишем).
+[Unit]
+Description=AI Ustaz API (prayer time notifications)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=mugalim
+Group=mugalim
+WorkingDirectory=/opt/mugalim/server
+EnvironmentFile=/etc/mugalim.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/mugalim/server/.venv/bin/uvicorn --app-dir /opt/mugalim/server --factory app:создать_приложение --host 127.0.0.1 --port 8031 --workers 1 --no-access-log --no-server-header
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=78
+CPUQuota=100%
+MemoryMax=512M
+Nice=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/mugalim
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

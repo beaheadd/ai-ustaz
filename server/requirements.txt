@@ -1,0 +1,10 @@
+# Сервер AI Ustaz (API 127.0.0.1:8031 и фоновые задачи). Версии закреплены; лицензии — licenses/README.md («Сервер»).
+# Владелец 20.11.2026: уведомления о времени намаза.
+fastapi==0.165.0          # MIT
+uvicorn==0.54.0           # BSD-3-Clause
+psycopg[binary]==3.3.9    # LGPL-3.0-only — как библиотека, без изменений (сервер; в приложение не попадает)
+pywebpush==2.5.0          # MPL-2.0 — Web Push (шифрование aes128gcm, VAPID)
+py-vapid==1.9.6           # MPL-2.0 — зависимость pywebpush
+http-ece==1.2.1           # MIT — зависимость pywebpush
+cryptography==50.0.1      # Apache-2.0 OR BSD-3-Clause
+requests==2.34.2          # Apache-2.0

@@ -1,0 +1,33 @@
+# AI Ustaz — фоновые задачи (CLAUDE.md: фоновые задачи — только здесь). Сейчас: отправка уведомлений о времени намаза
+# раз в 20 с (server/jobs.py), тихое «обновите время» за 3 дня до конца расписания, уборка раз в час.
+# Владелец 20.11.2026. Настройки — /etc/mugalim.env (root, 600). Наружу ходит только к push-сервисам браузеров
+# (fcm.googleapis.com, updates.push.services.mozilla.com, web.push.apple.com, *.notify.windows.com).
+[Unit]
+Description=AI Ustaz background jobs (prayer time notifications)
+After=network-online.target postgresql.service
+Wants=network-online.target postgresql.service
+
+[Service]
+Type=simple
+User=mugalim
+Group=mugalim
+WorkingDirectory=/opt/mugalim/server
+EnvironmentFile=/etc/mugalim.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/mugalim/server/.venv/bin/python /opt/mugalim/server/jobs.py
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=78
+CPUQuota=100%
+MemoryMax=512M
+Nice=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/mugalim
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
