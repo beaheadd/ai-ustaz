@@ -67,3 +67,6 @@ app/og/.og-tmp.html
 
 # Графика Google Play (twa/play/make-graphics.mjs) — растры не в git
 play-graphics/
+
+# Рабочие копии агентов Claude Code (временные, не для git)
+.claude/worktrees/
