@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буква ح",
     "kk": "ح әрпі",
-    "uz": "ح harfi"
+    "uz": "ح harfi",
+    "en": "The letter ح"
   },
   "цель": {
     "ru": "Различаем خ и ح, ه и ح",
     "kk": "خ және ح, ه және ح әріптерін ажыратамыз",
-    "uz": "خ va ح, ه va ح ni farqlaymiz"
+    "uz": "خ va ح, ه va ح ni farqlaymiz",
+    "en": "Telling خ and ح, ه and ح apart"
   },
   "новое": [
     "ح"
@@ -24,7 +26,8 @@
       "название": {
         "ru": "х̣а",
         "kk": "х̣а",
-        "uz": "ḥo"
+        "uz": "ḥo",
+        "en": "ḥa"
       },
       "формы": {
         "отдельная": "ح",
@@ -36,18 +39,21 @@
       "подсказка": {
         "ru": "Гладкий выдох из середины горла: горло слегка сжато, без хрипа — как будто дышите на стекло очков.",
         "kk": "Тамақтың ортасынан шығатын жұмсақ дем: тамақ сәл қысылады, қырылсыз — көзілдірік әйнегіне дем үргендей.",
-        "uz": "Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek."
+        "uz": "Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.",
+        "en": "A smooth breath from the middle of the throat: the throat is slightly tightened, without rasping — as if you were breathing on your glasses."
       },
       "подмены": [
         {
           "ru": "ح звучит как «х»",
           "kk": "ح «х» болып естіледі",
-          "uz": "ح «x» boʻlib eshitiladi"
+          "uz": "ح «x» boʻlib eshitiladi",
+          "en": "ح sounds like “kh”"
         },
         {
           "ru": "ح звучит как лёгкое «һ»",
           "kk": "ح жеңіл «һ» болып естіледі",
-          "uz": "ح yengil «h» boʻlib eshitiladi"
+          "uz": "ح yengil «h» boʻlib eshitiladi",
+          "en": "ح sounds like a light “h”"
         }
       ],
       "примеры": [
@@ -65,7 +71,8 @@
       "вопрос": {
         "ru": "Найдите букву «х̣а».",
         "kk": "«х̣а» әрпін табыңыз.",
-        "uz": "«ḥo» harfini toping."
+        "uz": "«ḥo» harfini toping.",
+        "en": "Find the letter “ḥa”."
       },
       "варианты": [
         {
@@ -85,7 +92,8 @@
       "пояснение": {
         "ru": "«х̣а» — это ح.",
         "kk": "«х̣а» — ح әрпі.",
-        "uz": "«ḥo» — bu ح."
+        "uz": "«ḥo» — bu ح.",
+        "en": "“ḥa” is ح."
       }
     },
     {
@@ -95,7 +103,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «х̣а»?",
         "kk": "«х̣а» әрпінде қандай белгі тұр?",
-        "uz": "«ḥo» harfida qanday belgi bor?"
+        "uz": "«ḥo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ḥa”?"
       },
       "показ": "أَحْ",
       "варианты": [
@@ -103,28 +112,32 @@
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -132,7 +145,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -142,7 +156,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «х̣а».",
         "kk": "«х̣а» әрпінің соңғы түрін табыңыз.",
-        "uz": "«ḥo» harfining oxirgi shaklini toping."
+        "uz": "«ḥo» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ḥa”."
       },
       "варианты": [
         {
@@ -166,7 +181,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -202,7 +218,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "حَ حِ حُ أَحْ إِحْ أُحْ"
@@ -215,12 +232,14 @@
       "заголовок": {
         "ru": "Различаем ح, خ и ه",
         "kk": "ح, خ және ه әріптерін ажыратамыз",
-        "uz": "ح, خ va ه harflarini farqlaymiz"
+        "uz": "ح, خ va ه harflarini farqlaymiz",
+        "en": "Telling ح, خ and ه apart"
       },
       "текст": {
         "ru": "ح — Гладкий выдох из середины горла: горло слегка сжато, без хрипа — как будто дышите на стекло очков.\nخ — Как «х», но глубже, с лёгким хрипом.\nه — Лёгкий выдох из глубины горла, тише ح. В конце слова не глотайте.",
         "kk": "ح — Тамақтың ортасынан шығатын жұмсақ дем: тамақ сәл қысылады, қырылсыз — көзілдірік әйнегіне дем үргендей.\nخ — «Х» дыбысындай, бірақ тереңірек, сәл қырылмен.\nه — Терең тамақтан шығатын жеңіл дем, ح әрпінен әлсіздеу. Сөз соңында жұтып қоймаңыз.",
-        "uz": "ح — Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.\nخ — «x» kabi, lekin chuqurroq, yengil xirillash bilan.\nه — Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang."
+        "uz": "ح — Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.\nخ — «x» kabi, lekin chuqurroq, yengil xirillash bilan.\nه — Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang.",
+        "en": "ح — A smooth breath from the middle of the throat: the throat is slightly tightened, without rasping — as if you were breathing on your glasses.\nخ — Like “kh”, but deeper, with a slight rasp.\nه — A light breath from deep in the throat, softer than ح. Do not swallow it at the end of a word."
       },
       "примеры": [
         "حَ",
@@ -235,7 +254,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "حَلْقْ",
       "варианты": [
@@ -250,7 +270,8 @@
       "пояснение": {
         "ru": "ح: Гладкий выдох из середины горла: горло слегка сжато, без хрипа — как будто дышите на стекло очков.",
         "kk": "ح: Тамақтың ортасынан шығатын жұмсақ дем: тамақ сәл қысылады, қырылсыз — көзілдірік әйнегіне дем үргендей.",
-        "uz": "ح: Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek."
+        "uz": "ح: Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.",
+        "en": "ح: A smooth breath from the middle of the throat: the throat is slightly tightened, without rasping — as if you were breathing on your glasses."
       }
     },
     {
@@ -260,7 +281,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "خَتْمْ",
       "варианты": [
@@ -275,7 +297,8 @@
       "пояснение": {
         "ru": "خ: Как «х», но глубже, с лёгким хрипом.",
         "kk": "خ: «Х» дыбысындай, бірақ тереңірек, сәл қырылмен.",
-        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan."
+        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan.",
+        "en": "خ: Like “kh”, but deeper, with a slight rasp."
       }
     },
     {
@@ -285,7 +308,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "أَرْخَمْ",
       "варианты": [
@@ -300,7 +324,8 @@
       "пояснение": {
         "ru": "خ: Как «х», но глубже, с лёгким хрипом.",
         "kk": "خ: «Х» дыбысындай, бірақ тереңірек, сәл қырылмен.",
-        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan."
+        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan.",
+        "en": "خ: Like “kh”, but deeper, with a slight rasp."
       }
     },
     {
@@ -310,7 +335,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "هَ",
       "варианты": [
@@ -325,7 +351,8 @@
       "пояснение": {
         "ru": "ه: Лёгкий выдох из глубины горла, тише ح. В конце слова не глотайте.",
         "kk": "ه: Терең тамақтан шығатын жеңіл дем, ح әрпінен әлсіздеу. Сөз соңында жұтып қоймаңыз.",
-        "uz": "ه: Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang."
+        "uz": "ه: Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang.",
+        "en": "ه: A light breath from deep in the throat, softer than ح. Do not swallow it at the end of a word."
       }
     },
     {
@@ -335,7 +362,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "هِمْ",
       "варианты": [
@@ -350,7 +378,8 @@
       "пояснение": {
         "ru": "ه: Лёгкий выдох из глубины горла, тише ح. В конце слова не глотайте.",
         "kk": "ه: Терең тамақтан шығатын жеңіл дем, ح әрпінен әлсіздеу. Сөз соңында жұтып қоймаңыз.",
-        "uz": "ه: Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang."
+        "uz": "ه: Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang.",
+        "en": "ه: A light breath from deep in the throat, softer than ح. Do not swallow it at the end of a word."
       }
     },
     {
@@ -359,7 +388,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -403,7 +433,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -431,7 +462,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "حَسَنْ، أَحْسَنَ، يَحْكُمُ"
@@ -444,7 +476,8 @@
       "подсказка": {
         "ru": "Лестница: читайте по ступеням — от слога к слову. Запишите каждую ступень.",
         "kk": "Баспалдақ: буыннан сөзге дейін саты-сатымен оқыңыз. Әр сатыны жазып алыңыз.",
-        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling."
+        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling.",
+        "en": "Ladder: read step by step — from the syllable to the word. Record each step."
       },
       "ступени": [
         {

@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ج и خ",
     "kk": "ج және خ әріптері",
-    "uz": "ج va خ harflari"
+    "uz": "ج va خ harflari",
+    "en": "Letters ج and خ"
   },
   "цель": {
     "ru": "Новые буквы; خ — не «к»",
     "kk": "Жаңа әріптер; خ — «к» емес",
-    "uz": "Yangi harflar; خ — «k» emas"
+    "uz": "Yangi harflar; خ — «k» emas",
+    "en": "New letters; خ is not “k”"
   },
   "новое": [
     "ج",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "джим",
         "kk": "джим",
-        "uz": "jim"
+        "uz": "jim",
+        "en": "jim"
       },
       "формы": {
         "отдельная": "ج",
@@ -51,7 +54,8 @@
       "вопрос": {
         "ru": "Найдите букву «джим».",
         "kk": "«джим» әрпін табыңыз.",
-        "uz": "«jim» harfini toping."
+        "uz": "«jim» harfini toping.",
+        "en": "Find the letter “jim”."
       },
       "варианты": [
         {
@@ -71,7 +75,8 @@
       "пояснение": {
         "ru": "«джим» — это ج.",
         "kk": "«джим» — ج әрпі.",
-        "uz": "«jim» — bu ج."
+        "uz": "«jim» — bu ج.",
+        "en": "“jim” is ج."
       }
     },
     {
@@ -81,7 +86,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «джим»?",
         "kk": "«джим» әрпінде қандай белгі тұр?",
-        "uz": "«jim» harfida qanday belgi bor?"
+        "uz": "«jim» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “jim”?"
       },
       "показ": "أُجْ",
       "варианты": [
@@ -89,28 +95,32 @@
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -118,7 +128,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -128,7 +139,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «джим».",
         "kk": "«джим» әрпінің соңғы түрін табыңыз.",
-        "uz": "«jim» harfining oxirgi shaklini toping."
+        "uz": "«jim» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “jim”."
       },
       "варианты": [
         {
@@ -154,7 +166,8 @@
       "название": {
         "ru": "ха",
         "kk": "ха",
-        "uz": "xo"
+        "uz": "xo",
+        "en": "kha"
       },
       "формы": {
         "отдельная": "خ",
@@ -166,13 +179,15 @@
       "подсказка": {
         "ru": "Как «х», но глубже, с лёгким хрипом.",
         "kk": "«Х» дыбысындай, бірақ тереңірек, сәл қырылмен.",
-        "uz": "«x» kabi, lekin chuqurroq, yengil xirillash bilan."
+        "uz": "«x» kabi, lekin chuqurroq, yengil xirillash bilan.",
+        "en": "Like “kh”, but deeper, with a slight rasp."
       },
       "подмены": [
         {
           "ru": "خ звучит как «к» или как ح",
           "kk": "خ «к» немесе ح болып естіледі",
-          "uz": "خ «k» yoki ح boʻlib eshitiladi"
+          "uz": "خ «k» yoki ح boʻlib eshitiladi",
+          "en": "خ sounds like “k” or like ح"
         }
       ],
       "примеры": [
@@ -190,7 +205,8 @@
       "вопрос": {
         "ru": "Найдите букву «ха».",
         "kk": "«ха» әрпін табыңыз.",
-        "uz": "«xo» harfini toping."
+        "uz": "«xo» harfini toping.",
+        "en": "Find the letter “kha”."
       },
       "варианты": [
         {
@@ -210,7 +226,8 @@
       "пояснение": {
         "ru": "«ха» — это خ.",
         "kk": "«ха» — خ әрпі.",
-        "uz": "«xo» — bu خ."
+        "uz": "«xo» — bu خ.",
+        "en": "“kha” is خ."
       }
     },
     {
@@ -220,7 +237,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «ха»?",
         "kk": "«ха» әрпінде қандай белгі тұр?",
-        "uz": "«xo» harfida qanday belgi bor?"
+        "uz": "«xo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “kha”?"
       },
       "показ": "خَ",
       "варианты": [
@@ -228,21 +246,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -250,7 +271,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -260,7 +282,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «ха».",
         "kk": "«ха» әрпінің соңғы түрін табыңыз.",
-        "uz": "«xo» harfining oxirgi shaklini toping."
+        "uz": "«xo» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “kha”."
       },
       "варианты": [
         {
@@ -284,7 +307,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -320,7 +344,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -356,7 +381,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "جَ جِ جُ أَجْ إِجْ أُجْ"
@@ -369,7 +395,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -401,7 +428,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -417,7 +445,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "جَبَلْ، جَمَلْ، فَجْرْ"

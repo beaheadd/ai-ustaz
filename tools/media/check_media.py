@@ -16,7 +16,7 @@
   (д) файлы на своём сервере — только относительные пути media/…: файл_видео (.mp4/.webm),
       аудио.файл (.m4a/.mp3/.ogg/.opus/.webm); у клипа есть текст и известный источник;
       без схем http(s), без «..», без встраивания (embed, youtube-nocookie, iframe);
-  (е) у источника есть имя и атрибуция ru + kk + uz; ссылка канала — без схемы.
+  (е) у источника есть имя и атрибуция ru + kk + uz + en; ссылка канала — без схемы.
 """
 import json
 import pathlib
@@ -39,7 +39,7 @@ def путь_файла(з, шаблон):
 
 
 def локализованный(з):
-    return isinstance(з, dict) and all(isinstance(з.get(я), str) and з[я].strip() for я in ('ru', 'kk', 'uz'))
+    return isinstance(з, dict) and all(isinstance(з.get(я), str) and з[я].strip() for я in ('ru', 'kk', 'uz', 'en'))
 
 
 def проверить(контент):
@@ -71,7 +71,7 @@ def проверить(контент):
     for ид, и in источники.items():
         где = f'источники.{ид}'
         if not локализованный(и.get('имя')) or not локализованный(и.get('атрибуция')):
-            ош(где, 'нужны имя и атрибуция на ru, kk и uz')
+            ош(где, 'нужны имя и атрибуция на ru, kk, uz и en')
         if not isinstance(и.get('ссылка_канала'), str) or '://' in и['ссылка_канала']:
             ош(где, 'ссылка_канала — текст без схемы (youtube.com/channel/…)')
         if и.get('разрешено') not in (True, False):

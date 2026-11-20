@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буква ط",
     "kk": "ط әрпі",
-    "uz": "ط harfi"
+    "uz": "ط harfi",
+    "en": "The letter ط"
   },
   "цель": {
     "ru": "Буква ط; «тяжёлые» буквы (исти‘ля)",
     "kk": "ط әрпі; «жуан» әріптер (истиғла)",
-    "uz": "ط harfi; «qalin» harflar (istiʼlo)"
+    "uz": "ط harfi; «qalin» harflar (istiʼlo)",
+    "en": "The letter ط; “heavy” letters (istiʿla)"
   },
   "новое": [
     "ط"
@@ -24,7 +26,8 @@
       "название": {
         "ru": "т̣а",
         "kk": "т̣а",
-        "uz": "ṭo"
+        "uz": "ṭo",
+        "en": "ṭa"
       },
       "формы": {
         "отдельная": "ط",
@@ -36,13 +39,15 @@
       "подсказка": {
         "ru": "Как «т», но язык плотно прижат, задняя часть поднята; звук полный, без придыхания.",
         "kk": "«Т» сияқты, бірақ тіл тығыз тиеді, арты көтеріледі; дыбыс толық, демсіз.",
-        "uz": "«t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan."
+        "uz": "«t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan.",
+        "en": "Like “t”, but the tongue is pressed firmly and its back is raised; the sound is full, without aspiration."
       },
       "подмены": [
         {
           "ru": "ط → «т»",
           "kk": "ط → «т»",
-          "uz": "ط → «t»"
+          "uz": "ط → «t»",
+          "en": "ط → “t”"
         }
       ],
       "примеры": [
@@ -60,7 +65,8 @@
       "вопрос": {
         "ru": "Найдите букву «т̣а».",
         "kk": "«т̣а» әрпін табыңыз.",
-        "uz": "«ṭo» harfini toping."
+        "uz": "«ṭo» harfini toping.",
+        "en": "Find the letter “ṭa”."
       },
       "варианты": [
         {
@@ -80,7 +86,8 @@
       "пояснение": {
         "ru": "«т̣а» — это ط.",
         "kk": "«т̣а» — ط әрпі.",
-        "uz": "«ṭo» — bu ط."
+        "uz": "«ṭo» — bu ط.",
+        "en": "“ṭa” is ط."
       }
     },
     {
@@ -90,7 +97,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «т̣а»?",
         "kk": "«т̣а» әрпінде қандай белгі тұр?",
-        "uz": "«ṭo» harfida qanday belgi bor?"
+        "uz": "«ṭo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ṭa”?"
       },
       "показ": "طُ",
       "варианты": [
@@ -98,21 +106,24 @@
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -120,7 +131,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -130,7 +142,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «т̣а».",
         "kk": "«т̣а» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ṭo» harfining oʻrta shaklini toping."
+        "uz": "«ṭo» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ṭa”."
       },
       "варианты": [
         {
@@ -154,7 +167,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -190,7 +204,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "طَ طِ طُ أَطْ إِطْ أُطْ"
@@ -203,12 +218,14 @@
       "заголовок": {
         "ru": "Тяжёлые буквы (исти‘ля)",
         "kk": "Жуан әріптер (истиғла)",
-        "uz": "Qalin harflar (istiʼlo)"
+        "uz": "Qalin harflar (istiʼlo)",
+        "en": "Heavy letters (istiʿla)"
       },
       "текст": {
         "ru": "Семь букв читаются «тяжело»: задняя часть языка поднята, звук полный; гласный после них темнее, но не «о».",
         "kk": "Жеті әріп «жуан» оқылады: тілдің арты көтеріледі, дыбыс толық; кейінгі дауысты жуандайды, бірақ «о» емес.",
-        "uz": "Yetti harf «qalin» oʻqiladi: tilning orqa qismi koʻtarilgan, tovush toʻliq; ulardan keyingi unli qalinroq, lekin «o» emas."
+        "uz": "Yetti harf «qalin» oʻqiladi: tilning orqa qismi koʻtarilgan, tovush toʻliq; ulardan keyingi unli qalinroq, lekin «o» emas.",
+        "en": "Seven letters are read “heavy”: the back of the tongue is raised, the sound is full; the vowel after them is darker, but not “o”."
       },
       "примеры": [
         "خ",
@@ -227,7 +244,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "تَرَفْ",
       "варианты": [
@@ -247,7 +265,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "سَبْطْ",
       "варианты": [
@@ -262,7 +281,8 @@
       "пояснение": {
         "ru": "ط: Как «т», но язык плотно прижат, задняя часть поднята; звук полный, без придыхания.",
         "kk": "ط: «Т» сияқты, бірақ тіл тығыз тиеді, арты көтеріледі; дыбыс толық, демсіз.",
-        "uz": "ط: «t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan."
+        "uz": "ط: «t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan.",
+        "en": "ط: Like “t”, but the tongue is pressed firmly and its back is raised; the sound is full, without aspiration."
       }
     },
     {
@@ -271,7 +291,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -299,7 +320,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -327,7 +349,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "طَلَبَ، مَطَرْ، طِفْلْ"

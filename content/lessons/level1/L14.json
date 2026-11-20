@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы د и ض",
     "kk": "د және ض әріптері",
-    "uz": "د va ض harflari"
+    "uz": "د va ض harflari",
+    "en": "Letters د and ض"
   },
   "цель": {
     "ru": "Различаем د и ض",
     "kk": "د және ض әріптерін ажыратамыз",
-    "uz": "د va ض ni farqlaymiz"
+    "uz": "د va ض ni farqlaymiz",
+    "en": "Telling د and ض apart"
   },
   "новое": [
     "د",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "даль",
         "kk": "даль",
-        "uz": "dol"
+        "uz": "dol",
+        "en": "dal"
       },
       "формы": {
         "отдельная": "د",
@@ -37,13 +40,15 @@
       "подсказка": {
         "ru": "Звонко; на конце и при остановке не переходите в «т».",
         "kk": "Ұяң; соңында және тоқтағанда «т» дыбысына айналдырмаңыз.",
-        "uz": "Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang."
+        "uz": "Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang.",
+        "en": "Voiced; at the end and when stopping do not turn it into “t”."
       },
       "подмены": [
         {
           "ru": "د на конце звучит глухо, как «т» (нет отскока)",
           "kk": "соңындағы د «т» сияқты қатаң шығады (серпіліс жоқ)",
-          "uz": "oxiridagi د jarangsiz, «t» kabi chiqadi (sapchish yoʻq)"
+          "uz": "oxiridagi د jarangsiz, «t» kabi chiqadi (sapchish yoʻq)",
+          "en": "د at the end sounds voiceless, like “t” (no bounce)"
         }
       ],
       "примеры": [
@@ -61,7 +66,8 @@
       "вопрос": {
         "ru": "Найдите букву «даль».",
         "kk": "«даль» әрпін табыңыз.",
-        "uz": "«dol» harfini toping."
+        "uz": "«dol» harfini toping.",
+        "en": "Find the letter “dal”."
       },
       "варианты": [
         {
@@ -81,7 +87,8 @@
       "пояснение": {
         "ru": "«даль» — это د.",
         "kk": "«даль» — د әрпі.",
-        "uz": "«dol» — bu د."
+        "uz": "«dol» — bu د.",
+        "en": "“dal” is د."
       }
     },
     {
@@ -91,7 +98,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «даль»?",
         "kk": "«даль» әрпінде қандай белгі тұр?",
-        "uz": "«dol» harfida qanday belgi bor?"
+        "uz": "«dol» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “dal”?"
       },
       "показ": "دِ",
       "варианты": [
@@ -99,21 +107,24 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -121,7 +132,8 @@
       "пояснение": {
         "ru": "Короткая косая черта под буквой. Звук «и».",
         "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+        "en": "A short slanted stroke below the letter. The sound “i”."
       }
     },
     {
@@ -131,7 +143,8 @@
       "вопрос": {
         "ru": "Соберите слог: буква «даль» + фатха.",
         "kk": "Буын құраңыз: «даль» әрпі + фатха.",
-        "uz": "Boʻgʻin yigʻing: «dol» harfi + fatha."
+        "uz": "Boʻgʻin yigʻing: «dol» harfi + fatha.",
+        "en": "Build the syllable: the letter “dal” + fatha."
       },
       "варианты": [
         {
@@ -148,7 +161,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -159,7 +173,8 @@
       "название": {
         "ru": "д̣ад",
         "kk": "д̣ад",
-        "uz": "ḍod"
+        "uz": "ḍod",
+        "en": "ḍad"
       },
       "формы": {
         "отдельная": "ض",
@@ -171,18 +186,21 @@
       "подсказка": {
         "ru": "Края языка у коренных зубов, задняя часть поднята; звук звонкий и полный. Не «з» и не простое «д».",
         "kk": "Тілдің жиегі азу тістерге тиеді, арты көтеріледі; дыбыс ұяң, толық. «З» де, жай «д» да емес.",
-        "uz": "Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas."
+        "uz": "Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas.",
+        "en": "The edges of the tongue at the molars, the back raised; the sound is voiced and full. Not “z” and not a plain “d”."
       },
       "подмены": [
         {
           "ru": "ض → «д» или «з»",
           "kk": "ض → «д» не «з»",
-          "uz": "ض → «d» yoki «z»"
+          "uz": "ض → «d» yoki «z»",
+          "en": "ض → “d” or “z”"
         },
         {
           "ru": "путаница ض и ظ — оценивает только устаз",
           "kk": "ض пен ظ шатастыру — тек ұстаз бағалайды",
-          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi"
+          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi",
+          "en": "confusing ض and ظ — assessed only by an ustaz"
         }
       ],
       "примеры": [
@@ -200,7 +218,8 @@
       "вопрос": {
         "ru": "Найдите букву «д̣ад».",
         "kk": "«д̣ад» әрпін табыңыз.",
-        "uz": "«ḍod» harfini toping."
+        "uz": "«ḍod» harfini toping.",
+        "en": "Find the letter “ḍad”."
       },
       "варианты": [
         {
@@ -220,7 +239,8 @@
       "пояснение": {
         "ru": "«д̣ад» — это ض.",
         "kk": "«д̣ад» — ض әрпі.",
-        "uz": "«ḍod» — bu ض."
+        "uz": "«ḍod» — bu ض.",
+        "en": "“ḍad” is ض."
       }
     },
     {
@@ -230,7 +250,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «д̣ад»?",
         "kk": "«д̣ад» әрпінде қандай белгі тұр?",
-        "uz": "«ḍod» harfida qanday belgi bor?"
+        "uz": "«ḍod» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ḍad”?"
       },
       "показ": "إِضْ",
       "варианты": [
@@ -238,28 +259,32 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -267,7 +292,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -277,7 +303,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «д̣ад».",
         "kk": "«д̣ад» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ḍod» harfining oʻrta shaklini toping."
+        "uz": "«ḍod» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ḍad”."
       },
       "варианты": [
         {
@@ -301,7 +328,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -337,7 +365,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -373,7 +402,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "دَ دِ دُ أَدْ إِدْ أُدْ"
@@ -386,12 +416,14 @@
       "заголовок": {
         "ru": "Различаем ض и د",
         "kk": "ض және د әріптерін ажыратамыз",
-        "uz": "ض va د harflarini farqlaymiz"
+        "uz": "ض va د harflarini farqlaymiz",
+        "en": "Telling ض and د apart"
       },
       "текст": {
         "ru": "ض — Края языка у коренных зубов, задняя часть поднята; звук звонкий и полный. Не «з» и не простое «д».\nد — Звонко; на конце и при остановке не переходите в «т».",
         "kk": "ض — Тілдің жиегі азу тістерге тиеді, арты көтеріледі; дыбыс ұяң, толық. «З» де, жай «д» да емес.\nد — Ұяң; соңында және тоқтағанда «т» дыбысына айналдырмаңыз.",
-        "uz": "ض — Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas.\nد — Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang."
+        "uz": "ض — Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas.\nد — Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang.",
+        "en": "ض — The edges of the tongue at the molars, the back raised; the sound is voiced and full. Not “z” and not a plain “d”.\nد — Voiced; at the end and when stopping do not turn it into “t”."
       },
       "примеры": [
         "ضَ",
@@ -405,7 +437,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "بَعْدُ",
       "варианты": [
@@ -420,7 +453,8 @@
       "пояснение": {
         "ru": "د: Звонко; на конце и при остановке не переходите в «т».",
         "kk": "د: Ұяң; соңында және тоқтағанда «т» дыбысына айналдырмаңыз.",
-        "uz": "د: Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang."
+        "uz": "د: Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang.",
+        "en": "د: Voiced; at the end and when stopping do not turn it into “t”."
       }
     },
     {
@@ -430,7 +464,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "دَرْسْ",
       "варианты": [
@@ -445,7 +480,8 @@
       "пояснение": {
         "ru": "د: Звонко; на конце и при остановке не переходите в «т».",
         "kk": "د: Ұяң; соңында және тоқтағанда «т» дыбысына айналдырмаңыз.",
-        "uz": "د: Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang."
+        "uz": "د: Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang.",
+        "en": "د: Voiced; at the end and when stopping do not turn it into “t”."
       }
     },
     {
@@ -454,7 +490,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -482,7 +519,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -514,7 +552,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -530,7 +569,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "دَرْسْ، أَحَدْ، ضَرَبَ"

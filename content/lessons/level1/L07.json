@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ف и ق",
     "kk": "ف және ق әріптері",
-    "uz": "ف va ق harflari"
+    "uz": "ف va ق harflari",
+    "en": "Letters ف and ق"
   },
   "цель": {
     "ru": "Различаем ك и ق",
     "kk": "ك және ق әріптерін ажыратамыз",
-    "uz": "ك va ق ni farqlaymiz"
+    "uz": "ك va ق ni farqlaymiz",
+    "en": "Telling ك and ق apart"
   },
   "новое": [
     "ف",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "фа",
         "kk": "фа",
-        "uz": "fo"
+        "uz": "fo",
+        "en": "fa"
       },
       "формы": {
         "отдельная": "ف",
@@ -37,13 +40,15 @@
       "подсказка": {
         "ru": "Нижняя губа касается верхних зубов: «ф», а не «п».",
         "kk": "Төменгі ерін жоғарғы тістерге тиеді: «п» емес, «ф».",
-        "uz": "Pastki lab yuqori tishlarga tegadi: «f», «p» emas."
+        "uz": "Pastki lab yuqori tishlarga tegadi: «f», «p» emas.",
+        "en": "The lower lip touches the upper teeth: “f”, not “p”."
       },
       "подмены": [
         {
           "ru": "ف звучит как «п»",
           "kk": "ف «п» болып естіледі",
-          "uz": "ف «p» boʻlib eshitiladi"
+          "uz": "ف «p» boʻlib eshitiladi",
+          "en": "ف sounds like “p”"
         }
       ],
       "примеры": [
@@ -61,7 +66,8 @@
       "вопрос": {
         "ru": "Найдите букву «фа».",
         "kk": "«фа» әрпін табыңыз.",
-        "uz": "«fo» harfini toping."
+        "uz": "«fo» harfini toping.",
+        "en": "Find the letter “fa”."
       },
       "варианты": [
         {
@@ -81,7 +87,8 @@
       "пояснение": {
         "ru": "«фа» — это ف.",
         "kk": "«фа» — ف әрпі.",
-        "uz": "«fo» — bu ف."
+        "uz": "«fo» — bu ف.",
+        "en": "“fa” is ف."
       }
     },
     {
@@ -91,7 +98,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «фа»?",
         "kk": "«фа» әрпінде қандай белгі тұр?",
-        "uz": "«fo» harfida qanday belgi bor?"
+        "uz": "«fo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “fa”?"
       },
       "показ": "فَ",
       "варианты": [
@@ -99,21 +107,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -121,7 +132,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -131,7 +143,8 @@
       "вопрос": {
         "ru": "Найдите начальную форму буквы «фа».",
         "kk": "«фа» әрпінің бастапқы түрін табыңыз.",
-        "uz": "«fo» harfining boshlangʻich shaklini toping."
+        "uz": "«fo» harfining boshlangʻich shaklini toping.",
+        "en": "Find the initial form of the letter “fa”."
       },
       "варианты": [
         {
@@ -157,7 +170,8 @@
       "название": {
         "ru": "қаф",
         "kk": "қаф",
-        "uz": "qof"
+        "uz": "qof",
+        "en": "qaf"
       },
       "формы": {
         "отдельная": "ق",
@@ -169,13 +183,15 @@
       "подсказка": {
         "ru": "Корень языка смыкается с самым задним нёбом, глубже русского «к». Опора — казахское «қ».",
         "kk": "Тіл түбі таңдайдың ең артына тиеді — қазақтың «қ» дыбысына жақын.",
-        "uz": "Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ»."
+        "uz": "Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».",
+        "en": "The root of the tongue closes against the very back of the palate, deeper than the Russian “k”. Anchor — the Kazakh “қ”."
       },
       "подмены": [
         {
           "ru": "ق звучит как ك (قُلْ → «куль»)",
           "kk": "ق әрпі ك болып естіледі (قُلْ → «куль»)",
-          "uz": "ق harfi ك boʻlib eshitiladi (قُلْ → «kul»)"
+          "uz": "ق harfi ك boʻlib eshitiladi (قُلْ → «kul»)",
+          "en": "ق sounds like ك (قُلْ → “kul”)"
         }
       ],
       "примеры": [
@@ -193,7 +209,8 @@
       "вопрос": {
         "ru": "Найдите букву «қаф».",
         "kk": "«қаф» әрпін табыңыз.",
-        "uz": "«qof» harfini toping."
+        "uz": "«qof» harfini toping.",
+        "en": "Find the letter “qaf”."
       },
       "варианты": [
         {
@@ -213,7 +230,8 @@
       "пояснение": {
         "ru": "«қаф» — это ق.",
         "kk": "«қаф» — ق әрпі.",
-        "uz": "«qof» — bu ق."
+        "uz": "«qof» — bu ق.",
+        "en": "“qaf” is ق."
       }
     },
     {
@@ -223,7 +241,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «қаф»?",
         "kk": "«қаф» әрпінде қандай белгі тұр?",
-        "uz": "«qof» harfida qanday belgi bor?"
+        "uz": "«qof» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “qaf”?"
       },
       "показ": "أُقْ",
       "варианты": [
@@ -231,28 +250,32 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         }
       ],
@@ -260,7 +283,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -270,7 +294,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «қаф».",
         "kk": "«қаф» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«qof» harfining oʻrta shaklini toping."
+        "uz": "«qof» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “qaf”."
       },
       "варианты": [
         {
@@ -294,7 +319,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -330,7 +356,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -366,7 +393,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "فَ فِ فُ أَفْ إِفْ أُفْ"
@@ -379,12 +407,14 @@
       "заголовок": {
         "ru": "Различаем ق и ك",
         "kk": "ق және ك әріптерін ажыратамыз",
-        "uz": "ق va ك harflarini farqlaymiz"
+        "uz": "ق va ك harflarini farqlaymiz",
+        "en": "Telling ق and ك apart"
       },
       "текст": {
         "ru": "ق — Корень языка смыкается с самым задним нёбом, глубже русского «к». Опора — казахское «қ».\nك — Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
         "kk": "ق — Тіл түбі таңдайдың ең артына тиеді — қазақтың «қ» дыбысына жақын.\nك — Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-        "uz": "ق — Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».\nك — Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+        "uz": "ق — Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».\nك — Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+        "en": "ق — The root of the tongue closes against the very back of the palate, deeper than the Russian “k”. Anchor — the Kazakh “қ”.\nك — An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
       },
       "примеры": [
         "قَ",
@@ -398,7 +428,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "كُلْ",
       "варианты": [
@@ -413,7 +444,8 @@
       "пояснение": {
         "ru": "ك: Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
         "kk": "ك: Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+        "en": "ك: An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
       }
     },
     {
@@ -423,7 +455,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "قَلْبْ",
       "варианты": [
@@ -438,7 +471,8 @@
       "пояснение": {
         "ru": "ق: Корень языка смыкается с самым задним нёбом, глубже русского «к». Опора — казахское «қ».",
         "kk": "ق: Тіл түбі таңдайдың ең артына тиеді — қазақтың «қ» дыбысына жақын.",
-        "uz": "ق: Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ»."
+        "uz": "ق: Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».",
+        "en": "ق: The root of the tongue closes against the very back of the palate, deeper than the Russian “k”. Anchor — the Kazakh “қ”."
       }
     },
     {
@@ -448,7 +482,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "فَلَكْ",
       "варианты": [
@@ -463,7 +498,8 @@
       "пояснение": {
         "ru": "ك: Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
         "kk": "ك: Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+        "en": "ك: An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
       }
     },
     {
@@ -473,7 +509,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "كَمَرْ",
       "варианты": [
@@ -488,7 +525,8 @@
       "пояснение": {
         "ru": "ك: Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
         "kk": "ك: Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+        "uz": "ك: Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+        "en": "ك: An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
       }
     },
     {
@@ -497,7 +535,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -541,7 +580,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -573,7 +613,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "قُلْ، قَبْلَ، فَوْقَ"
@@ -586,7 +627,8 @@
       "подсказка": {
         "ru": "Лестница: читайте по ступеням — от слога к слову. Запишите каждую ступень.",
         "kk": "Баспалдақ: буыннан сөзге дейін саты-сатымен оқыңыз. Әр сатыны жазып алыңыз.",
-        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling."
+        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling.",
+        "en": "Ladder: read step by step — from the syllable to the word. Record each step."
       },
       "ступени": [
         {

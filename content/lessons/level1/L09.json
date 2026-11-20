@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ث и ص",
     "kk": "ث және ص әріптері",
-    "uz": "ث va ص harflari"
+    "uz": "ث va ص harflari",
+    "en": "Letters ث and ص"
   },
   "цель": {
     "ru": "Различаем س и ث, س и ص",
     "kk": "س және ث, س және ص әріптерін ажыратамыз",
-    "uz": "س va ث, س va ص ni farqlaymiz"
+    "uz": "س va ث, س va ص ni farqlaymiz",
+    "en": "Telling س and ث, س and ص apart"
   },
   "новое": [
     "ث",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "с̱а",
         "kk": "с̱а",
-        "uz": "s̱o"
+        "uz": "s̱o",
+        "en": "tha"
       },
       "формы": {
         "отдельная": "ث",
@@ -37,13 +40,15 @@
       "подсказка": {
         "ru": "Кончик языка между зубами, глухо (как th в английском think). Не «с».",
         "kk": "Тіл ұшы тістің арасында, қатаң. «С» емес.",
-        "uz": "Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas."
+        "uz": "Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas.",
+        "en": "Tongue tip between the teeth, voiceless (like th in the English “think”). Not “s”."
       },
       "подмены": [
         {
           "ru": "ث → «с»",
           "kk": "ث → «с»",
-          "uz": "ث → «s»"
+          "uz": "ث → «s»",
+          "en": "ث → “s”"
         }
       ],
       "примеры": [
@@ -61,7 +66,8 @@
       "вопрос": {
         "ru": "Найдите букву «с̱а».",
         "kk": "«с̱а» әрпін табыңыз.",
-        "uz": "«s̱o» harfini toping."
+        "uz": "«s̱o» harfini toping.",
+        "en": "Find the letter “tha”."
       },
       "варианты": [
         {
@@ -81,7 +87,8 @@
       "пояснение": {
         "ru": "«с̱а» — это ث.",
         "kk": "«с̱а» — ث әрпі.",
-        "uz": "«s̱o» — bu ث."
+        "uz": "«s̱o» — bu ث.",
+        "en": "“tha” is ث."
       }
     },
     {
@@ -91,7 +98,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «с̱а»?",
         "kk": "«с̱а» әрпінде қандай белгі тұр?",
-        "uz": "«s̱o» harfida qanday belgi bor?"
+        "uz": "«s̱o» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “tha”?"
       },
       "показ": "ثِ",
       "варианты": [
@@ -99,21 +107,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -121,7 +132,8 @@
       "пояснение": {
         "ru": "Короткая косая черта под буквой. Звук «и».",
         "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+        "en": "A short slanted stroke below the letter. The sound “i”."
       }
     },
     {
@@ -131,7 +143,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «с̱а».",
         "kk": "«с̱а» әрпінің соңғы түрін табыңыз.",
-        "uz": "«s̱o» harfining oxirgi shaklini toping."
+        "uz": "«s̱o» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “tha”."
       },
       "варианты": [
         {
@@ -157,7 +170,8 @@
       "название": {
         "ru": "с̣ад",
         "kk": "с̣ад",
-        "uz": "ṣod"
+        "uz": "ṣod",
+        "en": "ṣad"
       },
       "формы": {
         "отдельная": "ص",
@@ -169,13 +183,15 @@
       "подсказка": {
         "ru": "Как «с», но задняя часть языка поднята, звук полный, со свистом. «А» после неё темнее, но не «о».",
         "kk": "«С» сияқты, бірақ тілдің арты көтеріледі, дыбыс толық, ысқырықты. Кейінгі «а» жуандайды, бірақ «о» емес.",
-        "uz": "«s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas."
+        "uz": "«s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas.",
+        "en": "Like “s”, but the back of the tongue is raised, the sound is full, with a whistle. The “a” after it is darker, but not “o”."
       },
       "подмены": [
         {
           "ru": "ص → «с»",
           "kk": "ص → «с»",
-          "uz": "ص → «s»"
+          "uz": "ص → «s»",
+          "en": "ص → “s”"
         }
       ],
       "примеры": [
@@ -193,7 +209,8 @@
       "вопрос": {
         "ru": "Найдите букву «с̣ад».",
         "kk": "«с̣ад» әрпін табыңыз.",
-        "uz": "«ṣod» harfini toping."
+        "uz": "«ṣod» harfini toping.",
+        "en": "Find the letter “ṣad”."
       },
       "варианты": [
         {
@@ -213,7 +230,8 @@
       "пояснение": {
         "ru": "«с̣ад» — это ص.",
         "kk": "«с̣ад» — ص әрпі.",
-        "uz": "«ṣod» — bu ص."
+        "uz": "«ṣod» — bu ص.",
+        "en": "“ṣad” is ص."
       }
     },
     {
@@ -223,7 +241,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «с̣ад»?",
         "kk": "«с̣ад» әрпінде қандай белгі тұр?",
-        "uz": "«ṣod» harfida qanday belgi bor?"
+        "uz": "«ṣod» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ṣad”?"
       },
       "показ": "أُصْ",
       "варианты": [
@@ -231,28 +250,32 @@
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -260,7 +283,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -270,7 +294,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «с̣ад».",
         "kk": "«с̣ад» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ṣod» harfining oʻrta shaklini toping."
+        "uz": "«ṣod» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ṣad”."
       },
       "варианты": [
         {
@@ -294,7 +319,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -330,7 +356,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -366,7 +393,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "ثَ ثِ ثُ أَثْ إِثْ أُثْ"
@@ -379,12 +407,14 @@
       "заголовок": {
         "ru": "Различаем س, ث и ص",
         "kk": "س, ث және ص әріптерін ажыратамыз",
-        "uz": "س, ث va ص harflarini farqlaymiz"
+        "uz": "س, ث va ص harflarini farqlaymiz",
+        "en": "Telling س, ث and ص apart"
       },
       "текст": {
         "ru": "ث — Кончик языка между зубами, глухо (как th в английском think). Не «с».\nص — Как «с», но задняя часть языка поднята, звук полный, со свистом. «А» после неё темнее, но не «о».",
         "kk": "ث — Тіл ұшы тістің арасында, қатаң. «С» емес.\nص — «С» сияқты, бірақ тілдің арты көтеріледі, дыбыс толық, ысқырықты. Кейінгі «а» жуандайды, бірақ «о» емес.",
-        "uz": "ث — Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas.\nص — «s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas."
+        "uz": "ث — Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas.\nص — «s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas.",
+        "en": "ث — Tongue tip between the teeth, voiceless (like th in the English “think”). Not “s”.\nص — Like “s”, but the back of the tongue is raised, the sound is full, with a whistle. The “a” after it is darker, but not “o”."
       },
       "примеры": [
         "سَ",
@@ -399,7 +429,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "ثَمَرْ",
       "варианты": [
@@ -414,7 +445,8 @@
       "пояснение": {
         "ru": "ث: Кончик языка между зубами, глухо (как th в английском think). Не «с».",
         "kk": "ث: Тіл ұшы тістің арасында, қатаң. «С» емес.",
-        "uz": "ث: Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas."
+        "uz": "ث: Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas.",
+        "en": "ث: Tongue tip between the teeth, voiceless (like th in the English “think”). Not “s”."
       }
     },
     {
@@ -424,7 +456,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "سَبَتَ",
       "варианты": [
@@ -444,7 +477,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "صَيْفْ",
       "варианты": [
@@ -459,7 +493,8 @@
       "пояснение": {
         "ru": "ص: Как «с», но задняя часть языка поднята, звук полный, со свистом. «А» после неё темнее, но не «о».",
         "kk": "ص: «С» сияқты, бірақ тілдің арты көтеріледі, дыбыс толық, ысқырықты. Кейінгі «а» жуандайды, бірақ «о» емес.",
-        "uz": "ص: «s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas."
+        "uz": "ص: «s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas.",
+        "en": "ص: Like “s”, but the back of the tongue is raised, the sound is full, with a whistle. The “a” after it is darker, but not “o”."
       }
     },
     {
@@ -469,7 +504,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "سَفَرْ",
       "варианты": [
@@ -488,7 +524,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -532,7 +569,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -564,7 +602,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -580,7 +619,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "ثَمَرْ، مِثْلُ، كَوْثَرْ"

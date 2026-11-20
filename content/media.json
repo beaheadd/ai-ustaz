@@ -11,7 +11,8 @@
    "имя": {
     "ru": "шейх Алижон кари",
     "kk": "шейх Әлижон қари",
-    "uz": "shayx Alijon qori"
+    "uz": "shayx Alijon qori",
+    "en": "Sheikh Alijon Qori"
    },
    "канал": "AlQuranuz — Shayx Alijon qori sahifasi",
    "канал_id": "UCfLQuhJsVgpgpkIz-BnVa_w",
@@ -25,14 +26,16 @@
    "атрибуция": {
     "ru": "Видео: шейх Алижон кари, канал AlQuranuz, курс «Muallimi soniy». Используется с разрешения автора.",
     "kk": "Бейне: шейх Әлижон қари, AlQuranuz арнасы, «Muallimi soniy» курсы. Автордың рұқсатымен қолданылады.",
-    "uz": "Video: shayx Alijon qori, AlQuranuz kanali, «Muallimi soniy» kursi. Muallif ruxsati bilan foydalanilmoqda."
+    "uz": "Video: shayx Alijon qori, AlQuranuz kanali, «Muallimi soniy» kursi. Muallif ruxsati bilan foydalanilmoqda.",
+    "en": "Video: Sheikh Alijon Qori, AlQuranuz channel, the “Muallimi soniy” course. Used with the author's permission."
    }
   },
   "shokay_tajvid": {
    "имя": {
     "ru": "устаз Еркінбек Шоқай",
     "kk": "ұстаз Еркінбек Шоқай",
-    "uz": "ustoz Yerkinbek Shoqay"
+    "uz": "ustoz Yerkinbek Shoqay",
+    "en": "Ustaz Yerkinbek Shokay"
    },
    "канал": "Ұстаз Еркінбек Шоқай",
    "канал_id": "UCQDge2vG-ZZzF2LmxdIVp7g",
@@ -46,14 +49,16 @@
    "атрибуция": {
     "ru": "Видео: устаз Еркінбек Шоқай, канал «Ұстаз Еркінбек Шоқай», курс таджвида на казахском языке. Используется с разрешения автора.",
     "kk": "Бейне: ұстаз Еркінбек Шоқай, «Ұстаз Еркінбек Шоқай» арнасы, қазақ тіліндегі тәжуид курсы. Автордың рұқсатымен қолданылады.",
-    "uz": "Video: ustoz Yerkinbek Shoqay, «Ұстаз Еркінбек Шоқай» kanali, qozoq tilidagi tajvid kursi. Muallif ruxsati bilan foydalanilmoqda."
+    "uz": "Video: ustoz Yerkinbek Shoqay, «Ұстаз Еркінбек Шоқай» kanali, qozoq tilidagi tajvid kursi. Muallif ruxsati bilan foydalanilmoqda.",
+    "en": "Video: Ustaz Yerkinbek Shokay, the “Ұстаз Еркінбек Шоқай” channel, a tajweed course in Kazakh. Used with the author's permission."
    }
   },
   "suwaid_tajwid_musawwar": {
    "имя": {
     "ru": "д-р Айман Рушди Сувайд",
     "kk": "доктор Айман Рушди Сувайд",
-    "uz": "doktor Ayman Rushdiy Suvayd"
+    "uz": "doktor Ayman Rushdiy Suvayd",
+    "en": "Dr. Ayman Rushdi Suwaid"
    },
    "канал": "د. أيمن سويد Dr. Ayman Swaid",
    "канал_id": "UCKtLDrh3IgxwcZtxiTvOQAA",
@@ -67,7 +72,8 @@
    "атрибуция": {
     "ru": "Видео: д-р Айман Рушди Сувайд, канал «Dr. Ayman Swaid», разбор книги «التجويد المصور» («Көрнекі тәжуид»). Используется с разрешения автора.",
     "kk": "Бейне: доктор Айман Рушди Сувайд, «Dr. Ayman Swaid» арнасы, «التجويد المصور» («Көрнекі тәжуид») кітабының түсіндірмесі. Автордың рұқсатымен қолданылады.",
-    "uz": "Video: doktor Ayman Rushdiy Suvayd, «Dr. Ayman Swaid» kanali, «التجويد المصور» («Көрнекі тәжуид») kitobining sharhi. Muallif ruxsati bilan foydalanilmoqda."
+    "uz": "Video: doktor Ayman Rushdiy Suvayd, «Dr. Ayman Swaid» kanali, «التجويد المصور» («Көрнекі тәжуид») kitobining sharhi. Muallif ruxsati bilan foydalanilmoqda.",
+    "en": "Video: Dr. Ayman Rushdi Suwaid, the “Dr. Ayman Swaid” channel, commentary on the book “التجويد المصور” (“Illustrated Tajweed”). Used with the author's permission."
    }
   }
  },

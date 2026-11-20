@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ش и س",
     "kk": "ش және س әріптері",
-    "uz": "ش va س harflari"
+    "uz": "ش va س harflari",
+    "en": "Letters ش and س"
   },
   "цель": {
     "ru": "Новые буквы и длинные слова",
     "kk": "Жаңа әріптер және ұзын сөздер",
-    "uz": "Yangi harflar va uzun soʻzlar"
+    "uz": "Yangi harflar va uzun soʻzlar",
+    "en": "New letters and long words"
   },
   "новое": [
     "ش",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "шин",
         "kk": "шин",
-        "uz": "shin"
+        "uz": "shin",
+        "en": "shin"
       },
       "формы": {
         "отдельная": "ش",
@@ -51,7 +54,8 @@
       "вопрос": {
         "ru": "Найдите букву «шин».",
         "kk": "«шин» әрпін табыңыз.",
-        "uz": "«shin» harfini toping."
+        "uz": "«shin» harfini toping.",
+        "en": "Find the letter “shin”."
       },
       "варианты": [
         {
@@ -71,7 +75,8 @@
       "пояснение": {
         "ru": "«шин» — это ش.",
         "kk": "«шин» — ش әрпі.",
-        "uz": "«shin» — bu ش."
+        "uz": "«shin» — bu ش.",
+        "en": "“shin” is ش."
       }
     },
     {
@@ -81,7 +86,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «шин»?",
         "kk": "«шин» әрпінде қандай белгі тұр?",
-        "uz": "«shin» harfida qanday belgi bor?"
+        "uz": "«shin» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “shin”?"
       },
       "показ": "شَ",
       "варианты": [
@@ -89,21 +95,24 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -111,7 +120,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -121,7 +131,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «шин».",
         "kk": "«шин» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«shin» harfining oʻrta shaklini toping."
+        "uz": "«shin» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “shin”."
       },
       "варианты": [
         {
@@ -147,7 +158,8 @@
       "название": {
         "ru": "син",
         "kk": "син",
-        "uz": "sin"
+        "uz": "sin",
+        "en": "sin"
       },
       "формы": {
         "отдельная": "س",
@@ -173,7 +185,8 @@
       "вопрос": {
         "ru": "Найдите букву «син».",
         "kk": "«син» әрпін табыңыз.",
-        "uz": "«sin» harfini toping."
+        "uz": "«sin» harfini toping.",
+        "en": "Find the letter “sin”."
       },
       "варианты": [
         {
@@ -193,7 +206,8 @@
       "пояснение": {
         "ru": "«син» — это س.",
         "kk": "«син» — س әрпі.",
-        "uz": "«sin» — bu س."
+        "uz": "«sin» — bu س.",
+        "en": "“sin” is س."
       }
     },
     {
@@ -203,7 +217,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «син»?",
         "kk": "«син» әрпінде қандай белгі тұр?",
-        "uz": "«sin» harfida qanday belgi bor?"
+        "uz": "«sin» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “sin”?"
       },
       "показ": "إِسْ",
       "варианты": [
@@ -211,28 +226,32 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -240,7 +259,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -250,7 +270,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «син».",
         "kk": "«син» әрпінің соңғы түрін табыңыз.",
-        "uz": "«sin» harfining oxirgi shaklini toping."
+        "uz": "«sin» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “sin”."
       },
       "варианты": [
         {
@@ -274,7 +295,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -310,7 +332,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -346,7 +369,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "شَ شِ شُ أَشْ إِشْ أُشْ"
@@ -359,7 +383,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -391,7 +416,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -411,7 +437,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "شَهْرُ، شُكْرُ، مَشْرِقْ"
@@ -424,7 +451,8 @@
       "подсказка": {
         "ru": "Лестница: читайте по ступеням — от слога к слову. Запишите каждую ступень.",
         "kk": "Баспалдақ: буыннан сөзге дейін саты-сатымен оқыңыз. Әр сатыны жазып алыңыз.",
-        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling."
+        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling.",
+        "en": "Ladder: read step by step — from the syllable to the word. Record each step."
       },
       "ступени": [
         {

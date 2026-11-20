@@ -5,12 +5,14 @@
   "название": {
     "ru": "Вход",
     "kk": "Кіріспе",
-    "uz": "Kirish"
+    "uz": "Kirish",
+    "en": "Introduction"
   },
   "цель": {
     "ru": "ИИ-предупреждение, как устроен урок, первая запись «а — и — у»",
     "kk": "ЖИ туралы ескерту, сабақтың құрылымы, «а — и — у» алғашқы жазбасы",
-    "uz": "SI haqida ogohlantirish, dars qanday tuzilgan, ilk yozuv «a — i — u»"
+    "uz": "SI haqida ogohlantirish, dars qanday tuzilgan, ilk yozuv «a — i — u»",
+    "en": "AI notice, how a lesson works, first recording “a — i — u”"
   },
   "предупреждениеИИ": {
     "id": "qml-notice",
@@ -19,7 +21,8 @@
     "ru": "Этот учитель Корана — модель искусственного интеллекта, которая может ошибаться. Она предназначена только для помощи, и на неё нельзя полагаться. Она не заменяет опытного, уполномоченного учителя, поскольку Коран передаётся только устно (мушафаха).",
     "kk": "Бұл Құран мұғалімі — қателесуі мүмкін жасанды интеллект моделі. Ол тек көмек үшін арналған, оған сүйенуге болмайды. Ол шебер әрі рұқсаты бар ұстаздың орнын баспайды, өйткені Құран тек ауызба-ауыз (мушафаха) жолымен қабылданады.",
     "uz": "Bu Qurʼon ustozi — xato qilishi mumkin boʻlgan sunʼiy intellekt modeli. U faqat yordam uchun moʻljallangan va unga tayanib boʻlmaydi. U tajribali, vakolatli ustozning oʻrnini bosmaydi, chunki Qurʼon faqat ogʻzaki (mushofaha) yoʻli bilan oʻtadi.",
-    "источник": "quran-muaalem, файл NOTICE (QML-1.0); ar и ru — официальные тексты; kk и uz — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)",
+    "en": "This Quranic Teacher is an artificial-intelligence model that may make mistakes. It is intended for assistance only and must not be relied upon. It is not a replacement for a proficient, authorized teacher, because the Quran is only received through oral transmission (mushafahah).",
+    "источник": "quran-muaalem, файл NOTICE (QML-1.0); ar, ru и en — официальные тексты (en прочитан 20.11.2026); kk и uz — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)",
     "ссылка": "github.com/obadx/quran-muaalem — файл NOTICE",
     "прочитано": "2026-11-18"
   },
@@ -27,7 +30,8 @@
     "вопрос": {
       "ru": "Вы уже читаете по-арабски?",
       "kk": "Сіз арабша оқи аласыз ба?",
-      "uz": "Siz arabcha oʻqiy olasizmi?"
+      "uz": "Siz arabcha oʻqiy olasizmi?",
+      "en": "Can you already read Arabic?"
     },
     "варианты": [
       {
@@ -35,7 +39,8 @@
         "текст": {
           "ru": "Не знаю букв",
           "kk": "Әріптерді білмеймін",
-          "uz": "Harflarni bilmayman"
+          "uz": "Harflarni bilmayman",
+          "en": "I do not know the letters"
         },
         "куда": {
           "экран": "урок",
@@ -47,7 +52,8 @@
         "текст": {
           "ru": "Знаю буквы, читаю медленно",
           "kk": "Әріптерді білемін, баяу оқимын",
-          "uz": "Harflarni bilaman, sekin oʻqiyman"
+          "uz": "Harflarni bilaman, sekin oʻqiyman",
+          "en": "I know the letters, I read slowly"
         },
         "куда": {
           "экран": "картаКурса"
@@ -55,7 +61,8 @@
         "примечание": {
           "ru": "Теста на уровень в прототипе пока нет: выберите урок на карте курса (например, урок 16 «Формы и соединения букв»).",
           "kk": "Прототипте деңгей тесті әзірге жоқ: курс картасынан сабақ таңдаңыз (мысалы, 16-сабақ «Әріптердің түрлері мен жалғануы»).",
-          "uz": "Prototipda daraja testi hozircha yoʻq: kurs xaritasidan dars tanlang (masalan, 16-dars «Harflarning shakllari va qoʻshilishi»)."
+          "uz": "Prototipda daraja testi hozircha yoʻq: kurs xaritasidan dars tanlang (masalan, 16-dars «Harflarning shakllari va qoʻshilishi»).",
+          "en": "There is no placement test in the prototype yet: choose a lesson on the course map (for example, lesson 16 “Letter forms and joining”)."
         }
       },
       {
@@ -63,7 +70,8 @@
         "текст": {
           "ru": "Читаю, хочу таджвид",
           "kk": "Оқимын, тәжуид үйренгім келеді",
-          "uz": "Oʻqiyman, tajvid oʻrganmoqchiman"
+          "uz": "Oʻqiyman, tajvid oʻrganmoqchiman",
+          "en": "I read, I want tajweed"
         },
         "куда": {
           "экран": "какОбъясняем"
@@ -71,7 +79,8 @@
         "примечание": {
           "ru": "«Аудит Фатихи» появится вместе с проверкой голосом. Сейчас можно посмотреть, как AI Ustaz будет объяснять ошибки.",
           "kk": "«Фатиха аудиті» дауыспен тексерумен бірге шығады. Қазір AI Ustaz қателерді қалай түсіндіретінін көруге болады.",
-          "uz": "«Fotiha auditi» ovoz bilan tekshirish bilan birga paydo boʻladi. Hozir AI Ustaz xatolarni qanday tushuntirishini koʻrish mumkin."
+          "uz": "«Fotiha auditi» ovoz bilan tekshirish bilan birga paydo boʻladi. Hozir AI Ustaz xatolarni qanday tushuntirishini koʻrish mumkin.",
+          "en": "The “Fatiha audit” will come together with the voice check. For now you can see how AI Ustaz will explain mistakes."
         }
       },
       {
@@ -79,7 +88,8 @@
         "текст": {
           "ru": "Учу наизусть",
           "kk": "Жатқа үйренемін",
-          "uz": "Yod olyapman"
+          "uz": "Yod olyapman",
+          "en": "I am memorising"
         },
         "куда": {
           "экран": "картаКурса"
@@ -87,7 +97,8 @@
         "примечание": {
           "ru": "«Слушатель» для хифза появится позже. Пока можно пройти курс чтения.",
           "kk": "Хифзға арналған «Тыңдаушы» кейінірек шығады. Әзірге оқу курсынан өтуге болады.",
-          "uz": "Hifz uchun «Tinglovchi» keyinroq paydo boʻladi. Hozircha oʻqish kursini oʻtish mumkin."
+          "uz": "Hifz uchun «Tinglovchi» keyinroq paydo boʻladi. Hozircha oʻqish kursini oʻtish mumkin.",
+          "en": "The “Listener” for hifz will come later. For now you can take the reading course."
         }
       }
     ]
@@ -96,7 +107,8 @@
     "вопрос": {
       "ru": "С каким намерением вы учитесь? (по желанию, ответ не сохраняется)",
       "kk": "Қандай ниетпен оқисыз? (қаласаңыз; жауап сақталмайды)",
-      "uz": "Qanday niyat bilan oʻqiyapsiz? (xohishga koʻra, javob saqlanmaydi)"
+      "uz": "Qanday niyat bilan oʻqiyapsiz? (xohishga koʻra, javob saqlanmaydi)",
+      "en": "With what intention are you learning? (optional, the answer is not saved)"
     },
     "варианты": [
       {
@@ -104,7 +116,8 @@
         "текст": {
           "ru": "Читать в намазе",
           "kk": "Намазда оқу",
-          "uz": "Namozda oʻqish"
+          "uz": "Namozda oʻqish",
+          "en": "To read in prayer"
         }
       },
       {
@@ -112,7 +125,8 @@
         "текст": {
           "ru": "Читать Коран",
           "kk": "Құран оқу",
-          "uz": "Qurʼon oʻqish"
+          "uz": "Qurʼon oʻqish",
+          "en": "To read the Quran"
         }
       },
       {
@@ -120,7 +134,8 @@
         "текст": {
           "ru": "Учить детей",
           "kk": "Балаларды үйрету",
-          "uz": "Bolalarni oʻqitish"
+          "uz": "Bolalarni oʻqitish",
+          "en": "To teach children"
         }
       },
       {
@@ -128,7 +143,8 @@
         "текст": {
           "ru": "Заучивать",
           "kk": "Жаттау",
-          "uz": "Yod olish"
+          "uz": "Yod olish",
+          "en": "To memorise"
         }
       },
       {
@@ -136,7 +152,8 @@
         "текст": {
           "ru": "Пропустить",
           "kk": "Өткізіп жіберу",
-          "uz": "Oʻtkazib yuborish"
+          "uz": "Oʻtkazib yuborish",
+          "en": "Skip"
         }
       }
     ],
@@ -149,12 +166,14 @@
       "заголовок": {
         "ru": "Как устроен урок",
         "kk": "Сабақ қалай құрылған",
-        "uz": "Dars qanday tuzilgan"
+        "uz": "Dars qanday tuzilgan",
+        "en": "How a lesson works"
       },
       "текст": {
         "ru": "Урок — 8–12 коротких заданий: узнать букву, найти её среди похожих, прочитать слог и сказать вслух. Сейчас это прототип: ИИ ещё не проверяет голос, а голос кари появится после записи эталона. Ваша запись остаётся только на этой странице и никуда не отправляется.",
         "kk": "Сабақ 8–12 қысқа тапсырмадан тұрады: әріпті тану, оны ұқсас әріптердің арасынан табу, буынды оқу және дауыстап айту. Қазір бұл — прототип: ЖИ әзірге дауысты тексермейді, ал қари дауысы эталон жазылғаннан кейін қосылады. Жазбаңыз тек осы бетте қалады және ешқайда жіберілмейді.",
-        "uz": "Dars — 8–12 ta qisqa topshiriq: harfni tanish, uni oʻxshashlari orasidan topish, boʻgʻinni oʻqish va ovoz chiqarib aytish. Hozir bu — prototip: SI hali ovozni tekshirmaydi, qori ovozi esa namuna yozib olingandan keyin qoʻshiladi. Yozuvingiz faqat shu sahifada qoladi va hech qayerga yuborilmaydi."
+        "uz": "Dars — 8–12 ta qisqa topshiriq: harfni tanish, uni oʻxshashlari orasidan topish, boʻgʻinni oʻqish va ovoz chiqarib aytish. Hozir bu — prototip: SI hali ovozni tekshirmaydi, qori ovozi esa namuna yozib olingandan keyin qoʻshiladi. Yozuvingiz faqat shu sahifada qoladi va hech qayerga yuborilmaydi.",
+        "en": "A lesson is 8–12 short tasks: recognise a letter, find it among similar ones, read a syllable and say it aloud. This is a prototype for now: the AI does not check the voice yet, and the qari voice will appear once the reference recording is made. Your recording stays only on this page and is not sent anywhere."
       }
     },
     {
@@ -163,12 +182,14 @@
       "заголовок": {
         "ru": "Справа налево",
         "kk": "Оңнан солға",
-        "uz": "Oʻngdan chapga"
+        "uz": "Oʻngdan chapga",
+        "en": "Right to left"
       },
       "текст": {
         "ru": "Арабский текст читают справа налево. Начните с правого слога: а — и — у.",
         "kk": "Араб мәтіні оңнан солға қарай оқылады. Оң жақтағы буыннан бастаңыз: а — и — у.",
-        "uz": "Arabcha matn oʻngdan chapga oʻqiladi. Oʻngdagi boʻgʻindan boshlang: a — i — u."
+        "uz": "Arabcha matn oʻngdan chapga oʻqiladi. Oʻngdagi boʻgʻindan boshlang: a — i — u.",
+        "en": "Arabic text is read from right to left. Start with the right-hand syllable: a — i — u."
       },
       "примеры": [
         "أَ",
@@ -182,7 +203,8 @@
       "подсказка": {
         "ru": "Первая запись: прочитайте «а — и — у» три раза подряд и послушайте себя. Оценки нет.",
         "kk": "Алғашқы жазба: «а — и — у» деп үш рет қатарынан оқып, өзіңізді тыңдаңыз. Баға қойылмайды.",
-        "uz": "Ilk yozuv: «a — i — u»ni ketma-ket uch marta oʻqing va oʻzingizni tinglang. Baho qoʻyilmaydi."
+        "uz": "Ilk yozuv: «a — i — u»ni ketma-ket uch marta oʻqing va oʻzingizni tinglang. Baho qoʻyilmaydi.",
+        "en": "First recording: read “a — i — u” three times in a row and listen to yourself. There is no grade."
       },
       "читать": {
         "учебный": "أَ إِ أُ"

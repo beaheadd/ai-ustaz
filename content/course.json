@@ -12,7 +12,8 @@
       "название": {
         "ru": "Вход",
         "kk": "Кіріспе",
-        "uz": "Kirish"
+        "uz": "Kirish",
+        "en": "Introduction"
       },
       "пункты": [
         {
@@ -24,12 +25,14 @@
           "название": {
             "ru": "Вход",
             "kk": "Кіріспе",
-            "uz": "Kirish"
+            "uz": "Kirish",
+            "en": "Introduction"
           },
           "цель": {
             "ru": "ИИ-предупреждение, как устроен урок, первая запись «а — и — у»",
             "kk": "ЖИ туралы ескерту, сабақтың құрылымы, «а — и — у» алғашқы жазбасы",
-            "uz": "SI haqida ogohlantirish, dars qanday tuzilgan, ilk yozuv «a — i — u»"
+            "uz": "SI haqida ogohlantirish, dars qanday tuzilgan, ilk yozuv «a — i — u»",
+            "en": "AI notice, how a lesson works, first recording “a — i — u”"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -43,7 +46,8 @@
       "название": {
         "ru": "Буквы, огласовки, сукун",
         "kk": "Әріптер, харакаттар, сукун",
-        "uz": "Harflar, harakatlar, sukun"
+        "uz": "Harflar, harakatlar, sukun",
+        "en": "Letters, vowel marks, sukun"
       },
       "пункты": [
         {
@@ -55,12 +59,14 @@
           "название": {
             "ru": "Алиф (ا), хамза (ء) и ра (ر)",
             "kk": "Алиф (ا), хамза (ء) және ра (ر) әріптері",
-            "uz": "Alif (ا), hamza (ء) va ro (ر)"
+            "uz": "Alif (ا), hamza (ء) va ro (ر)",
+            "en": "Alif (ا), hamza (ء) and ra (ر)"
           },
           "цель": {
             "ru": "Читать справа налево; фатха, кясра, дамма и сукун",
             "kk": "Оңнан солға оқу; фатха, кәсра, дамма және сукун",
-            "uz": "Oʻngdan chapga oʻqish; fatha, kasra, damma va sukun"
+            "uz": "Oʻngdan chapga oʻqish; fatha, kasra, damma va sukun",
+            "en": "Reading right to left; fatha, kasra, damma and sukun"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -76,12 +82,14 @@
           "название": {
             "ru": "Буквы ز и م",
             "kk": "ز және م әріптері",
-            "uz": "ز va م harflari"
+            "uz": "ز va م harflari",
+            "en": "Letters ز and م"
           },
           "цель": {
             "ru": "Новые буквы и первые слова",
             "kk": "Жаңа әріптер және алғашқы сөздер",
-            "uz": "Yangi harflar va ilk soʻzlar"
+            "uz": "Yangi harflar va ilk soʻzlar",
+            "en": "New letters and first words"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -97,12 +105,14 @@
           "название": {
             "ru": "Буквы ت и ن",
             "kk": "ت және ن әріптері",
-            "uz": "ت va ن harflari"
+            "uz": "ت va ن harflari",
+            "en": "Letters ت and ن"
           },
           "цель": {
             "ru": "Закрытые слоги и слова",
             "kk": "Жабық буындар мен сөздер",
-            "uz": "Yopiq boʻgʻinlar va soʻzlar"
+            "uz": "Yopiq boʻgʻinlar va soʻzlar",
+            "en": "Closed syllables and words"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -118,12 +128,14 @@
           "название": {
             "ru": "Буквы ي и ب",
             "kk": "ي және ب әріптері",
-            "uz": "ي va ب harflari"
+            "uz": "ي va ب harflari",
+            "en": "Letters ي and ب"
           },
           "цель": {
             "ru": "ي как согласная и дифтонг «ай»",
             "kk": "ي дауыссыз дыбыс ретінде және «ай» дифтонгы",
-            "uz": "ي undosh sifatida va «ay» diftongi"
+            "uz": "ي undosh sifatida va «ay» diftongi",
+            "en": "ي as a consonant and the diphthong “ay”"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -139,12 +151,14 @@
           "название": {
             "ru": "Буквы ك и ل",
             "kk": "ك және ل әріптері",
-            "uz": "ك va ل harflari"
+            "uz": "ك va ل harflari",
+            "en": "Letters ك and ل"
           },
           "цель": {
             "ru": "Новые буквы в коротких словах",
             "kk": "Жаңа әріптер қысқа сөздерде",
-            "uz": "Qisqa soʻzlarda yangi harflar"
+            "uz": "Qisqa soʻzlarda yangi harflar",
+            "en": "New letters in short words"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -160,12 +174,14 @@
           "название": {
             "ru": "Буквы و и ه",
             "kk": "و және ه әріптері",
-            "uz": "و va ه harflari"
+            "uz": "و va ه harflari",
+            "en": "Letters و and ه"
           },
           "цель": {
             "ru": "Дифтонг «ау»; ه не глотаем",
             "kk": "«Ау» дифтонгы; ه әрпін жұтпаймыз",
-            "uz": "«av» diftongi; ه ni yutmaymiz"
+            "uz": "«av» diftongi; ه ni yutmaymiz",
+            "en": "The diphthong “aw”; do not swallow ه"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -181,12 +197,14 @@
           "название": {
             "ru": "Буквы ف и ق",
             "kk": "ف және ق әріптері",
-            "uz": "ف va ق harflari"
+            "uz": "ف va ق harflari",
+            "en": "Letters ف and ق"
           },
           "цель": {
             "ru": "Различаем ك и ق",
             "kk": "ك және ق әріптерін ажыратамыз",
-            "uz": "ك va ق ni farqlaymiz"
+            "uz": "ك va ق ni farqlaymiz",
+            "en": "Telling ك and ق apart"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -202,12 +220,14 @@
           "название": {
             "ru": "Буквы ش и س",
             "kk": "ش және س әріптері",
-            "uz": "ش va س harflari"
+            "uz": "ش va س harflari",
+            "en": "Letters ش and س"
           },
           "цель": {
             "ru": "Новые буквы и длинные слова",
             "kk": "Жаңа әріптер және ұзын сөздер",
-            "uz": "Yangi harflar va uzun soʻzlar"
+            "uz": "Yangi harflar va uzun soʻzlar",
+            "en": "New letters and long words"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -223,12 +243,14 @@
           "название": {
             "ru": "Буквы ث и ص",
             "kk": "ث және ص әріптері",
-            "uz": "ث va ص harflari"
+            "uz": "ث va ص harflari",
+            "en": "Letters ث and ص"
           },
           "цель": {
             "ru": "Различаем س и ث, س и ص",
             "kk": "س және ث, س және ص әріптерін ажыратамыз",
-            "uz": "س va ث, س va ص ni farqlaymiz"
+            "uz": "س va ث, س va ص ni farqlaymiz",
+            "en": "Telling س and ث, س and ص apart"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -244,12 +266,14 @@
           "название": {
             "ru": "Буква ط",
             "kk": "ط әрпі",
-            "uz": "ط harfi"
+            "uz": "ط harfi",
+            "en": "The letter ط"
           },
           "цель": {
             "ru": "Буква ط; «тяжёлые» буквы (исти‘ля)",
             "kk": "ط әрпі; «жуан» әріптер (истиғла)",
-            "uz": "ط harfi; «qalin» harflar (istiʼlo)"
+            "uz": "ط harfi; «qalin» harflar (istiʼlo)",
+            "en": "The letter ط; “heavy” letters (istiʿla)"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -265,12 +289,14 @@
           "название": {
             "ru": "Буквы ج и خ",
             "kk": "ج және خ әріптері",
-            "uz": "ج va خ harflari"
+            "uz": "ج va خ harflari",
+            "en": "Letters ج and خ"
           },
           "цель": {
             "ru": "Новые буквы; خ — не «к»",
             "kk": "Жаңа әріптер; خ — «к» емес",
-            "uz": "Yangi harflar; خ — «k» emas"
+            "uz": "Yangi harflar; خ — «k» emas",
+            "en": "New letters; خ is not “k”"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -286,12 +312,14 @@
           "название": {
             "ru": "Буква ح",
             "kk": "ح әрпі",
-            "uz": "ح harfi"
+            "uz": "ح harfi",
+            "en": "The letter ح"
           },
           "цель": {
             "ru": "Различаем خ и ح, ه и ح",
             "kk": "خ және ح, ه және ح әріптерін ажыратамыз",
-            "uz": "خ va ح, ه va ح ni farqlaymiz"
+            "uz": "خ va ح, ه va ح ni farqlaymiz",
+            "en": "Telling خ and ح, ه and ح apart"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -307,12 +335,14 @@
           "название": {
             "ru": "Буквы غ и ع",
             "kk": "غ және ع әріптері",
-            "uz": "غ va ع harflari"
+            "uz": "غ va ع harflari",
+            "en": "Letters غ and ع"
           },
           "цель": {
             "ru": "Различаем غ и ع, ء и ع",
             "kk": "غ және ع, ء және ع әріптерін ажыратамыз",
-            "uz": "غ va ع, ء va ع ni farqlaymiz"
+            "uz": "غ va ع, ء va ع ni farqlaymiz",
+            "en": "Telling غ and ع, ء and ع apart"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -328,12 +358,14 @@
           "название": {
             "ru": "Буквы د и ض",
             "kk": "د және ض әріптері",
-            "uz": "د va ض harflari"
+            "uz": "د va ض harflari",
+            "en": "Letters د and ض"
           },
           "цель": {
             "ru": "Различаем د и ض",
             "kk": "د және ض әріптерін ажыратамыз",
-            "uz": "د va ض ni farqlaymiz"
+            "uz": "د va ض ni farqlaymiz",
+            "en": "Telling د and ض apart"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -349,12 +381,14 @@
           "название": {
             "ru": "Буквы ذ и ظ",
             "kk": "ذ және ظ әріптері",
-            "uz": "ذ va ظ harflari"
+            "uz": "ذ va ظ harflari",
+            "en": "Letters ذ and ظ"
           },
           "цель": {
             "ru": "Пары ذ и ظ, ض и ظ, ز и ذ, ز и ظ",
             "kk": "ذ және ظ, ض және ظ, ز және ذ, ز және ظ жұптары",
-            "uz": "ذ va ظ, ض va ظ, ز va ذ, ز va ظ juftliklari"
+            "uz": "ذ va ظ, ض va ظ, ز va ذ, ز va ظ juftliklari",
+            "en": "Pairs ذ and ظ, ض and ظ, ز and ذ, ز and ظ"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -370,12 +404,14 @@
           "название": {
             "ru": "Формы и соединения букв",
             "kk": "Әріптердің түрлері мен жалғануы",
-            "uz": "Harflarning shakllari va qoʻshilishi"
+            "uz": "Harflarning shakllari va qoʻshilishi",
+            "en": "Letter forms and joining"
           },
           "цель": {
             "ru": "Начальная, срединная, конечная форма; буквы, не соединяющиеся слева; لا",
             "kk": "Бастапқы, ортаңғы, соңғы түрі; солға жалғанбайтын әріптер; لا",
-            "uz": "Boshlangʻich, oʻrta, oxirgi shakl; chapga qoʻshilmaydigan harflar; لا"
+            "uz": "Boshlangʻich, oʻrta, oxirgi shakl; chapga qoʻshilmaydigan harflar; لا",
+            "en": "Initial, medial and final forms; letters that do not join on the left; لا"
           },
           "очередь": "сейчас",
           "статус": "черновик",
@@ -391,12 +427,14 @@
           "название": {
             "ru": "Контрольная 1",
             "kk": "Бақылау 1",
-            "uz": "1-nazorat"
+            "uz": "1-nazorat",
+            "en": "Checkpoint 1"
           },
           "цель": {
             "ru": "Повторение всего буквенного блока: 28 букв, слова уроков 1–15, пары",
             "kk": "Бүкіл әріп бөлімін қайталау: 28 әріп, 1–15-сабақтардың сөздері, жұптар",
-            "uz": "Butun harflar boʻlimini takrorlash: 28 harf, 1–15-darslar soʻzlari, juftliklar"
+            "uz": "Butun harflar boʻlimini takrorlash: 28 harf, 1–15-darslar soʻzlari, juftliklar",
+            "en": "Revision of the whole letter block: 28 letters, words of lessons 1–15, pairs"
           },
           "очередь": "следующий выпуск",
           "статус": "черновик",
@@ -405,7 +443,8 @@
           "примечание": {
             "ru": "Сейчас — тренировочный вариант без проверки голосом. Настоящая К1 — со следующим выпуском.",
             "kk": "Қазір — дауыспен тексерусіз жаттығу нұсқасы. Нағыз Б1 — келесі шығарылыммен.",
-            "uz": "Hozir — ovoz bilan tekshiruvsiz mashq varianti. Haqiqiy K1 — keyingi chiqarilish bilan."
+            "uz": "Hozir — ovoz bilan tekshiruvsiz mashq varianti. Haqiqiy K1 — keyingi chiqarilish bilan.",
+            "en": "For now it is a practice version without voice check. The real K1 comes with the next release."
           }
         }
       ]
@@ -415,7 +454,8 @@
       "название": {
         "ru": "Долгота, удвоение, танвин, хамза, мост к мусхафу",
         "kk": "Мәд, шәдда, тәнуин, хамза, мұсхафқа көпір",
-        "uz": "Choʻziq, tashdid, tanvin, hamza, mushafga koʻprik"
+        "uz": "Choʻziq, tashdid, tanvin, hamza, mushafga koʻprik",
+        "en": "Length, doubling, tanween, hamza, bridge to the mushaf"
       },
       "пункты": [
         {
@@ -427,12 +467,14 @@
           "название": {
             "ru": "Мадд через ا",
             "kk": "ا арқылы мәд",
-            "uz": "ا orqali madd"
+            "uz": "ا orqali madd",
+            "en": "Madd with ا"
           },
           "цель": {
             "ru": "Мадд табии — 2 счёта; краткое против долгого",
             "kk": "Табиғи мәд — 2 харакат; қысқа мен ұзынды ажырату",
-            "uz": "Tabiiy madd — 2 harakat; qisqa va uzunni farqlash"
+            "uz": "Tabiiy madd — 2 harakat; qisqa va uzunni farqlash",
+            "en": "Madd tabi'i — 2 counts; short versus long"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -448,12 +490,14 @@
           "название": {
             "ru": "Мадд через ي и و; лин",
             "kk": "ي және و арқылы мәд; лин",
-            "uz": "ي va و orqali madd; lin"
+            "uz": "ي va و orqali madd; lin",
+            "en": "Madd with ي and و; lin"
           },
           "цель": {
             "ru": "Долгие «ӣ» и «ӯ»; лин (أَيْ، أَوْ)",
             "kk": "Ұзын «ӣ» мен «ӯ»; лин (أَيْ، أَوْ)",
-            "uz": "Uzun «ī» va «ū»; lin (أَيْ، أَوْ)"
+            "uz": "Uzun «ī» va «ū»; lin (أَيْ، أَوْ)",
+            "en": "Long “ī” and “ū”; lin (أَيْ، أَوْ)"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -469,12 +513,14 @@
           "название": {
             "ru": "Беглость длинных слов",
             "kk": "Ұзын сөздерді еркін оқу",
-            "uz": "Uzun soʻzlarni ravon oʻqish"
+            "uz": "Uzun soʻzlarni ravon oʻqish",
+            "en": "Fluency with long words"
           },
           "цель": {
             "ru": "Длинные слова с маддом — без пауз",
             "kk": "Мәді бар ұзын сөздер — үзіліссіз",
-            "uz": "Maddli uzun soʻzlar — pauzasiz"
+            "uz": "Maddli uzun soʻzlar — pauzasiz",
+            "en": "Long words with madd — without pauses"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -490,12 +536,14 @@
           "название": {
             "ru": "Шадда",
             "kk": "Шәдда",
-            "uz": "Shadda"
+            "uz": "Shadda",
+            "en": "Shaddah"
           },
           "цель": {
             "ru": "Шадда = сукун + огласовка (رَبَّ = رَبْبَ)",
             "kk": "Шәдда = сукун + харакат (رَبَّ = رَبْبَ)",
-            "uz": "Shadda = sukun + harakat (رَبَّ = رَبْبَ)"
+            "uz": "Shadda = sukun + harakat (رَبَّ = رَبْبَ)",
+            "en": "Shaddah = sukun + vowel mark (رَبَّ = رَبْبَ)"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -511,12 +559,14 @@
           "название": {
             "ru": "Нун и мим с шаддой",
             "kk": "Шәддалы нун мен мим",
-            "uz": "Shaddali nun va mim"
+            "uz": "Shaddali nun va mim",
+            "en": "Nun and mim with shaddah"
           },
           "цель": {
             "ru": "Гунна — 2 счёта",
             "kk": "Ғұнна — 2 харакат",
-            "uz": "Gʻunna — 2 harakat"
+            "uz": "Gʻunna — 2 harakat",
+            "en": "Ghunnah — 2 counts"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -532,12 +582,14 @@
           "название": {
             "ru": "Танвин",
             "kk": "Тәнуин",
-            "uz": "Tanvin"
+            "uz": "Tanvin",
+            "en": "Tanween"
           },
           "цель": {
             "ru": "Танвин = «н» (ـً = ـَنْ); танвин с шаддой; ‘ивад при остановке",
             "kk": "Тәнуин = «н» (ـً = ـَنْ); шәддалы тәнуин; тоқтағандағы ‘иуад",
-            "uz": "Tanvin = «n» (ـً = ـَنْ); shaddali tanvin; toʻxtashda ivaz"
+            "uz": "Tanvin = «n» (ـً = ـَنْ); shaddali tanvin; toʻxtashda ivaz",
+            "en": "Tanween = “n” (ـً = ـَنْ); tanween with shaddah; ʿiwad when stopping"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -553,12 +605,14 @@
           "название": {
             "ru": "Хамза в 9 видах; знак мадда",
             "kk": "Хамзаның 9 түрі; мәд белгісі",
-            "uz": "Hamzaning 9 koʻrinishi; madd belgisi"
+            "uz": "Hamzaning 9 koʻrinishi; madd belgisi",
+            "en": "Hamza in 9 forms; the madd sign"
           },
           "цель": {
             "ru": "Хамза и ع; знак мадда ٓ — тянем не меньше 4",
             "kk": "Хамза және ع; мәд белгісі ٓ — кемінде 4 харакат",
-            "uz": "Hamza va ع; madd belgisi ٓ — kamida 4 harakat choʻzamiz"
+            "uz": "Hamza va ع; madd belgisi ٓ — kamida 4 harakat choʻzamiz",
+            "en": "Hamza and ع; the madd sign ٓ — hold at least 4"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -574,12 +628,14 @@
           "название": {
             "ru": "Мост к мусхафу I",
             "kk": "Мұсхафқа көпір I",
-            "uz": "Mushafga koʻprik I"
+            "uz": "Mushafga koʻprik I",
+            "en": "Bridge to the mushaf I"
           },
           "цель": {
             "ru": "Та марбута, алиф максура, малые буквы ـٰ ۥ ۦ",
             "kk": "Тә марбута, алиф мақсура, кіші әріптер ـٰ ۥ ۦ",
-            "uz": "Toi marbuta, alif maqsura, kichik harflar ـٰ ۥ ۦ"
+            "uz": "Toi marbuta, alif maqsura, kichik harflar ـٰ ۥ ۦ",
+            "en": "Ta marbuta, alif maqsura, small letters ـٰ ۥ ۦ"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -595,12 +651,14 @@
           "название": {
             "ru": "Мост к мусхафу II",
             "kk": "Мұсхафқа көпір II",
-            "uz": "Mushafga koʻprik II"
+            "uz": "Mushafga koʻprik II",
+            "en": "Bridge to the mushaf II"
           },
           "цель": {
             "ru": "Пишется, но не читается: ٱ, алиф после вава, знак ۟; лям камарийя",
             "kk": "Жазылады, бірақ оқылмайды: ٱ, вавтан кейінгі алиф, ۟ белгісі; лям қамария",
-            "uz": "Yoziladi, lekin oʻqilmaydi: ٱ, vovdan keyingi alif, ۟ belgisi; lomi qamariya"
+            "uz": "Yoziladi, lekin oʻqilmaydi: ٱ, vovdan keyingi alif, ۟ belgisi; lomi qamariya",
+            "en": "Written but not read: ٱ, alif after waw, the sign ۟; lam qamariyyah"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -616,12 +674,14 @@
           "название": {
             "ru": "Лям шамсийя; слово «Аллах»",
             "kk": "Лям шамсия; «Аллаһ» сөзі",
-            "uz": "Lomi shamsiya; «Alloh» soʻzi"
+            "uz": "Lomi shamsiya; «Alloh» soʻzi",
+            "en": "Lam shamsiyyah; the word “Allah”"
           },
           "цель": {
             "ru": "Солнечные буквы; тяжёлый и лёгкий лям в слове «Аллах»",
             "kk": "«Күн» әріптері; «Аллаһ» сөзіндегі жуан және жіңішке лям",
-            "uz": "Quyosh harflari; «Alloh» soʻzidagi qalin va ingichka lom"
+            "uz": "Quyosh harflari; «Alloh» soʻzidagi qalin va ingichka lom",
+            "en": "Sun letters; heavy and light lam in the word “Allah”"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -637,12 +697,14 @@
           "название": {
             "ru": "Васл",
             "kk": "Уасл",
-            "uz": "Vasl"
+            "uz": "Vasl",
+            "en": "Wasl"
           },
           "цель": {
             "ru": "Соединение слов через хамзат-васль; встреча двух сукунов",
             "kk": "Сөздерді хамзат-уасл арқылы жалғау; екі сукунның кездесуі",
-            "uz": "Soʻzlarni hamzai vasl orqali qoʻshish; ikki sukunning uchrashishi"
+            "uz": "Soʻzlarni hamzai vasl orqali qoʻshish; ikki sukunning uchrashishi",
+            "en": "Joining words through hamzat al-wasl; meeting of two sukuns"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -658,12 +720,14 @@
           "название": {
             "ru": "Вакф I",
             "kk": "Уақф I",
-            "uz": "Vaqf I"
+            "uz": "Vaqf I",
+            "en": "Waqf I"
           },
           "цель": {
             "ru": "Формы остановки: сукун, алиф ‘ивада, ة → ه",
             "kk": "Тоқтау түрлері: сукун, ‘иуад алифі, ة → ه",
-            "uz": "Toʻxtash shakllari: sukun, ivaz alifi, ة → ه"
+            "uz": "Toʻxtash shakllari: sukun, ivaz alifi, ة → ه",
+            "en": "Forms of stopping: sukun, alif of ʿiwad, ة → ه"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -679,12 +743,14 @@
           "название": {
             "ru": "Контрольная 2",
             "kk": "Бақылау 2",
-            "uz": "2-nazorat"
+            "uz": "2-nazorat",
+            "en": "Checkpoint 2"
           },
           "цель": {
             "ru": "Аль-Фатиха и аль-Ихлас по слогам, с подсветкой",
             "kk": "Әл-Фатиха мен әл-Ықылас буын бойынша, белгілеумен",
-            "uz": "Al-Fotiha va al-Ixlos boʻgʻinlab, ajratib koʻrsatish bilan"
+            "uz": "Al-Fotiha va al-Ixlos boʻgʻinlab, ajratib koʻrsatish bilan",
+            "en": "Al-Fatiha and al-Ikhlas syllable by syllable, with highlighting"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -698,7 +764,8 @@
       "название": {
         "ru": "Аль-Фатиха и суры намаза: базовый таджвид",
         "kk": "Әл-Фатиха және намаз сүрелері: негізгі тәжуид",
-        "uz": "Al-Fotiha va namoz suralari: asosiy tajvid"
+        "uz": "Al-Fotiha va namoz suralari: asosiy tajvid",
+        "en": "Al-Fatiha and the surahs of prayer: basic tajweed"
       },
       "пункты": [
         {
@@ -710,12 +777,14 @@
           "название": {
             "ru": "Исти‘аза и басмала",
             "kk": "Истиғаза мен бәсмала",
-            "uz": "Istiʼoza va basmala"
+            "uz": "Istiʼoza va basmala",
+            "en": "Istiʿadha and basmala"
           },
           "цель": {
             "ru": "Мадд ‘арид при остановке (2, 4 или 6)",
             "kk": "Тоқтағандағы ‘арид мәд (2, 4 не 6)",
-            "uz": "Toʻxtashdagi oriz madd (2, 4 yoki 6)"
+            "uz": "Toʻxtashdagi oriz madd (2, 4 yoki 6)",
+            "en": "Madd ʿarid when stopping (2, 4 or 6)"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -731,12 +800,14 @@
           "название": {
             "ru": "Аль-Фатиха, аяты 1–4",
             "kk": "Әл-Фатиха, 1–4 аяттар",
-            "uz": "Al-Fotiha, 1–4-oyatlar"
+            "uz": "Al-Fotiha, 1–4-oyatlar",
+            "en": "Al-Fatiha, ayahs 1–4"
           },
           "цель": {
             "ru": "Аяты 1–4 по слогам и целиком",
             "kk": "1–4 аяттар буын бойынша және тұтас",
-            "uz": "1–4-oyatlar boʻgʻinlab va toʻliq"
+            "uz": "1–4-oyatlar boʻgʻinlab va toʻliq",
+            "en": "Ayahs 1–4 syllable by syllable and in full"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -752,12 +823,14 @@
           "название": {
             "ru": "Аль-Фатиха, аяты 5–7; мадд лязим",
             "kk": "Әл-Фатиха, 5–7 аяттар; ләзим мәд",
-            "uz": "Al-Fotiha, 5–7-oyatlar; lozim madd"
+            "uz": "Al-Fotiha, 5–7-oyatlar; lozim madd",
+            "en": "Al-Fatiha, ayahs 5–7; madd lazim"
           },
           "цель": {
             "ru": "Аяты 5–7; мадд лязим — 6 счётов; отметка урока 31",
             "kk": "5–7 аяттар; ләзим мәд — 6 харакат; 31-сабақ белгісі",
-            "uz": "5–7-oyatlar; lozim madd — 6 harakat; 31-dars belgisi"
+            "uz": "5–7-oyatlar; lozim madd — 6 harakat; 31-dars belgisi",
+            "en": "Ayahs 5–7; madd lazim — 6 counts; lesson 31 mark"
           },
           "очередь": "следующие выпуски",
           "статус": "черновик",
@@ -773,12 +846,14 @@
           "название": {
             "ru": "Изхар",
             "kk": "Изһар",
-            "uz": "Izhor"
+            "uz": "Izhor",
+            "en": "Izhar"
           },
           "цель": {
             "ru": "Нун сакина и танвин перед горловыми буквами",
             "kk": "Тамақ әріптерінің алдындағы сукунды нун мен тәнуин",
-            "uz": "Tomoq harflari oldidagi sokin nun va tanvin"
+            "uz": "Tomoq harflari oldidagi sokin nun va tanvin",
+            "en": "Nun sakinah and tanween before the throat letters"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -794,12 +869,14 @@
           "название": {
             "ru": "Идгам",
             "kk": "Идғам",
-            "uz": "Idgʻom"
+            "uz": "Idgʻom",
+            "en": "Idgham"
           },
           "цель": {
             "ru": "Идгам с гунной и без; изхар мутляк",
             "kk": "Ғұннамен және ғұннасыз идғам; изһар мутлақ",
-            "uz": "Gʻunnali va gʻunnasiz idgʻom; mutlaq izhor"
+            "uz": "Gʻunnali va gʻunnasiz idgʻom; mutlaq izhor",
+            "en": "Idgham with and without ghunnah; izhar mutlaq"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -815,12 +892,14 @@
           "название": {
             "ru": "Икляб",
             "kk": "Иқлаб",
-            "uz": "Iqlob"
+            "uz": "Iqlob",
+            "en": "Iqlab"
           },
           "цель": {
             "ru": "Нун сакина и танвин перед ب звучат как «м»",
             "kk": "ب алдында сукунды нун мен тәнуин «м» болып естіледі",
-            "uz": "ب oldidagi sokin nun va tanvin «m» boʻlib eshitiladi"
+            "uz": "ب oldidagi sokin nun va tanvin «m» boʻlib eshitiladi",
+            "en": "Nun sakinah and tanween before ب sound like “m”"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -836,12 +915,14 @@
           "название": {
             "ru": "Ихфа",
             "kk": "Ихфа",
-            "uz": "Ixfo"
+            "uz": "Ixfo",
+            "en": "Ikhfa"
           },
           "цель": {
             "ru": "15 букв ихфы; тренировка слуха",
             "kk": "Ихфаның 15 әрпі; есту жаттығуы",
-            "uz": "Ixfoning 15 harfi; eshitish mashqi"
+            "uz": "Ixfoning 15 harfi; eshitish mashqi",
+            "en": "The 15 letters of ikhfa; ear training"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -857,12 +938,14 @@
           "название": {
             "ru": "Мим сакина",
             "kk": "Сукунды мим",
-            "uz": "Sokin mim"
+            "uz": "Sokin mim",
+            "en": "Mim sakinah"
           },
           "цель": {
             "ru": "Ихфа шафави, идгам мислейн, изхар шафави",
             "kk": "Ихфа шафауи, идғам мислейн, изһар шафауи",
-            "uz": "Shafaviy ixfo, misliyn idgʻomi, shafaviy izhor"
+            "uz": "Shafaviy ixfo, misliyn idgʻomi, shafaviy izhor",
+            "en": "Ikhfa shafawi, idgham mithlayn, izhar shafawi"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -878,12 +961,14 @@
           "название": {
             "ru": "Калькаля",
             "kk": "Қалқала",
-            "uz": "Qalqala"
+            "uz": "Qalqala",
+            "en": "Qalqalah"
           },
           "цель": {
             "ru": "Буквы ق ط ب ج د: малая и большая; без ложной калькали",
             "kk": "ق ط ب ج د әріптері: кіші және үлкен; жалған қалқаласыз",
-            "uz": "ق ط ب ج د harflari: kichik va katta; soxta qalqalasiz"
+            "uz": "ق ط ب ج د harflari: kichik va katta; soxta qalqalasiz",
+            "en": "The letters ق ط ب ج د: minor and major; no false qalqalah"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -899,12 +984,14 @@
           "название": {
             "ru": "Мадд муттасиль и мунфасиль",
             "kk": "Муттасил және мунфасил мәд",
-            "uz": "Muttasil va munfasil madd"
+            "uz": "Muttasil va munfasil madd",
+            "en": "Madd muttasil and munfasil"
           },
           "цель": {
             "ru": "4 или 5 счётов; единообразие",
             "kk": "4 не 5 харакат; біркелкілік",
-            "uz": "4 yoki 5 harakat; bir xillik"
+            "uz": "4 yoki 5 harakat; bir xillik",
+            "en": "4 or 5 counts; consistency"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -920,12 +1007,14 @@
           "название": {
             "ru": "‘Арид, лин, ‘ивад, сыля",
             "kk": "‘Арид, лин, ‘иуад, сыла",
-            "uz": "Oriz, lin, ivaz, sila"
+            "uz": "Oriz, lin, ivaz, sila",
+            "en": "ʿArid, lin, ʿiwad, silah"
           },
           "цель": {
             "ru": "Мадды при остановке; сыля",
             "kk": "Тоқтағандағы мәдтер; сыла",
-            "uz": "Toʻxtashdagi maddlar; sila"
+            "uz": "Toʻxtashdagi maddlar; sila",
+            "en": "Madds when stopping; silah"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -941,12 +1030,14 @@
           "название": {
             "ru": "Мадд лязим; мукатта‘ат",
             "kk": "Ләзим мәд; мұқаттаъат",
-            "uz": "Lozim madd; muqattaʼot"
+            "uz": "Lozim madd; muqattaʼot",
+            "en": "Madd lazim; muqattaʿat"
           },
           "цель": {
             "ru": "Мадд лязим в слове и в буквах; буквы мукатта‘ат",
             "kk": "Сөздегі және әріптердегі ләзим мәд; мұқаттаъат әріптері",
-            "uz": "Soʻzdagi va harflardagi lozim madd; muqattaʼot harflari"
+            "uz": "Soʻzdagi va harflardagi lozim madd; muqattaʼot harflari",
+            "en": "Madd lazim in a word and in letters; the muqattaʿat letters"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -962,12 +1053,14 @@
           "название": {
             "ru": "Ра: тяжёлая и лёгкая",
             "kk": "Ра: жуан және жіңішке",
-            "uz": "Ro: qalin va ingichka"
+            "uz": "Ro: qalin va ingichka",
+            "en": "Ra: heavy and light"
           },
           "цель": {
             "ru": "Места, где допустимы оба варианта",
             "kk": "Екі нұсқа да дұрыс болатын жерлер",
-            "uz": "Ikkala variant ham joiz boʻlgan joylar"
+            "uz": "Ikkala variant ham joiz boʻlgan joylar",
+            "en": "Places where both variants are acceptable"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -983,12 +1076,14 @@
           "название": {
             "ru": "Тяжёлые буквы; лям в слове «Аллах»",
             "kk": "Жуан әріптер; «Аллаһ» сөзіндегі лям",
-            "uz": "Qalin harflar; «Alloh» soʻzidagi lom"
+            "uz": "Qalin harflar; «Alloh» soʻzidagi lom",
+            "en": "Heavy letters; lam in the word “Allah”"
           },
           "цель": {
             "ru": "Степени тафхима; тяжёлый и лёгкий лям",
             "kk": "Тафхим дәрежелері; жуан және жіңішке лям",
-            "uz": "Tafxim darajalari; qalin va ingichka lom"
+            "uz": "Tafxim darajalari; qalin va ingichka lom",
+            "en": "Degrees of tafkhim; heavy and light lam"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1004,12 +1099,14 @@
           "название": {
             "ru": "Контрольная 3",
             "kk": "Бақылау 3",
-            "uz": "3-nazorat"
+            "uz": "3-nazorat",
+            "en": "Checkpoint 3"
           },
           "цель": {
             "ru": "Аль-Фатиха и три суры на выбор, без подсветки",
             "kk": "Әл-Фатиха және таңдаған үш сүре, белгілеусіз",
-            "uz": "Al-Fotiha va tanlangan uchta sura, ajratib koʻrsatishsiz"
+            "uz": "Al-Fotiha va tanlangan uchta sura, ajratib koʻrsatishsiz",
+            "en": "Al-Fatiha and three surahs of your choice, without highlighting"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1025,12 +1122,14 @@
           "название": {
             "ru": "Ас-сана",
             "kk": "Ас-сана",
-            "uz": "Sano"
+            "uz": "Sano",
+            "en": "As-Sana"
           },
           "цель": {
             "ru": "Текст намаза: ас-сана",
             "kk": "Намаз мәтіні: ас-сана",
-            "uz": "Namoz matni: sano"
+            "uz": "Namoz matni: sano",
+            "en": "Prayer text: as-sana"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1046,12 +1145,14 @@
           "название": {
             "ru": "Ташаххуд",
             "kk": "Ташаһһуд",
-            "uz": "Tashahhud"
+            "uz": "Tashahhud",
+            "en": "Tashahhud"
           },
           "цель": {
             "ru": "Текст намаза: ташаххуд",
             "kk": "Намаз мәтіні: ташаһһуд",
-            "uz": "Namoz matni: tashahhud"
+            "uz": "Namoz matni: tashahhud",
+            "en": "Prayer text: tashahhud"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1067,12 +1168,14 @@
           "название": {
             "ru": "Салават",
             "kk": "Салауат",
-            "uz": "Salovot"
+            "uz": "Salovot",
+            "en": "Salawat"
           },
           "цель": {
             "ru": "Текст намаза: салават",
             "kk": "Намаз мәтіні: салауат",
-            "uz": "Namoz matni: salovot"
+            "uz": "Namoz matni: salovot",
+            "en": "Prayer text: salawat"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1088,12 +1191,14 @@
           "название": {
             "ru": "Ханафитский кунут витра",
             "kk": "Ханафи үтірінің құнұты",
-            "uz": "Hanafiy mazhabidagi vitr qunuti"
+            "uz": "Hanafiy mazhabidagi vitr qunuti",
+            "en": "Hanafi qunut of witr"
           },
           "цель": {
             "ru": "Текст намаза: кунут витра",
             "kk": "Намаз мәтіні: үтір намазының құнұты",
-            "uz": "Namoz matni: vitr qunuti"
+            "uz": "Namoz matni: vitr qunuti",
+            "en": "Prayer text: qunut of witr"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1107,7 +1212,8 @@
       "название": {
         "ru": "Чтение мусхафа и углублённый таджвид",
         "kk": "Мұсхафты оқу және тереңдетілген тәжуид",
-        "uz": "Mushafni oʻqish va chuqurlashtirilgan tajvid"
+        "uz": "Mushafni oʻqish va chuqurlashtirilgan tajvid",
+        "en": "Reading the mushaf and advanced tajweed"
       },
       "пункты": [
         {
@@ -1119,12 +1225,14 @@
           "название": {
             "ru": "Махраджи и сифаты",
             "kk": "Махраждар мен сифаттар",
-            "uz": "Maxrajlar va sifatlar"
+            "uz": "Maxrajlar va sifatlar",
+            "en": "Makharij and sifat"
           },
           "цель": {
             "ru": "Короткие карточки по вашим частым ошибкам",
             "kk": "Жиі кететін қателеріңіз бойынша қысқа карточкалар",
-            "uz": "Koʻp uchraydigan xatolaringiz boʻyicha qisqa kartochkalar"
+            "uz": "Koʻp uchraydigan xatolaringiz boʻyicha qisqa kartochkalar",
+            "en": "Short cards on your frequent mistakes"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1140,12 +1248,14 @@
           "название": {
             "ru": "Идгамы двух согласных",
             "kk": "Екі дауыссыздың идғамы",
-            "uz": "Ikki undoshning idgʻomlari"
+            "uz": "Ikki undoshning idgʻomlari",
+            "en": "Idghams of two consonants"
           },
           "цель": {
             "ru": "Одинаковые, однородные и близкие согласные",
             "kk": "Бірдей, біртекті және жақын дауыссыздар",
-            "uz": "Bir xil, bir jinsli va yaqin undoshlar"
+            "uz": "Bir xil, bir jinsli va yaqin undoshlar",
+            "en": "Identical, homogeneous and close consonants"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1161,12 +1271,14 @@
           "название": {
             "ru": "Вакф и ибтида",
             "kk": "Уақф және ибтида",
-            "uz": "Vaqf va ibtido"
+            "uz": "Vaqf va ibtido",
+            "en": "Waqf and ibtida"
           },
           "цель": {
             "ru": "Виды остановок; знаки вакфа",
             "kk": "Тоқтау түрлері; уақф белгілері",
-            "uz": "Toʻxtash turlari; vaqf belgilari"
+            "uz": "Toʻxtash turlari; vaqf belgilari",
+            "en": "Kinds of stops; waqf signs"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1182,12 +1294,14 @@
           "название": {
             "ru": "Особые места Хафса",
             "kk": "Хафстың ерекше жерлері",
-            "uz": "Hafsning alohida oʻrinlari"
+            "uz": "Hafsning alohida oʻrinlari",
+            "en": "Special places of Hafs"
           },
           "цель": {
             "ru": "Сакт, имала, ташиль, ишмам и другие",
             "kk": "Сакт, имала, ташил, ишмам және басқалар",
-            "uz": "Sakt, imola, tashil, ishmom va boshqalar"
+            "uz": "Sakt, imola, tashil, ishmom va boshqalar",
+            "en": "Sakt, imalah, tashil, ishmam and others"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1203,12 +1317,14 @@
           "название": {
             "ru": "Темп",
             "kk": "Қарқын",
-            "uz": "Surʼat"
+            "uz": "Surʼat",
+            "en": "Pace"
           },
           "цель": {
             "ru": "Тахкик, тадвир, хадр; ровность маддов",
             "kk": "Тахқиқ, тадуир, хадр; мәдтердің біркелкілігі",
-            "uz": "Tahqiq, tadvir, hadr; maddlarning bir tekisligi"
+            "uz": "Tahqiq, tadvir, hadr; maddlarning bir tekisligi",
+            "en": "Tahqiq, tadwir, hadr; even madds"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1224,12 +1340,14 @@
           "название": {
             "ru": "Джуз ‘Амма — книга для чтения",
             "kk": "‘Амма парасы — оқу кітабы",
-            "uz": "Amma porasi — oʻqish kitobi"
+            "uz": "Amma porasi — oʻqish kitobi",
+            "en": "Juz ʿAmma — a reading book"
           },
           "цель": {
             "ru": "Суры 114 → 78; переход к хифзу",
             "kk": "114 → 78 сүрелер; хифзға көшу",
-            "uz": "114 → 78-suralar; hifzga oʻtish"
+            "uz": "114 → 78-suralar; hifzga oʻtish",
+            "en": "Surahs 114 → 78; transition to hifz"
           },
           "очередь": "позже",
           "статус": "черновик",
@@ -1245,12 +1363,14 @@
           "название": {
             "ru": "Итоговое чтение",
             "kk": "Қорытынды оқу",
-            "uz": "Yakuniy oʻqish"
+            "uz": "Yakuniy oʻqish",
+            "en": "Final reading"
           },
           "цель": {
             "ru": "Чтение двух страниц мусхафа",
             "kk": "Мұсхафтың екі бетін оқу",
-            "uz": "Mushafning ikki sahifasini oʻqish"
+            "uz": "Mushafning ikki sahifasini oʻqish",
+            "en": "Reading two pages of the mushaf"
           },
           "очередь": "позже",
           "статус": "черновик",

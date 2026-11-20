@@ -5,12 +5,14 @@
   "название": {
     "ru": "Алиф (ا), хамза (ء) и ра (ر)",
     "kk": "Алиф (ا), хамза (ء) және ра (ر) әріптері",
-    "uz": "Alif (ا), hamza (ء) va ro (ر)"
+    "uz": "Alif (ا), hamza (ء) va ro (ر)",
+    "en": "Alif (ا), hamza (ء) and ra (ر)"
   },
   "цель": {
     "ru": "Читать справа налево; фатха, кясра, дамма и сукун",
     "kk": "Оңнан солға оқу; фатха, кәсра, дамма және сукун",
-    "uz": "Oʻngdan chapga oʻqish; fatha, kasra, damma va sukun"
+    "uz": "Oʻngdan chapga oʻqish; fatha, kasra, damma va sukun",
+    "en": "Reading right to left; fatha, kasra, damma and sukun"
   },
   "новое": [
     "ا",
@@ -24,12 +26,14 @@
       "заголовок": {
         "ru": "Справа налево",
         "kk": "Оңнан солға",
-        "uz": "Oʻngdan chapga"
+        "uz": "Oʻngdan chapga",
+        "en": "Right to left"
       },
       "текст": {
         "ru": "Арабский текст читают справа налево. Первая буква слова — справа.",
         "kk": "Араб мәтіні оңнан солға қарай оқылады. Сөздің бірінші әрпі — оң жақта.",
-        "uz": "Arabcha matn oʻngdan chapga oʻqiladi. Soʻzning birinchi harfi — oʻngda."
+        "uz": "Arabcha matn oʻngdan chapga oʻqiladi. Soʻzning birinchi harfi — oʻngda.",
+        "en": "Arabic text is read from right to left. The first letter of a word is on the right."
       },
       "примеры": [
         "أَ",
@@ -43,12 +47,14 @@
       "заголовок": {
         "ru": "Огласовки: фатха, кясра, дамма",
         "kk": "Харакаттар: фатха, кәсра, дамма",
-        "uz": "Harakatlar: fatha, kasra, damma"
+        "uz": "Harakatlar: fatha, kasra, damma",
+        "en": "Vowel marks: fatha, kasra, damma"
       },
       "текст": {
         "ru": "Фатха — черта над буквой: «а». Кясра — черта под буквой: «и». Дамма — петелька над буквой: «у».",
         "kk": "Фатха — әріптің үстіндегі сызық: «а». Кәсра — әріптің астындағы сызық: «и». Дамма — әріптің үстіндегі ілмек: «у».",
-        "uz": "Fatha — harf ustidagi chiziq: «a». Kasra — harf ostidagi chiziq: «i». Damma — harf ustidagi ilmoq: «u»."
+        "uz": "Fatha — harf ustidagi chiziq: «a». Kasra — harf ostidagi chiziq: «i». Damma — harf ustidagi ilmoq: «u».",
+        "en": "Fatha is a stroke above the letter: “a”. Kasra is a stroke below the letter: “i”. Damma is a loop above the letter: “u”."
       },
       "примеры": [
         "أَ",
@@ -62,12 +68,14 @@
       "заголовок": {
         "ru": "Сукун",
         "kk": "Сукун",
-        "uz": "Sukun"
+        "uz": "Sukun",
+        "en": "Sukun"
       },
       "текст": {
         "ru": "Сукун — маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Сукун — әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Sukun — harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Sukun — harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "Sukun is a small circle above the letter. The syllable is closed: there is no vowel after the letter."
       },
       "примеры": [
         "أَرْ",
@@ -83,7 +91,8 @@
       "название": {
         "ru": "алиф",
         "kk": "алиф",
-        "uz": "alif"
+        "uz": "alif",
+        "en": "alif"
       },
       "формы": {
         "отдельная": "ا",
@@ -107,12 +116,14 @@
       "заголовок": {
         "ru": "Алиф и хамза",
         "kk": "Алиф пен хамза",
-        "uz": "Alif va hamza"
+        "uz": "Alif va hamza",
+        "en": "Alif and hamza"
       },
       "текст": {
         "ru": "Хамза (ء) — короткая смычка в горле, как перерыв в «а-а!». В начале слова она пишется на алифе: أَ إِ أُ.",
         "kk": "Хамза (ء) — тамақтағы қысқа тоқтау, «а-а!» дегендегі үзіліс сияқты. Сөз басында ол алифтің үстіне жазылады: أَ إِ أُ.",
-        "uz": "Hamza (ء) — tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi. Soʻz boshida u alif ustiga yoziladi: أَ إِ أُ."
+        "uz": "Hamza (ء) — tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi. Soʻz boshida u alif ustiga yoziladi: أَ إِ أُ.",
+        "en": "Hamza (ء) is a short stop in the throat, like the break in “uh-oh!”. At the start of a word it is written on an alif: أَ إِ أُ."
       },
       "примеры": [
         "أَ",
@@ -128,20 +139,23 @@
       "название": {
         "ru": "хамза",
         "kk": "хамза",
-        "uz": "hamza"
+        "uz": "hamza",
+        "en": "hamza"
       },
       "формы": null,
       "соединяетсяСлева": false,
       "подсказка": {
         "ru": "Короткая смычка в горле, как перерыв в «а-а!».",
         "kk": "Тамақтағы қысқа тоқтау, «а-а!» дегендегі үзіліс сияқты.",
-        "uz": "Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi."
+        "uz": "Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi.",
+        "en": "A short stop in the throat, like the break in “uh-oh!”."
       },
       "подмены": [
         {
           "ru": "хамза пропадает",
           "kk": "хамза түсіп қалады",
-          "uz": "hamza tushib qoladi"
+          "uz": "hamza tushib qoladi",
+          "en": "hamza disappears"
         }
       ],
       "примеры": [
@@ -158,7 +172,8 @@
       "вопрос": {
         "ru": "Найдите букву «хамза».",
         "kk": "«хамза» әрпін табыңыз.",
-        "uz": "«hamza» harfini toping."
+        "uz": "«hamza» harfini toping.",
+        "en": "Find the letter “hamza”."
       },
       "варианты": [
         {
@@ -172,7 +187,8 @@
       "пояснение": {
         "ru": "«хамза» — это ء.",
         "kk": "«хамза» — ء әрпі.",
-        "uz": "«hamza» — bu ء."
+        "uz": "«hamza» — bu ء.",
+        "en": "“hamza” is ء."
       }
     },
     {
@@ -182,7 +198,8 @@
       "вопрос": {
         "ru": "Какой знак у хамзы?",
         "kk": "Хамзада қандай белгі тұр?",
-        "uz": "Hamzada qanday belgi bor?"
+        "uz": "Hamzada qanday belgi bor?",
+        "en": "Which mark is on the hamza?"
       },
       "показ": "أُ",
       "варианты": [
@@ -190,21 +207,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -212,7 +232,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -222,7 +243,8 @@
       "вопрос": {
         "ru": "Соберите слог: буква «хамза» + дамма.",
         "kk": "Буын құраңыз: «хамза» әрпі + дамма.",
-        "uz": "Boʻgʻin yigʻing: «hamza» harfi + damma."
+        "uz": "Boʻgʻin yigʻing: «hamza» harfi + damma.",
+        "en": "Build the syllable: the letter “hamza” + damma."
       },
       "варианты": [
         {
@@ -239,7 +261,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -250,7 +273,8 @@
       "название": {
         "ru": "ра",
         "kk": "ра",
-        "uz": "ro"
+        "uz": "ro",
+        "en": "ra"
       },
       "формы": {
         "отдельная": "ر",
@@ -262,13 +286,15 @@
       "подсказка": {
         "ru": "Один лёгкий удар кончика языка, без раската «р-р».",
         "kk": "Тіл ұшымен бір жеңіл соғу, «р-р» деп дірілдетпеңіз.",
-        "uz": "Til uchining bitta yengil zarbi, «r-r» deb titratmasdan."
+        "uz": "Til uchining bitta yengil zarbi, «r-r» deb titratmasdan.",
+        "en": "One light tap of the tongue tip, without rolling “r-r”."
       },
       "подмены": [
         {
           "ru": "«р» с раскатом «р-р»",
           "kk": "«р-р» деп дірілдетіп айту",
-          "uz": "«r»ni «r-r» deb titratib aytish"
+          "uz": "«r»ni «r-r» deb titratib aytish",
+          "en": "“r” rolled as “r-r”"
         }
       ],
       "примеры": [
@@ -286,7 +312,8 @@
       "вопрос": {
         "ru": "Найдите букву «ра».",
         "kk": "«ра» әрпін табыңыз.",
-        "uz": "«ro» harfini toping."
+        "uz": "«ro» harfini toping.",
+        "en": "Find the letter “ra”."
       },
       "варианты": [
         {
@@ -300,7 +327,8 @@
       "пояснение": {
         "ru": "«ра» — это ر.",
         "kk": "«ра» — ر әрпі.",
-        "uz": "«ro» — bu ر."
+        "uz": "«ro» — bu ر.",
+        "en": "“ra” is ر."
       }
     },
     {
@@ -310,7 +338,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «ра»?",
         "kk": "«ра» әрпінде қандай белгі тұр?",
-        "uz": "«ro» harfida qanday belgi bor?"
+        "uz": "«ro» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ra”?"
       },
       "показ": "أَرْ",
       "варианты": [
@@ -318,28 +347,32 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -347,7 +380,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -357,7 +391,8 @@
       "вопрос": {
         "ru": "Соберите слог: буква «ра» + дамма.",
         "kk": "Буын құраңыз: «ра» әрпі + дамма.",
-        "uz": "Boʻgʻin yigʻing: «ro» harfi + damma."
+        "uz": "Boʻgʻin yigʻing: «ro» harfi + damma.",
+        "en": "Build the syllable: the letter “ra” + damma."
       },
       "варианты": [
         {
@@ -374,7 +409,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -383,7 +419,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -419,7 +456,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -443,7 +481,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "أَ إِ أُ رَ رِ رُ"
