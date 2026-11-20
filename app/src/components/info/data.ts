@@ -88,7 +88,12 @@ function целое(з: unknown, мин: number, макс: number): з is number
 function локализованный(з: unknown): з is ЛокализованныйТекст {
   if (!з || typeof з !== 'object') return false;
   const т = з as Record<string, unknown>;
-  return typeof т.ru === 'string' && typeof т.kk === 'string' && (т.ru.length > 0 || т.kk.length > 0);
+  return (
+    typeof т.ru === 'string' &&
+    typeof т.kk === 'string' &&
+    (т.uz === undefined || typeof т.uz === 'string') &&
+    (т.ru.length > 0 || т.kk.length > 0)
+  );
 }
 function статус(з: unknown): СтатусКонтента {
   return (СТАТУСЫ as readonly unknown[]).includes(з) ? (з as СтатусКонтента) : 'черновик';
@@ -187,7 +192,7 @@ export function проверитьУрок0(сырые: unknown): Урок0Да�
     номер: 0,
     id: 'L00',
     уровень: 0,
-    название: локализованный(у.название) ? у.название : { ru: 'Вход', kk: 'Кіріспе' },
+    название: локализованный(у.название) ? у.название : { ru: 'Вход', kk: 'Кіріспе', uz: 'Kirish' },
     цель: локализованный(у.цель) ? у.цель : ПУСТО,
     предупреждениеИИ: {
       id: строка(пр.id) ? пр.id : 'qml-notice',
@@ -195,6 +200,7 @@ export function проверитьУрок0(сырые: unknown): Урок0Да�
       ar: пр.ar,
       ru: пр.ru,
       kk: пр.kk,
+      ...(строка(пр.uz) ? { uz: пр.uz } : {}),
       источник: строка(пр.источник) ? пр.источник : '',
       ссылка: строка(пр.ссылка) ? пр.ссылка : '',
       прочитано: строка(пр.прочитано) ? пр.прочитано : '',

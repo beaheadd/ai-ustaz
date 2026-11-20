@@ -35,11 +35,11 @@ import { номераУроков } from '../engine/lessonEngine';
 import { useНавигация } from '../engine/navigation';
 import { useПрогресс } from '../engine/progress';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { создатьСловарь, useПеревод, useСловарь, type Язык } from '../i18n';
 import { НАЗВАНИЯ, деньРК, короткийДень, подписьСмещения, сдвигДня, смещениеПояса, чч_мм } from '../prayer/day';
 import { useЧасы } from '../prayer/hooks';
 import { методСтраны, поправкиМетода, type Мазхаб, type Метод } from '../prayer/methods';
-import { оговоркаТочности, type Место } from '../prayer/places';
+import { названиеМеста, оговоркаТочности, type Место } from '../prayer/places';
 import { useМазхаб, useМестоНамаза } from '../prayer/store';
 import { названиеСтраны } from '../prayer/world';
 import { КЛЮЧИ_ВРЕМЁН, type ВременаДня, type КлючВремени } from '../prayer/times';
@@ -143,23 +143,71 @@ const СЛОВАРЬ = создатьСловарь({
     официальноПриватность: 'Серверімізге тек қосымша тізіміндегі елді мекен мен жыл жіберіледі — сіздің координаттарыңыз жіберілмейді.',
     официальноЗапас: 'Желі жоқ кезде, batr.kz-те және шафиғи екінтіде уақытты қосымшаның өзі сол әдіспен есептейді.',
   },
+  uz: {
+    заголовок: 'Namoz vaqti',
+    неделя: 'Bir haftaga',
+    сегодня: 'bugun',
+    пояс: 'Vaqt — Qozogʻiston vaqti bilan (UTC+5), 24 soatlik.',
+    метод: 'Qanday hisoblaymiz',
+    метод1:
+      'Vaqtni ilovaning oʻzi, shu telefonda, QMDB usuli boʻyicha hisoblaydi: bomdod va xufton — quyosh ufqdan 15° pastda boʻlganda, asr — hanafiy mazhabi boʻyicha. QMDB tuzatishlari: quyosh chiqishi −3 daq., peshin, asr va shom +3 daq.; 48° shimoliy kenglikda va undan shimolda — −5 va +5 daq. Yozda shimolda, tun qisqa boʻlganda, bomdod va xufton — QMDBdagi kabi yuqori kengliklar qoidasi boʻyicha.',
+    метод2: 'Hisobni QMDBning 2026-yil har bir kuni uchun rasmiy jadvallari bilan solishtirdik: farq — 1 daqiqadan oshmaydi.',
+    метод3: 'Bu QMDB jadvali emas, bizning hisobimiz. Masjidingizdagi vaqt farq qilsa, masjid jadvaliga qarang.',
+    оговорка: 'Bu yerda hisob QMDB jadvallaridan 3 daqiqagacha farq qilishi mumkin.',
+    поясМеста: 'Vaqt — joyga koʻra ({смещение}), 24 soatlik.',
+    аср: 'Asr vaqti',
+    асрПояснение: 'Standart boʻyicha — hanafiy mazhabi. Tanlov faqat shu telefonda saqlanadi.',
+    асрХанафи: 'Hanafiy mazhabi',
+    асрХанафиПодпись: 'narsaning soyasi — uning ikki baravari',
+    асрШафии: 'Shofeʼiy mazhabi',
+    асрШафииПодпись: 'narsaning soyasi — uning bir baravari (boshqa mazhablarning koʻpchiligida shunday)',
+    общий1:
+      'Vaqtni ilovaning oʻzi, shu telefonda, joy mamlakatida ({страна}) qabul qilingan usul boʻyicha hisoblaydi: {ведомство}. Bomdod — quyosh ufqdan {фаджр}° pastda boʻlganda, xufton — {иша}. Asr — {аср}.{поправки}',
+    ишаУгол: 'quyosh ufqdan {угол}° pastda boʻlganda',
+    ишаМинуты: 'shomdan {минут} daqiqa keyin',
+    асрХ: 'hanafiy mazhabi boʻyicha',
+    асрШ: 'shofeʼiy mazhabi boʻyicha',
+    поправки: ' Idora tuzatishlari: {список}.',
+    сверено: 'Hisobni idoraning eʼlon qilingan jadvallari bilan solishtirdik: farq — {мин} daqiqadan oshmaydi.',
+    оценка: 'Parametrlar idoraning eʼlon qilingan jadvallari boʻyicha tanlangan va hali aniqlanmoqda — hozircha bu qoralama.',
+    стандарт: 'Mahalliy idora usulining tavsifini hali topmadik, shuning uchun umumqabul qilingan standart boʻyicha hisoblaymiz. Vaqt masjidingiz jadvalidan bir necha daqiqa farq qilishi mumkin.',
+    общий3: 'Bu idora jadvali emas, bizning hisobimiz. Masjidingizdagi vaqt farq qilsa, masjid jadvaliga qarang.',
+    высокие: 'Yozda yuqori kengliklarda, tun qisqa boʻlganda, bomdod va xufton — yuqori kengliklar qoidasi boʻyicha.',
+    источникиМир: 'Koordinatalar — GeoNames (CC BY 4.0). Hisob — adhan kutubxonasi (MIT). Hisob uchun internet kerak emas.',
+    с: 'sh. k.',
+    ю: 'j. k.',
+    в: 'sh. u.',
+    з: 'gʻ. u.',
+    место: 'Joy: {место} — {широта}° {сш}, {долгота}° {вд}.',
+    источники:
+      'Koordinatalar — GeoNames (CC BY 4.0); 6 ta joy (Alatau, Kaskelen, Jem, Korday, Baykonur, Kaztalovka) — QMDBning ochiq joylar roʻyxatidagi nuqtalar. Hisob — adhan kutubxonasi (MIT). Internet kerak emas.',
+    лицензии: 'Litsenziyalar va manbalar',
+    черновик: 'Qoralama — ustoz tekshiryapti',
+    официальноТаблица:
+      'Vaqt — QMDBning {год}-yil uchun rasmiy jadvalidan, «{пункт}» punkti boʻyicha (muftyat.kz dagi kabi). Serverimiz jadvalni QMDBdan oladi, yilning har bir kunini tekshiradi va hisobimiz bilan solishtiradi; telefon uni oʻzida saqlaydi. Yangilandi: {дата}.',
+    официальноПравило:
+      'Vaqt — Oʻzbekiston musulmonlari idorasi qoidasi boʻyicha, ularning roʻyxatidagi «{пункт}» punkti uchun (muslim.uz va islom.uz dagi kabi: bomdod va xufton — quyosh ufqdan 15,5° pastda, asr — hanafiy mazhabi boʻyicha, shom — quyosh botishi + 4 daq.). {год}-yil jadvalini serverimiz hisoblaydi; telefon uni oʻzida saqlaydi. Yangilandi: {дата}.',
+    официальноПриватность: 'Serverimizga faqat ilova roʻyxatidagi punkt va yil yuboriladi — koordinatalaringiz yuborilmaydi.',
+    официальноЗапас: 'Tarmoqsiz, batr.kz saytida va shofeʼiy asrda vaqtni ilovaning oʻzi xuddi shu usul bilan hisoblaydi.',
+  },
 });
 
 const ДНЕЙ = 8;
 
 type ТСловаря = (ключ: keyof (typeof СЛОВАРЬ)['ru'], параметры?: Record<string, string | number>) => string;
 
-const ИМЕНА_ПОПРАВОК: Record<'ru' | 'kk', Record<string, string>> = {
+const ИМЕНА_ПОПРАВОК: Record<Язык, Record<string, string>> = {
   ru: { fajr: 'фаджр', sunrise: 'восход', dhuhr: 'зухр', asr: 'аср', maghrib: 'магриб', isha: 'иша' },
   kk: { fajr: 'таң', sunrise: 'күн шығуы', dhuhr: 'бесін', asr: 'екінті', maghrib: 'ақшам', isha: 'құптан' },
+  uz: { fajr: 'bomdod', sunrise: 'quyosh chiqishi', dhuhr: 'peshin', asr: 'asr', maghrib: 'shom', isha: 'xufton' },
 };
 
 /** Текст «как считаем» для страны не РК — из таблицы метода (prayer/methods.ts), без ручных абзацев на страну. */
-function описаниеМетода(метод: Метод, мазхаб: Мазхаб, страна: string, язык: 'ru' | 'kk', т: ТСловаря, широта: number): string {
+function описаниеМетода(метод: Метод, мазхаб: Мазхаб, страна: string, язык: Язык, т: ТСловаря, широта: number): string {
   const п = поправкиМетода(метод, широта);
   const список = Object.entries(п)
     .filter(([, мин]) => мин !== 0)
-    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} мин`)
+    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} ${язык === 'uz' ? 'daq.' : 'мин'}`)
     .join(', ');
   const иша = typeof метод.иша === 'number' ? т('ишаУгол', { угол: String(метод.иша).replace('.', ',') }) : т('ишаМинуты', { минут: метод.иша.минут });
   return т('общий1', {
@@ -263,7 +311,7 @@ export function ВремяНамаза(_: ПропсыЭкрана<'намаз'>
         {!официально && оговоркаТочности(место) ? <Текст>{т('оговорка')}</Текст> : null}
         <Текст вид="второй" testID="намаз-место">
           {т('место', {
-            место: место[язык],
+            место: названиеМеста(место, язык),
             широта: число(место.широта),
             долгота: число(место.долгота),
             сш: т(место.широта >= 0 ? 'с' : 'ю'),
@@ -334,7 +382,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
   return (
     <View
       role="table"
-      aria-label={язык === 'kk' ? 'Аптаға арналған намаз уақыты' : 'Время намаза на неделю'}
+      aria-label={{ ru: 'Время намаза на неделю', kk: 'Аптаға арналған намаз уақыты', uz: 'Bir haftalik namoz vaqti' }[язык]}
       testID="намаз-неделя"
       style={{ borderRadius: радиус.l, borderWidth: 1, borderColor: цвет.граница, backgroundColor: цвет.поверхность, overflow: 'hidden' }}
     >
@@ -356,7 +404,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
         ))}
       </View>
       <View role="row" style={{ flexDirection: 'row', backgroundColor: цвет.поверхностьВторая }}>
-        <View role="columnheader" aria-label={язык === 'kk' ? 'Күн' : 'День'} style={деньСтолбец} />
+        <View role="columnheader" aria-label={{ ru: 'День', kk: 'Күн', uz: 'Kun' }[язык]} style={деньСтолбец} />
         {КЛЮЧИ_ВРЕМЁН.map((к) => (
           <View key={к} role="columnheader" style={[столбец(к), { gap: 2, paddingHorizontal: 1 }]}>
             {узко ? null : <Значок имя={ЗНАЧКИ_НАМАЗА[к]} размер={16} цвет={к === 'sunrise' ? цвет.текстВторой : цвет.акцент} />}

@@ -70,6 +70,18 @@ const СЛОВАРЬ = создатьСловарь({
     'согласие.да': 'Түсінікті, тексеру',
     'согласие.нет': 'Қазір емес',
   },
+  uz: {
+    проверить: 'Tekshirish',
+    ещё: 'Yana tekshirish',
+    идёт: 'Tekshirilmoqda…',
+    предупреждение: 'SI tekshiruvi — xato qilishi mumkin, ustozning oʻrnini bosmaydi.',
+    черновик: 'Maslahat matnlari — qoralama, ularni ustoz tekshiradi.',
+    'согласие.заголовок': 'Tekshirishdan oldin',
+    'согласие.сервер': 'Yozuv Qozogʻistondagi AI Ustaz serveriga yuboriladi va tekshiruvdan keyin darhol oʻchiriladi.',
+    'согласие.никому': 'Biz yozuvni saqlamaymiz va hech kimga bermaymiz. Yuborish — faqat siz «Tekshirish» tugmasini bosganingizda.',
+    'согласие.да': 'Tushunarli, tekshirish',
+    'согласие.нет': 'Hozir emas',
+  },
 });
 
 export type СвойстваПроверкиГолосом = {

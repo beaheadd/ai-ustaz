@@ -17,7 +17,7 @@ import { useEffect, useMemo } from 'react';
 import { useПеревод } from '../i18n';
 import { useУстановка } from '../install/useInstall';
 import type { Мазхаб } from '../prayer/methods';
-import type { Место } from '../prayer/places';
+import { названиеМеста, type Место } from '../prayer/places';
 import { временаДняКэш } from '../prayer/hooks';
 import { useВерсияОфициальных } from '../prayer/officialStore';
 import { текущийМазхаб, useМазхаб, useМестоНамаза } from '../prayer/store';
@@ -33,7 +33,7 @@ export function useПоддержкаУведомлений(): Поддержк�
 
 export function данныеРасписания(
   место: Место,
-  язык: 'ru' | 'kk',
+  язык: 'ru' | 'kk' | 'uz',
   настройки: НастройкиУведомлений,
   сейчас: number,
   мазхаб: Мазхаб = текущийМазхаб(),
@@ -45,7 +45,7 @@ export function данныеРасписания(
     заранее: настройки.заранее,
     пояс: место.пояс,
   });
-  return { язык, город: место[язык].slice(0, 60), пункты };
+  return { язык, город: названиеМеста(место, язык).slice(0, 60), пункты };
 }
 
 export function ключСинхронизации(место: Место, язык: string, настройки: НастройкиУведомлений, мазхаб: Мазхаб = 'hanafi', официальные = 0): string {

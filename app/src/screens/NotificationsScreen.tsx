@@ -37,6 +37,7 @@ import { создатьСловарь, useПеревод, useСловарь } fr
 import { НАЗВАНИЯ, датаДня, деньРК, чч_мм } from '../prayer/day';
 import { useДеньНамаза, useСейчас, версияОфициальных } from '../prayer/hooks';
 import { текущийМазхаб, useМестоНамаза } from '../prayer/store';
+import { названиеМеста } from '../prayer/places';
 import type { КлючВремени } from '../prayer/times';
 import { включить, выключить, проверить, разрешение } from '../notify/push';
 import { ВАРИАНТЫ_ЗАРАНЕЕ, ПОРЯДОК, концаРасписания, type Заранее } from '../notify/schedule';
@@ -159,6 +160,62 @@ const СЛОВАРЬ = создатьСловарь({
     приватностьТекст: 'Қазақстандағы AI Ustaz серверінде: браузер жазылымы (мекенжайы мен шифрлау кілттері), тіл, қала атауы және 30 күндік кесте. Координат, аты-жөн, телефон жоқ. Жарнамасыз, аналитикасыз. Өшірсеңіз — бәрі бірден жойылады.',
     звук: 'Дыбыс — телефоныңыздағы әдеттегі хабарландыру дыбысы.',
     черновик: 'Жоба',
+  },
+  uz: {
+    заголовок: 'Namoz haqida bildirishnomalar',
+    вступление: 'Namoz vaqti kirganda bildirishnoma — shahringiz uchun hisob boʻyicha. Namozlarni va oldindan eslatishni tanlash mumkin.',
+    переключатель: 'Bildirishnomalarni yuborish',
+    включены: 'Yoqilgan',
+    выключены: 'Oʻchirilgan',
+    пояснениеЗаголовок: 'Brauzer ruxsat soʻrashidan oldin',
+    пояснение1: 'Tanlangan namozlar vaqti kirganda «Asr · 14:39» keladi va, xohlasangiz, oldindan eslatma. Faqat namoz vaqti — reklamasiz.',
+    пояснение2: 'Koordinatalar yuborilmaydi: vaqtni telefoningiz hisoblaydi. Qozogʻistondagi AI Ustaz serveriga brauzer obunasi, til, shahar nomi va 30 kunlik jadval yuboriladi.',
+    пояснение3: 'Bildirishnomalar yoqilgan ekan, saqlanadi. Shu yerda oʻchirsangiz — obuna va jadval serverdan darhol oʻchiriladi.',
+    пояснение4: 'Jadval AI Ustazni ochganingizda yangilanadi. Uni qariyb bir oy ochmasangiz, bitta sokin eslatma keladi.',
+    разрешить: 'Bildirishnomalarga ruxsat berish',
+    неСейчас: 'Hozir emas',
+    ждём: 'Yoqilmoqda…',
+    отказЗаголовок: 'Brauzer bildirishnomalarni taqiqladi',
+    отказТекст: 'Ruxsat sozlamalarda beriladi — AI Ustaz uni oʻzi yoqa olmaydi. Keyin shu yerga qaytib, tugmani yana yoqing.',
+    отказAndroid: 'Android, Chrome: manzil chap tomonidagi belgi → «Ruxsatlar» (yoki «Sayt sozlamalari») → «Bildirishnomalar» → «Ruxsat berish». AI Ustaz ilovasi: telefon sozlamalari → «Ilovalar» → AI Ustaz → «Bildirishnomalar».',
+    отказIOS: 'iPhone: «Sozlamalar» → «Bildirishnomalar» → AI Ustaz → «Bildirishnomalarga ruxsat».',
+    отказКомпьютер: 'Kompyuter: manzil chap tomonidagi belgi → «Bildirishnomalar» → «Ruxsat berish», soʻng sahifani yangilang.',
+    iosЗаголовок: 'iPhoneʼda — «Uy» ekranidan',
+    iosТекст: 'iPhone saytlar bildirishnomalarini faqat «Uy» ekranidagi ilovaga yuboradi (iOS 16.4 va yangisi). AI Ustazni «Uy» ekraniga qoʻshing, uni oʻsha yerdan oching va bildirishnomalarni shu yerda yoqing.',
+    iosКнопка: '«Uy» ekraniga qanday qoʻshiladi',
+    iosСтарый: 'iPhoneʼda saytlar bildirishnomalari iOS 16.4 dan boshlab ishlaydi. Namoz vaqti haqida bildirishnoma olish uchun iOSni yangilang.',
+    нетПоддержкиЗаголовок: 'Bu yerda bildirishnomalar mavjud emas',
+    нетПоддержки: 'Bu brauzer saytlar bildirishnomalarini koʻrsatmaydi (masalan, Instagram yoki Telegram ichidagi brauzer). aiustaz.pro ni Androidʼda Chromeʼda yoki iPhoneʼda Safariʼda («Uy» ekranidan) oching.',
+    batrЗаголовок: 'Bildirishnomalar — aiustaz.pro saytida',
+    batrТекст: 'Namoz vaqti haqidagi bildirishnomalar AI Ustazning oʻz saytida — aiustaz.pro da, atrofida reklama va begona skriptlarsiz ishlaydi. Bu yerda, batr.kz saytida, ular yoʻq.',
+    открытьСайт: 'aiustaz.pro ni ochish',
+    какие: 'Qaysi vaqtlar',
+    восходПодпись: 'Namoz emas: u bilan bomdod vaqti tugaydi',
+    последний: 'Kamida bitta vaqt qolishi kerak',
+    заранее: 'Oldindan eslatish',
+    заранееПодпись: 'N daqiqa oldin eslatma — vaqt kirganidagi bildirishnomaga qoʻshimcha.',
+    нет: 'Yoʻq',
+    мин: '{n} daq.',
+    группаЗаранее: 'Oldindan eslatish, daqiqa',
+    город: 'Shahar',
+    городПодпись: 'Namoz vaqti uchun tanlangan shahar',
+    проверить: 'Bildirishnomani tekshirish',
+    'итог.включено': 'Bildirishnomalar yoqildi. 30 kunlik jadval yuborildi.',
+    'итог.выключено': 'Bildirishnomalar oʻchirildi. Obuna va jadval serverdan oʻchirildi.',
+    'итог.выключеноБезСети': 'Bildirishnomalar shu telefonda oʻchirildi. Server maʼlumotlarni keyingi yuborishda oʻzi oʻchiradi.',
+    'итог.закрыто': 'Ruxsat oynasi yopildi — bildirishnomalar yoqilmadi.',
+    'итог.нетСети': 'AI Ustaz serveri bilan aloqa yoʻq. Keyinroq urinib koʻring.',
+    'итог.ошибка': 'Bildirishnomalarni yoqib boʻlmadi. Keyinroq urinib koʻring.',
+    'итог.отправлено': 'Yuborildi. Bildirishnoma bir necha soniyada keladi.',
+    'итог.часто': 'Tekshiruvni bir necha daqiqadan keyin takrorlash mumkin.',
+    'итог.нетПодписки': 'Obuna topilmadi — bildirishnomalarni oʻchirib, yana yoqing.',
+    состояние: '30 kunlik jadval — {дата} gacha. AI Ustazni ochganingizda yangilanadi.',
+    пример: 'Shunday koʻrinadi',
+    примерТекст: 'Namoz vaqti kirdi · {город}. Keyingi — {намаз}, {время}',
+    приватность: 'Nima saqlanadi',
+    приватностьТекст: 'Qozogʻistondagi AI Ustaz serverida: brauzer obunasi (manzil va shifrlash kalitlari), til, shahar nomi va 30 kunlik jadval. Koordinatalar, ism, telefon yoʻq. Reklama va analitikasiz. Oʻchirdingiz — hammasi darhol oʻchiriladi.',
+    звук: 'Ovoz — telefoningizning odatiy bildirishnoma ovozi.',
+    черновик: 'Qoralama',
   },
 });
 
@@ -380,7 +437,7 @@ export function Уведомления(_: ПропсыЭкрана<'уведом
               <View style={{ flex: 1, gap: 2 }}>
                 <Текст вид="мелкий">AI Ustaz</Текст>
                 <Текст стиль={{ fontWeight: '600' }}>{`${НАЗВАНИЯ.asr[язык]} · ${чч_мм(день.сегодня.asr, место.пояс)}`}</Текст>
-                <Текст вид="мелкий">{т('примерТекст', { город: место[язык], намаз: НАЗВАНИЯ.maghrib[язык], время: чч_мм(день.сегодня.maghrib, место.пояс) })}</Текст>
+                <Текст вид="мелкий">{т('примерТекст', { город: названиеМеста(место, язык), намаз: НАЗВАНИЯ.maghrib[язык], время: чч_мм(день.сегодня.maghrib, место.пояс) })}</Текст>
               </View>
             </View>
             <Текст вид="мелкий" testID="уведомления-звук">

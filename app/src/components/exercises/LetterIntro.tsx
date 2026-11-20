@@ -48,6 +48,18 @@ const СЛОВАРЬ = создатьСловарь({
     вниманию: 'Назар аударыңыз',
     примеры: 'Қозғалыс белгілерімен',
   },
+  uz: {
+    буква: 'Yangi harf',
+    отдельная: 'Alohida',
+    начальная: 'Boshida',
+    срединная: 'Oʻrtasida',
+    конечная: 'Oxirida',
+    формы: 'Harf shakllari',
+    неСоединяется: 'Bu harf keyingi (chapdagi) harfga qoʻshilmaydi.',
+    подсказка: 'Qanday talaffuz qilinadi',
+    вниманию: 'Eʼtibor bering',
+    примеры: 'Harakatlar bilan',
+  },
 });
 
 /** Ряды сетки форм: справа налево (row-reverse) — «отдельно» справа сверху, как в книге. */

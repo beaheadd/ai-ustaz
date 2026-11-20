@@ -33,12 +33,17 @@ export function названиеСуры(запись: Pick<ЗаписьСуры
     const т = запись?.транслит.kk;
     return т ? `${т} сүресі (${номер})` : `${номер}-сүре`;
   }
+  if (язык === 'uz') {
+    const т = запись?.транслит.uz;
+    return т ? `${т} surasi (${номер})` : `${номер}-sura`;
+  }
   const т = запись?.транслит.ru;
   return т ? `Сура ${т} (${номер})` : `Сура ${номер}`;
 }
 
 export function словоАятов(н: number, язык: string): string {
   if (язык === 'kk') return `${н} аят`;
+  if (язык === 'uz') return `${н} oyat`;
   const д = н % 100;
   const е = н % 10;
   const слово = д >= 11 && д <= 14 ? 'аятов' : е === 1 ? 'аят' : е >= 2 && е <= 4 ? 'аята' : 'аятов';
@@ -61,7 +66,7 @@ export function разобратьПереход(строка: string): Мест
 export function упростить(с: string): string {
   return с
     .toLocaleLowerCase('ru')
-    .replace(/[\s\-‐‑–—'’‘ʼ`.]/g, '')
+    .replace(/[\s\-‐‑–—'’‘ʼʻ`.]/g, '')
     .replace(/й/g, 'и')
     .replace(/я/g, 'а')
     .replace(/ю/g, 'у')
@@ -77,7 +82,7 @@ export function подходящиеСуры(суры: readonly ЗаписьСу
   const у = упростить(з);
   if (!у) return суры;
   const подходит = (т: string | null | undefined) => !!т && упростить(т).includes(у);
-  return суры.filter((с) => с.имя.includes(з) || подходит(с.транслит.ru) || подходит(с.транслит.kk) || (с.синонимы ?? []).some(подходит));
+  return суры.filter((с) => с.имя.includes(з) || подходит(с.транслит.ru) || подходит(с.транслит.kk) || подходит(с.транслит.uz) || (с.синонимы ?? []).some(подходит));
 }
 
 function место(з: unknown): МестоЧтения | null {

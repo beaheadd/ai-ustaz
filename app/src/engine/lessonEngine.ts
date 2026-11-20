@@ -197,7 +197,8 @@ export function видУпражнения(задание: Задание): Ви
 
 export function локально(текст: ЛокализованныйТекст | undefined, язык: Язык): string {
   if (!текст) return '';
-  return (язык === 'kk' ? текст.kk : текст.ru) || текст.ru || текст.kk || '';
+  // Нет перевода на язык интерфейса (uz добавлен позже, 20.11.2026) — русский, не ключ.
+  return текст[язык] || текст.ru || текст.kk || '';
 }
 
 // ───────────────────────── Проверка данных ─────────────────────────
@@ -209,7 +210,12 @@ function этоСтрока(з: unknown): з is string {
 function этоЛокализованный(з: unknown): з is ЛокализованныйТекст {
   if (!з || typeof з !== 'object') return false;
   const т = з as Record<string, unknown>;
-  return typeof т.ru === 'string' && typeof т.kk === 'string' && (т.ru.length > 0 || т.kk.length > 0);
+  return (
+    typeof т.ru === 'string' &&
+    typeof т.kk === 'string' &&
+    (т.uz === undefined || typeof т.uz === 'string') &&
+    (т.ru.length > 0 || т.kk.length > 0)
+  );
 }
 
 function этоЦелое(з: unknown, мин: number, макс: number): з is number {

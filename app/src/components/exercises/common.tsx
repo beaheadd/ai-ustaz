@@ -46,7 +46,7 @@ import type { ИтогПроверки } from '../../speech/answer';
 import { подсветкаИзИтога, type МестоПодсветки } from '../../speech/highlight';
 import { подписьПодсветки } from '../../speech/hints';
 import { СмешанныйТекст } from '../info/MixedText';
-import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
+import { создатьСловарь, useПеревод, useСловарь, type Язык } from '../../i18n';
 import { useТема } from '../../theme';
 import { АрабскийТекст, type РазмерАрабского } from '../ArabicText';
 import { Карточка } from '../Card';
@@ -108,6 +108,27 @@ export const СЛОВАРЬ_УПРАЖНЕНИЙ = создатьСловарь(
     слоги: 'Буын бойынша',
     кари: 'Қари дауысы эталон жазылғаннан кейін пайда болады. Дауысты ЖИ тексеруі әзірге жоқ.',
     кариКнопка: 'Қариды тыңдау',
+  },
+  uz: {
+    верно: 'Toʻgʻri!',
+    вернаяВторая: 'Endi toʻgʻri. Dars natijasiga birinchi urinish hisoblanadi.',
+    этоНоНужно: 'Bu — {выбрано}, kerakligi esa — {нужно}.',
+    этоЕщёРаз: 'Bu — {выбрано}. Yana bir bor qarang.',
+    неТоЕщёРаз: 'Bu boshqa variant. Yana bir bor qarang.',
+    сравните: 'Solishtiring:',
+    вашВыбор: 'Sizning tanlovingiz',
+    нужноПодпись: 'Kerak',
+    вариант: '{номер}-variant: {что}',
+    вариантВерный: 'toʻgʻri javob',
+    вариантВыбран: 'sizning tanlovingiz',
+    сураАят: '{сура}-sura, {аят}-oyat',
+    сураАятСлова: '{сура}-sura, {аят}-oyat, {с}–{по}-soʻzlar',
+    источникКорана: 'Qurʼon matni — Tanzil Uthmani v1.1, aynan.',
+    подсказкаПоказать: 'Maslahatni koʻrsatish',
+    подсказкаСкрыть: 'Maslahatni yashirish',
+    слоги: 'Boʻgʻinlab',
+    кари: 'Qori ovozi namuna yozib olingandan keyin qoʻshiladi. Ovozni SI hali tekshirmaydi.',
+    кариКнопка: 'Qorini tinglash',
   },
 });
 
@@ -253,7 +274,7 @@ function КарточкаВарианта({ подпись, вариант, ве
   );
 }
 
-export function подписьВарианта(вариант: ВариантОтвета, язык: 'ru' | 'kk'): string {
+export function подписьВарианта(вариант: ВариантОтвета, язык: Язык): string {
   return 'арабский' in вариант ? вариант.арабский : локально(вариант.текст, язык);
 }
 

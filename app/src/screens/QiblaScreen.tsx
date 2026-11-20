@@ -44,7 +44,8 @@ import {
   совпадает,
   солнцеВСторонеКиблы,
 } from '../qibla/qibla';
-import { деньРК as деньМеста, подписьСмещения, поясОтличается, смещениеПояса, чч_мм } from '../prayer/day';
+import { датаДня, деньРК as деньМеста, подписьСмещения, поясОтличается, смещениеПояса, чч_мм } from '../prayer/day';
+import { названиеМеста } from '../prayer/places';
 import { useМестоКиблы } from '../qibla/place';
 import { ВосьмёркаКалибровки, ЦиферблатКиблы } from '../qibla/QiblaDial';
 import { useКомпас } from '../qibla/useCompass';
@@ -140,12 +141,51 @@ const СЛОВАРЬ = создатьСловарь({
     склонениеТочка: 'Магниттік ауытқу ескерілді ({город}): {с}°. Бағыт — сіздің нүктеңізден (≈ 1 км) Қағбаға ең қысқа жол (үлкен шеңбер доғасы).',
     приватно: 'Бәрі телефонда, интернетсіз және картасыз есептеледі. Датчик деректері мен орын ешқайда жіберілмейді.',
   },
+  uz: {
+    заголовок: 'Qibla',
+    черновик: 'Qoralama — ustoz tekshiryapti',
+    доКаабы: 'Kaʼbagacha {км} km',
+    сменить: 'Oʻzgartirish',
+    отСевера: 'shimoldan · {румб}',
+    подписьЦиферблата: 'Siferblat: qibla shimoldan {г}°, {румб}',
+    подписьЦиферблатаКурс: 'Siferblat: qibla shimoldan {г}°; {поворот}',
+    включить: 'Kompasni yoqish',
+    включитьПояснение: 'Telefon harakat datchiklariga ruxsat soʻraydi. Ularning maʼlumotlari telefonda qoladi va hech qayerga yuborilmaydi.',
+    ищем: 'Telefon kompasi qidirilmoqda…',
+    нет: 'Bu qurilmada kompas yoʻq. Quyida — chizma va quyosh boʻyicha moʻljallar.',
+    отказ: 'Datchiklarga ruxsat yoʻq. Kompasni yoqish uchun sahifani qayta yuklang va yana «Kompasni yoqish»ni bosing.',
+    правее: '{г}° oʻngroqqa buriling',
+    левее: '{г}° chaproqqa buriling',
+    совпало: 'Siz qibla tomonga qarab turibsiz',
+    подсказкаКомпаса: 'Telefonni gorizontal ushlang va u bilan birga buriling, toki Kaʼba tasvirlangan joy yuqoridagi belgining ostiga kelsin.',
+    вертикально: 'Telefonni ekrani tepaga qaratib, gorizontal qoʻying.',
+    калибровка: 'Kompas kalibrlanmagan: telefon bilan havoda 3–4 marta sakkiz raqamini chizing.',
+    неустойчиво: 'Strelka barqaror emas: metall va magnitlardan uzoqlashing, magnitli gʻilofni yechib oling, telefon bilan sakkiz raqamini chizing.',
+    точностьДатчика: 'Kompasning hozirgi aniqligi: ±{т}°',
+    безКомпаса: 'Kompassiz',
+    отСевераПолно: 'Qibla — shimoldan soat mili yoʻnalishida {г}° ({румб}).',
+    опораЮг: 'Janub qayerdaligini bilsangiz, unga yuzlanib turing va {сторона} {г}° buriling.',
+    опораСевер: 'Shimol qayerdaligini bilsangiz, unga yuzlanib turing va {сторона} {г}° buriling.',
+    вправо: 'oʻngga',
+    влево: 'chapga',
+    полдень: 'Bugun soat {время} da quyosh aynan janubda',
+    полденьПодпись: 'Haqiqiy peshin. Quyoshga yuzlanib turing va {сторона} {г}° buriling.',
+    сейчас: 'Hozir quyosh — shimoldan {аз}°',
+    сейчасПодпись: 'Quyoshga yuzlanib turing va {сторона} {г}° buriling.',
+    наКибле: 'Taxminan soat {время} da quyosh aynan qibla tomonida turadi',
+    наКиблеПодпись: 'Quyosh koʻrinsa — unga yuzlanib turing.',
+    надКаабой: '{дата} kuni soat {время} da quyosh Kaʼbaning tepasida boʻladi',
+    надКаабойПодпись: 'Shu daqiqada ustunlar va devorlar soyasi aynan qibladan teskari tushadi: qibla — quyosh tomonda.',
+    времяРК: 'Vaqt — Qozogʻiston vaqti bilan (UTC+5).',
+    времяМеста: 'Vaqt — joyga koʻra ({смещение}).',
+    точностьЗаголовок: 'Bu qanchalik aniq',
+    честно:
+      'Telefon kompasi odatda 5–15° xato qiladi, metall, magnitlar, magnitli gʻilof yonida va mashinada esa — kuchliroq. Aniqlik uchun eng yaqin masjid mehrobi bilan solishtiring.',
+    склонение: 'Magnit ogʻishi hisobga olingan ({город}): {с}°. Yoʻnalish — shahar markazidan Kaʼbagacha eng qisqa yoʻl (katta doira yoyi).',
+    склонениеТочка: 'Magnit ogʻishi hisobga olingan ({город}): {с}°. Yoʻnalish — sizning nuqtangizdan (≈ 1 km) Kaʼbagacha eng qisqa yoʻl (katta doira yoyi).',
+    приватно: 'Hammasi telefonda, internetsiz va xaritalarsiz hisoblanadi. Datchiklar maʼlumotlari va joy hech qayerga yuborilmaydi.',
+  },
 });
-
-const МЕСЯЦЫ = {
-  ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
-  kk: ['қаңтар', 'ақпан', 'наурыз', 'сәуір', 'мамыр', 'маусым', 'шілде', 'тамыз', 'қыркүйек', 'қазан', 'қараша', 'желтоқсан'],
-} as const;
 
 /** 4288 → '4 288' (неразрывный пробел). */
 const тысячи = (ч: number) => String(Math.round(ч)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -184,7 +224,7 @@ export function Кибла(_: ПропсыЭкрана<'кибла'>) {
   const градусы = Math.round(кибла) % 360;
   const румбКиблы = румб(кибла, язык);
   const км = useMemo(() => расстояниеДоКаабыКм(место.широта, место.долгота), [место.широта, место.долгота]);
-  const город = язык === 'kk' ? место.kk : место.ru;
+  const город = названиеМеста(место, язык);
   const сторона = (с: 'вправо' | 'влево' | 'прямо') => т(с === 'влево' ? 'влево' : 'вправо');
 
   // Схема без компаса: опора (юг/север) и ориентиры по солнцу на сегодня (в поясе места).
@@ -213,12 +253,7 @@ export function Кибла(_: ПропсыЭкрана<'кибла'>) {
   }, [минута, день, место.широта, место.долгота, кибла, севернееТропика]);
   const поворотОтПолудня = поворот(180, кибла);
   const поворотОтСолнца = солнце.теперь ? поворот(солнце.теперь.азимут, кибла) : null;
-  const датаНадКаабой = солнце.надКаабой
-    ? (() => {
-        const [, м, ч] = деньРК(солнце.надКаабой).split('-').map(Number);
-        return `${ч} ${МЕСЯЦЫ[язык][м - 1]}`;
-      })()
-    : '';
+  const датаНадКаабой = солнце.надКаабой ? датаДня(деньРК(солнце.надКаабой), язык) : '';
   // Пояс телефона не совпадает с поясом места — подписать, по какому времени показано.
   const неРК = поясОтличается(пояс, сейчас.getTime(), -сейчас.getTimezoneOffset());
   const текстВремени = место.страна === 'KZ' ? т('времяРК') : т('времяМеста', { смещение: подписьСмещения(смещениеПояса(пояс, сейчас.getTime())) });

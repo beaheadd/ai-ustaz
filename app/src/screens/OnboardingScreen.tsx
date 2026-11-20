@@ -15,10 +15,12 @@
  *         онбординг-шаг-назад, онбординг-начать (→ урок 0), онбординг-на-главную, онбординг-приветствие,
  *         онбординг-эмблема, онбординг-намаз, онбординг-город.
  * Правила: эмблема — предмет без лица (CLAUDE.md, правило 9); «Ас-саляму алейкум» — статичное приветствие
- * команды, не реплика ИИ (02-образ-устаза §9); без звуков и наград; казахский — черновик для редактора.
+ * команды, не реплика ИИ (02-образ-устаза §9); без звуков и наград; казахский и узбекский — черновики для редактора.
+ * Язык браузера (uz-*, kk-*, ru-*) — подсказка: этот язык первым в переключателе и кнопка «Продолжить на нём»
+ * (testID онбординг-язык-браузера); сам язык не меняется, пока человек не нажмёт.
  */
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import {
   Карточка,
   Кнопка,
@@ -36,9 +38,10 @@ import {
 import { Пункты, УзелПути, отметитьОнбордингПредложен } from '../components/info';
 import { useНавигация } from '../engine/navigation';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь, type ПараметрыСтроки } from '../i18n';
+import { создатьСловарь, useПеревод, useСловарь, языкБраузера, type ПараметрыСтроки, type Язык } from '../i18n';
 import { НАЗВАНИЯ } from '../prayer/day';
 import { методСтраны, подписьМетода } from '../prayer/methods';
+import { названиеМеста } from '../prayer/places';
 import { useМазхаб, useМестоНамаза } from '../prayer/store';
 import { КЛЮЧИ_ВРЕМЁН } from '../prayer/times';
 import { useТема } from '../theme';
@@ -60,6 +63,7 @@ const СЛОВАРЬ = создатьСловарь({
     'ш1.п3': 'Помогает между занятиями с устазом и не заменяет его.',
     'ш1.язык': 'Язык интерфейса',
     'ш1.языкПояснение': 'Его можно поменять в любой момент на главной.',
+    'ш1.языкБраузера': 'Продолжить на русском',
     'ш2.заголовок': 'Бесплатно, ради Аллаха',
     'ш2.п1.з': 'Бесплатно',
     'ш2.п1': 'Без подписок, платных функций и покупок. Проект полностью финансирует бизнес владельца.',
@@ -110,6 +114,7 @@ const СЛОВАРЬ = создатьСловарь({
     'ш1.п3': 'Ұстазбен сабақ арасында көмектеседі, ұстаздың орнын баспайды.',
     'ш1.язык': 'Интерфейс тілі',
     'ш1.языкПояснение': 'Оны басты бетте кез келген уақытта өзгертуге болады.',
+    'ш1.языкБраузера': 'Қазақша жалғастыру',
     'ш2.заголовок': 'Тегін, Алла разылығы үшін',
     'ш2.п1.з': 'Тегін',
     'ш2.п1': 'Жазылымсыз, ақылы функцияларсыз және сатып алуларсыз. Жобаны толығымен иесінің бизнесі қаржыландырады.',
@@ -143,6 +148,57 @@ const СЛОВАРЬ = создатьСловарь({
     назадШаг: 'Артқа',
     начать: '0-сабақтан бастау',
     наГлавную: 'Алдымен басты бетті көру',
+  },
+  uz: {
+    шаг: 'Qadam: {номер} / {всего}',
+    'шаг.1': 'Tanishuv',
+    'шаг.2': 'Alloh roziligi uchun',
+    'шаг.3': 'Namoz vaqti',
+    'шаг.4': 'Prototip',
+    'ш1.заголовок': 'Assalomu alaykum!',
+    'ш1.текст': 'AI Ustaz — Qurʼonni toʻgʻri oʻqish boʻyicha SI-murabbiy.',
+    'ш1.п1.з': 'Birinchi harfdan suragacha',
+    'ш1.п1': 'Ahmadhodiy Maqsudiy uslubi boʻyicha: harflar → boʻgʻinlar → soʻzlar → suralar.',
+    'ш1.п2.з': 'Kuniga 5–10 daqiqa',
+    'ш1.п2': 'Qisqa darslar, oʻz suratingizda.',
+    'ш1.п3.з': 'Ustoz emas, yordamchi',
+    'ш1.п3': 'Ustoz bilan mashgʻulotlar orasida yordam beradi va uning oʻrnini bosmaydi.',
+    'ш1.язык': 'Interfeys tili',
+    'ш1.языкПояснение': 'Uni istalgan vaqtda bosh sahifada oʻzgartirish mumkin.',
+    'ш1.языкБраузера': 'Oʻzbek tilida davom etish',
+    'ш2.заголовок': 'Bepul, Alloh roziligi uchun',
+    'ш2.п1.з': 'Bepul',
+    'ш2.п1': 'Obunalar, pullik funksiyalar va xaridlarsiz. Loyihani toʻliq egasining biznesi moliyalashtiradi.',
+    'ш2.п2.з': 'Reklama va kuzatuvsiz',
+    'ш2.п2': 'Reklama va reklama kuzatuvisiz. Maʼlumotlaringiz sotilmaydi va hech kimga berilmaydi.',
+    'ш2.п3.з': 'QMDB yoʻnalishi',
+    'ш2.п3': 'Hanafiy mazhabi; qiroat — Osimdan Hafs rivoyati. Ilova fatvo chiqarmaydi.',
+    'ш3.заголовок': 'Namoz vaqti va qibla',
+    'ш3.текст': 'Bosh sahifaning yuqorisida — kunning olti vaqti. Vaqtni telefonning oʻzi, internetsiz hisoblaydi.',
+    'ш3.метод': 'QMDB usuli boʻyicha hisoblangan (±1 daq.)',
+    'ш3.черновик': 'Qoralama — ustoz tekshiryapti',
+    'ш3.город.поУмолчанию': '{город} — standart boʻyicha',
+    'ш3.город.выбран': 'Shahringiz: {город}',
+    'ш3.город.позже': 'Oʻz shahringizni keyinroq tanlaysiz: bosh sahifa yuqorisidagi shahar nomini bosing.',
+    'ш3.город.сменить': 'Shaharni oʻzgartirish — bosh sahifa yuqorisidagi uning nomini bosing.',
+    'ш3.кибла.з': 'Qibla',
+    'ш3.кибла': 'Kaʼba tomonga yoʻnalish — telefon kompasi yoki quyosh boʻyicha. Tugma — shahar yonida.',
+    'ш3.место.з': 'Joy — faqat telefonda',
+    'ш3.место': 'Geolokatsiyani faqat oʻzingiz «Geolokatsiya orqali aniqlash»ni bossangiz soʻraymiz. Koordinatalar hech qayerga yuborilmaydi.',
+    'ш4.заголовок': 'Bu — prototip',
+    'ш4.реплика': '0-darsdan boshlaymiz: SI haqida qisqa ogohlantirish va ilk ovoz yozuvi — shunchaki oʻzingizni eshitish uchun.',
+    'ш4.текст': 'Birinchi versiya — hozirdanoq oʻrganishni boshlash va fikrlaringiz boʻyicha yaxshilash uchun.',
+    'ш4.нет': 'Hozircha nima yoʻq',
+    'ш4.нет1': 'Ovozni sunʼiy intellekt tekshirishi: siz oʻzingizni yozib olib, tinglaysiz — bahosiz.',
+    'ш4.нет2': 'Qori ovozi: u namuna yozib olingandan keyin qoʻshiladi.',
+    'ш4.нет3': 'Kirish va server: natijalar faqat shu qurilmada saqlanadi.',
+    'ш4.будет': 'Ovozni tekshirish va qori ovozi yaqin chiqarilishlarda paydo boʻladi — namuna yozib olingach va Qozogʻistondagi serverda oʻz tekshiruvimiz ishga tushgach.',
+    'ш4.черновик': 'Darslar — qoralama: ularni ustoz tekshiryapti',
+    далее: 'Keyingi',
+    пропустить: 'Oʻtkazib yuborish',
+    назадШаг: 'Orqaga',
+    начать: '0-darsdan boshlash',
+    наГлавную: 'Avval bosh sahifani koʻrish',
   },
 });
 
@@ -253,8 +309,19 @@ function Ход({ шаг, т }: { шаг: number; т: Т }) {
   );
 }
 
+/** Язык браузера (navigator.languages[0] / navigator.language), если он есть среди наших; иначе null. */
+function предложенныйЯзык(): Язык | null {
+  if (Platform.OS !== 'web' || typeof navigator === 'undefined') return null;
+  return языкБраузера(navigator.languages?.[0] ?? navigator.language);
+}
+
 function ШагЗнакомство({ т }: { т: Т }) {
   const { отступ, цвет } = useТема();
+  const { язык, языкВыбран, установитьЯзык } = useПеревод();
+  // Владелец 20.11.2026 (узбекский): браузер на uz-* — Oʻzbekcha первым в переключателе и кнопка «Oʻzbek tilida davom
+  // etish» (надпись — на предлагаемом языке). Молча язык не меняем: человек нажимает сам.
+  const [предложенный] = useState(предложенныйЯзык);
+  const предложить = предложенный && предложенный !== язык && !языкВыбран ? предложенный : null;
   return (
     <View style={{ gap: отступ.l }} testID="онбординг-шаг-1">
       <Карточка вид="герой" testID="онбординг-приветствие">
@@ -276,7 +343,16 @@ function ШагЗнакомство({ т }: { т: Т }) {
             {т('ш1.язык')}
           </Текст>
         </View>
-        <ПереключательЯзыка />
+        {предложить ? (
+          <Кнопка
+            вид="вторичная"
+            значок="язык"
+            надпись={СЛОВАРЬ[предложить]['ш1.языкБраузера']}
+            приНажатии={() => установитьЯзык(предложить)}
+            testID="онбординг-язык-браузера"
+          />
+        ) : null}
+        <ПереключательЯзыка первым={предложенный ?? undefined} />
         <Текст вид="мелкий">{т('ш1.языкПояснение')}</Текст>
       </Карточка>
 
@@ -321,7 +397,7 @@ function ШагНамаз({ т }: { т: Т }) {
   const { отступ, цвет, радиус } = useТема();
   const { место, выбрано } = useМестоНамаза();
   const { мазхаб } = useМазхаб();
-  const город = место[язык];
+  const город = названиеМеста(место, язык);
   return (
     <View style={{ gap: отступ.l }} testID="онбординг-шаг-3">
       <View style={{ gap: отступ.xs }}>

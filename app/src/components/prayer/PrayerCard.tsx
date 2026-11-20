@@ -65,7 +65,7 @@
 import { useState } from 'react';
 import { Pressable, View, useWindowDimensions, type TextStyle } from 'react-native';
 import { useНавигация } from '../../engine/navigation';
-import { создатьСловарь, useПеревод, useСловарь, type ПараметрыСтроки } from '../../i18n';
+import { создатьСловарь, useПеревод, useСловарь, type ПараметрыСтроки, type Язык } from '../../i18n';
 import {
   НАЗВАНИЯ,
   ФАЗА_ГОРИЗОНТА,
@@ -84,7 +84,7 @@ import {
 import { useДеньНамаза, useСейчас } from '../../prayer/hooks';
 import { методСтраны, подписьМетода } from '../../prayer/methods';
 import { подписьОфициального } from '../../prayer/official';
-import { оговоркаТочности } from '../../prayer/places';
+import { названиеМеста, оговоркаТочности } from '../../prayer/places';
 import { useМазхаб, useМестоНамаза } from '../../prayer/store';
 import { КЛЮЧИ_ВРЕМЁН, type КлючВремени } from '../../prayer/times';
 import { ГОРИЗОНТ, useТема } from '../../theme';
@@ -157,6 +157,36 @@ const СЛОВАРЬ = создатьСловарь({
     наЗавтра: 'Ертеңге, {дата}',
     колоколВкл: 'Намаз хабарландырулары: қосулы. Баптау',
     колоколВыкл: 'Намаз хабарландырулары: өшірулі. Қосу',
+  },
+  uz: {
+    меткаСледующий: 'keyingi',
+    меткаСейчас: 'hozir',
+    поУмолчанию: 'standart',
+    изменитьГород: 'Shahar: {город}. Oʻzgartirish',
+    изменитьГородПоУмолчанию: 'Shahar: {город}, standart. Oʻzgartirish',
+    кибла: 'Qibla',
+    доВосхода: 'Quyosh chiqishi: {время} — {отсчёт}',
+    сейчасИша: 'Hozir — {намаз} ({время} dan boshlab)',
+    подпись: 'QMDB usuli boʻyicha hisoblangan (±1 daq.)',
+    подписьОговорка: 'QMDB usuli boʻyicha hisoblangan (±3 daq. gacha)',
+    оговорка: 'Bu yerda hisob QMDB jadvallaridan 3 daqiqagacha farq qilishi mumkin — masjid jadvali bilan solishtiring.',
+    черновик: 'Qoralama',
+    пояс: 'Qozogʻiston vaqti bilan (UTC+5)',
+    поясМеста: 'Vaqt — joyga koʻra ({смещение})',
+    подробнее: 'Hafta va qanday hisoblaymiz',
+    неделя: 'Hafta va usul',
+    ошибка: 'Bu joy uchun vaqtni hisoblab boʻlmadi. Roʻyxatdan shaharni tanlang.',
+    диктор: '{намаз}, {время}',
+    дикторСледующий: '{намаз}, {время}, keyingi namoz',
+    дикторСейчас: '{намаз}, {время}, hozir',
+    дикторПрошёл: '{намаз}, {время}, oʻtdi',
+    дикторВосход: 'Quyosh chiqishi, {время}',
+    дикторШапка: '{дата}. Keyingi namoz: {намаз}, {время}, {отсчёт}',
+    дикторШапкаЗавтра: '{сейчас}. Keyingi namoz — ertaga, {дата}: {намаз}, {время}, {отсчёт}. Quyida — ertangi vaqt',
+    дикторПодпись: '{подробнее}. {подпись}. {черновик}',
+    наЗавтра: 'Ertaga, {дата}',
+    колоколВкл: 'Namoz bildirishnomalari: yoqilgan. Sozlash',
+    колоколВыкл: 'Namoz bildirishnomalari: oʻchirilgan. Yoqish',
   },
 });
 
@@ -247,7 +277,7 @@ export function КарточкаНамаза({
   // kk: «Күн шығуы», если влезает в плитку; иначе «Күн».
   const восходПолностью = язык !== 'kk' || (ширинаБлока !== undefined && замер.восход !== undefined && замер.восход + 2 * ПОЛЯ.бок + 2 <= ширинаБлока);
   const открытьГород = выбратьГород ?? (() => перейти('городНамаза'));
-  const имяМеста = место[язык];
+  const имяМеста = названиеМеста(место, язык);
   // КЗ/УЗ: официальная таблица на телефоне — «По данным ДУМК · обновлено …» (владелец 20.11.2026); иначе — расчёт.
   const оговорка = источник ? null : оговоркаТочности(место);
   const подписьРасчёта = источник ? подписьОфициального(источник.src, источник.обновлено, язык) : подписьМетода(методСтраны(место.страна), мазхаб, язык);
@@ -345,7 +375,7 @@ export function порядокБлоков(восходПоследним: boole
 type Т = (ключ: keyof (typeof СЛОВАРЬ)['ru'], параметры?: ПараметрыСтроки) => string;
 
 /** Подпись плитки: kk-восход на узкой плитке — «Күн». */
-function названиеПлитки(ключ: КлючВремени, язык: 'ru' | 'kk', коротко: boolean): string {
+function названиеПлитки(ключ: КлючВремени, язык: Язык, коротко: boolean): string {
   return коротко && ключ === 'sunrise' && язык === 'kk' ? ВОСХОД_КОРОТКО : НАЗВАНИЯ[ключ][язык];
 }
 
@@ -368,7 +398,7 @@ function ЗнакФазы({ фаза }: { фаза: КлючВремени }) {
  * что на экране. Не зависит от числа колонок — сетка перестраивается без «качелей». Ловит и системный крупный шрифт,
  * и «масштаб текста» браузера (на вебе fontScale всегда 1).
  */
-function ЗамерПодписей({ язык, т, запомнить }: { язык: 'ru' | 'kk'; т: Т; запомнить: (ключ: keyof Замер, значение: number) => void }) {
+function ЗамерПодписей({ язык, т, запомнить }: { язык: Язык; т: Т; запомнить: (ключ: keyof Замер, значение: number) => void }) {
   return (
     <View aria-hidden testID="намаз-замер" style={{ position: 'absolute', left: 0, top: 0, opacity: 0, pointerEvents: 'none', alignItems: 'flex-start' }}>
       <View style={{ alignItems: 'flex-start' }} onLayout={(е) => запомнить('текст', е.nativeEvent.layout.width)}>
@@ -465,7 +495,7 @@ function Колокол({ верх, т }: { верх: number; т: Т }) {
   );
 }
 
-function Шапка({ состояние, сейчас, язык, т, колокол, пояс }: { состояние: СостояниеДня; сейчас: number; язык: 'ru' | 'kk'; т: Т; колокол: boolean; пояс: string }) {
+function Шапка({ состояние, сейчас, язык, т, колокол, пояс }: { состояние: СостояниеДня; сейчас: number; язык: Язык; т: Т; колокол: boolean; пояс: string }) {
   const { цвет } = useТема();
   const поддержка = useПоддержкаУведомлений();
   const показатьКолокол = колокол && поддержка === 'можно';
@@ -544,7 +574,7 @@ function БлокНамаза({
   высотаЯрлыка: number;
   коротко: boolean;
   арабские: boolean;
-  язык: 'ru' | 'kk';
+  язык: Язык;
   т: Т;
   пояс: string;
 }) {

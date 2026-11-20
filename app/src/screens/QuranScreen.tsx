@@ -93,6 +93,27 @@ const СЛОВАРЬ = создатьСловарь({
     сура: '{н}-сүре',
     найдено: 'Табылған сүрелер: {н}',
   },
+  uz: {
+    продолжить: 'Oʻqishni davom ettirish',
+    продолжитьГде: '{сура}, {аят}-oyat',
+    поиск: 'Raqam, nom yoki 2:255',
+    поискПодпись: 'Surani topish yoki oyatga oʻtish',
+    перейти: '{сура}:{аят} ni ochish',
+    перейтиПодпись: '{название}, {аят}-oyat',
+    нетАята: '{сура}-surada {аятов} bor. Bunday oyat yoʻq.',
+    ничего: 'Hech narsa topilmadi. Sura raqamini yoki «2:255» ni kiriting.',
+    перевод: 'Maʼnolar tarjimasi va tafsir — faqat tekshirilgan nashrlardan, huquq egasining ruxsati bilan, ustoz tekshiruvidan keyin. Tayyorlanmoqda.',
+    источник: 'Tanzil Uthmani v1.1 · nazorat summasi boʻyicha solishtirilgan. Oyat raqamlari — matndan alohida.',
+    лицензии: 'Tanzil manbasi va shartlari',
+    лицензииПояснение: 'tanzil.net, litsenziya va atributsiya',
+    как: 'AI Ustaz xatoni qanday tushuntiradi',
+    какПояснение: 'Al-Fotiha misolida — oʻqishingizni tekshirish emas',
+    кУрокам: 'Oʻqishni oʻrganish — darslarga',
+    черновик: 'Suralarning lotincha nomlari — transliteratsiya, qoralama: ustoz tekshiryapti',
+    нет: 'Matn tekshirilgan baza bilan solishtiruvdan oʻtmadi — koʻrsatmaymiz.',
+    сура: '{н}-sura',
+    найдено: 'Topilgan suralar: {н}',
+  },
 });
 
 export function Коран(_: ПропсыЭкрана<'коран'>) {
@@ -291,7 +312,7 @@ const СтрокаСуры = memo(function СтрокаСуры({
 }) {
   const { цвет, отступ, радиус } = useТема();
   const н = запись.сура;
-  const естьИмя = !!запись.транслит[язык === 'kk' ? 'kk' : 'ru'];
+  const естьИмя = !!(запись.транслит as Record<string, string | null>)[язык];
   const название = естьИмя ? названиеСуры(запись, н, язык) : null;
   const аятов = словоАятов(запись.аятов, язык);
   const подпись = название ? `${название}, ${аятов}` : `${названиеСуры(запись, н, язык)}, ${аятов}`;

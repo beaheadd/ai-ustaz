@@ -26,6 +26,11 @@ const СЛОВАРЬ = создатьСловарь({
     обновить: 'Бетті жаңарту',
     нет: 'Мәтін тексерілген базамен салыстырудан өтпеді — көрсетпейміз.',
   },
+  uz: {
+    нетФайла: 'Matnli fayl topilmadi — ehtimol, yangi versiya chiqqan. Sahifani yangilang.',
+    обновить: 'Sahifani yangilash',
+    нет: 'Matn tekshirilgan baza bilan solishtiruvdan oʻtmadi — koʻrsatmaymiz.',
+  },
 });
 
 export function ТекстКоранаНедоступен({ состояние }: { состояние: { нетСвязи: boolean; причина: ПричинаОтказа; повторить: () => void } }) {

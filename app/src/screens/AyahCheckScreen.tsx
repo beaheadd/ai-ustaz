@@ -61,6 +61,19 @@ const СЛОВАРЬ = создатьСловарь({
     нет: 'Мәтін тексерілген базамен салыстырудан өтпеді — көрсетпейміз.',
     черновик: 'Бөліктерге бөлу мен кеңестер — жоба, ұстаз тексереді',
   },
+  uz: {
+    заголовок: '{сура}:{аят}-oyat',
+    где: '{сура}, {аятов} oyatdan {аят}-oyat',
+    пояснение: 'Oyatni ovoz chiqarib oʻqing va oʻzingizni yozib oling. Yozuvni faqat siz eshitasiz.',
+    пояснениеПроверка: 'Oyatni ovoz chiqarib oʻqing va oʻzingizni yozib oling. «Tekshirish»ni bosmaguningizcha yozuv qurilmada qoladi.',
+    черновикНазвания: 'Suralarning lotincha nomlari — qoralama',
+    пред: 'Oldingi oyat',
+    след: 'Keyingi oyat',
+    кСуре: 'Butun sura',
+    нетАята: 'Bu surada {аятов} oyat bor — {аят}-oyat yoʻq.',
+    нет: 'Matn tekshirilgan baza bilan solishtiruvdan oʻtmadi — koʻrsatmaymiz.',
+    черновик: 'Qismlarga boʻlish va maslahatlar — qoralama, ustoz tekshiryapti',
+  },
 });
 
 export function ПроверкаАята({ параметры }: ПропсыЭкрана<'проверкаАята'>) {
@@ -73,7 +86,7 @@ export function ПроверкаАята({ параметры }: ПропсыЭ�
   const индекс = useИндексСур();
   const запись = индекс.состояние === 'есть' ? (индекс.данные.суры[н - 1] ?? null) : null;
   const название = названиеСуры(запись, н, язык);
-  const естьТранслит = !!запись?.транслит[язык === 'kk' ? 'kk' : 'ru'];
+  const естьТранслит = !!запись?.транслит[язык];
   const [проверкаВключена] = useState(проверкаГолосомВключена);
 
   /** «Вся сура»: если под нами эта сура — назад к ней, иначе — открыть её у этого аята. */

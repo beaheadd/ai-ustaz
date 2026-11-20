@@ -67,6 +67,27 @@ const СЛОВАРЬ = создатьСловарь({
     'статус.проверен-устазом': 'ұстаз тексерген',
     'статус.подписан-советом': 'кеңес бекіткен',
   },
+  uz: {
+    заголовок: 'Xatoni qanday tushuntiramiz',
+    одно: 'Bitta aniq tushuntirish',
+    шаги: 'Qayerda · Nima eshitildi · Qanday boʻlishi kerak · Qoida · Nima qilish kerak',
+    правилаЗаголовок: 'Matnlar qayerdan',
+    черновик: 'Qoralama — ustoz tekshiryapti',
+    вступление:
+      'Ovoz bilan tekshirish paydo boʻlganda, AI Ustaz shunchaki «xato» emas, balki bitta aniq tushuntirish koʻrsatadi: qayerda, nima eshitildi, qanday boʻlishi kerak, qaysi qoida va nima qilish kerak.',
+    правила:
+      'Tushuntirish matnlari — faqat tasdiqlangan qoidalar va andozalar bazasidan, SI ularni oʻzi toʻqib chiqarmaydi. Ishonch boʻlmasa — tanbeh bermaymiz: yomon ovoz — xato emas, hali oʻtilmagan qoida uchun ham tanbeh bermaymiz.',
+    сура: 'Al-Fotiha surasi (1:1–7)',
+    подсказка: 'Ajratilgan soʻzni bosing — tushuntirish namunasi ochiladi.',
+    примеры: 'Barcha namunalar',
+    гдеСлово: '{сура}:{аят}, {слово}-soʻz',
+    словоПодпись: '{аят}-oyat, {слово}-soʻz: tushuntirish namunasi',
+    источник: 'Qurʼon matni — Tanzil Uthmani v1.1, aynan. Tushuntirishlar — AI Ustaz xatolar katalogi, versiya {версия} · {статус}.',
+    нетДанных: 'Namuna hali yuklanmadi. Sahifani yangilang.',
+    'статус.черновик': 'qoralama, ustoz tekshiruvidan oʻtmoqda',
+    'статус.проверен-устазом': 'ustoz tekshirgan',
+    'статус.подписан-советом': 'kengash imzolagan',
+  },
 });
 
 export function КакОбъясняем(_: ПропсыЭкрана<'какОбъясняем'>) {
