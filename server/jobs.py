@@ -9,6 +9,10 @@
      push.срок_жизни; 404/410 от push-сервиса — подписка больше не действует: удалить её и расписание сразу;
   4. подписки, у которых до конца расписания меньше 3 дней, — одно тихое «Откройте AI Ustaz, чтобы обновить время намаза»;
   5. раз в час — уборка (db.Хранилище.убрать_старое).
+Официальное время намаза КЗ/УЗ (server/prayer.py; владелец 20.11.2026) — в отдельном потоке этой же службы, чтобы
+скачивание у ведомства не задерживало уведомления: раз в MUGALIM_PRAYER_TICK_SEC (60 с) порция до 12 таблиц — сначала
+те, что попросили клиенты, потом недостающие (с 1 ноября — и на следующий год), потом не сверенные 7 дней.
+MUGALIM_PRAYER_FETCH=0 — не скачивать (API отдаёт то, что уже в базе).
 Контракт для тестов: шаг(хранилище, отправить, сейчас) -> dict; отправить(подписка, данные, ttl, срочность) -> код HTTP
 (0 — нет ответа). Запуск: python jobs.py (WorkingDirectory=/opt/mugalim/server). В журнал — только хэш адреса подписки.
 """
@@ -129,6 +133,30 @@ def создать_отправителя(приватный: str, тема: str
     return отправить
 
 
+def поток_намаза(хранилище, стоп: threading.Event) -> threading.Thread:
+    import prayer
+
+    тик = число_из_окружения('MUGALIM_PRAYER_TICK_SEC', 60.0, 20.0, 3600.0)
+
+    def цикл() -> None:
+        while not стоп.is_set():
+            try:
+                счёт = prayer.шаг_обновления(хранилище, prayer.скачать_json, int(time.time() * 1000),
+                                             пауза=lambda: стоп.wait(2.0), стоп=стоп.is_set)
+                if any(счёт.values()):
+                    журнал.info('время намаза: %s', счёт)
+            except boot.ЧужаяБаза as е:
+                журнал.critical('СТОП: %s', е)
+                стоп.set()
+            except Exception as е:  # noqa: BLE001 — поток не должен умирать (сеть, база перезапускается)
+                журнал.warning('время намаза: шаг не удался: %s', type(е).__name__)
+            стоп.wait(тик)
+
+    поток = threading.Thread(target=цикл, name='prayer-official', daemon=True)
+    поток.start()
+    return поток
+
+
 def главный() -> None:
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)s %(message)s')
     logging.getLogger('urllib3').setLevel(logging.WARNING)  # адреса подписок в журнал не пишем
@@ -155,6 +183,8 @@ def главный() -> None:
     signal.signal(signal.SIGINT, lambda *_: стоп.set())
     последняя_уборка = 0.0
     журнал.info('уведомления: цикл раз в %.0f с, потоков %d', тик, потоков)
+    if целое_из_окружения('MUGALIM_PRAYER_FETCH', 1, 0, 1):
+        поток_намаза(хранилище, стоп)
     while not стоп.is_set():
         сейчас = int(time.time() * 1000)
         try:

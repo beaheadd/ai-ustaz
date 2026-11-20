@@ -12,7 +12,15 @@
   .учесть(ключ, окно_сек, предел, сейчас) -> bool — лимит запросов (состояние — в БД, не в памяти)
   .записать(хэш, событие, статус=None)      — журнал без адреса целиком
   .убрать_старое(сейчас) -> dict             — взятые пункты старше суток, лимиты старше часа, журнал старше 90 дней,
-        подписки, у которых расписание кончилось больше 30 дней назад (человек не открывал приложение месяц)
+        подписки, у которых расписание кончилось больше 30 дней назад (человек не открывал приложение месяц);
+        официальное время намаза: журнал старше года, очередь старше недели, таблицы прошлых лет (кроме прошлого года)
+Официальное время намаза (server/prayer.py, миграция 003; владелец 20.11.2026):
+  .таблица_намаза(src, place, год) -> dict | None   {src, place, year, дни, точка, способ, sha, получено, проверено}
+  .сохранить_таблицу_намаза(src, place, год, дни, точка, способ, sha, расхождение, сейчас) -> 'new' | 'changed' | 'same'
+  .какие_таблицы_намаза() -> set[(src, place, год)];  .давно_проверенные_намаза(до, предел) -> list
+  .попросить_намаз(src, place, год, сейчас) — очередь «клиент просил»; .нужные_намаза(предел, попытка_до) -> list
+  .отметить_попытку_намаза(src, place, год, сейчас); .недавние_попытки_намаза(после) -> set
+  .журнал_намаза(src, place, год, итог, подробно); .мета_намаза(ключ) -> {данные, при} | None; .записать_мету_намаза(…)
 Соединение на операцию (нагрузка маленькая; пула нет — зависимостей меньше). Транзакция на операцию.
 """
 from __future__ import annotations
@@ -22,6 +30,7 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 
 import psycopg
+from psycopg.types.json import Jsonb
 
 import boot
 from push import ДЕНЬ_МС, Запрос, Пункт
@@ -183,4 +192,91 @@ class Хранилище:
             лимиты = с.execute('DELETE FROM push_limits WHERE window_start < %s', (_вр(сейчас - 3_600_000),)).rowcount
             журнал = с.execute('DELETE FROM push_log WHERE at < %s', (_вр(сейчас - 90 * ДЕНЬ_МС),)).rowcount
             подписки = с.execute('DELETE FROM push_subscriptions WHERE schedule_end < %s', (_вр(сейчас - 30 * ДЕНЬ_МС),)).rowcount
-        return {'пункты': пункты, 'лимиты': лимиты, 'журнал': журнал, 'подписки': подписки}
+            год = datetime.fromtimestamp(сейчас / 1000, tz=timezone.utc).year
+            намаз = с.execute('DELETE FROM prayer_log WHERE at < %s', (_вр(сейчас - 365 * ДЕНЬ_МС),)).rowcount
+            намаз += с.execute('DELETE FROM prayer_wanted WHERE asked_at < %s', (_вр(сейчас - 7 * ДЕНЬ_МС),)).rowcount
+            намаз += с.execute('DELETE FROM prayer_official WHERE year < %s', (год - 1,)).rowcount
+        return {'пункты': пункты, 'лимиты': лимиты, 'журнал': журнал, 'подписки': подписки, 'намаз': намаз}
+
+    # ───────────── официальное время намаза ─────────────
+    def таблица_намаза(self, src: str, place: str, год: int) -> dict | None:
+        with self._соединение() as с:
+            р = с.execute(
+                'SELECT days, point, method, sha, fetched_at, checked_at FROM prayer_official WHERE src = %s AND place = %s AND year = %s',
+                (src, place, год),
+            ).fetchone()
+        if not р:
+            return None
+        return {'src': src, 'place': place, 'year': год, 'дни': р[0], 'точка': р[1], 'способ': р[2], 'sha': р[3],
+                'получено': _мс(р[4]), 'проверено': _мс(р[5])}
+
+    def сохранить_таблицу_намаза(self, src: str, place: str, год: int, дни: list, точка: dict, способ: str, sha: str,
+                                 расхождение: int, сейчас: int) -> str:
+        with self._соединение() as с:
+            было = с.execute('SELECT sha FROM prayer_official WHERE src = %s AND place = %s AND year = %s FOR UPDATE',
+                             (src, place, год)).fetchone()
+            if было and было[0] == sha:
+                с.execute('UPDATE prayer_official SET checked_at = %s, max_diff = %s WHERE src = %s AND place = %s AND year = %s',
+                          (_вр(сейчас), расхождение, src, place, год))
+                итог = 'same'
+            else:
+                с.execute(
+                    """INSERT INTO prayer_official (src, place, year, days, point, method, sha, max_diff, fetched_at, checked_at)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                       ON CONFLICT (src, place, year) DO UPDATE SET days = EXCLUDED.days, point = EXCLUDED.point,
+                           method = EXCLUDED.method, sha = EXCLUDED.sha, max_diff = EXCLUDED.max_diff,
+                           fetched_at = EXCLUDED.fetched_at, checked_at = EXCLUDED.checked_at""",
+                    (src, place, год, Jsonb(дни), Jsonb(точка), способ, sha, расхождение, _вр(сейчас), _вр(сейчас)),
+                )
+                итог = 'changed' if было else 'new'
+            с.execute('DELETE FROM prayer_wanted WHERE src = %s AND place = %s AND year = %s', (src, place, год))
+        return итог
+
+    def какие_таблицы_намаза(self) -> set[tuple[str, str, int]]:
+        with self._соединение() as с:
+            return {(р[0], р[1], р[2]) for р in с.execute('SELECT src, place, year FROM prayer_official').fetchall()}
+
+    def давно_проверенные_намаза(self, до: int, предел: int) -> list[tuple[str, str, int]]:
+        with self._соединение() as с:
+            строки = с.execute('SELECT src, place, year FROM prayer_official WHERE checked_at < %s ORDER BY checked_at LIMIT %s',
+                               (_вр(до), предел)).fetchall()
+        return [(р[0], р[1], р[2]) for р in строки]
+
+    def попросить_намаз(self, src: str, place: str, год: int, сейчас: int) -> None:
+        with self._соединение() as с:
+            с.execute('INSERT INTO prayer_wanted (src, place, year, asked_at) VALUES (%s, %s, %s, %s) ON CONFLICT DO NOTHING',
+                      (src, place, год, _вр(сейчас)))
+
+    def нужные_намаза(self, предел: int, попытка_до: int) -> list[tuple[str, str, int]]:
+        with self._соединение() as с:
+            строки = с.execute(
+                'SELECT src, place, year FROM prayer_wanted WHERE tried_at IS NULL OR tried_at < %s ORDER BY asked_at LIMIT %s',
+                (_вр(попытка_до), предел)).fetchall()
+        return [(р[0], р[1], р[2]) for р in строки]
+
+    def отметить_попытку_намаза(self, src: str, place: str, год: int, сейчас: int) -> None:
+        with self._соединение() as с:
+            с.execute("""INSERT INTO prayer_wanted (src, place, year, asked_at, tried_at) VALUES (%s, %s, %s, %s, %s)
+                         ON CONFLICT (src, place, year) DO UPDATE SET tried_at = EXCLUDED.tried_at""",
+                      (src, place, год, _вр(сейчас), _вр(сейчас)))
+
+    def недавние_попытки_намаза(self, после: int) -> set[tuple[str, str, int]]:
+        with self._соединение() as с:
+            return {(р[0], р[1], р[2]) for р in с.execute(
+                'SELECT src, place, year FROM prayer_wanted WHERE tried_at >= %s', (_вр(после),)).fetchall()}
+
+    def журнал_намаза(self, src: str, place: str, год: int, итог: str, подробно: str = '') -> None:
+        with self._соединение() as с:
+            с.execute('INSERT INTO prayer_log (src, place, year, result, detail) VALUES (%s, %s, %s, %s, %s)',
+                      (src[:8], place[:40], год, итог[:40], (подробно or '')[:300]))
+
+    def мета_намаза(self, ключ: str) -> dict | None:
+        with self._соединение() as с:
+            р = с.execute('SELECT value, updated_at FROM prayer_meta WHERE key = %s', (ключ,)).fetchone()
+        return {'данные': р[0], 'при': _мс(р[1])} if р else None
+
+    def записать_мету_намаза(self, ключ: str, значение: object, сейчас: int) -> None:
+        with self._соединение() as с:
+            с.execute("""INSERT INTO prayer_meta (key, value, updated_at) VALUES (%s, %s, %s)
+                         ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = EXCLUDED.updated_at""",
+                      (ключ, Jsonb(значение), _вр(сейчас)))

@@ -1,4 +1,5 @@
-"""API AI Ustaz (FastAPI) — пока только уведомления о времени намаза. Прод: 127.0.0.1:8031 за nginx aiustaz.pro (/api/push/).
+"""API AI Ustaz (FastAPI): уведомления о времени намаза и официальное время намаза КЗ/УЗ. Прод: 127.0.0.1:8031 за nginx
+aiustaz.pro (/api/push/, /api/prayer/).
 
 Владелец 20.11.2026: «правильные, красивые уведомления время намаза приходило к клиенту». docs/дизайн/07-уведомления.md.
 
@@ -14,6 +15,9 @@
 unsubscribe — 20 в минуту с IP; test — 3 за 10 минут на подписку и 10 в минуту с IP. Превышение — 429.
 Тело — не больше 64 КБ (413). Origin, если есть, — только свой домен (MUGALIM_PUSH_ORIGINS), иначе 403.
 Координаты на сервер не приходят: клиент сам считает время намаза (app/src/notify/schedule.ts).
+  GET  /api/prayer/official?src=dumk|umuz&place=<id>&year=<год> — годовая таблица ведомства по id пункта из нашего списка
+                              (server/prayer.py; владелец 20.11.2026: «Время намаза Казахстан, Узбекистан бери из
+                              официальных источников»). Лимит — 60 в минуту с IP (хэш), ETag и Cache-Control.
 
 Сборка (модули — через register, зависимости — параметрами):
   register(app, хранилище=, публичный_ключ=, отправить=, часы=)   — тесты подставляют своё хранилище и отправку;
@@ -33,6 +37,7 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 
 import boot
+import prayer
 import push
 from envnum import строка_из_окружения
 
@@ -180,4 +185,5 @@ def создать_приложение() -> FastAPI:
         отправить=отправить,
         источники=строка_из_окружения('MUGALIM_PUSH_ORIGINS', СВОИ_ИСТОЧНИКИ),
     )
+    prayer.register(app, хранилище=хранилище, ключ_лимита=хэш_ip)
     return app

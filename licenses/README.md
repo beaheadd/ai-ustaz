@@ -51,10 +51,12 @@
 | requests | 2.34.2 | Apache-2.0 | HTTP к push-сервисам браузеров |
 | fastapi | 0.165.0 | MIT | API `/api/push/` |
 | uvicorn | 0.54.0 | BSD-3-Clause | процесс API |
+| adhanpy | 1.0.5 | MIT | своя проверка официального времени намаза КЗ/УЗ и правило УМУз (`server/prayer.py`; округление — своё, как adhan-js); владелец 20.11.2026 |
 | psycopg (+ psycopg-binary) | 3.3.9 | LGPL-3.0-only | PostgreSQL (своя база `mugalim`); динамически подключаемая библиотека без изменений — условие LGPL «можно заменить библиотеку» выполняется (пакет ставится pip отдельно) |
 
 Только на сервере, наружу ходит лишь к push-сервисам браузеров (fcm.googleapis.com, updates.push.services.mozilla.com,
-web.push.apple.com, *.notify.windows.com). Firebase SDK, аналитики и рекламы нет: Web Push — стандарт браузера, ключи
+web.push.apple.com, *.notify.windows.com) и к источникам официального времени намаза (api.muftyat.kz — ДУМК,
+new.islom.uz — список регионов УМУз; только служба mugalim-jobs). Firebase SDK, аналитики и рекламы нет: Web Push — стандарт браузера, ключи
 VAPID создаются только на сервере (`/etc/mugalim.env`, права 600).
 
 ## Контент

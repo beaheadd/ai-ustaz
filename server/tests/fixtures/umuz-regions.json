@@ -1,0 +1,24 @@
+{
+  "_описание": "ФИКСТУРА ДЛЯ ТЕСТА, не официальные данные. Форма — как ответ https://new.islom.uz/api/v1/regions (поля id, name, name_ru, differ_minute, status, latitude, longitude, order — по трём открытым клиентам: furqon2077/NamazBar, Pursuit2703/omarchy-salah-time, AvazbekNurmatov/omarchy-prayer-times). id, названия и точки 16 городов — из встроенного списка NamazBar (снят с islom.uz); differ_minute Ташкента (0), Нукуса (+42) и Андижана (−12) — из исследования MohamedAbulgasem/Taqwa, остальные поправки — условные для теста. Бишкек — сосед вне Узбекистана (должен отбрасываться), запись без координат и запись со status 0 — тоже.",
+  "data": [
+    {"id": 27, "name": "Тошкент", "name_ru": "Ташкент", "differ_minute": "0", "status": 1, "latitude": "41.300872", "longitude": "69.241813", "order": 1},
+    {"id": 1, "name": "Андижон", "name_ru": "", "differ_minute": "-12", "status": 1, "latitude": "40.786215", "longitude": "72.328205", "order": 2},
+    {"id": 4, "name": "Бухоро", "name_ru": "", "differ_minute": "19", "status": 1, "latitude": "39.772300", "longitude": "64.423324", "order": 3},
+    {"id": 5, "name": "Гулистон", "name_ru": "Гулистан", "differ_minute": "2", "status": 1, "latitude": "40.492550", "longitude": "68.777611", "order": 4},
+    {"id": 18, "name": "Самарқанд", "name_ru": "", "differ_minute": "9", "status": 1, "latitude": "39.650650", "longitude": "66.976460", "order": 5},
+    {"id": 15, "name": "Наманган", "name_ru": "", "differ_minute": "-10", "status": 1, "latitude": "41.005175", "longitude": "71.643583", "order": 6},
+    {"id": 14, "name": "Навоий", "name_ru": "Навои", "differ_minute": "16", "status": 1, "latitude": "40.102403", "longitude": "65.367579", "order": 7},
+    {"id": 9, "name": "Жиззах", "name_ru": "", "differ_minute": "6", "status": 1, "latitude": "40.122196", "longitude": "67.873275", "order": 8},
+    {"id": 16, "name": "Нукус", "name_ru": "", "differ_minute": "42", "status": 1, "latitude": "42.471325", "longitude": "59.616820", "order": 9},
+    {"id": 25, "name": "Қарши", "name_ru": "Карши", "differ_minute": "14", "status": 1, "latitude": "38.830248", "longitude": "65.778764", "order": 10},
+    {"id": 26, "name": "Қўқон", "name_ru": "", "differ_minute": "-7", "status": 1, "latitude": "40.535509", "longitude": "70.937948", "order": 11},
+    {"id": 21, "name": "Хива", "name_ru": "", "differ_minute": "35", "status": 1, "latitude": "41.389141", "longitude": "60.350174", "order": 12},
+    {"id": 13, "name": "Марғилон", "name_ru": "Маргилан", "differ_minute": "-10", "status": 1, "latitude": "40.47111", "longitude": "71.72472", "order": 13},
+    {"id": 37, "name": "Фарғона", "name_ru": "", "differ_minute": "-10", "status": 1, "latitude": "40.376952", "longitude": "71.793129", "order": 99},
+    {"id": 74, "name": "Термиз", "name_ru": "", "differ_minute": "8", "status": 1, "latitude": "37.258528", "longitude": "67.308346", "order": 99},
+    {"id": 78, "name": "Урганч", "name_ru": "Ургенч", "differ_minute": "34", "status": 1, "latitude": "41.553823", "longitude": "60.620611", "order": 99},
+    {"id": 3, "name": "Бишкек", "name_ru": "", "differ_minute": "-20", "status": 1, "latitude": "42.874621", "longitude": "74.569762", "order": 99},
+    {"id": 90, "name": "Без координат", "name_ru": "", "differ_minute": "0", "status": 1, "latitude": "", "longitude": "", "order": 99},
+    {"id": 91, "name": "Выключен", "name_ru": "", "differ_minute": "0", "status": 0, "latitude": "41.0", "longitude": "69.0", "order": 99}
+  ]
+}

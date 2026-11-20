@@ -8,3 +8,4 @@ py-vapid==1.9.6           # MPL-2.0 — зависимость pywebpush
 http-ece==1.2.1           # MIT — зависимость pywebpush
 cryptography==50.0.1      # Apache-2.0 OR BSD-3-Clause
 requests==2.34.2          # Apache-2.0
+adhanpy==1.0.5            # MIT — своя проверка официального времени намаза КЗ/УЗ и правило УМУз (server/prayer.py; владелец 20.11.2026)
