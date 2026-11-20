@@ -17,6 +17,9 @@
  *   5. карта курса, «Как объясняем» (нажатие на подсвеченное слово → карточка), «О проекте», «Лицензии» — из раздела
  *      «Ещё» нижнего меню;
  *   6. казахский и обратно (переключатель — в «Ещё»; lang страницы, сохранение после перезагрузки);
+ *   6б. узбекский (латиница; владелец 20.11.2026): «Oʻzbekcha» в «Ещё» → lang="uz-Latn", «Yana», главная — «Bomdod»,
+ *       урок 1 на uz с плашкой черновика; отдельно (один раз, E2E_UZ=0 — пропустить) — онбординг с браузером uz-UZ:
+ *       «Oʻzbekcha» первым и кнопка «Oʻzbek tilida davom etish», язык сам не меняется;
  *   7. отказ в доступе к микрофону → понятное сообщение, урок продолжается;
  *   8. (один раз) все уроки L01–L16 и К1 на узком телефоне 360×740: каждое задание верным ответом,
  *      плашка на месте, нет горизонтальной прокрутки, итог «Урок пройден» (E2E_ALL_LESSONS=0 — пропустить);
@@ -354,6 +357,50 @@ async function всеУроки(браузер, база) {
   await контекст.close();
 }
 
+/**
+ * Онбординг с браузером на узбекском (locale uz-UZ): «Oʻzbekcha» первым в переключателе и кнопка «Oʻzbek tilida
+ * davom etish», но язык сам не меняется (молча не выбираем); после нажатия — uz, приветствие «Assalomu alaykum!»,
+ * ИИ-предупреждение в «Ещё» на uz (арабский рядом), главная — Bomdod.
+ */
+async function узбекскийОнбординг(браузер, база) {
+  console.log('\n══ Онбординг: браузер на узбекском ══');
+  const проблемы = [];
+  const контекст = await браузер.newContext({ ...ПРОФИЛИ.телефон, locale: 'uz-UZ' });
+  const стр = await контекст.newPage();
+  наблюдать(стр, база, проблемы);
+  const п = помощники(стр, 'uz', проблемы);
+  await стр.goto(база + '/aiustaz');
+  await п.э('экран-онбординг').waitFor({ timeout: 20000 });
+  п.проверить((await стр.evaluate(() => navigator.language)) === 'uz-UZ', 'navigator.language = uz-UZ');
+  п.проверить((await стр.evaluate(() => document.documentElement.lang)) === 'ru', 'язык сам не сменился (ru, пока человек не выберет)');
+  const порядок = await стр.$$eval('[data-testid^="язык-"]', (э) => э.map((х) => х.getAttribute('data-testid')));
+  п.проверить(порядок[0] === 'язык-uz', `«Oʻzbekcha» — первым в переключателе (${порядок.join(', ')})`);
+  п.проверить((await п.э('онбординг-язык-браузера').innerText()).includes('Oʻzbek tilida davom etish'), 'кнопка «Oʻzbek tilida davom etish»');
+  await п.снимок('онбординг-uz-до');
+  await п.э('онбординг-язык-браузера').click();
+  await стр.waitForFunction(() => document.documentElement.lang === 'uz-Latn');
+  п.проверить((await п.текст()).includes('Assalomu alaykum!'), 'онбординг на узбекском: «Assalomu alaykum!»');
+  п.проверить(!(await п.есть('онбординг-язык-браузера')), 'после выбора кнопка подсказки скрыта');
+  await п.безГоризонтальнойПрокрутки('онбординг uz, 3 языка в переключателе');
+  await п.снимок('онбординг-uz');
+  await п.э('онбординг-пропустить').click();
+  await п.э('экран-главная').waitFor();
+  п.проверить((await п.э('намаз-блок-fajr').innerText()).includes('Bomdod'), 'главная на узбекском: Bomdod');
+  const пр = await п.прогресс();
+  п.проверить(пр?.язык === 'uz', 'язык uz сохранён в прогрессе');
+  await стр.goto(база + '/aiustaz/index.html#/more');
+  await п.э('экран-ещё').waitFor();
+  await стр.getByTestId('ещё-предупреждение').first().click().catch(() => {});
+  await стр.waitForTimeout(300);
+  const текст = await п.текст();
+  if (текст.includes('SI haqida ogohlantirish') && (await п.есть('предупреждение-текст'))) {
+    const т = await п.э('предупреждение-текст').innerText();
+    п.проверить(т.includes('Bu Qurʼon ustozi') && АРАБСКИЙ.test(await п.э('предупреждение-ar').innerText()), 'ИИ-предупреждение QML на uz и на арабском');
+  }
+  await п.безПроблем('онбординг uz: нет ошибок в консоли, чужих запросов и нарушений CSP');
+  await контекст.close();
+}
+
 async function сценарийПрофиля(браузер, база, профиль) {
   console.log(`\n══ Профиль: ${профиль} ══`);
   const проблемы = [];
@@ -639,6 +686,31 @@ async function сценарийПрофиля(браузер, база, проф
   await э('урок-вступление').waitFor();
   проверить((await э('урок-начать').innerText()).includes('Сабақты бастау'), 'урок на казахском');
   await снимок('урок1-вступление-kk');
+  await стр.goto(база + '/aiustaz/index.html#/more');
+  await э('экран-ещё').waitFor();
+
+  // ── 6б. Узбекский (латиница; владелец 20.11.2026) — тот же переключатель в «Ещё» ──
+  console.log('6б. Узбекский интерфейс (латиница)');
+  await э('язык-uz').click();
+  await стр.waitForFunction(() => document.documentElement.lang === 'uz-Latn');
+  проверить((await п.текст()).includes('Sozlamalar') && (await э('меню-ещё').innerText()).includes('Yana'), 'узбекский интерфейс («Yana», «Sozlamalar», lang="uz-Latn")');
+  await п.безГоризонтальнойПрокрутки('«Ещё» uz');
+  // «Ещё» открыт адресом (goto) поверх урока — вкладка «Главная» вернула бы назад по истории; идём адресом.
+  await стр.goto(база + '/aiustaz/index.html#/');
+  await э('экран-главная').waitFor();
+  проверить((await э('намаз-блок-fajr').innerText()).includes('Bomdod'), 'главная на узбекском: Bomdod');
+  await п.безГоризонтальнойПрокрутки('главная uz');
+  await снимок('главная-uz');
+  await стр.reload();
+  await э('экран-главная').waitFor();
+  проверить((await стр.evaluate(() => document.documentElement.lang)) === 'uz-Latn', 'язык uz сохранён после перезагрузки');
+  await э('главная-карта').click();
+  await э('карта-урок-1').click();
+  await э('урок-вступление').waitFor();
+  проверить((await э('урок-начать').innerText()).includes('Darsni boshlash'), 'урок на узбекском');
+  проверить((await э('плашка-прототипа').innerText()).includes('Dars qoralamasi'), 'урок на uz — с плашкой «черновик» (Prototip. Dars qoralamasi)');
+  проверить(/Oʻngdan chapga oʻqish/.test(await п.текст()), 'цель урока 1 из контента — на узбекском (content/course.json uz)');
+  await снимок('урок1-uz');
   await стр.goto(база + '/aiustaz/index.html#/more');
   await э('экран-ещё').waitFor();
   await э('язык-ru').click();
@@ -1187,6 +1259,16 @@ try {
       итоги.push([профиль, 'OK']);
     } catch (е) {
       итоги.push([профиль, 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_UZ !== '0') {
+    try {
+      await узбекскийОнбординг(браузер, сервер.адрес);
+      итоги.push(['онбординг uz (язык браузера первым, не молча)', 'OK']);
+    } catch (е) {
+      итоги.push(['онбординг uz (язык браузера первым, не молча)', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
     }
