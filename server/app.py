@@ -18,6 +18,9 @@ unsubscribe — 20 в минуту с IP; test — 3 за 10 минут на п�
   GET  /api/prayer/official?src=dumk|umuz&place=<id>&year=<год> — годовая таблица ведомства по id пункта из нашего списка
                               (server/prayer.py; владелец 20.11.2026: «Время намаза Казахстан, Узбекистан бери из
                               официальных источников»). Лимит — 60 в минуту с IP (хэш), ETag и Cache-Control.
+  POST /api/ask/v1 {q, lang}; GET /api/ask/health — «Спросить AI Ustaz» (server/ask.py; владелец 20.11.2026: «Только с нашей
+                              базы данных, в интернете не будет искать»). Ответ только из своей базы знаний (миграция 004),
+                              лимиты 10/мин и 100/сутки с IP (хэш), тело ≤ 8 КБ; ИИ — только по флагу MUGALIM_ASK_LLM=1.
 
 Сборка (модули — через register, зависимости — параметрами):
   register(app, хранилище=, публичный_ключ=, отправить=, часы=)   — тесты подставляют своё хранилище и отправку;
@@ -36,6 +39,7 @@ from fastapi import FastAPI, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 
+import ask
 import boot
 import prayer
 import push
@@ -161,6 +165,7 @@ def register(
 def создать_приложение() -> FastAPI:
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)s %(message)s')
     logging.getLogger('urllib3').setLevel(logging.WARNING)
+    logging.getLogger('httpx2').setLevel(logging.WARNING)  # SDK anthropic: строки запросов в журнал не пишем
     from db import Хранилище
     from jobs import создать_отправителя
 
@@ -186,4 +191,7 @@ def создать_приложение() -> FastAPI:
         источники=строка_из_окружения('MUGALIM_PUSH_ORIGINS', СВОИ_ИСТОЧНИКИ),
     )
     prayer.register(app, хранилище=хранилище, ключ_лимита=хэш_ip)
+    настройки = ask.настройки_из_окружения()
+    ask.register(app, хранилище=хранилище, ключ_лимита=хэш_ip, ии=ask.создать_ии(), черновые=настройки['черновые'],
+                 порог=настройки['порог'], источники=настройки['источники'])
     return app

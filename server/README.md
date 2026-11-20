@@ -84,6 +84,34 @@ API (только чтение из БД, 60 запросов в минуту с
 Хранится (`prayer_official`, `prayer_wanted`, `prayer_log` — год, `prayer_meta`): таблицы ведомств по пунктам,
 очередь, журнал, последний принятый список регионов УМУз. Ни IP, ни координат пользователей.
 
+## «Спросить AI Ustaz» (`ask.py`, `kb.py`, `kb_load.py`, миграция 004) — НЕ выкачено
+
+Владелец 20.11.2026: «люди могут задавать свои вопросы и получать ответы … Только с нашей базы данных, в интернете не
+будет искать … Сделай эту функцию, но не выкатывай.» Дизайн, границы и вопросы владельцу —
+`docs/дизайн/08-спросить-устаза.md`; формат базы — `docs/база-знаний.md`.
+
+| Запрос | Ответ |
+|---|---|
+| `POST /api/ask/v1` `{q: 3…500 символов, lang: 'ru'\|'kk'\|'uz'}` | `200 {вид: 'ответ'\|'нет-в-базе'\|'к-имаму'\|'вне-темы', режим: 'поиск'\|'ии', текст, источники: [{id, вид, заголовок, ссылка, текст, арабский, источник, степень, кто_оценил, черновик, версия}], черновик}` |
+| ошибки | `400 question\|lang`, `413 size` (тело > 8 КБ), `429 rate` (10/мин и 100/сутки по Алматы с хэша IP), `403 origin`, `503 kb` (база пуста или недоступна) |
+| `GET /api/ask/health` | `{ок: true, записей, режим}` |
+
+Путь вопроса: классификатор (словари ru/kk/uz в `ask.py`, черновик) → `вне-темы` (политика, течения, экстремизм, споры
+мазхабов, не-исламское) / тафсир (только запись базы вида «тафсир» с той же «сура:аят», ИИ-тафсира нет) / `к-имаму`
+(личный фикх: шаблон «к имаму, в ДУМК, Imam AI» + общие материалы) / поиск PostgreSQL (`tsv` 'russian'/'simple' +
+`tsv_simple` для префиксов; порог — доля совпавших слов `MUGALIM_ASK_MIN_SHARE`). Не нашли — `нет-в-базе` и +1 в
+`ask_misses` за день (вопрос не храним). Режим `ии` — только при `MUGALIM_ASK_LLM=1` и ключе: обезличенный вопрос +
+найденные записи → Claude (SDK `anthropic`, структурированный JSON) → валидатор → иначе откат в `поиск`.
+
+Загрузка базы (на сервере, из `/opt/mugalim/server`, база — `MUGALIM_DATABASE_URL`):
+```bash
+python -m kb_load --check ../content/kb/spravka.jsonl   # только проверить
+python -m kb_load ../content/kb/spravka.jsonl           # загрузить: всё или ничего, upsert по id, версия и sha256
+```
+nginx (когда владелец решит выкатывать — по образцу `/api/push/`): `location /api/ask/ { client_max_body_size 8k;
+limit_except GET POST { deny all; } proxy_pass http://127.0.0.1:8031; … access_log off; }` — журнал доступа выключен
+(IP не пишем), `proxy_read_timeout 20s` (ИИ — до 10 с).
+
 ## Что хранится (и сколько)
 
 `push_subscriptions` — адрес push-сервиса браузера, ключи шифрования (p256dh, auth), язык, город строкой, конец
@@ -91,6 +119,9 @@ API (только чтение из БД, 60 запросов в минуту с
 счётчики по хэшу (час); `push_log` — хэш адреса, событие, код ответа (90 дней). Координат, имени, телефона, IP — нет.
 Отписка — удаление сразу (каскад). Подписка, отвергнутая push-сервисом (404/410), — удаляется. Расписание, кончившееся
 больше 30 дней назад, — удаляется вместе с подпиской.
+«Спросить AI Ustaz»: `kb_entries`, `kb_texts` — база знаний (записи, не люди); `ask_log` — дата, вид ответа, режим,
+код причины отката, число источников (90 дней); `ask_misses` — число «не нашли» за день. Текста вопроса и IP нет нигде;
+лимиты — хэш IP в `push_limits` (минутные — час, суточные `askd:` — двое суток).
 
 ## Запуск локально и тесты
 
@@ -100,7 +131,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest
 .venv/bin/python -m pytest -q tests                      # логика без БД (тесты БД пропускаются)
 # с настоящим PostgreSQL — своя временная база mugalim_test_<…> создаётся и удаляется в каждом тесте:
 MUGALIM_TEST_PG='postgresql://postgres@127.0.0.1:5432/postgres' .venv/bin/python -m pytest -q tests
-python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py
+python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py ask.py kb.py kb_load.py
 # API вручную (своя база mugalim_dev):
 MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_VAPID_PRIVATE=… \
   .venv/bin/python -m uvicorn --app-dir . --factory app:создать_приложение --port 8030
@@ -195,6 +226,12 @@ MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_
 | `MUGALIM_PRAYER_RECHECK_DAYS` | 7 (1–60) | как часто перепроверять принятую таблицу |
 | `MUGALIM_UMUZ_MODEL` | `nuqta` | УМУз: `nuqta` — правило в точке региона (как islom.uz/taqvim), `farq` — Ташкент + differ_minute |
 | `MUGALIM_UMUZ_REGIONS_URL` | `https://new.islom.uz/api/v1/regions` | список регионов УМУз (точки) |
+| `MUGALIM_ASK_DRAFTS` | 1 (0/1) | «Спросить»: показывать записи со статусом «черновик» (всегда с пометкой); 1 — на время запуска среди своих |
+| `MUGALIM_ASK_MIN_SHARE` | 0,3 (0,05–1) | порог релевантности: доля значимых слов вопроса, найденных в записи |
+| `MUGALIM_ASK_ORIGINS` | `https://aiustaz.pro,https://www.aiustaz.pro` | разрешённые Origin для `/api/ask/` |
+| `MUGALIM_ASK_LLM` | 0 (0/1) | режим «ии» — только по решению владельца (вопрос свободным текстом уходит во внешний ИИ) |
+| `ANTHROPIC_API_KEY` | — | ключ Claude API (секрет; только здесь, не в git и не в журнал); без него — режим «поиск» |
+| `MUGALIM_ASK_MODEL` | `claude-opus-5-5` | модель для режима «ии» |
 
 Лицензии: pywebpush и py-vapid — MPL-2.0 (без изменений), psycopg — LGPL-3.0 (библиотека без изменений), adhanpy —
 MIT (своя проверка официального времени; округление — своё), остальное — MIT/BSD/Apache (`licenses/README.md`, раздел «Сервер AI Ustaz»; экран «Лицензии»).
