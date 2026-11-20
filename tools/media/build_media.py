@@ -43,33 +43,37 @@ import sys
 АЛИЖОН, ШОКАЙ, СУВАЙД = 'alijon_muallimi_soniy', 'shokay_tajvid', 'suwaid_tajwid_musawwar'
 
 
-def т(ru, kk, uz):
-    return {'ru': ru, 'kk': kk, 'uz': uz}
+def т(ru, kk, uz, en):
+    return {'ru': ru, 'kk': kk, 'uz': uz, 'en': en}
 
 
-# Источники: имена и атрибуция (ru — черновик методиста, kk и uz (латиница) — черновики для редактора-носителя).
-# Имя шейха Алижона кари на uz — как в его канале AlQuranuz (латиница).
+# Источники: имена и атрибуция (ru — черновик методиста, kk, uz (латиница) и en (владелец 20.11.2026) — черновики
+# для редактора-носителя). Имя шейха Алижона кари на uz — как в его канале AlQuranuz (латиница); названия каналов —
+# как у авторов.
 ИСТОЧНИКИ = {
     АЛИЖОН: {
-        'имя': т('шейх Алижон кари', 'шейх Әлижон қари', 'shayx Alijon qori'),
+        'имя': т('шейх Алижон кари', 'шейх Әлижон қари', 'shayx Alijon qori', 'Sheikh Alijon Qori'),
         'курс': 'Muallimi soniy',
         'атрибуция': т('Видео: шейх Алижон кари, канал AlQuranuz, курс «Muallimi soniy». Используется с разрешения автора.',
                        'Бейне: шейх Әлижон қари, AlQuranuz арнасы, «Muallimi soniy» курсы. Автордың рұқсатымен қолданылады.',
-                       'Video: shayx Alijon qori, AlQuranuz kanali, «Muallimi soniy» kursi. Muallif ruxsati bilan foydalanilmoqda.'),
+                       'Video: shayx Alijon qori, AlQuranuz kanali, «Muallimi soniy» kursi. Muallif ruxsati bilan foydalanilmoqda.',
+                       "Video: Sheikh Alijon Qori, AlQuranuz channel, the “Muallimi soniy” course. Used with the author's permission."),
     },
     ШОКАЙ: {
-        'имя': т('устаз Еркінбек Шоқай', 'ұстаз Еркінбек Шоқай', 'ustoz Yerkinbek Shoqay'),
+        'имя': т('устаз Еркінбек Шоқай', 'ұстаз Еркінбек Шоқай', 'ustoz Yerkinbek Shoqay', 'Ustaz Yerkinbek Shokay'),
         'курс': 'Тәжуид ғылымы',
         'атрибуция': т('Видео: устаз Еркінбек Шоқай, канал «Ұстаз Еркінбек Шоқай», курс таджвида на казахском языке. Используется с разрешения автора.',
                        'Бейне: ұстаз Еркінбек Шоқай, «Ұстаз Еркінбек Шоқай» арнасы, қазақ тіліндегі тәжуид курсы. Автордың рұқсатымен қолданылады.',
-                       'Video: ustoz Yerkinbek Shoqay, «Ұстаз Еркінбек Шоқай» kanali, qozoq tilidagi tajvid kursi. Muallif ruxsati bilan foydalanilmoqda.'),
+                       'Video: ustoz Yerkinbek Shoqay, «Ұстаз Еркінбек Шоқай» kanali, qozoq tilidagi tajvid kursi. Muallif ruxsati bilan foydalanilmoqda.',
+                       "Video: Ustaz Yerkinbek Shokay, the “Ұстаз Еркінбек Шоқай” channel, a tajweed course in Kazakh. Used with the author's permission."),
     },
     СУВАЙД: {
-        'имя': т('д-р Айман Рушди Сувайд', 'доктор Айман Рушди Сувайд', 'doktor Ayman Rushdiy Suvayd'),
+        'имя': т('д-р Айман Рушди Сувайд', 'доктор Айман Рушди Сувайд', 'doktor Ayman Rushdiy Suvayd', 'Dr. Ayman Rushdi Suwaid'),
         'курс': 'شرح كتاب التجويد المصور',
         'атрибуция': т('Видео: д-р Айман Рушди Сувайд, канал «Dr. Ayman Swaid», разбор книги «التجويد المصور» («Көрнекі тәжуид»). Используется с разрешения автора.',
                        'Бейне: доктор Айман Рушди Сувайд, «Dr. Ayman Swaid» арнасы, «التجويد المصور» («Көрнекі тәжуид») кітабының түсіндірмесі. Автордың рұқсатымен қолданылады.',
-                       'Video: doktor Ayman Rushdiy Suvayd, «Dr. Ayman Swaid» kanali, «التجويد المصور» («Көрнекі тәжуид») kitobining sharhi. Muallif ruxsati bilan foydalanilmoqda.'),
+                       'Video: doktor Ayman Rushdiy Suvayd, «Dr. Ayman Swaid» kanali, «التجويد المصور» («Көрнекі тәжуид») kitobining sharhi. Muallif ruxsati bilan foydalanilmoqda.',
+                       "Video: Dr. Ayman Rushdi Suwaid, the “Dr. Ayman Swaid” channel, commentary on the book “التجويد المصور” (“Illustrated Tajweed”). Used with the author's permission."),
     },
 }
 

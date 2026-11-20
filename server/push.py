@@ -17,7 +17,7 @@
     время места: смещение — минуты к востоку от UTC (по умолчанию 300 = UTC+5, Казахстан и Узбекистан)
 
 Что приходит от клиента (координаты НЕ приходят — клиент сам считает расписание на 30 дней методом страны места):
-  { subscription: { endpoint, keys: { p256dh, auth } }, lang: 'ru'|'kk'|'uz', city: 'Алматы',
+  { subscription: { endpoint, keys: { p256dh, auth } }, lang: 'ru'|'kk'|'uz'|'en', city: 'Алматы',
     items: [ { at: мс UTC, key: 'fajr'…'isha', time: '14:39', before: 0|5|10|15|30, next?: { key, time }, off?: 300 } ] }
   at — момент уведомления: время намаза или (before > 0) за before минут до него; time — местное время намаза;
   off — смещение пояса места в момент намаза, минуты (−720…+840, кратно 15; нет — 300: клиенты до 20.11.2026).
@@ -27,6 +27,8 @@
 без рейтингов, серий и наград, без эмодзи; о действительности намаза — ничего. Восход — не намаз (в тексте не зовём).
 kk — черновик для редактора-носителя и словаря терминов ДУМК. uz (узбекский, латиница; владелец 20.11.2026) — черновик
 для редактора-носителя; намазы — Bomdod, Quyosh, Peshin, Asr, Shom, Xufton (как в приложении, app/src/prayer/day.ts).
+en (английский; владелец 20.11.2026) — черновик для редактора-носителя; намазы — Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha;
+пятница — «Jumu'ah prayer». Сервер выкатывается раньше клиента: старый сервер ответит на en-подписку 400 ('lang').
 """
 from __future__ import annotations
 
@@ -46,7 +48,7 @@ from urllib.parse import urlsplit
 КЛЮЧИ = ('fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha')
 НАМАЗЫ = ('fajr', 'dhuhr', 'asr', 'maghrib', 'isha')
 ЗАРАНЕЕ = (0, 5, 10, 15, 30)
-ЯЗЫКИ = ('ru', 'kk', 'uz')
+ЯЗЫКИ = ('ru', 'kk', 'uz', 'en')
 
 МАКС_ДНЕЙ = 31  # клиент шлёт 30 дней вперёд; сутки — запас на границу дня
 МАКС_В_СУТКИ = 12  # 6 времён × (в момент + напоминание)
@@ -64,8 +66,9 @@ from urllib.parse import urlsplit
     'ru': {'fajr': 'Фаджр', 'sunrise': 'Восход', 'dhuhr': 'Зухр', 'asr': 'Аср', 'maghrib': 'Магриб', 'isha': 'Иша'},
     'kk': {'fajr': 'Таң', 'sunrise': 'Күн шығуы', 'dhuhr': 'Бесін', 'asr': 'Екінті', 'maghrib': 'Ақшам', 'isha': 'Құптан'},
     'uz': {'fajr': 'Bomdod', 'sunrise': 'Quyosh', 'dhuhr': 'Peshin', 'asr': 'Asr', 'maghrib': 'Shom', 'isha': 'Xufton'},
+    'en': {'fajr': 'Fajr', 'sunrise': 'Sunrise', 'dhuhr': 'Dhuhr', 'asr': 'Asr', 'maghrib': 'Maghrib', 'isha': 'Isha'},
 }
-ДЖУМА = {'ru': 'Джума', 'kk': 'Жұма намазы', 'uz': 'Juma namozi'}
+ДЖУМА = {'ru': 'Джума', 'kk': 'Жұма намазы', 'uz': 'Juma namozi', 'en': "Jumu'ah prayer"}
 
 ТЕКСТЫ = {
     'ru': {
@@ -102,6 +105,18 @@ from urllib.parse import urlsplit
         'проверка_заголовок': 'Bildirishnomani tekshirish · AI Ustaz',
         'проверка': 'Namoz vaqti haqidagi bildirishnomalar shunday keladi · {город}',
         'кнопка_намаз': 'Namoz vaqti',
+        'кнопка_кибла': 'Qibla',
+    },
+    'en': {
+        'наступило': 'It is time for prayer · {город}',
+        'восход': 'Sunrise · {город}',
+        'следующий': 'Next — {намаз} at {время}',
+        'напоминание': 'In {мин} min — {намаз} ({время})',
+        'обновить_заголовок': 'AI Ustaz',
+        'обновить': 'Open AI Ustaz to update the prayer times',
+        'проверка_заголовок': 'Notification test · AI Ustaz',
+        'проверка': 'This is how prayer time notifications will arrive · {город}',
+        'кнопка_намаз': 'Prayer times',
         'кнопка_кибла': 'Qibla',
     },
 }

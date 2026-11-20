@@ -15,8 +15,8 @@
  *         онбординг-шаг-назад, онбординг-начать (→ урок 0), онбординг-на-главную, онбординг-приветствие,
  *         онбординг-эмблема, онбординг-намаз, онбординг-город.
  * Правила: эмблема — предмет без лица (CLAUDE.md, правило 9); «Ас-саляму алейкум» — статичное приветствие
- * команды, не реплика ИИ (02-образ-устаза §9); без звуков и наград; казахский и узбекский — черновики для редактора.
- * Язык браузера (uz-*, kk-*, ru-*) — подсказка: этот язык первым в переключателе и кнопка «Продолжить на нём»
+ * команды, не реплика ИИ (02-образ-устаза §9); без звуков и наград; казахский, узбекский и английский — черновики.
+ * Язык браузера (en-*, uz-*, kk-*, ru-*) — подсказка: этот язык первым в переключателе и кнопка «Продолжить на нём»
  * (testID онбординг-язык-браузера); сам язык не меняется, пока человек не нажмёт.
  */
 import { useEffect, useState } from 'react';
@@ -200,6 +200,57 @@ const СЛОВАРЬ = создатьСловарь({
     начать: '0-darsdan boshlash',
     наГлавную: 'Avval bosh sahifani koʻrish',
   },
+  en: {
+    шаг: 'Step {номер} of {всего}',
+    'шаг.1': 'Welcome',
+    'шаг.2': 'For the sake of Allah',
+    'шаг.3': 'Prayer times',
+    'шаг.4': 'Prototype',
+    'ш1.заголовок': "As-salamu alaykum!",
+    'ш1.текст': 'AI Ustaz is an AI mentor for correct Quran reading.',
+    'ш1.п1.з': 'From the first letter to a surah',
+    'ш1.п1': 'Using the method of Ahmadhadi Maksudi: letters → syllables → words → surahs.',
+    'ш1.п2.з': '5–10 minutes a day',
+    'ш1.п2': 'Short lessons, at your own pace.',
+    'ш1.п3.з': 'A helper, not an ustaz',
+    'ш1.п3': 'It helps between classes with an ustaz and does not replace one.',
+    'ш1.язык': 'Interface language',
+    'ш1.языкПояснение': 'You can change it at any time on the home screen.',
+    'ш1.языкБраузера': 'Continue in English',
+    'ш2.заголовок': 'Free, for the sake of Allah',
+    'ш2.п1.з': 'Free',
+    'ш2.п1': "No subscriptions, paid features or purchases. The project is fully funded by the owner's business.",
+    'ш2.п2.з': 'No ads or tracking',
+    'ш2.п2': 'No ads and no ad tracking. Your data is not sold or shared.',
+    'ш2.п3.з': 'The SAMK approach',
+    'ш2.п3': "Hanafi madhhab; recitation — Hafs from 'Asim. The app does not issue fatwas.",
+    'ш3.заголовок': 'Prayer times and qibla',
+    'ш3.текст': 'At the top of the home screen — six times of the day. The phone calculates them itself, without the internet.',
+    'ш3.метод': 'Calculated by the SAMK method (±1 min)',
+    'ш3.черновик': 'Draft — under review by an ustaz',
+    'ш3.город.поУмолчанию': '{город} — default',
+    'ш3.город.выбран': 'Your city: {город}',
+    'ш3.город.позже': 'You will choose your city later: tap the city name at the top of the home screen.',
+    'ш3.город.сменить': 'To change the city, tap its name at the top of the home screen.',
+    'ш3.кибла.з': 'Qibla',
+    'ш3.кибла': 'The direction of the Kaaba — by the phone compass or by the sun. The button is next to the city.',
+    'ш3.место.з': 'Location — only on the phone',
+    'ш3.место': 'We will ask for your location only if you tap “Detect by location” yourself. Coordinates are not sent anywhere.',
+    'ш4.заголовок': 'This is a prototype',
+    'ш4.реплика': 'Let us start with lesson 0: a short AI notice and your first voice recording — just to hear yourself.',
+    'ш4.текст': 'The first version — to start learning right now and improve based on your feedback.',
+    'ш4.нет': 'What is not here yet',
+    'ш4.нет1': 'Artificial intelligence voice check: you record yourself and listen — without a verdict.',
+    'ш4.нет2': 'The qari voice: it will appear once the reference recording is made.',
+    'ш4.нет3': 'Sign-in and server: progress is stored only on this device.',
+    'ш4.будет': 'Voice check and the qari voice will come in the next releases — after the reference recording and the launch of our own check on a server in Kazakhstan.',
+    'ш4.черновик': 'Lessons are a draft: an ustaz is reviewing them',
+    далее: 'Next',
+    пропустить: 'Skip',
+    назадШаг: 'Back',
+    начать: 'Start with lesson 0',
+    наГлавную: 'First look at the home screen',
+  },
 });
 
 const ВСЕГО = 4;
@@ -319,7 +370,8 @@ function ШагЗнакомство({ т }: { т: Т }) {
   const { отступ, цвет } = useТема();
   const { язык, языкВыбран, установитьЯзык } = useПеревод();
   // Владелец 20.11.2026 (узбекский): браузер на uz-* — Oʻzbekcha первым в переключателе и кнопка «Oʻzbek tilida davom
-  // etish» (надпись — на предлагаемом языке). Молча язык не меняем: человек нажимает сам.
+  // etish» (надпись — на предлагаемом языке). Так же en-* — English первым и «Continue in English» (владелец 20.11.2026,
+  // английский). Молча язык не меняем: человек нажимает сам.
   const [предложенный] = useState(предложенныйЯзык);
   const предложить = предложенный && предложенный !== язык && !языкВыбран ? предложенный : null;
   return (

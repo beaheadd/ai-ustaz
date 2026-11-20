@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ت и ن",
     "kk": "ت және ن әріптері",
-    "uz": "ت va ن harflari"
+    "uz": "ت va ن harflari",
+    "en": "Letters ت and ن"
   },
   "цель": {
     "ru": "Закрытые слоги и слова",
     "kk": "Жабық буындар мен сөздер",
-    "uz": "Yopiq boʻgʻinlar va soʻzlar"
+    "uz": "Yopiq boʻgʻinlar va soʻzlar",
+    "en": "Closed syllables and words"
   },
   "новое": [
     "ت",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "та",
         "kk": "та",
-        "uz": "to"
+        "uz": "to",
+        "en": "ta"
       },
       "формы": {
         "отдельная": "ت",
@@ -39,7 +42,8 @@
         {
           "ru": "ت с придыханием",
           "kk": "ت демді шығарып айтылады",
-          "uz": "ت nafas chiqarib aytiladi"
+          "uz": "ت nafas chiqarib aytiladi",
+          "en": "ت with aspiration"
         }
       ],
       "примеры": [
@@ -57,7 +61,8 @@
       "вопрос": {
         "ru": "Найдите букву «та».",
         "kk": "«та» әрпін табыңыз.",
-        "uz": "«to» harfini toping."
+        "uz": "«to» harfini toping.",
+        "en": "Find the letter “ta”."
       },
       "варианты": [
         {
@@ -77,7 +82,8 @@
       "пояснение": {
         "ru": "«та» — это ت.",
         "kk": "«та» — ت әрпі.",
-        "uz": "«to» — bu ت."
+        "uz": "«to» — bu ت.",
+        "en": "“ta” is ت."
       }
     },
     {
@@ -87,7 +93,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «та»?",
         "kk": "«та» әрпінде қандай белгі тұр?",
-        "uz": "«to» harfida qanday belgi bor?"
+        "uz": "«to» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ta”?"
       },
       "показ": "تَ",
       "варианты": [
@@ -95,21 +102,24 @@
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -117,7 +127,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -127,7 +138,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «та».",
         "kk": "«та» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«to» harfining oʻrta shaklini toping."
+        "uz": "«to» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ta”."
       },
       "варианты": [
         {
@@ -153,7 +165,8 @@
       "название": {
         "ru": "нун",
         "kk": "нун",
-        "uz": "nun"
+        "uz": "nun",
+        "en": "nun"
       },
       "формы": {
         "отдельная": "ن",
@@ -179,7 +192,8 @@
       "вопрос": {
         "ru": "Найдите букву «нун».",
         "kk": "«нун» әрпін табыңыз.",
-        "uz": "«nun» harfini toping."
+        "uz": "«nun» harfini toping.",
+        "en": "Find the letter “nun”."
       },
       "варианты": [
         {
@@ -199,7 +213,8 @@
       "пояснение": {
         "ru": "«нун» — это ن.",
         "kk": "«нун» — ن әрпі.",
-        "uz": "«nun» — bu ن."
+        "uz": "«nun» — bu ن.",
+        "en": "“nun” is ن."
       }
     },
     {
@@ -209,7 +224,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «нун»?",
         "kk": "«нун» әрпінде қандай белгі тұр?",
-        "uz": "«nun» harfida qanday belgi bor?"
+        "uz": "«nun» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “nun”?"
       },
       "показ": "إِنْ",
       "варианты": [
@@ -217,28 +233,32 @@
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -246,7 +266,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -256,7 +277,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «нун».",
         "kk": "«нун» әрпінің соңғы түрін табыңыз.",
-        "uz": "«nun» harfining oxirgi shaklini toping."
+        "uz": "«nun» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “nun”."
       },
       "варианты": [
         {
@@ -280,7 +302,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -316,7 +339,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "تَ تِ تُ نَ نِ نُ"
@@ -329,7 +353,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -361,7 +386,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -381,7 +407,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "أَنْتَ، أَنْتُمْ، مِنْ"

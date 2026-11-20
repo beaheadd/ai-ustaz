@@ -5,12 +5,14 @@
   "название": {
     "ru": "Формы и соединения букв",
     "kk": "Әріптердің түрлері мен жалғануы",
-    "uz": "Harflarning shakllari va qoʻshilishi"
+    "uz": "Harflarning shakllari va qoʻshilishi",
+    "en": "Letter forms and joining"
   },
   "цель": {
     "ru": "Начальная, срединная, конечная форма; буквы, не соединяющиеся слева; لا",
     "kk": "Бастапқы, ортаңғы, соңғы түрі; солға жалғанбайтын әріптер; لا",
-    "uz": "Boshlangʻich, oʻrta, oxirgi shakl; chapga qoʻshilmaydigan harflar; لا"
+    "uz": "Boshlangʻich, oʻrta, oxirgi shakl; chapga qoʻshilmaydigan harflar; لا",
+    "en": "Initial, medial and final forms; letters that do not join on the left; لا"
   },
   "новое": [
     "لا"
@@ -22,12 +24,14 @@
       "заголовок": {
         "ru": "Четыре формы буквы",
         "kk": "Әріптің төрт түрі",
-        "uz": "Harfning toʻrt shakli"
+        "uz": "Harfning toʻrt shakli",
+        "en": "Four forms of a letter"
       },
       "текст": {
         "ru": "В слове буква меняет форму: отдельная, начальная, срединная, конечная.",
         "kk": "Сөзде әріп түрін өзгертеді: жеке, бастапқы, ортаңғы, соңғы.",
-        "uz": "Soʻzda harf shaklini oʻzgartiradi: alohida, boshlangʻich, oʻrta, oxirgi."
+        "uz": "Soʻzda harf shaklini oʻzgartiradi: alohida, boshlangʻich, oʻrta, oxirgi.",
+        "en": "In a word a letter changes its form: isolated, initial, medial, final."
       },
       "примеры": [
         "ب",
@@ -42,12 +46,14 @@
       "заголовок": {
         "ru": "Шесть букв не соединяются слева",
         "kk": "Алты әріп солға жалғанбайды",
-        "uz": "Olti harf chapga qoʻshilmaydi"
+        "uz": "Olti harf chapga qoʻshilmaydi",
+        "en": "Six letters do not join on the left"
       },
       "текст": {
         "ru": "Буквы ا د ذ ر ز و соединяются только с предыдущей буквой, а со следующей — нет.",
         "kk": "ا د ذ ر ز و әріптері тек алдыңғы әріппен жалғанады, келесімен жалғанбайды.",
-        "uz": "ا د ذ ر ز و harflari faqat oldingi harf bilan qoʻshiladi, keyingisi bilan esa — yoʻq."
+        "uz": "ا د ذ ر ز و harflari faqat oldingi harf bilan qoʻshiladi, keyingisi bilan esa — yoʻq.",
+        "en": "The letters ا د ذ ر ز و join only to the previous letter, not to the next one."
       },
       "примеры": [
         "ا",
@@ -64,12 +70,14 @@
       "заголовок": {
         "ru": "Лям и алиф: لا",
         "kk": "Лям мен алиф: لا",
-        "uz": "Lom va alif: لا"
+        "uz": "Lom va alif: لا",
+        "en": "Lam and alif: لا"
       },
       "текст": {
         "ru": "Лям и алиф пишутся вместе одним знаком: لا.",
         "kk": "ل мен ا бірге бір белгімен жазылады: لا.",
-        "uz": "Lom va alif birga, bitta belgi bilan yoziladi: لا."
+        "uz": "Lom va alif birga, bitta belgi bilan yoziladi: لا.",
+        "en": "Lam and alif are written together as one sign: لا."
       },
       "примеры": [
         "لا"
@@ -83,7 +91,8 @@
       "вопрос": {
         "ru": "Найдите начальную форму буквы «шин».",
         "kk": "«шин» әрпінің бастапқы түрін табыңыз.",
-        "uz": "«shin» harfining boshlangʻich shaklini toping."
+        "uz": "«shin» harfining boshlangʻich shaklini toping.",
+        "en": "Find the initial form of the letter “shin”."
       },
       "варианты": [
         {
@@ -108,7 +117,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «йа».",
         "kk": "«йа» әрпінің соңғы түрін табыңыз.",
-        "uz": "«yo» harfining oxirgi shaklini toping."
+        "uz": "«yo» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ya”."
       },
       "варианты": [
         {
@@ -133,7 +143,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «т̣а».",
         "kk": "«т̣а» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ṭo» harfining oʻrta shaklini toping."
+        "uz": "«ṭo» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ṭa”."
       },
       "варианты": [
         {
@@ -158,7 +169,8 @@
       "вопрос": {
         "ru": "Найдите начальную форму буквы «син».",
         "kk": "«син» әрпінің бастапқы түрін табыңыз.",
-        "uz": "«sin» harfining boshlangʻich shaklini toping."
+        "uz": "«sin» harfining boshlangʻich shaklini toping.",
+        "en": "Find the initial form of the letter “sin”."
       },
       "варианты": [
         {
@@ -183,7 +195,8 @@
       "вопрос": {
         "ru": "Найдите начальную форму буквы «х̣а».",
         "kk": "«х̣а» әрпінің бастапқы түрін табыңыз.",
-        "uz": "«ḥo» harfining boshlangʻich shaklini toping."
+        "uz": "«ḥo» harfining boshlangʻich shaklini toping.",
+        "en": "Find the initial form of the letter “ḥa”."
       },
       "варианты": [
         {
@@ -208,7 +221,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «з̣а».",
         "kk": "«з̣а» әрпінің соңғы түрін табыңыз.",
-        "uz": "«ẓo» harfining oxirgi shaklini toping."
+        "uz": "«ẓo» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ẓa”."
       },
       "варианты": [
         {
@@ -233,7 +247,8 @@
       "вопрос": {
         "ru": "Какая из этих букв не соединяется со следующей (левой) буквой?",
         "kk": "Осы әріптердің қайсысы келесі (сол жақтағы) әріппен жалғанбайды?",
-        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?"
+        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?",
+        "en": "Which of these letters does not join to the next (left) letter?"
       },
       "варианты": [
         {
@@ -250,7 +265,8 @@
       "пояснение": {
         "ru": "Не соединяются со следующей буквой шесть букв: ا د ذ ر ز و.",
         "kk": "Келесі әріппен алты әріп жалғанбайды: ا د ذ ر ز و.",
-        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و."
+        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و.",
+        "en": "Six letters do not join to the next letter: ا د ذ ر ز و."
       }
     },
     {
@@ -260,7 +276,8 @@
       "вопрос": {
         "ru": "Какая из этих букв не соединяется со следующей (левой) буквой?",
         "kk": "Осы әріптердің қайсысы келесі (сол жақтағы) әріппен жалғанбайды?",
-        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?"
+        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?",
+        "en": "Which of these letters does not join to the next (left) letter?"
       },
       "варианты": [
         {
@@ -277,7 +294,8 @@
       "пояснение": {
         "ru": "Не соединяются со следующей буквой шесть букв: ا د ذ ر ز و.",
         "kk": "Келесі әріппен алты әріп жалғанбайды: ا د ذ ر ز و.",
-        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و."
+        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و.",
+        "en": "Six letters do not join to the next letter: ا د ذ ر ز و."
       }
     },
     {
@@ -287,7 +305,8 @@
       "вопрос": {
         "ru": "Какая из этих букв не соединяется со следующей (левой) буквой?",
         "kk": "Осы әріптердің қайсысы келесі (сол жақтағы) әріппен жалғанбайды?",
-        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?"
+        "uz": "Bu harflardan qaysi biri keyingi (chapdagi) harfga qoʻshilmaydi?",
+        "en": "Which of these letters does not join to the next (left) letter?"
       },
       "варианты": [
         {
@@ -304,7 +323,8 @@
       "пояснение": {
         "ru": "Не соединяются со следующей буквой шесть букв: ا د ذ ر ز و.",
         "kk": "Келесі әріппен алты әріп жалғанбайды: ا د ذ ر ز و.",
-        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و."
+        "uz": "Keyingi harfga olti harf qoʻshilmaydi: ا د ذ ر ز و.",
+        "en": "Six letters do not join to the next letter: ا د ذ ر ز و."
       }
     },
     {
@@ -314,7 +334,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 1-я справа?",
         "kk": "Сөздегі оң жақтан 1-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 1-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 1-harf qaysi?",
+        "en": "Which letter is number 1 from the right in the word?"
       },
       "показ": "بَيْتَ",
       "варианты": [
@@ -337,7 +358,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 3-я справа?",
         "kk": "Сөздегі оң жақтан 3-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 3-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 3-harf qaysi?",
+        "en": "Which letter is number 3 from the right in the word?"
       },
       "показ": "مَرْيَمَ",
       "варианты": [
@@ -360,7 +382,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 2-я справа?",
         "kk": "Сөздегі оң жақтан 2-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 2-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 2-harf qaysi?",
+        "en": "Which letter is number 2 from the right in the word?"
       },
       "показ": "حَسَنْ",
       "варианты": [
@@ -383,7 +406,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 2-я справа?",
         "kk": "Сөздегі оң жақтан 2-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 2-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 2-harf qaysi?",
+        "en": "Which letter is number 2 from the right in the word?"
       },
       "показ": "بِنْتُ",
       "варианты": [
@@ -405,7 +429,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -433,7 +458,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -461,7 +487,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "كَوْثَرْ، مَغْرِبْ، مَرْيَمَ"

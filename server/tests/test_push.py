@@ -86,7 +86,7 @@ def test_лишние_поля_не_принимаем():
 
 
 def test_язык_и_город():
-    ошибка(тело(язык='en'), 'lang')
+    ошибка(тело(язык='de'), 'lang')
     ошибка(тело(город=''), 'city')
     ошибка(тело(город='Г' * 61), 'city')
     ошибка(тело(город='<script>'), 'city')
@@ -170,6 +170,23 @@ def test_текст_uz():
     for с in [*push.ТЕКСТЫ['uz'].values(), *push.НАЗВАНИЯ['uz'].values(), push.ДЖУМА['uz']]:
         assert not re.search(r'[а-яёәіңғүұқөһ]', re.sub(r'\{[^}]+\}', '', с), re.I), с  # латиница (кроме {подстановок})
         assert not re.search(r'(?i)\bsura|oyat|hadis', с), с
+
+
+def test_текст_en():
+    """en (владелец 20.11.2026): Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha; пятница — Jumu'ah prayer."""
+    assert push.разобрать_подписку(тело(город='Istanbul', язык='en'), СЕЙЧАС).язык == 'en'
+    п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
+    у = push.уведомление(п, 'en', 'Almaty')
+    assert у['title'] == "Jumu'ah prayer · 13:05" and у['lang'] == 'en'
+    assert у['body'] == 'It is time for prayer · Almaty. Next — Asr at 15:20'
+    assert [к['title'] for к in у['actions']] == ['Prayer times', 'Qibla']
+    п2 = push.Пункт(момент('2026-11-21', '05:50'), 'fajr', '06:00', 10, 'sunrise', '07:30')
+    assert push.уведомление(п2, 'en', 'Almaty')['title'] == 'In 10 min — Fajr (06:00)'
+    assert push.уведомление_обновить('en', СЕЙЧАС)['body'] == 'Open AI Ustaz to update the prayer times'
+    assert set(push.НАЗВАНИЯ['en'].values()) == {'Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'}
+    for с in [*push.ТЕКСТЫ['en'].values(), *push.НАЗВАНИЯ['en'].values(), push.ДЖУМА['en']]:
+        assert not re.search(r'[а-яёәіңғүұқөһ’ʻʼ]', re.sub(r'\{[^}]+\}', '', с), re.I), с  # латиница, апостроф ASCII
+        assert not re.search(r'(?i)\bsurah?|ayah|hadith|quran', с), с  # без текста и ссылок Корана (правило 9)
 
 
 def test_напоминание_и_восход():

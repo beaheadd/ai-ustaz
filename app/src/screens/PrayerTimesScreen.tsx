@@ -190,6 +190,53 @@ const СЛОВАРЬ = создатьСловарь({
     официальноПриватность: 'Serverimizga faqat ilova roʻyxatidagi punkt va yil yuboriladi — koordinatalaringiz yuborilmaydi.',
     официальноЗапас: 'Tarmoqsiz, batr.kz saytida va shofeʼiy asrda vaqtni ilovaning oʻzi xuddi shu usul bilan hisoblaydi.',
   },
+  en: {
+    заголовок: 'Prayer times',
+    неделя: 'For the week',
+    сегодня: 'today',
+    пояс: 'Times are in Kazakhstan time (UTC+5), 24-hour clock.',
+    метод: 'How we calculate',
+    метод1:
+      "The app calculates the times itself, on this phone, by the SAMK method: Fajr and Isha — when the sun is 15° below the horizon, Asr — by the Hanafi madhhab. SAMK adjustments: sunrise −3 min, Dhuhr, Asr and Maghrib +3 min; at 48° N and further north — −5 and +5 min. In summer in the north, when the night is short, Fajr and Isha follow the high-latitude rule, as SAMK does.",
+    метод2: 'We checked the calculation against the official SAMK tables for every day of 2026: the difference is no more than 1 minute.',
+    метод3: 'This is not the SAMK table but our calculation. If the time at your mosque differs, follow the mosque schedule.',
+    оговорка: 'Here the calculation may differ from the SAMK tables by up to 3 minutes.',
+    поясМеста: 'Local time of the place ({смещение}), 24-hour clock.',
+    аср: 'Asr time',
+    асрПояснение: 'By default — the Hanafi madhhab. The choice is stored only on this phone.',
+    асрХанафи: 'Hanafi madhhab',
+    асрХанафиПодпись: "an object's shadow is twice its length",
+    асрШафии: "Shafi'i madhhab",
+    асрШафииПодпись: "an object's shadow equals its length (as in most other madhhabs)",
+    общий1:
+      'The app calculates the times itself, on this phone, by the method accepted in the country of the place ({страна}): {ведомство}. Fajr — when the sun is {фаджр}° below the horizon, Isha — {иша}. Asr — {аср}.{поправки}',
+    ишаУгол: 'when the sun is {угол}° below the horizon',
+    ишаМинуты: '{минут} min after Maghrib',
+    асрХ: 'by the Hanafi madhhab',
+    асрШ: "by the Shafi'i madhhab",
+    поправки: ' Authority adjustments: {список}.',
+    сверено: "We checked the calculation against the authority's published tables: the difference is no more than {мин} min.",
+    оценка: "The parameters were fitted to the authority's published tables and are still being refined — a draft for now.",
+    стандарт: "We have not yet found a description of the local authority's method, so we calculate by the common standard. The time may differ from your mosque schedule by a few minutes.",
+    общий3: "This is not the authority's table but our calculation. If the time at your mosque differs, follow the mosque schedule.",
+    высокие: 'In summer at high latitudes, when the night is short, Fajr and Isha follow the high-latitude rule.',
+    источникиМир: 'Coordinates — GeoNames (CC BY 4.0). Calculation — the adhan library (MIT). No internet needed for the calculation.',
+    с: 'N',
+    ю: 'S',
+    в: 'E',
+    з: 'W',
+    место: 'Place: {место} — {широта}° {сш}, {долгота}° {вд}.',
+    источники:
+      'Coordinates — GeoNames (CC BY 4.0); 6 places (Alatau, Kaskelen, Zhem, Korday, Baikonur, Kaztalovka) — points from the public SAMK list of places. Calculation — the adhan library (MIT). No internet needed.',
+    лицензии: 'Licenses and sources',
+    черновик: 'Draft — under review by an ustaz',
+    официальноТаблица:
+      'Times — from the official SAMK table for {год} for “{пункт}” (as on muftyat.kz). Our server takes the table from SAMK, checks every day of the year and compares it with our calculation; the phone keeps it locally. Updated {дата}.',
+    официальноПравило:
+      'Times — by the rule of the Muslim Board of Uzbekistan for “{пункт}” from their list (as on muslim.uz and islom.uz: Fajr and Isha — sun 15.5° below the horizon, Asr — by the Hanafi madhhab, Maghrib — sunset + 4 min). Our server calculates the table for {год}; the phone keeps it locally. Updated {дата}.',
+    официальноПриватность: 'Only the place from the app list and the year go to our server — your coordinates are not sent.',
+    официальноЗапас: "Offline, on batr.kz and with the Shafi'i Asr, the app calculates the times itself by the same method.",
+  },
 });
 
 const ДНЕЙ = 8;
@@ -200,6 +247,7 @@ const ИМЕНА_ПОПРАВОК: Record<Язык, Record<string, string>> = {
   ru: { fajr: 'фаджр', sunrise: 'восход', dhuhr: 'зухр', asr: 'аср', maghrib: 'магриб', isha: 'иша' },
   kk: { fajr: 'таң', sunrise: 'күн шығуы', dhuhr: 'бесін', asr: 'екінті', maghrib: 'ақшам', isha: 'құптан' },
   uz: { fajr: 'bomdod', sunrise: 'quyosh chiqishi', dhuhr: 'peshin', asr: 'asr', maghrib: 'shom', isha: 'xufton' },
+  en: { fajr: 'Fajr', sunrise: 'sunrise', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' },
 };
 
 /** Текст «как считаем» для страны не РК — из таблицы метода (prayer/methods.ts), без ручных абзацев на страну. */
@@ -207,7 +255,7 @@ function описаниеМетода(метод: Метод, мазхаб: Ма
   const п = поправкиМетода(метод, широта);
   const список = Object.entries(п)
     .filter(([, мин]) => мин !== 0)
-    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} ${язык === 'uz' ? 'daq.' : 'мин'}`)
+    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} ${язык === 'uz' ? 'daq.' : язык === 'en' ? 'min' : 'мин'}`)
     .join(', ');
   const иша = typeof метод.иша === 'number' ? т('ишаУгол', { угол: String(метод.иша).replace('.', ',') }) : т('ишаМинуты', { минут: метод.иша.минут });
   return т('общий1', {
@@ -382,7 +430,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
   return (
     <View
       role="table"
-      aria-label={{ ru: 'Время намаза на неделю', kk: 'Аптаға арналған намаз уақыты', uz: 'Bir haftalik namoz vaqti' }[язык]}
+      aria-label={{ ru: 'Время намаза на неделю', kk: 'Аптаға арналған намаз уақыты', uz: 'Bir haftalik namoz vaqti', en: 'Prayer times for the week' }[язык]}
       testID="намаз-неделя"
       style={{ borderRadius: радиус.l, borderWidth: 1, borderColor: цвет.граница, backgroundColor: цвет.поверхность, overflow: 'hidden' }}
     >
@@ -404,7 +452,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
         ))}
       </View>
       <View role="row" style={{ flexDirection: 'row', backgroundColor: цвет.поверхностьВторая }}>
-        <View role="columnheader" aria-label={{ ru: 'День', kk: 'Күн', uz: 'Kun' }[язык]} style={деньСтолбец} />
+        <View role="columnheader" aria-label={{ ru: 'День', kk: 'Күн', uz: 'Kun', en: 'Day' }[язык]} style={деньСтолбец} />
         {КЛЮЧИ_ВРЕМЁН.map((к) => (
           <View key={к} role="columnheader" style={[столбец(к), { gap: 2, paddingHorizontal: 1 }]}>
             {узко ? null : <Значок имя={ЗНАЧКИ_НАМАЗА[к]} размер={16} цвет={к === 'sunrise' ? цвет.текстВторой : цвет.акцент} />}

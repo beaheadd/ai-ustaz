@@ -82,6 +82,18 @@ const СЛОВАРЬ = создатьСловарь({
     'согласие.да': 'Tushunarli, tekshirish',
     'согласие.нет': 'Hozir emas',
   },
+  en: {
+    проверить: 'Check',
+    ещё: 'Check again',
+    идёт: 'Checking…',
+    предупреждение: 'AI check — it can make mistakes and does not replace an ustaz.',
+    черновик: 'The hint texts are a draft; an ustaz is reviewing them.',
+    'согласие.заголовок': 'Before the check',
+    'согласие.сервер': 'The recording will go to the AI Ustaz server in Kazakhstan and will be deleted right after the check.',
+    'согласие.никому': 'We do not store the recording and do not share it with anyone. It is sent only when you tap “Check”.',
+    'согласие.да': 'Got it, check',
+    'согласие.нет': 'Not now',
+  },
 });
 
 export type СвойстваПроверкиГолосом = {

@@ -69,13 +69,15 @@ await тест('бисмилла: у 112 сур, кроме 1 и 9; блок у�
     assert.equal(данные.копирайт, индекс.копирайт);
   }
 });
-await тест('транслитерация: ru и uz (латиница) — строки (черновик), kk — пока null; сура 1 — «аль-Фатиха» / «Fotiha», имя — арабское из Tanzil', () => {
+await тест('транслитерация: ru, uz (латиница) и en (Tanzil tname) — строки (черновик), kk — пока null; сура 1 — «аль-Фатиха» / «Fotiha» / «Al-Faatiha», имя — арабское из Tanzil', () => {
   assert.equal(индекс.статусТранслита, 'черновик');
-  assert.deepEqual(индекс.суры[0].транслит, { ru: 'аль-Фатиха', kk: null, uz: 'Fotiha' });
+  assert.deepEqual(индекс.суры[0].транслит, { ru: 'аль-Фатиха', kk: null, uz: 'Fotiha', en: 'Al-Faatiha' });
   assert.equal(индекс.суры[0].имя, 'الفاتحة');
   assert.ok(индекс.суры.every((з) => typeof з.транслит.ru === 'string' && з.транслит.kk === null));
   assert.ok(индекс.суры.every((з) => typeof з.транслит.uz === 'string' && !/[а-яё]/i.test(з.транслит.uz) && !/['’]/.test(з.транслит.uz)));
   assert.equal(индекс.суры[35].транслит.uz, 'Yosin');
+  assert.ok(индекс.суры.every((з) => typeof з.транслит.en === 'string' && /^[A-Za-z' -]+$/.test(з.транслит.en)));
+  assert.equal(индекс.суры[35].транслит.en, 'Yaseen');
 });
 await тест('dist/quran (если есть сборка) — те же файлы побайтно', () => {
   const dist = path.join(корень, 'dist', 'quran');

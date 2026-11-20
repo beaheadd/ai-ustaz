@@ -27,19 +27,19 @@ export type Кусок = { текст: string; код: КодТаджвида | 
 /** Порядок легенды: гунна и нун/мим → калькаля → мадды → непроизносимое. Совпадает с tajweed_rules.КОДЫ. */
 export const КОДЫ_ТАДЖВИДА: readonly КодТаджвида[] = ['g', 'n', 'b', 'k', 'q', 'c', 't', 'm', 'f', 'l', 's'];
 
-/** Названия правил (ru; kk и uz — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7). */
-export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, { ru: string; kk: string; uz: string; урок: string; уроки: readonly number[] }>> = {
-  g: { ru: 'Гунна: нّ и мّ — 2 счёта', kk: 'Ғұнна: нّ және мّ — 2 санақ', uz: 'Gʻunna: nّ va mّ — 2 harakat', урок: '21', уроки: [21] },
-  n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan', урок: '33, 36', уроки: [33, 36] },
-  b: { ru: 'Идгам без гунны: нун/танвин перед ل ر', kk: 'Ғұннасыз идғам: нун/тәнуин ل ر алдында', uz: 'Gʻunnasiz idgʻom: nun/tanvin ل ر oldidan', урок: '33', уроки: [33] },
-  k: { ru: 'Ихфа: нун/танвин перед 15 буквами, мим перед ب', kk: 'Ихфа: 15 әріп алдында нун/тәнуин, ب алдында мим', uz: 'Ixfo: nun/tanvin 15 harf oldidan, mim ب oldidan', урок: '35, 36', уроки: [35, 36] },
-  q: { ru: 'Икляб: нун/танвин перед ب', kk: 'Иқлаб: ب алдында нун/тәнуин', uz: 'Iqlob: nun/tanvin ب oldidan', урок: '34', уроки: [34] },
-  c: { ru: 'Калькаля: ق ط ب ج د с сукуном и при остановке', kk: 'Қалқала: сукунды және тоқтағанда ق ط ب ج د', uz: 'Qalqala: ق ط ب ج د sukun bilan va toʻxtaganda', урок: '37', уроки: [37] },
-  t: { ru: 'Мадд табии — 2 счёта', kk: 'Табиғи мәд — 2 санақ', uz: 'Tabiiy madd — 2 harakat', урок: '17, 18, 24', уроки: [17, 18, 24] },
-  m: { ru: 'Мадд муттасиль — 4–5 (хамза в том же слове)', kk: 'Муттасыл мәд — 4–5 (хамза сол сөзде)', uz: 'Muttasil madd — 4–5 (hamza oʻsha soʻzda)', урок: '23, 38', уроки: [23, 38] },
-  f: { ru: 'Мадд мунфасиль — 4–5 (хамза в следующем слове)', kk: 'Мунфасыл мәд — 4–5 (хамза келесі сөзде)', uz: 'Munfasil madd — 4–5 (hamza keyingi soʻzda)', урок: '38', уроки: [38] },
-  l: { ru: 'Мадд лязим — 6 счётов', kk: 'Ләзім мәд — 6 санақ', uz: 'Lozim madd — 6 harakat', урок: '31, 40', уроки: [31, 40] },
-  s: { ru: 'Не читается: хамзат-васль, лям шамсийя, буква со знаком ۟', kk: 'Оқылмайды: хамзат-уасл, шамси ләм, ۟ белгілі әріп', uz: 'Oʻqilmaydi: hamzai vasl, shamsiya lom, ۟ belgili harf', урок: '25, 26', уроки: [25, 26] },
+/** Названия правил (ru; kk, uz и en — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7). */
+export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, { ru: string; kk: string; uz: string; en: string; урок: string; уроки: readonly number[] }>> = {
+  g: { ru: 'Гунна: нّ и мّ — 2 счёта', kk: 'Ғұнна: нّ және мّ — 2 санақ', uz: 'Gʻunna: nّ va mّ — 2 harakat', en: 'Ghunnah: nّ and mّ — 2 counts', урок: '21', уроки: [21] },
+  n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan', en: 'Idgham with ghunnah: nun/tanween before ي ن م و', урок: '33, 36', уроки: [33, 36] },
+  b: { ru: 'Идгам без гунны: нун/танвин перед ل ر', kk: 'Ғұннасыз идғам: нун/тәнуин ل ر алдында', uz: 'Gʻunnasiz idgʻom: nun/tanvin ل ر oldidan', en: 'Idgham without ghunnah: nun/tanween before ل ر', урок: '33', уроки: [33] },
+  k: { ru: 'Ихфа: нун/танвин перед 15 буквами, мим перед ب', kk: 'Ихфа: 15 әріп алдында нун/тәнуин, ب алдында мим', uz: 'Ixfo: nun/tanvin 15 harf oldidan, mim ب oldidan', en: 'Ikhfa: nun/tanween before 15 letters, mim before ب', урок: '35, 36', уроки: [35, 36] },
+  q: { ru: 'Икляб: нун/танвин перед ب', kk: 'Иқлаб: ب алдында нун/тәнуин', uz: 'Iqlob: nun/tanvin ب oldidan', en: 'Iqlab: nun/tanween before ب', урок: '34', уроки: [34] },
+  c: { ru: 'Калькаля: ق ط ب ج د с сукуном и при остановке', kk: 'Қалқала: сукунды және тоқтағанда ق ط ب ج د', uz: 'Qalqala: ق ط ب ج د sukun bilan va toʻxtaganda', en: 'Qalqalah: ق ط ب ج د with sukun and when stopping', урок: '37', уроки: [37] },
+  t: { ru: 'Мадд табии — 2 счёта', kk: 'Табиғи мәд — 2 санақ', uz: 'Tabiiy madd — 2 harakat', en: 'Madd tabi\'i — 2 counts', урок: '17, 18, 24', уроки: [17, 18, 24] },
+  m: { ru: 'Мадд муттасиль — 4–5 (хамза в том же слове)', kk: 'Муттасыл мәд — 4–5 (хамза сол сөзде)', uz: 'Muttasil madd — 4–5 (hamza oʻsha soʻzda)', en: 'Madd muttasil — 4–5 (hamza in the same word)', урок: '23, 38', уроки: [23, 38] },
+  f: { ru: 'Мадд мунфасиль — 4–5 (хамза в следующем слове)', kk: 'Мунфасыл мәд — 4–5 (хамза келесі сөзде)', uz: 'Munfasil madd — 4–5 (hamza keyingi soʻzda)', en: 'Madd munfasil — 4–5 (hamza in the next word)', урок: '38', уроки: [38] },
+  l: { ru: 'Мадд лязим — 6 счётов', kk: 'Ләзім мәд — 6 санақ', uz: 'Lozim madd — 6 harakat', en: 'Madd lazim — 6 counts', урок: '31, 40', уроки: [31, 40] },
+  s: { ru: 'Не читается: хамзат-васль, лям шамсийя, буква со знаком ۟', kk: 'Оқылмайды: хамзат-уасл, шамси ләм, ۟ белгілі әріп', uz: 'Oʻqilmaydi: hamzai vasl, shamsiya lom, ۟ belgili harf', en: 'Not pronounced: hamzat al-wasl, lam shamsiyyah, a letter with the sign ۟', урок: '25, 26', уроки: [25, 26] },
 };
 
 /** Фон «бумаги» мусхафа и ночной страницы (для контраста; те же значения — в components/quran/MushafView). */

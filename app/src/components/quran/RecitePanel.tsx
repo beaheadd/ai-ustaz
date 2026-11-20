@@ -124,6 +124,29 @@ const СЛОВАРЬ = создатьСловарь({
       'Yozuv qurilmangizda qoladi. U Qozogʻistondagi serverga faqat «Tekshirish» tugmasini bosganingizda yuboriladi va darhol oʻchiriladi.',
     слово: '{н}-soʻz: oʻzingizni tekshiring',
   },
+  en: {
+    часть: 'Part {н} of {всего} · words {с}–{по}',
+    назад: 'Previous part',
+    вперёд: 'Next part',
+    вынужденная: 'There is no stop sign here. Read the highlighted part; ask an ustaz where to stop and where to resume.',
+    возврат: 'This part starts with the word the previous part ended with. Ask an ustaz where to resume after a stop.',
+    весьАят: 'Whole ayah',
+    скрытьАят: 'Hide the whole ayah',
+    отмечены: 'Marked words: {список}',
+    уровеньПроверьте: 'check yourself',
+    уровеньПодсказка: 'hint',
+    черновикЧастей: 'Splitting the ayah into parts is a draft; an ustaz approves it.',
+    бисмилла: 'The basmala before the surah is not part of the check — record only the ayah.',
+    сравнить: 'Compare with the qari',
+    остановитьКари: 'Stop the qari recitation',
+    кариЦеликом: 'The qari recites the whole ayah.',
+    кариНет: 'The qari recitation will appear once permission is granted.',
+    наСвоёмСайте:
+      'The recording stays on your device and is erased when you leave the ayah. The voice check will appear on our separate website.',
+    приватность:
+      'The recording stays on your device. It goes to the server in Kazakhstan only when you tap “Check”, and is deleted right away.',
+    слово: 'Word {н}: check yourself',
+  },
 });
 
 export type УправлениеКари = { играет: boolean; играть: () => void; стоп: () => void };

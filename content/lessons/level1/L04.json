@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ي и ب",
     "kk": "ي және ب әріптері",
-    "uz": "ي va ب harflari"
+    "uz": "ي va ب harflari",
+    "en": "Letters ي and ب"
   },
   "цель": {
     "ru": "ي как согласная и дифтонг «ай»",
     "kk": "ي дауыссыз дыбыс ретінде және «ай» дифтонгы",
-    "uz": "ي undosh sifatida va «ay» diftongi"
+    "uz": "ي undosh sifatida va «ay» diftongi",
+    "en": "ي as a consonant and the diphthong “ay”"
   },
   "новое": [
     "ي",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "йа",
         "kk": "йа",
-        "uz": "yo"
+        "uz": "yo",
+        "en": "ya"
       },
       "формы": {
         "отдельная": "ي",
@@ -51,7 +54,8 @@
       "вопрос": {
         "ru": "Найдите букву «йа».",
         "kk": "«йа» әрпін табыңыз.",
-        "uz": "«yo» harfini toping."
+        "uz": "«yo» harfini toping.",
+        "en": "Find the letter “ya”."
       },
       "варианты": [
         {
@@ -71,7 +75,8 @@
       "пояснение": {
         "ru": "«йа» — это ي.",
         "kk": "«йа» — ي әрпі.",
-        "uz": "«yo» — bu ي."
+        "uz": "«yo» — bu ي.",
+        "en": "“ya” is ي."
       }
     },
     {
@@ -81,7 +86,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «йа»?",
         "kk": "«йа» әрпінде қандай белгі тұр?",
-        "uz": "«yo» harfida qanday belgi bor?"
+        "uz": "«yo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ya”?"
       },
       "показ": "يُ",
       "варианты": [
@@ -89,21 +95,24 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -111,7 +120,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -121,7 +131,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «йа».",
         "kk": "«йа» әрпінің соңғы түрін табыңыз.",
-        "uz": "«yo» harfining oxirgi shaklini toping."
+        "uz": "«yo» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ya”."
       },
       "варианты": [
         {
@@ -147,7 +158,8 @@
       "название": {
         "ru": "ба",
         "kk": "ба",
-        "uz": "bo"
+        "uz": "bo",
+        "en": "ba"
       },
       "формы": {
         "отдельная": "ب",
@@ -159,13 +171,15 @@
       "подсказка": {
         "ru": "Звонко; на конце и при остановке не переходите в «п».",
         "kk": "Ұяң; соңында және тоқтағанда «п» дыбысына айналдырмаңыз.",
-        "uz": "Jarangli; oxirida va toʻxtaganda «p»ga oʻtmang."
+        "uz": "Jarangli; oxirida va toʻxtaganda «p»ga oʻtmang.",
+        "en": "Voiced; at the end and when stopping do not turn it into “p”."
       },
       "подмены": [
         {
           "ru": "ب на конце слова оглушается в «п»",
           "kk": "сөз соңындағы ب «п» болып қатаңдайды",
-          "uz": "soʻz oxiridagi ب jarangsizlanib «p»ga aylanadi"
+          "uz": "soʻz oxiridagi ب jarangsizlanib «p»ga aylanadi",
+          "en": "ب at the end of a word is devoiced to “p”"
         }
       ],
       "примеры": [
@@ -183,7 +197,8 @@
       "вопрос": {
         "ru": "Найдите букву «ба».",
         "kk": "«ба» әрпін табыңыз.",
-        "uz": "«bo» harfini toping."
+        "uz": "«bo» harfini toping.",
+        "en": "Find the letter “ba”."
       },
       "варианты": [
         {
@@ -203,7 +218,8 @@
       "пояснение": {
         "ru": "«ба» — это ب.",
         "kk": "«ба» — ب әрпі.",
-        "uz": "«bo» — bu ب."
+        "uz": "«bo» — bu ب.",
+        "en": "“ba” is ب."
       }
     },
     {
@@ -213,7 +229,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «ба»?",
         "kk": "«ба» әрпінде қандай белгі тұр?",
-        "uz": "«bo» harfida qanday belgi bor?"
+        "uz": "«bo» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ba”?"
       },
       "показ": "أَبْ",
       "варианты": [
@@ -221,28 +238,32 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         }
       ],
@@ -250,7 +271,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -260,7 +282,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «ба».",
         "kk": "«ба» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«bo» harfining oʻrta shaklini toping."
+        "uz": "«bo» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ba”."
       },
       "варианты": [
         {
@@ -284,7 +307,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -312,7 +336,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -348,7 +373,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "يَ يِ يُ أَيْ"
@@ -361,12 +387,14 @@
       "заголовок": {
         "ru": "Дифтонг «ай»",
         "kk": "«Ай» дифтонгы",
-        "uz": "«Ay» diftongi"
+        "uz": "«Ay» diftongi",
+        "en": "The diphthong “ay”"
       },
       "текст": {
         "ru": "Если на ي сукун, а перед ней фатха, звучит «ай».",
         "kk": "ي әрпінде сукун, ал алдында фатха болса, «ай» естіледі.",
-        "uz": "Agar ي da sukun, undan oldin esa fatha boʻlsa, «ay» eshitiladi."
+        "uz": "Agar ي da sukun, undan oldin esa fatha boʻlsa, «ay» eshitiladi.",
+        "en": "If ي has a sukun and a fatha comes before it, it sounds “ay”."
       },
       "примеры": [
         "بَيْتَ",
@@ -379,7 +407,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -411,7 +440,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -427,7 +457,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "بَيْتَ، بَيْنَ، مَرْيَمَ"

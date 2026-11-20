@@ -18,7 +18,7 @@ def база(pg_адрес):
     from db import Хранилище
 
     х = Хранилище(pg_адрес)
-    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz']
+    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz', '006_lang_en']
     assert х.применить_миграции() == []  # второй раз — ничего
     return х
 
@@ -41,7 +41,25 @@ def test_сохранить_заменить_удалить(база, pg_адр�
     п = база.подписка(з.хэш)
     assert п['город'] == 'Toshkent' and п['язык'] == 'uz'
     with psycopg.connect(pg_адрес) as с:
-        assert с.execute('SELECT lang, lang_ui FROM push_subscriptions').fetchone() == ('ru', 'uz')
+        assert с.execute('SELECT lang, lang_ui, lang_code FROM push_subscriptions').fetchone() == ('ru', 'uz', 'uz')
+    # en (миграция 006): в lang и lang_ui — запасной 'ru' (ограничения 001 и 005), язык текста — lang_code.
+    подписать(база, [пункт('2026-11-21', '15:20')], город='Istanbul', язык='en')
+    п = база.подписка(з.хэш)
+    assert п['город'] == 'Istanbul' and п['язык'] == 'en'
+    with psycopg.connect(pg_адрес) as с:
+        assert с.execute('SELECT lang, lang_ui, lang_code FROM push_subscriptions').fetchone() == ('ru', 'ru', 'en')
+        # подписка до 006 (lang_code пуст) читается по-старому: lang_ui, затем lang
+        с.execute("UPDATE push_subscriptions SET lang_code = NULL, lang_ui = 'uz'")
+    assert база.подписка(з.хэш)['язык'] == 'uz'
+    with psycopg.connect(pg_адрес) as с:
+        с.execute('UPDATE push_subscriptions SET lang_code = NULL, lang_ui = NULL')
+    assert база.подписка(з.хэш)['язык'] == 'ru'
+    with psycopg.connect(pg_адрес) as с:
+        # ограничения старых столбцов на месте: en в lang и lang_ui не пройдёт
+        for столбец in ('lang', 'lang_ui'):
+            with pytest.raises(psycopg.errors.CheckViolation):
+                с.execute(f"UPDATE push_subscriptions SET {столбец} = 'en'")
+            с.rollback()
     подписать(база, [пункт('2026-11-21', '15:20')], город='Астана', язык='kk')
     assert база.подписка(з.хэш)['язык'] == 'kk'
     with psycopg.connect(pg_адрес) as с:

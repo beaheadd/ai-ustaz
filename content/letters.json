@@ -8,7 +8,8 @@
     "название": {
       "ru": "алиф",
       "kk": "алиф",
-      "uz": "alif"
+      "uz": "alif",
+      "en": "alif"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "",
@@ -33,7 +34,8 @@
     "название": {
       "ru": "хамза",
       "kk": "хамза",
-      "uz": "hamza"
+      "uz": "hamza",
+      "en": "hamza"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "’",
@@ -48,7 +50,8 @@
     "подсказка": {
       "ru": "Короткая смычка в горле, как перерыв в «а-а!».",
       "kk": "Тамақтағы қысқа тоқтау, «а-а!» дегендегі үзіліс сияқты.",
-      "uz": "Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi."
+      "uz": "Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi.",
+      "en": "A short stop in the throat, like the break in “uh-oh!”."
     },
     "подмены": [
       {
@@ -56,7 +59,8 @@
         "описание": {
           "ru": "хамза пропадает",
           "kk": "хамза түсіп қалады",
-          "uz": "hamza tushib qoladi"
+          "uz": "hamza tushib qoladi",
+          "en": "hamza disappears"
         },
         "кому": null,
         "гипотеза": false
@@ -76,7 +80,8 @@
     "название": {
       "ru": "ра",
       "kk": "ра",
-      "uz": "ro"
+      "uz": "ro",
+      "en": "ra"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "р",
@@ -90,7 +95,8 @@
     "подсказка": {
       "ru": "Один лёгкий удар кончика языка, без раската «р-р».",
       "kk": "Тіл ұшымен бір жеңіл соғу, «р-р» деп дірілдетпеңіз.",
-      "uz": "Til uchining bitta yengil zarbi, «r-r» deb titratmasdan."
+      "uz": "Til uchining bitta yengil zarbi, «r-r» deb titratmasdan.",
+      "en": "One light tap of the tongue tip, without rolling “r-r”."
     },
     "подмены": [
       {
@@ -98,7 +104,8 @@
         "описание": {
           "ru": "«р» с раскатом «р-р»",
           "kk": "«р-р» деп дірілдетіп айту",
-          "uz": "«r»ni «r-r» deb titratib aytish"
+          "uz": "«r»ni «r-r» deb titratib aytish",
+          "en": "“r” rolled as “r-r”"
         },
         "кому": null,
         "гипотеза": false
@@ -116,7 +123,8 @@
     "название": {
       "ru": "зай",
       "kk": "зай",
-      "uz": "zay"
+      "uz": "zay",
+      "en": "zay"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "з",
@@ -134,7 +142,8 @@
         "описание": {
           "ru": "ز на конце оглушается в «с»",
           "kk": "соңындағы ز «с» болып қатаңдайды",
-          "uz": "oxiridagi ز jarangsizlanib «s»ga aylanadi"
+          "uz": "oxiridagi ز jarangsizlanib «s»ga aylanadi",
+          "en": "ز at the end is devoiced to “s”"
         },
         "кому": null,
         "гипотеза": false
@@ -155,7 +164,8 @@
     "название": {
       "ru": "мим",
       "kk": "мим",
-      "uz": "mim"
+      "uz": "mim",
+      "en": "mim"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "м",
@@ -180,7 +190,8 @@
     "название": {
       "ru": "та",
       "kk": "та",
-      "uz": "to"
+      "uz": "to",
+      "en": "ta"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "т",
@@ -198,7 +209,8 @@
         "описание": {
           "ru": "ت с придыханием",
           "kk": "ت демді шығарып айтылады",
-          "uz": "ت nafas chiqarib aytiladi"
+          "uz": "ت nafas chiqarib aytiladi",
+          "en": "ت with aspiration"
         },
         "кому": null,
         "гипотеза": false
@@ -218,7 +230,8 @@
     "название": {
       "ru": "нун",
       "kk": "нун",
-      "uz": "nun"
+      "uz": "nun",
+      "en": "nun"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "н",
@@ -243,7 +256,8 @@
     "название": {
       "ru": "йа",
       "kk": "йа",
-      "uz": "yo"
+      "uz": "yo",
+      "en": "ya"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "й",
@@ -268,7 +282,8 @@
     "название": {
       "ru": "ба",
       "kk": "ба",
-      "uz": "bo"
+      "uz": "bo",
+      "en": "ba"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "б",
@@ -282,7 +297,8 @@
     "подсказка": {
       "ru": "Звонко; на конце и при остановке не переходите в «п».",
       "kk": "Ұяң; соңында және тоқтағанда «п» дыбысына айналдырмаңыз.",
-      "uz": "Jarangli; oxirida va toʻxtaganda «p»ga oʻtmang."
+      "uz": "Jarangli; oxirida va toʻxtaganda «p»ga oʻtmang.",
+      "en": "Voiced; at the end and when stopping do not turn it into “p”."
     },
     "подмены": [
       {
@@ -290,7 +306,8 @@
         "описание": {
           "ru": "ب на конце слова оглушается в «п»",
           "kk": "сөз соңындағы ب «п» болып қатаңдайды",
-          "uz": "soʻz oxiridagi ب jarangsizlanib «p»ga aylanadi"
+          "uz": "soʻz oxiridagi ب jarangsizlanib «p»ga aylanadi",
+          "en": "ب at the end of a word is devoiced to “p”"
         },
         "кому": null,
         "гипотеза": false
@@ -308,7 +325,8 @@
     "название": {
       "ru": "каф",
       "kk": "каф",
-      "uz": "kof"
+      "uz": "kof",
+      "en": "kaf"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "к",
@@ -322,7 +340,8 @@
     "подсказка": {
       "ru": "Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
       "kk": "Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-      "uz": "Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+      "uz": "Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+      "en": "An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
     },
     "подмены": [
       {
@@ -330,12 +349,14 @@
         "описание": {
           "ru": "ك слишком глубокое, как ق",
           "kk": "ك тым терең, ق сияқты айтылады",
-          "uz": "ك juda chuqur, ق kabi aytiladi"
+          "uz": "ك juda chuqur, ق kabi aytiladi",
+          "en": "ك too deep, like ق"
         },
         "кому": {
           "ru": "казахо- и узбекоязычным",
           "kk": "қазақ және өзбек тілділерге",
-          "uz": "qozoq va oʻzbek tilida soʻzlashuvchilarga"
+          "uz": "qozoq va oʻzbek tilida soʻzlashuvchilarga",
+          "en": "Kazakh and Uzbek speakers"
         },
         "гипотеза": true
       }
@@ -354,7 +375,8 @@
     "название": {
       "ru": "лям",
       "kk": "лям",
-      "uz": "lom"
+      "uz": "lom",
+      "en": "lam"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "л",
@@ -379,7 +401,8 @@
     "название": {
       "ru": "вав",
       "kk": "вав",
-      "uz": "vov"
+      "uz": "vov",
+      "en": "waw"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "в",
@@ -404,7 +427,8 @@
     "название": {
       "ru": "һа",
       "kk": "һа",
-      "uz": "ha"
+      "uz": "ha",
+      "en": "ha"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "һ",
@@ -418,7 +442,8 @@
     "подсказка": {
       "ru": "Лёгкий выдох из глубины горла, тише ح. В конце слова не глотайте.",
       "kk": "Терең тамақтан шығатын жеңіл дем, ح әрпінен әлсіздеу. Сөз соңында жұтып қоймаңыз.",
-      "uz": "Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang."
+      "uz": "Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang.",
+      "en": "A light breath from deep in the throat, softer than ح. Do not swallow it at the end of a word."
     },
     "подмены": [
       {
@@ -426,12 +451,14 @@
         "описание": {
           "ru": "ه звучит как «х»",
           "kk": "ه «х» болып естіледі",
-          "uz": "ه «x» boʻlib eshitiladi"
+          "uz": "ه «x» boʻlib eshitiladi",
+          "en": "ه sounds like “kh”"
         },
         "кому": {
           "ru": "русскоязычным, казахоязычным",
           "kk": "орыс тілділерге, қазақ тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga, qozoq tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga, qozoq tilida soʻzlashuvchilarga",
+          "en": "Russian speakers, Kazakh speakers"
         },
         "гипотеза": true
       },
@@ -440,12 +467,14 @@
         "описание": {
           "ru": "ه пропадает, особенно в конце слова",
           "kk": "ه түсіп қалады, әсіресе сөз соңында",
-          "uz": "ه tushib qoladi, ayniqsa soʻz oxirida"
+          "uz": "ه tushib qoladi, ayniqsa soʻz oxirida",
+          "en": "ه disappears, especially at the end of a word"
         },
         "кому": {
           "ru": "русскоязычным, казахоязычным",
           "kk": "орыс тілділерге, қазақ тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga, qozoq tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga, qozoq tilida soʻzlashuvchilarga",
+          "en": "Russian speakers, Kazakh speakers"
         },
         "гипотеза": true
       }
@@ -464,7 +493,8 @@
     "название": {
       "ru": "фа",
       "kk": "фа",
-      "uz": "fo"
+      "uz": "fo",
+      "en": "fa"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "ф",
@@ -478,7 +508,8 @@
     "подсказка": {
       "ru": "Нижняя губа касается верхних зубов: «ф», а не «п».",
       "kk": "Төменгі ерін жоғарғы тістерге тиеді: «п» емес, «ф».",
-      "uz": "Pastki lab yuqori tishlarga tegadi: «f», «p» emas."
+      "uz": "Pastki lab yuqori tishlarga tegadi: «f», «p» emas.",
+      "en": "The lower lip touches the upper teeth: “f”, not “p”."
     },
     "подмены": [
       {
@@ -486,12 +517,14 @@
         "описание": {
           "ru": "ف звучит как «п»",
           "kk": "ف «п» болып естіледі",
-          "uz": "ف «p» boʻlib eshitiladi"
+          "uz": "ف «p» boʻlib eshitiladi",
+          "en": "ف sounds like “p”"
         },
         "кому": {
           "ru": "части старшего поколения казахоязычных",
           "kk": "қазақ тілді аға буынның бір бөлігіне",
-          "uz": "qozoq tilida soʻzlashuvchi katta avlodning bir qismiga"
+          "uz": "qozoq tilida soʻzlashuvchi katta avlodning bir qismiga",
+          "en": "part of the older generation of Kazakh speakers"
         },
         "гипотеза": true
       }
@@ -508,7 +541,8 @@
     "название": {
       "ru": "қаф",
       "kk": "қаф",
-      "uz": "qof"
+      "uz": "qof",
+      "en": "qaf"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "қ",
@@ -522,7 +556,8 @@
     "подсказка": {
       "ru": "Корень языка смыкается с самым задним нёбом, глубже русского «к». Опора — казахское «қ».",
       "kk": "Тіл түбі таңдайдың ең артына тиеді — қазақтың «қ» дыбысына жақын.",
-      "uz": "Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ»."
+      "uz": "Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».",
+      "en": "The root of the tongue closes against the very back of the palate, deeper than the Russian “k”. Anchor — the Kazakh “қ”."
     },
     "подмены": [
       {
@@ -530,12 +565,14 @@
         "описание": {
           "ru": "ق звучит как ك (قُلْ → «куль»)",
           "kk": "ق әрпі ك болып естіледі (قُلْ → «куль»)",
-          "uz": "ق harfi ك boʻlib eshitiladi (قُلْ → «kul»)"
+          "uz": "ق harfi ك boʻlib eshitiladi (قُلْ → «kul»)",
+          "en": "ق sounds like ك (قُلْ → “kul”)"
         },
         "кому": {
           "ru": "русскоязычным",
           "kk": "орыс тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga",
+          "en": "Russian speakers"
         },
         "гипотеза": true
       }
@@ -554,7 +591,8 @@
     "название": {
       "ru": "шин",
       "kk": "шин",
-      "uz": "shin"
+      "uz": "shin",
+      "en": "shin"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "ш",
@@ -579,7 +617,8 @@
     "название": {
       "ru": "син",
       "kk": "син",
-      "uz": "sin"
+      "uz": "sin",
+      "en": "sin"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "с",
@@ -607,7 +646,8 @@
     "название": {
       "ru": "с̱а",
       "kk": "с̱а",
-      "uz": "s̱o"
+      "uz": "s̱o",
+      "en": "tha"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "с̱",
@@ -621,7 +661,8 @@
     "подсказка": {
       "ru": "Кончик языка между зубами, глухо (как th в английском think). Не «с».",
       "kk": "Тіл ұшы тістің арасында, қатаң. «С» емес.",
-      "uz": "Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas."
+      "uz": "Til uchi tishlar orasida, jarangsiz (inglizcha think soʻzidagi th kabi). «s» emas.",
+      "en": "Tongue tip between the teeth, voiceless (like th in the English “think”). Not “s”."
     },
     "подмены": [
       {
@@ -629,12 +670,14 @@
         "описание": {
           "ru": "ث → «с»",
           "kk": "ث → «с»",
-          "uz": "ث → «s»"
+          "uz": "ث → «s»",
+          "en": "ث → “s”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       }
@@ -653,7 +696,8 @@
     "название": {
       "ru": "с̣ад",
       "kk": "с̣ад",
-      "uz": "ṣod"
+      "uz": "ṣod",
+      "en": "ṣad"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "с̣",
@@ -667,7 +711,8 @@
     "подсказка": {
       "ru": "Как «с», но задняя часть языка поднята, звук полный, со свистом. «А» после неё темнее, но не «о».",
       "kk": "«С» сияқты, бірақ тілдің арты көтеріледі, дыбыс толық, ысқырықты. Кейінгі «а» жуандайды, бірақ «о» емес.",
-      "uz": "«s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas."
+      "uz": "«s» kabi, lekin tilning orqa qismi koʻtarilgan, tovush toʻliq, hushtakli. Undan keyingi «a» qalinroq, lekin «o» emas.",
+      "en": "Like “s”, but the back of the tongue is raised, the sound is full, with a whistle. The “a” after it is darker, but not “o”."
     },
     "подмены": [
       {
@@ -675,12 +720,14 @@
         "описание": {
           "ru": "ص → «с»",
           "kk": "ص → «с»",
-          "uz": "ص → «s»"
+          "uz": "ص → «s»",
+          "en": "ص → “s”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       }
@@ -699,7 +746,8 @@
     "название": {
       "ru": "т̣а",
       "kk": "т̣а",
-      "uz": "ṭo"
+      "uz": "ṭo",
+      "en": "ṭa"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "т̣",
@@ -713,7 +761,8 @@
     "подсказка": {
       "ru": "Как «т», но язык плотно прижат, задняя часть поднята; звук полный, без придыхания.",
       "kk": "«Т» сияқты, бірақ тіл тығыз тиеді, арты көтеріледі; дыбыс толық, демсіз.",
-      "uz": "«t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan."
+      "uz": "«t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan.",
+      "en": "Like “t”, but the tongue is pressed firmly and its back is raised; the sound is full, without aspiration."
     },
     "подмены": [
       {
@@ -721,12 +770,14 @@
         "описание": {
           "ru": "ط → «т»",
           "kk": "ط → «т»",
-          "uz": "ط → «t»"
+          "uz": "ط → «t»",
+          "en": "ط → “t”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       }
@@ -745,7 +796,8 @@
     "название": {
       "ru": "джим",
       "kk": "джим",
-      "uz": "jim"
+      "uz": "jim",
+      "en": "jim"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "дж",
@@ -770,7 +822,8 @@
     "название": {
       "ru": "ха",
       "kk": "ха",
-      "uz": "xo"
+      "uz": "xo",
+      "en": "kha"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "х",
@@ -784,7 +837,8 @@
     "подсказка": {
       "ru": "Как «х», но глубже, с лёгким хрипом.",
       "kk": "«Х» дыбысындай, бірақ тереңірек, сәл қырылмен.",
-      "uz": "«x» kabi, lekin chuqurroq, yengil xirillash bilan."
+      "uz": "«x» kabi, lekin chuqurroq, yengil xirillash bilan.",
+      "en": "Like “kh”, but deeper, with a slight rasp."
     },
     "подмены": [
       {
@@ -792,12 +846,14 @@
         "описание": {
           "ru": "خ звучит как «к» или как ح",
           "kk": "خ «к» немесе ح болып естіледі",
-          "uz": "خ «k» yoki ح boʻlib eshitiladi"
+          "uz": "خ «k» yoki ح boʻlib eshitiladi",
+          "en": "خ sounds like “k” or like ح"
         },
         "кому": {
           "ru": "русскоязычным",
           "kk": "орыс тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga",
+          "en": "Russian speakers"
         },
         "гипотеза": true
       }
@@ -816,7 +872,8 @@
     "название": {
       "ru": "х̣а",
       "kk": "х̣а",
-      "uz": "ḥo"
+      "uz": "ḥo",
+      "en": "ḥa"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "х̣",
@@ -830,7 +887,8 @@
     "подсказка": {
       "ru": "Гладкий выдох из середины горла: горло слегка сжато, без хрипа — как будто дышите на стекло очков.",
       "kk": "Тамақтың ортасынан шығатын жұмсақ дем: тамақ сәл қысылады, қырылсыз — көзілдірік әйнегіне дем үргендей.",
-      "uz": "Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek."
+      "uz": "Tomoqning oʻrtasidan silliq nafas: tomoq biroz qisilgan, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.",
+      "en": "A smooth breath from the middle of the throat: the throat is slightly tightened, without rasping — as if you were breathing on your glasses."
     },
     "подмены": [
       {
@@ -838,12 +896,14 @@
         "описание": {
           "ru": "ح звучит как «х»",
           "kk": "ح «х» болып естіледі",
-          "uz": "ح «x» boʻlib eshitiladi"
+          "uz": "ح «x» boʻlib eshitiladi",
+          "en": "ح sounds like “kh”"
         },
         "кому": {
           "ru": "всем (у казахоязычных — х или һ, у русскоязычных — х)",
           "kk": "барлығына (қазақ тілділерде — х не һ, орыс тілділерде — х)",
-          "uz": "hammaga (qozoq tilida soʻzlashuvchilarda — x yoki h, rus tilida soʻzlashuvchilarda — x)"
+          "uz": "hammaga (qozoq tilida soʻzlashuvchilarda — x yoki h, rus tilida soʻzlashuvchilarda — x)",
+          "en": "everyone (Kazakh speakers — kh or h, Russian speakers — kh)"
         },
         "гипотеза": true
       },
@@ -852,12 +912,14 @@
         "описание": {
           "ru": "ح звучит как лёгкое «һ»",
           "kk": "ح жеңіл «һ» болып естіледі",
-          "uz": "ح yengil «h» boʻlib eshitiladi"
+          "uz": "ح yengil «h» boʻlib eshitiladi",
+          "en": "ح sounds like a light “h”"
         },
         "кому": {
           "ru": "всем (у казахоязычных — х или һ, у русскоязычных — х)",
           "kk": "барлығына (қазақ тілділерде — х не һ, орыс тілділерде — х)",
-          "uz": "hammaga (qozoq tilida soʻzlashuvchilarda — x yoki h, rus tilida soʻzlashuvchilarda — x)"
+          "uz": "hammaga (qozoq tilida soʻzlashuvchilarda — x yoki h, rus tilida soʻzlashuvchilarda — x)",
+          "en": "everyone (Kazakh speakers — kh or h, Russian speakers — kh)"
         },
         "гипотеза": true
       }
@@ -877,7 +939,8 @@
     "название": {
       "ru": "ғайн",
       "kk": "ғайн",
-      "uz": "gʻayn"
+      "uz": "gʻayn",
+      "en": "ghayn"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "ғ",
@@ -891,7 +954,8 @@
     "подсказка": {
       "ru": "Звонкий звук из верхней части горла, ближе ко рту (там же, где خ), похож на картавое «р», но не «г». У казахов опора — «ғ».",
       "kk": "Тамақтың жоғарғы, ауызға жақын бөлігінен (خ шығатын жерден) айтылатын ұяң дыбыс — қазақтың «ғ» дыбысына жақын, «г» емес.",
-      "uz": "Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ»."
+      "uz": "Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ».",
+      "en": "A voiced sound from the upper part of the throat, closer to the mouth (the same place as خ), similar to a guttural “r”, but not “g”. For Kazakh speakers the anchor is “ғ”."
     },
     "подмены": [
       {
@@ -899,12 +963,14 @@
         "описание": {
           "ru": "غ звучит как «г»",
           "kk": "غ «г» болып естіледі",
-          "uz": "غ «g» boʻlib eshitiladi"
+          "uz": "غ «g» boʻlib eshitiladi",
+          "en": "غ sounds like “g”"
         },
         "кому": {
           "ru": "русскоязычным",
           "kk": "орыс тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga",
+          "en": "Russian speakers"
         },
         "гипотеза": true
       }
@@ -923,7 +989,8 @@
     "название": {
       "ru": "‘айн",
       "kk": "‘айн",
-      "uz": "ayn"
+      "uz": "ayn",
+      "en": "ʿayn"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "‘",
@@ -937,7 +1004,8 @@
     "подсказка": {
       "ru": "Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».",
       "kk": "Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.",
-      "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas."
+      "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.",
+      "en": "A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”."
     },
     "подмены": [
       {
@@ -945,12 +1013,14 @@
         "описание": {
           "ru": "‘айн пропадает",
           "kk": "ع түсіп қалады",
-          "uz": "ayn tushib qoladi"
+          "uz": "ayn tushib qoladi",
+          "en": "ʿayn disappears"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       },
@@ -959,12 +1029,14 @@
         "описание": {
           "ru": "‘айн заменён хамзой («на’буду»)",
           "kk": "ع хамзамен ауысады («на’буду»)",
-          "uz": "ayn hamza bilan almashgan («naʼbudu»)"
+          "uz": "ayn hamza bilan almashgan («naʼbudu»)",
+          "en": "ʿayn replaced by hamza (“naʾbudu”)"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       },
@@ -973,12 +1045,14 @@
         "описание": {
           "ru": "‘айн звучит как «ғ»",
           "kk": "ع «ғ» болып естіледі",
-          "uz": "ayn «gʻ» boʻlib eshitiladi"
+          "uz": "ayn «gʻ» boʻlib eshitiladi",
+          "en": "ʿayn sounds like “ғ”"
         },
         "кому": {
           "ru": "казахоязычным",
           "kk": "қазақ тілділерге",
-          "uz": "qozoq tilida soʻzlashuvchilarga"
+          "uz": "qozoq tilida soʻzlashuvchilarga",
+          "en": "Kazakh speakers"
         },
         "гипотеза": true
       }
@@ -998,7 +1072,8 @@
     "название": {
       "ru": "даль",
       "kk": "даль",
-      "uz": "dol"
+      "uz": "dol",
+      "en": "dal"
     },
     "источникНазвания": "каталог ошибок §10.1/§13",
     "транскрипция": "д",
@@ -1012,7 +1087,8 @@
     "подсказка": {
       "ru": "Звонко; на конце и при остановке не переходите в «т».",
       "kk": "Ұяң; соңында және тоқтағанда «т» дыбысына айналдырмаңыз.",
-      "uz": "Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang."
+      "uz": "Jarangli; oxirida va toʻxtaganda «t»ga oʻtmang.",
+      "en": "Voiced; at the end and when stopping do not turn it into “t”."
     },
     "подмены": [
       {
@@ -1020,12 +1096,14 @@
         "описание": {
           "ru": "د на конце звучит глухо, как «т» (нет отскока)",
           "kk": "соңындағы د «т» сияқты қатаң шығады (серпіліс жоқ)",
-          "uz": "oxiridagi د jarangsiz, «t» kabi chiqadi (sapchish yoʻq)"
+          "uz": "oxiridagi د jarangsiz, «t» kabi chiqadi (sapchish yoʻq)",
+          "en": "د at the end sounds voiceless, like “t” (no bounce)"
         },
         "кому": {
           "ru": "русскоязычным",
           "kk": "орыс тілділерге",
-          "uz": "rus tilida soʻzlashuvchilarga"
+          "uz": "rus tilida soʻzlashuvchilarga",
+          "en": "Russian speakers"
         },
         "гипотеза": false
       }
@@ -1044,7 +1122,8 @@
     "название": {
       "ru": "д̣ад",
       "kk": "д̣ад",
-      "uz": "ḍod"
+      "uz": "ḍod",
+      "en": "ḍad"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "д̣",
@@ -1058,7 +1137,8 @@
     "подсказка": {
       "ru": "Края языка у коренных зубов, задняя часть поднята; звук звонкий и полный. Не «з» и не простое «д».",
       "kk": "Тілдің жиегі азу тістерге тиеді, арты көтеріледі; дыбыс ұяң, толық. «З» де, жай «д» да емес.",
-      "uz": "Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas."
+      "uz": "Til chetlari oziq tishlar yonida, orqa qismi koʻtarilgan; tovush jarangli va toʻliq. «z» ham, oddiy «d» ham emas.",
+      "en": "The edges of the tongue at the molars, the back raised; the sound is voiced and full. Not “z” and not a plain “d”."
     },
     "подмены": [
       {
@@ -1066,12 +1146,14 @@
         "описание": {
           "ru": "ض → «д» или «з»",
           "kk": "ض → «д» не «з»",
-          "uz": "ض → «d» yoki «z»"
+          "uz": "ض → «d» yoki «z»",
+          "en": "ض → “d” or “z”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       },
@@ -1080,7 +1162,8 @@
         "описание": {
           "ru": "путаница ض и ظ — оценивает только устаз",
           "kk": "ض пен ظ шатастыру — тек ұстаз бағалайды",
-          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi"
+          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi",
+          "en": "confusing ض and ظ — assessed only by an ustaz"
         },
         "кому": null,
         "гипотеза": false
@@ -1101,7 +1184,8 @@
     "название": {
       "ru": "з̱аль",
       "kk": "з̱аль",
-      "uz": "ẕol"
+      "uz": "ẕol",
+      "en": "dhal"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "з̱",
@@ -1115,7 +1199,8 @@
     "подсказка": {
       "ru": "Кончик языка между зубами, звонко (как th в английском this). Не «з».",
       "kk": "Тіл ұшы тістің арасында, ұяң. «З» емес.",
-      "uz": "Til uchi tishlar orasida, jarangli (inglizcha this soʻzidagi th kabi). «z» emas."
+      "uz": "Til uchi tishlar orasida, jarangli (inglizcha this soʻzidagi th kabi). «z» emas.",
+      "en": "Tongue tip between the teeth, voiced (like th in the English “this”). Not “z”."
     },
     "подмены": [
       {
@@ -1123,12 +1208,14 @@
         "описание": {
           "ru": "ذ → «з»",
           "kk": "ذ → «з»",
-          "uz": "ذ → «z»"
+          "uz": "ذ → «z»",
+          "en": "ذ → “z”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       },
@@ -1137,7 +1224,8 @@
         "описание": {
           "ru": "ذ на конце оглушается в «с»",
           "kk": "соңындағы ذ «с» болып қатаңдайды",
-          "uz": "oxiridagi ذ jarangsizlanib «s»ga aylanadi"
+          "uz": "oxiridagi ذ jarangsizlanib «s»ga aylanadi",
+          "en": "ذ at the end is devoiced to “s”"
         },
         "кому": null,
         "гипотеза": false
@@ -1158,7 +1246,8 @@
     "название": {
       "ru": "з̣а",
       "kk": "з̣а",
-      "uz": "ẓo"
+      "uz": "ẓo",
+      "en": "ẓa"
     },
     "источникНазвания": "по схеме транслитерации каталога §10.1 (в документах названия нет)",
     "транскрипция": "з̣",
@@ -1172,7 +1261,8 @@
     "подсказка": {
       "ru": "Кончик языка между зубами, звонко, задняя часть поднята. Не «з».",
       "kk": "Тіл ұшы тістің арасында, ұяң, тілдің арты көтеріледі. «З» емес.",
-      "uz": "Til uchi tishlar orasida, jarangli, orqa qismi koʻtarilgan. «z» emas."
+      "uz": "Til uchi tishlar orasida, jarangli, orqa qismi koʻtarilgan. «z» emas.",
+      "en": "Tongue tip between the teeth, voiced, the back raised. Not “z”."
     },
     "подмены": [
       {
@@ -1180,12 +1270,14 @@
         "описание": {
           "ru": "ظ → «з»",
           "kk": "ظ → «з»",
-          "uz": "ظ → «z»"
+          "uz": "ظ → «z»",
+          "en": "ظ → “z”"
         },
         "кому": {
           "ru": "всем",
           "kk": "барлығына",
-          "uz": "hammaga"
+          "uz": "hammaga",
+          "en": "everyone"
         },
         "гипотеза": true
       },
@@ -1194,7 +1286,8 @@
         "описание": {
           "ru": "путаница ض и ظ — оценивает только устаз",
           "kk": "ض пен ظ шатастыру — тек ұстаз бағалайды",
-          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi"
+          "uz": "ض va ظ ni chalkashtirish — faqat ustoz baholaydi",
+          "en": "confusing ض and ظ — assessed only by an ustaz"
         },
         "кому": null,
         "гипотеза": false
@@ -1216,7 +1309,8 @@
     "название": {
       "ru": "лям-алиф",
       "kk": "лям-алиф",
-      "uz": "lom-alif"
+      "uz": "lom-alif",
+      "en": "lam-alif"
     },
     "источникНазвания": "программа курса §5.2 (урок 16: لا)",
     "транскрипция": "ла",

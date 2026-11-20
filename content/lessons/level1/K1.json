@@ -5,12 +5,14 @@
   "название": {
     "ru": "Контрольная 1",
     "kk": "Бақылау 1",
-    "uz": "1-nazorat"
+    "uz": "1-nazorat",
+    "en": "Checkpoint 1"
   },
   "цель": {
     "ru": "Повторение всего буквенного блока: 28 букв, слова уроков 1–15, пары",
     "kk": "Бүкіл әріп бөлімін қайталау: 28 әріп, 1–15-сабақтардың сөздері, жұптар",
-    "uz": "Butun harflar boʻlimini takrorlash: 28 harf, 1–15-darslar soʻzlari, juftliklar"
+    "uz": "Butun harflar boʻlimini takrorlash: 28 harf, 1–15-darslar soʻzlari, juftliklar",
+    "en": "Revision of the whole letter block: 28 letters, words of lessons 1–15, pairs"
   },
   "новое": [],
   "задания": [
@@ -20,12 +22,14 @@
       "заголовок": {
         "ru": "Тренировочная К1",
         "kk": "Жаттығу Б1",
-        "uz": "Mashq K1"
+        "uz": "Mashq K1",
+        "en": "Practice K1"
       },
       "текст": {
         "ru": "Повторяем весь буквенный блок: 28 букв, формы, пары и слова уроков 1–15. Это тренировочный вариант: настоящая К1 — с проверкой голосом, два прохождения в разные дни.",
         "kk": "Бүкіл әріп бөлімін қайталаймыз: 28 әріп, түрлері, жұптар және 1–15-сабақтардың сөздері. Бұл — жаттығу нұсқасы: нағыз Б1 дауыспен тексеріледі, әр түрлі күндері екі рет өтеді.",
-        "uz": "Butun harflar boʻlimini takrorlaymiz: 28 harf, shakllar, juftliklar va 1–15-darslar soʻzlari. Bu — mashq varianti: haqiqiy K1 — ovoz bilan tekshiriladi, turli kunlarda ikki marta oʻtiladi."
+        "uz": "Butun harflar boʻlimini takrorlaymiz: 28 harf, shakllar, juftliklar va 1–15-darslar soʻzlari. Bu — mashq varianti: haqiqiy K1 — ovoz bilan tekshiriladi, turli kunlarda ikki marta oʻtiladi.",
+        "en": "We revise the whole letter block: 28 letters, forms, pairs and words of lessons 1–15. This is a practice version: the real K1 has a voice check and two attempts on different days."
       }
     },
     {
@@ -35,7 +39,8 @@
       "вопрос": {
         "ru": "Найдите букву «вав».",
         "kk": "«вав» әрпін табыңыз.",
-        "uz": "«vov» harfini toping."
+        "uz": "«vov» harfini toping.",
+        "en": "Find the letter “waw”."
       },
       "варианты": [
         {
@@ -55,7 +60,8 @@
       "пояснение": {
         "ru": "«вав» — это و.",
         "kk": "«вав» — و әрпі.",
-        "uz": "«vov» — bu و."
+        "uz": "«vov» — bu و.",
+        "en": "“waw” is و."
       }
     },
     {
@@ -65,7 +71,8 @@
       "вопрос": {
         "ru": "Найдите букву «нун».",
         "kk": "«нун» әрпін табыңыз.",
-        "uz": "«nun» harfini toping."
+        "uz": "«nun» harfini toping.",
+        "en": "Find the letter “nun”."
       },
       "варианты": [
         {
@@ -85,7 +92,8 @@
       "пояснение": {
         "ru": "«нун» — это ن.",
         "kk": "«нун» — ن әрпі.",
-        "uz": "«nun» — bu ن."
+        "uz": "«nun» — bu ن.",
+        "en": "“nun” is ن."
       }
     },
     {
@@ -95,7 +103,8 @@
       "вопрос": {
         "ru": "Найдите букву «ба».",
         "kk": "«ба» әрпін табыңыз.",
-        "uz": "«bo» harfini toping."
+        "uz": "«bo» harfini toping.",
+        "en": "Find the letter “ba”."
       },
       "варианты": [
         {
@@ -115,7 +124,8 @@
       "пояснение": {
         "ru": "«ба» — это ب.",
         "kk": "«ба» — ب әрпі.",
-        "uz": "«bo» — bu ب."
+        "uz": "«bo» — bu ب.",
+        "en": "“ba” is ب."
       }
     },
     {
@@ -125,7 +135,8 @@
       "вопрос": {
         "ru": "Найдите букву «зай».",
         "kk": "«зай» әрпін табыңыз.",
-        "uz": "«zay» harfini toping."
+        "uz": "«zay» harfini toping.",
+        "en": "Find the letter “zay”."
       },
       "варианты": [
         {
@@ -145,7 +156,8 @@
       "пояснение": {
         "ru": "«зай» — это ز.",
         "kk": "«зай» — ز әрпі.",
-        "uz": "«zay» — bu ز."
+        "uz": "«zay» — bu ز.",
+        "en": "“zay” is ز."
       }
     },
     {
@@ -155,7 +167,8 @@
       "вопрос": {
         "ru": "Найдите букву «фа».",
         "kk": "«фа» әрпін табыңыз.",
-        "uz": "«fo» harfini toping."
+        "uz": "«fo» harfini toping.",
+        "en": "Find the letter “fa”."
       },
       "варианты": [
         {
@@ -175,7 +188,8 @@
       "пояснение": {
         "ru": "«фа» — это ف.",
         "kk": "«фа» — ف әрпі.",
-        "uz": "«fo» — bu ف."
+        "uz": "«fo» — bu ف.",
+        "en": "“fa” is ف."
       }
     },
     {
@@ -185,7 +199,8 @@
       "вопрос": {
         "ru": "Найдите букву «йа».",
         "kk": "«йа» әрпін табыңыз.",
-        "uz": "«yo» harfini toping."
+        "uz": "«yo» harfini toping.",
+        "en": "Find the letter “ya”."
       },
       "варианты": [
         {
@@ -205,7 +220,8 @@
       "пояснение": {
         "ru": "«йа» — это ي.",
         "kk": "«йа» — ي әрпі.",
-        "uz": "«yo» — bu ي."
+        "uz": "«yo» — bu ي.",
+        "en": "“ya” is ي."
       }
     },
     {
@@ -215,7 +231,8 @@
       "вопрос": {
         "ru": "Найдите букву «с̣ад».",
         "kk": "«с̣ад» әрпін табыңыз.",
-        "uz": "«ṣod» harfini toping."
+        "uz": "«ṣod» harfini toping.",
+        "en": "Find the letter “ṣad”."
       },
       "варианты": [
         {
@@ -235,7 +252,8 @@
       "пояснение": {
         "ru": "«с̣ад» — это ص.",
         "kk": "«с̣ад» — ص әрпі.",
-        "uz": "«ṣod» — bu ص."
+        "uz": "«ṣod» — bu ص.",
+        "en": "“ṣad” is ص."
       }
     },
     {
@@ -245,7 +263,8 @@
       "вопрос": {
         "ru": "Найдите букву «т̣а».",
         "kk": "«т̣а» әрпін табыңыз.",
-        "uz": "«ṭo» harfini toping."
+        "uz": "«ṭo» harfini toping.",
+        "en": "Find the letter “ṭa”."
       },
       "варианты": [
         {
@@ -265,7 +284,8 @@
       "пояснение": {
         "ru": "«т̣а» — это ط.",
         "kk": "«т̣а» — ط әрпі.",
-        "uz": "«ṭo» — bu ط."
+        "uz": "«ṭo» — bu ط.",
+        "en": "“ṭa” is ط."
       }
     },
     {
@@ -275,7 +295,8 @@
       "вопрос": {
         "ru": "Найдите букву «һа».",
         "kk": "«һа» әрпін табыңыз.",
-        "uz": "«ha» harfini toping."
+        "uz": "«ha» harfini toping.",
+        "en": "Find the letter “ha”."
       },
       "варианты": [
         {
@@ -295,7 +316,8 @@
       "пояснение": {
         "ru": "«һа» — это ه.",
         "kk": "«һа» — ه әрпі.",
-        "uz": "«ha» — bu ه."
+        "uz": "«ha» — bu ه.",
+        "en": "“ha” is ه."
       }
     },
     {
@@ -305,7 +327,8 @@
       "вопрос": {
         "ru": "Найдите букву «ра».",
         "kk": "«ра» әрпін табыңыз.",
-        "uz": "«ro» harfini toping."
+        "uz": "«ro» harfini toping.",
+        "en": "Find the letter “ra”."
       },
       "варианты": [
         {
@@ -325,7 +348,8 @@
       "пояснение": {
         "ru": "«ра» — это ر.",
         "kk": "«ра» — ر әрпі.",
-        "uz": "«ro» — bu ر."
+        "uz": "«ro» — bu ر.",
+        "en": "“ra” is ر."
       }
     },
     {
@@ -335,7 +359,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «ба».",
         "kk": "«ба» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«bo» harfining oʻrta shaklini toping."
+        "uz": "«bo» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ba”."
       },
       "варианты": [
         {
@@ -360,7 +385,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «син».",
         "kk": "«син» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«sin» harfining oʻrta shaklini toping."
+        "uz": "«sin» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “sin”."
       },
       "варианты": [
         {
@@ -385,7 +411,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «ғайн».",
         "kk": "«ғайн» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«gʻayn» harfining oʻrta shaklini toping."
+        "uz": "«gʻayn» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ghayn”."
       },
       "варианты": [
         {
@@ -410,7 +437,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «с̣ад».",
         "kk": "«с̣ад» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ṣod» harfining oʻrta shaklini toping."
+        "uz": "«ṣod» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ṣad”."
       },
       "варианты": [
         {
@@ -435,7 +463,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "حَظَرْ",
       "варианты": [
@@ -450,7 +479,8 @@
       "пояснение": {
         "ru": "ظ: Кончик языка между зубами, звонко, задняя часть поднята. Не «з».",
         "kk": "ظ: Тіл ұшы тістің арасында, ұяң, тілдің арты көтеріледі. «З» емес.",
-        "uz": "ظ: Til uchi tishlar orasida, jarangli, orqa qismi koʻtarilgan. «z» emas."
+        "uz": "ظ: Til uchi tishlar orasida, jarangli, orqa qismi koʻtarilgan. «z» emas.",
+        "en": "ظ: Tongue tip between the teeth, voiced, the back raised. Not “z”."
       }
     },
     {
@@ -460,7 +490,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "خَتْمْ",
       "варианты": [
@@ -475,7 +506,8 @@
       "пояснение": {
         "ru": "خ: Как «х», но глубже, с лёгким хрипом.",
         "kk": "خ: «Х» дыбысындай, бірақ тереңірек, сәл қырылмен.",
-        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan."
+        "uz": "خ: «x» kabi, lekin chuqurroq, yengil xirillash bilan.",
+        "en": "خ: Like “kh”, but deeper, with a slight rasp."
       }
     },
     {
@@ -485,7 +517,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "طَرَفْ",
       "варианты": [
@@ -500,7 +533,8 @@
       "пояснение": {
         "ru": "ط: Как «т», но язык плотно прижат, задняя часть поднята; звук полный, без придыхания.",
         "kk": "ط: «Т» сияқты, бірақ тіл тығыз тиеді, арты көтеріледі; дыбыс толық, демсіз.",
-        "uz": "ط: «t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan."
+        "uz": "ط: «t» kabi, lekin til mahkam bosilgan, orqa qismi koʻtarilgan; tovush toʻliq, nafas chiqarmasdan.",
+        "en": "ط: Like “t”, but the tongue is pressed firmly and its back is raised; the sound is full, without aspiration."
       }
     },
     {
@@ -510,7 +544,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "قُلْ",
       "варианты": [
@@ -525,7 +560,8 @@
       "пояснение": {
         "ru": "ق: Корень языка смыкается с самым задним нёбом, глубже русского «к». Опора — казахское «қ».",
         "kk": "ق: Тіл түбі таңдайдың ең артына тиеді — қазақтың «қ» дыбысына жақын.",
-        "uz": "ق: Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ»."
+        "uz": "ق: Til ildizi tanglayning eng orqa qismiga tegadi, ruscha «k» dan chuqurroq. Tayanch — qozoqcha «қ».",
+        "en": "ق: The root of the tongue closes against the very back of the palate, deeper than the Russian “k”. Anchor — the Kazakh “қ”."
       }
     },
     {
@@ -535,7 +571,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 2-я справа?",
         "kk": "Сөздегі оң жақтан 2-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 2-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 2-harf qaysi?",
+        "en": "Which letter is number 2 from the right in the word?"
       },
       "показ": "غَيْرِ",
       "варианты": [
@@ -558,7 +595,8 @@
       "вопрос": {
         "ru": "Какая буква в слове 2-я справа?",
         "kk": "Сөздегі оң жақтан 2-әріп қайсы?",
-        "uz": "Soʻzda oʻngdan 2-harf qaysi?"
+        "uz": "Soʻzda oʻngdan 2-harf qaysi?",
+        "en": "Which letter is number 2 from the right in the word?"
       },
       "показ": "طَلَبَ",
       "варианты": [
@@ -580,7 +618,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -612,7 +651,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -644,7 +684,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -676,7 +717,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -708,7 +750,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "خَلَقَ، مِثْلُ، صَبْرْ"
@@ -721,7 +764,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "يُخْرِجُ، إِذْ، مَطَرْ"
@@ -741,6 +785,7 @@
   "примечание": {
     "ru": "Тренировочный вариант без проверки голосом. Контрольной К1 он не засчитывается.",
     "kk": "Дауыспен тексерусіз жаттығу нұсқасы. Ол Б1 бақылауы ретінде есептелмейді.",
-    "uz": "Ovoz bilan tekshiruvsiz mashq varianti. U K1 nazorati sifatida hisobga olinmaydi."
+    "uz": "Ovoz bilan tekshiruvsiz mashq varianti. U K1 nazorati sifatida hisobga olinmaydi.",
+    "en": "A practice version without voice check. It does not count as checkpoint K1."
   }
 }

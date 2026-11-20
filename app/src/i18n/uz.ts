@@ -26,6 +26,7 @@ export const uz: Record<КлючСтроки, string> = {
   'язык.ru': 'Русский',
   'язык.kk': 'Қазақша',
   'язык.uz': 'Oʻzbekcha',
+  'язык.en': 'English',
 
   'плашка.урок': 'Prototip. Dars qoralamasi — ustoz tekshiruvidan oʻtmoqda',
   'плашка.общая': 'Prototip: ovozni SI hali tekshirmaydi',
@@ -95,7 +96,7 @@ export const uz: Record<КлючСтроки, string> = {
 
   'урок.неНайден': 'Dars topilmadi.',
 
-  'оПроекте.казахский': 'Qozoqcha va oʻzbekcha matnlar — til sohibi muharriri uchun qoralama.',
+  'оПроекте.казахский': 'Qozoqcha, oʻzbekcha va inglizcha matnlar — til sohibi muharriri uchun qoralama.',
   'оПроекте.версияКонтента': 'Darslar versiyasi: {версия} ({статус})',
   'оПроекте.удалитьДанные': 'Shu qurilmadagi natijalarimni oʻchirish',
   'оПроекте.данныеУдалены': 'Shu qurilmadagi natijalar oʻchirildi.',

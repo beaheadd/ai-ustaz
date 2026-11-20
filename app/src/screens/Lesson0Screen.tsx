@@ -84,6 +84,22 @@ const СЛОВАРЬ = создатьСловарь({
     'статус.подписан-советом': 'kengash imzolagan',
     наГлавную: 'Bosh sahifaga',
   },
+  en: {
+    понятно: 'Got it, continue',
+    далее: 'Next',
+    завершить: 'Finish lesson 0',
+    назадШаг: 'Previous step',
+    предупреждениеВступление: 'Before we start, please read:',
+    маршрутПояснение: 'The answer is needed only to suggest where to go after this lesson. It is not saved anywhere.',
+    намерениеПояснение: 'You can skip this.',
+    справаНалево: 'We read from here',
+    готовится: 'Lesson 0 is still being prepared. Check back later.',
+    версия: 'Lesson version: {версия} · {статус}',
+    'статус.черновик': 'draft',
+    'статус.проверен-устазом': 'reviewed by an ustaz',
+    'статус.подписан-советом': 'signed off by the council',
+    наГлавную: 'To the home screen',
+  },
 });
 
 type Шаг = { вид: 'предупреждение' } | { вид: 'маршрут' } | { вид: 'намерение' } | { вид: 'задание'; задание: Задание; индекс: number };

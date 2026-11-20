@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ز и م",
     "kk": "ز және م әріптері",
-    "uz": "ز va م harflari"
+    "uz": "ز va م harflari",
+    "en": "Letters ز and م"
   },
   "цель": {
     "ru": "Новые буквы и первые слова",
     "kk": "Жаңа әріптер және алғашқы сөздер",
-    "uz": "Yangi harflar va ilk soʻzlar"
+    "uz": "Yangi harflar va ilk soʻzlar",
+    "en": "New letters and first words"
   },
   "новое": [
     "ز",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "зай",
         "kk": "зай",
-        "uz": "zay"
+        "uz": "zay",
+        "en": "zay"
       },
       "формы": {
         "отдельная": "ز",
@@ -39,7 +42,8 @@
         {
           "ru": "ز на конце оглушается в «с»",
           "kk": "соңындағы ز «с» болып қатаңдайды",
-          "uz": "oxiridagi ز jarangsizlanib «s»ga aylanadi"
+          "uz": "oxiridagi ز jarangsizlanib «s»ga aylanadi",
+          "en": "ز at the end is devoiced to “s”"
         }
       ],
       "примеры": [
@@ -57,7 +61,8 @@
       "вопрос": {
         "ru": "Найдите букву «зай».",
         "kk": "«зай» әрпін табыңыз.",
-        "uz": "«zay» harfini toping."
+        "uz": "«zay» harfini toping.",
+        "en": "Find the letter “zay”."
       },
       "варианты": [
         {
@@ -77,7 +82,8 @@
       "пояснение": {
         "ru": "«зай» — это ز.",
         "kk": "«зай» — ز әрпі.",
-        "uz": "«zay» — bu ز."
+        "uz": "«zay» — bu ز.",
+        "en": "“zay” is ز."
       }
     },
     {
@@ -87,7 +93,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «зай»?",
         "kk": "«зай» әрпінде қандай белгі тұр?",
-        "uz": "«zay» harfida qanday belgi bor?"
+        "uz": "«zay» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “zay”?"
       },
       "показ": "زِ",
       "варианты": [
@@ -95,21 +102,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -117,7 +127,8 @@
       "пояснение": {
         "ru": "Короткая косая черта под буквой. Звук «и».",
         "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+        "en": "A short slanted stroke below the letter. The sound “i”."
       }
     },
     {
@@ -127,7 +138,8 @@
       "вопрос": {
         "ru": "Соберите слог: буква «зай» + дамма.",
         "kk": "Буын құраңыз: «зай» әрпі + дамма.",
-        "uz": "Boʻgʻin yigʻing: «zay» harfi + damma."
+        "uz": "Boʻgʻin yigʻing: «zay» harfi + damma.",
+        "en": "Build the syllable: the letter “zay” + damma."
       },
       "варианты": [
         {
@@ -144,7 +156,8 @@
       "пояснение": {
         "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
         "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+        "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+        "en": "A small loop above the letter, like a small و. The sound “u”."
       }
     },
     {
@@ -155,7 +168,8 @@
       "название": {
         "ru": "мим",
         "kk": "мим",
-        "uz": "mim"
+        "uz": "mim",
+        "en": "mim"
       },
       "формы": {
         "отдельная": "م",
@@ -181,7 +195,8 @@
       "вопрос": {
         "ru": "Найдите букву «мим».",
         "kk": "«мим» әрпін табыңыз.",
-        "uz": "«mim» harfini toping."
+        "uz": "«mim» harfini toping.",
+        "en": "Find the letter “mim”."
       },
       "варианты": [
         {
@@ -201,7 +216,8 @@
       "пояснение": {
         "ru": "«мим» — это م.",
         "kk": "«мим» — م әрпі.",
-        "uz": "«mim» — bu م."
+        "uz": "«mim» — bu م.",
+        "en": "“mim” is م."
       }
     },
     {
@@ -211,7 +227,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «мим»?",
         "kk": "«мим» әрпінде қандай белгі тұр?",
-        "uz": "«mim» harfida qanday belgi bor?"
+        "uz": "«mim» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “mim”?"
       },
       "показ": "أَمْ",
       "варианты": [
@@ -219,28 +236,32 @@
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -248,7 +269,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -258,7 +280,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «мим».",
         "kk": "«мим» әрпінің соңғы түрін табыңыз.",
-        "uz": "«mim» harfining oxirgi shaklini toping."
+        "uz": "«mim» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “mim”."
       },
       "варианты": [
         {
@@ -282,7 +305,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -318,7 +342,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "زَ زِ زُ مَ مِ مُ"
@@ -331,7 +356,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -363,7 +389,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -379,7 +406,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "أَمْ مُرْ زُرْ"
@@ -392,7 +420,8 @@
       "подсказка": {
         "ru": "Лестница: читайте по ступеням — от слога к слову. Запишите каждую ступень.",
         "kk": "Баспалдақ: буыннан сөзге дейін саты-сатымен оқыңыз. Әр сатыны жазып алыңыз.",
-        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling."
+        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling.",
+        "en": "Ladder: read step by step — from the syllable to the word. Record each step."
       },
       "ступени": [
         {

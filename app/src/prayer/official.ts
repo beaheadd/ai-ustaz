@@ -120,14 +120,14 @@ export function временаИзТаблицы(таблица: Таблица�
   return итог;
 }
 
-export const ВЕДОМСТВО_ОФИЦИАЛЬНОЕ: Readonly<Record<ИсточникОфициальный, { ru: string; kk: string; uz: string }>> = {
-  dumk: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB' },
-  umuz: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасының', uz: 'Oʻzbekiston musulmonlari idorasi' },
+export const ВЕДОМСТВО_ОФИЦИАЛЬНОЕ: Readonly<Record<ИсточникОфициальный, { ru: string; kk: string; uz: string; en: string }>> = {
+  dumk: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB', en: 'SAMK' },
+  umuz: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасының', uz: 'Oʻzbekiston musulmonlari idorasi', en: 'the Muslim Board of Uzbekistan' },
 };
 
 /** «По данным ДУМК · обновлено 20.11.2026» / «ҚМДБ деректері бойынша · 20.11.2026 жаңартылды» /
- * «QMDB maʼlumotlari boʻyicha · 20.11.2026 yangilandi» (kk и uz — черновики). */
-export function подписьОфициального(src: ИсточникОфициальный, обновлено: string, язык: 'ru' | 'kk' | 'uz'): string {
+ * «QMDB maʼlumotlari boʻyicha · 20.11.2026 yangilandi» / «Per SAMK data · updated 20.11.2026» (kk, uz и en — черновики). */
+export function подписьОфициального(src: ИсточникОфициальный, обновлено: string, язык: 'ru' | 'kk' | 'uz' | 'en'): string {
   const р = ДАТА.exec(обновлено);
   const дата = р ? `${р[3]}.${р[2]}.${р[1]}` : обновлено;
   const в = ВЕДОМСТВО_ОФИЦИАЛЬНОЕ[src][язык];
@@ -135,8 +135,10 @@ export function подписьОфициального(src: ИсточникОф
   // «по правилу», а не «по данным» (ведущий, 20.11.2026). ДУМК — таблица скачана у ведомства: «по данным».
   if (src === 'umuz') {
     if (язык === 'uz') return `${в} qoidasi boʻyicha · ${дата} yangilandi`;
+    if (язык === 'en') return `Per ${в} rule · updated ${дата}`;
     return язык === 'kk' ? `${в} ережесі бойынша · ${дата} жаңартылды` : `По правилу ${в} · обновлено ${дата}`;
   }
   if (язык === 'uz') return `${в} maʼlumotlari boʻyicha · ${дата} yangilandi`;
+  if (язык === 'en') return `Per ${в} data · updated ${дата}`;
   return язык === 'kk' ? `${в} деректері бойынша · ${дата} жаңартылды` : `По данным ${в} · обновлено ${дата}`;
 }

@@ -114,6 +114,27 @@ const СЛОВАРЬ = создатьСловарь({
     сура: '{н}-sura',
     найдено: 'Topilgan suralar: {н}',
   },
+  en: {
+    продолжить: 'Continue reading',
+    продолжитьГде: '{сура}, ayah {аят}',
+    поиск: 'Number, name or 2:255',
+    поискПодпись: 'Find a surah or go to an ayah',
+    перейти: 'Open {сура}:{аят}',
+    перейтиПодпись: '{название}, ayah {аят}',
+    нетАята: 'Surah {сура} has {аятов}. There is no such ayah.',
+    ничего: 'Nothing found. Try a surah number or “2:255”.',
+    перевод: "Translation of the meanings and tafsir — only from verified editions with the rights holder's permission, after review by an ustaz. In preparation.",
+    источник: 'Tanzil Uthmani v1.1 · verified by checksum. Ayah numbers are kept separate from the text.',
+    лицензии: 'Tanzil source and terms',
+    лицензииПояснение: 'tanzil.net, license and attribution',
+    как: 'How AI Ustaz explains a mistake',
+    какПояснение: 'An example on al-Fatiha — not a check of your reading',
+    кУрокам: 'Learn to read — to the lessons',
+    черновик: 'Surah names in Latin script — transliteration, draft: under review by an ustaz',
+    нет: 'The text did not pass verification against the verified database — not shown.',
+    сура: 'Surah {н}',
+    найдено: 'Surahs found: {н}',
+  },
 });
 
 export function Коран(_: ПропсыЭкрана<'коран'>) {

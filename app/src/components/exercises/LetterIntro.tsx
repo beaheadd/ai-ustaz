@@ -60,6 +60,18 @@ const СЛОВАРЬ = создатьСловарь({
     вниманию: 'Eʼtibor bering',
     примеры: 'Harakatlar bilan',
   },
+  en: {
+    буква: 'New letter',
+    отдельная: 'Isolated',
+    начальная: 'Initial',
+    срединная: 'Medial',
+    конечная: 'Final',
+    формы: 'Letter forms',
+    неСоединяется: 'This letter does not join to the next letter (on its left).',
+    подсказка: 'How to pronounce',
+    вниманию: 'Note',
+    примеры: 'With vowel marks',
+  },
 });
 
 /** Ряды сетки форм: справа налево (row-reverse) — «отдельно» справа сверху, как в книге. */

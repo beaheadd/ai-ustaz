@@ -48,6 +48,14 @@ const СЛОВАРЬ = создатьСловарь({
     давно: '30 kun oldin',
     сегодня: 'bugun',
   },
+  en: {
+    заголовок: 'Your study days',
+    пусто: 'A mark will appear on the day you finish a lesson.',
+    приватно: 'Visible only to you and stored only on this device. No streaks or rankings.',
+    полоска: 'Last 30 days, today on the right',
+    давно: '30 days ago',
+    сегодня: 'today',
+  },
 });
 
 export function ДниЗанятий({ testID = 'главная-дни-занятий' }: { testID?: string }) {

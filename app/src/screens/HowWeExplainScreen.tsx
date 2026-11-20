@@ -88,6 +88,27 @@ const СЛОВАРЬ = создатьСловарь({
     'статус.проверен-устазом': 'ustoz tekshirgan',
     'статус.подписан-советом': 'kengash imzolagan',
   },
+  en: {
+    заголовок: 'How we explain a mistake',
+    одно: 'One precise explanation',
+    шаги: 'Where · What was heard · How it should be · Rule · What to do',
+    правилаЗаголовок: 'Where the texts come from',
+    черновик: 'Draft — under review by an ustaz',
+    вступление:
+      'When the voice check arrives, AI Ustaz will show not just a “mistake” but one precise explanation: where, what was heard, how it should be, which rule and what to do.',
+    правила:
+      'Explanation texts come only from the approved base of rules and templates; AI does not make them up on the fly. Not sure — no scolding: poor sound is not a mistake, and we do not scold for a rule you have not studied yet.',
+    сура: 'Surah al-Fatiha (1:1–7)',
+    подсказка: 'Tap a highlighted word — an example explanation will open.',
+    примеры: 'All examples',
+    гдеСлово: '{сура}:{аят}, word {слово}',
+    словоПодпись: 'Ayah {аят}, word {слово}: example explanation',
+    источник: 'Quran text — Tanzil Uthmani v1.1, verbatim. Explanations — the AI Ustaz mistake catalogue, version {версия} · {статус}.',
+    нетДанных: 'The example has not loaded yet. Refresh the page.',
+    'статус.черновик': 'draft, under review by an ustaz',
+    'статус.проверен-устазом': 'reviewed by an ustaz',
+    'статус.подписан-советом': 'signed off by the council',
+  },
 });
 
 export function КакОбъясняем(_: ПропсыЭкрана<'какОбъясняем'>) {

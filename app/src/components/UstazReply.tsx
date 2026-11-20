@@ -28,6 +28,7 @@ const СЛОВАРЬ = создатьСловарь({
   ru: { подпись: 'AI Ustaz · ИИ-наставник', предупреждение: 'Проверка ИИ может ошибаться и не заменяет устаза.' },
   kk: { подпись: 'AI Ustaz · ЖИ-тәлімгер', предупреждение: 'ЖИ тексеруі қателесуі мүмкін және ұстазды алмастырмайды.' },
   uz: { подпись: 'AI Ustaz · SI-murabbiy', предупреждение: 'SI tekshiruvi xato qilishi mumkin va ustozning oʻrnini bosmaydi.' },
+  en: { подпись: 'AI Ustaz · AI mentor', предупреждение: 'The AI check can make mistakes and does not replace an ustaz.' },
 });
 
 export type СвойстваРеплики = {

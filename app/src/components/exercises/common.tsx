@@ -130,6 +130,27 @@ export const СЛОВАРЬ_УПРАЖНЕНИЙ = создатьСловарь(
     кари: 'Qori ovozi namuna yozib olingandan keyin qoʻshiladi. Ovozni SI hali tekshirmaydi.',
     кариКнопка: 'Qorini tinglash',
   },
+  en: {
+    верно: 'Correct!',
+    вернаяВторая: 'Now it is correct. The lesson result counts the first attempt.',
+    этоНоНужно: 'This is {выбрано}, but {нужно} is needed.',
+    этоЕщёРаз: 'This is {выбрано}. Take another look.',
+    неТоЕщёРаз: 'This is a different option. Take another look.',
+    сравните: 'Compare:',
+    вашВыбор: 'Your choice',
+    нужноПодпись: 'Needed',
+    вариант: 'Option {номер}: {что}',
+    вариантВерный: 'correct answer',
+    вариантВыбран: 'your choice',
+    сураАят: 'Surah {сура}, ayah {аят}',
+    сураАятСлова: 'Surah {сура}, ayah {аят}, words {с}–{по}',
+    источникКорана: 'Quran text — Tanzil Uthmani v1.1, verbatim.',
+    подсказкаПоказать: 'Show hint',
+    подсказкаСкрыть: 'Hide hint',
+    слоги: 'By syllables',
+    кари: 'The qari voice will appear once the reference recording is made. There is no AI voice check yet.',
+    кариКнопка: 'Listen to the qari',
+  },
 });
 
 /** Кегли учебного арабского (как РАЗМЕРЫ в ArabicText.tsx). */

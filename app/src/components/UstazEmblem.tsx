@@ -54,6 +54,7 @@ const СЛОВАРЬ = создатьСловарь({
   ru: { подпись: 'AI Ustaz, ИИ-наставник', запись: 'AI Ustaz, ИИ-наставник: идёт запись' },
   kk: { подпись: 'AI Ustaz, ЖИ-тәлімгер', запись: 'AI Ustaz, ЖИ-тәлімгер: жазылып жатыр' },
   uz: { подпись: 'AI Ustaz, SI-murabbiy', запись: 'AI Ustaz, SI-murabbiy: yozib olinmoqda' },
+  en: { подпись: 'AI Ustaz, AI mentor', запись: 'AI Ustaz, AI mentor: recording' },
 });
 
 export function ЭмблемаУстаза({ размер = 48, состояние = 'покой', вариант = 'авто', подпись, стиль, testID }: СвойстваЭмблемы) {

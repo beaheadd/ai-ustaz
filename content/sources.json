@@ -34,7 +34,7 @@
     },
     {
       "id": "tanzil-metadata",
-      "что": "Страницы мединского мусхафа (604), джузы и четверти хизба — только номера «сура:аят» для видов чтения «Страница мусхафа» (app/public/quran/tajweed/index — tools/quran/build_tajweed.py). Текста Корана в файле нет.",
+      "что": "Страницы мединского мусхафа (604), джузы и четверти хизба — только номера «сура:аят» для видов чтения «Страница мусхафа» (app/public/quran/tajweed/index — tools/quran/build_tajweed.py); поле tname — английская транслитерация названий сур для интерфейса en (индекс Корана, tools/quran/quran_common.py). Текста Корана в файле нет.",
       "название": "Tanzil Quran Metadata (ver 1.0)",
       "лицензия": "CC BY 3.0",
       "ссылка": "tanzil.net/docs/quran_metadata",
@@ -45,11 +45,11 @@
       "sha256Файла": "9e9930c592aaa34b5c7a79ff4e99ffdc782263a266090bfe2c49e4ed4bac4ca4",
       "загружено": "2026-11-20",
       "параметрыЗагрузки": "tanzil.net/res/text/metadata/quran-data.js",
-      "примечание": "Файл хранится побайтно (sha256 — tools/quran/build_tajweed.py ЭТАЛОН_SHA256_МЕТАДАННЫХ). Берём только Page, Juz, HizbQaurter; Sajda (с пометками фикха) не используем — знак ۩ есть в самом тексте. Разметку таджвида не содержит: её строят свои правила tools/quran/tajweed_rules.py."
+      "примечание": "Файл хранится побайтно (sha256 — tools/quran/build_tajweed.py ЭТАЛОН_SHA256_МЕТАДАННЫХ). Берём только Page, Juz, HizbQaurter и tname из Sura; Sajda (с пометками фикха) не используем — знак ۩ есть в самом тексте. Разметку таджвида не содержит: её строят свои правила tools/quran/tajweed_rules.py."
     },
     {
       "id": "quran-muaalem-notice",
-      "что": "ИИ-предупреждение (lesson0.json): ar и ru — официальные тексты; kk и uz — наш перевод, черновик",
+      "что": "ИИ-предупреждение (lesson0.json): ar, ru и en — официальные тексты; kk и uz — наш перевод, черновик",
       "название": "quran-muaalem NOTICE",
       "лицензия": "QML-1.0",
       "ссылка": "github.com/obadx/quran-muaalem — файл NOTICE",

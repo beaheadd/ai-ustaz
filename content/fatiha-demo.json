@@ -3,22 +3,26 @@
   "название": {
     "ru": "Как AI Ustaz объясняет ошибку",
     "kk": "AI Ustaz қатені қалай түсіндіреді",
-    "uz": "AI Ustaz xatoni qanday tushuntiradi"
+    "uz": "AI Ustaz xatoni qanday tushuntiradi",
+    "en": "How AI Ustaz explains a mistake"
   },
   "пометка": {
     "ru": "Пример, не проверка вашего чтения. Так AI Ustaz будет объяснять ошибку, когда появится проверка голосом.",
     "kk": "Бұл — мысал, сіздің оқуыңызды тексеру емес. Дауыспен тексеру пайда болғанда, AI Ustaz қатені осылай түсіндіреді.",
-    "uz": "Bu — namuna, oʻqishingizni tekshirish emas. Ovoz bilan tekshirish paydo boʻlganda, AI Ustaz xatoni shunday tushuntiradi."
+    "uz": "Bu — namuna, oʻqishingizni tekshirish emas. Ovoz bilan tekshirish paydo boʻlganda, AI Ustaz xatoni shunday tushuntiradi.",
+    "en": "An example, not a check of your reading. This is how AI Ustaz will explain a mistake once the voice check arrives."
   },
   "пометкаИИ": {
     "ru": "Разбор подготовлен ИИ, он может ошибаться.",
     "kk": "Талдауды ЖИ дайындады, ол қателесуі мүмкін.",
-    "uz": "Tahlilni SI tayyorlagan, u xato qilishi mumkin."
+    "uz": "Tahlilni SI tayyorlagan, u xato qilishi mumkin.",
+    "en": "The analysis was prepared by AI and can be wrong."
   },
   "пометкаУровней": {
     "ru": "Уровни — целевые. С подключением проверки все замечания сначала идут как «Проверьте себя»; «Ошибка» включается код за кодом, когда проверка покажет себя надёжной.",
     "kk": "Деңгейлер — мақсатты. Тексеру қосылғанда барлық ескерту алдымен «Өзіңізді тексеріңіз» түрінде шығады; «Қате» тексеру сенімді екені дәлелденгенде, код бойынша біртіндеп қосылады.",
-    "uz": "Darajalar — maqsadli. Tekshiruv ulanganda barcha izohlar avval «Oʻzingizni tekshiring» sifatida chiqadi; «Xato» tekshiruv ishonchli ekani isbotlanganda, kod-ma-kod yoqiladi."
+    "uz": "Darajalar — maqsadli. Tekshiruv ulanganda barcha izohlar avval «Oʻzingizni tekshiring» sifatida chiqadi; «Xato» tekshiruv ishonchli ekani isbotlanganda, kod-ma-kod yoqiladi.",
+    "en": "The levels are target levels. When the check is connected, all remarks first come as “Check yourself”; “Mistake” is switched on code by code once the check proves reliable."
   },
   "аяты": [
     {
@@ -91,19 +95,22 @@
       "названиеУровня": {
         "ru": "Ошибка",
         "kk": "Қате",
-        "uz": "Xato"
+        "uz": "Xato",
+        "en": "Mistake"
       },
       "услышано": "аль-хамду",
       "нужно": "аль-х̣амду",
       "правило": {
         "ru": "Это важно: от этой буквы зависит смысл слова.",
         "kk": "Бұл маңызды: сөздің мағынасы осы әріпке байланысты.",
-        "uz": "Bu muhim: soʻzning maʼnosi shu harfga bogʻliq."
+        "uz": "Bu muhim: soʻzning maʼnosi shu harfga bogʻliq.",
+        "en": "This matters: the meaning of the word depends on this letter."
       },
       "чтоСделать": {
         "ru": "Гладкий выдох из середины горла, без хрипа — как будто дышите на стекло очков.",
         "kk": "Тамақтың ортасынан шығатын жұмсақ дем, қырылсыз — көзілдірік әйнегіне дем үргендей.",
-        "uz": "Tomoqning oʻrtasidan silliq nafas, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek."
+        "uz": "Tomoqning oʻrtasidan silliq nafas, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek.",
+        "en": "A smooth breath from the middle of the throat, without rasping — as if you were breathing on your glasses."
       },
       "лестница": [
         "حَ",
@@ -113,7 +120,8 @@
       "текст": {
         "ru": "В слове ٱلْحَمْدُ буква х̣а (ح) прозвучала как «х»: «аль-хамду». Гладкий выдох из середины горла, без хрипа — как будто дышите на стекло очков. Повторите: حَ — حَمْ — ٱلْحَمْدُ.",
         "kk": "ح әрпі ٱلْحَمْدُ сөзінде «х» болып естілді: «аль-хамду». Тамақтың ортасынан шығатын жұмсақ дем, қырылсыз — көзілдірік әйнегіне дем үргендей. Қайталаңыз: حَ — حَمْ — ٱلْحَمْدُ.",
-        "uz": "Ushbu ٱلْحَمْدُ soʻzida ḥo (ح) harfi «x» boʻlib eshitildi: «al-xamdu». Tomoqning oʻrtasidan silliq nafas, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek. Takrorlang: حَ — حَمْ — ٱلْحَمْدُ."
+        "uz": "Ushbu ٱلْحَمْدُ soʻzida ḥo (ح) harfi «x» boʻlib eshitildi: «al-xamdu». Tomoqning oʻrtasidan silliq nafas, xirillashsiz — xuddi koʻzoynak oynasiga nafas purkayotgandek. Takrorlang: حَ — حَمْ — ٱلْحَمْدُ.",
+        "en": "In the word ٱلْحَمْدُ the letter ḥa (ح) sounded like “kh”: “al-khamdu”. A smooth breath from the middle of the throat, without rasping — as if you were breathing on your glasses. Repeat: حَ — حَمْ — ٱلْحَمْدُ."
       }
     },
     {
@@ -128,19 +136,22 @@
       "названиеУровня": {
         "ru": "Ошибка",
         "kk": "Қате",
-        "uz": "Xato"
+        "uz": "Xato",
+        "en": "Mistake"
       },
       "услышано": "аламӣн",
       "нужно": null,
       "правило": {
         "ru": "Без буквы ‘айн (ع) слово меняется.",
         "kk": "ع әрпінсіз сөз өзгереді.",
-        "uz": "Ayn (ع) harfisiz soʻz oʻzgaradi."
+        "uz": "Ayn (ع) harfisiz soʻz oʻzgaradi.",
+        "en": "Without the letter ʿayn (ع) the word changes."
       },
       "чтоСделать": {
         "ru": "Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием.",
         "kk": "Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады.",
-        "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi."
+        "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi.",
+        "en": "A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort."
       },
       "лестница": [
         "عَا",
@@ -150,7 +161,8 @@
       "текст": {
         "ru": "В слове ٱلْعَـٰلَمِينَ не прозвучала буква ‘айн (ع) — получилось «аламӣн», а без неё слово меняется. Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Повторите: عَا — ٱلْعَا — ٱلْعَـٰلَمِينَ.",
         "kk": "ٱلْعَـٰلَمِينَ сөзінде ع әрпі естілмеді — «аламӣн» болып шықты, ал онсыз сөз өзгереді. Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Қайталаңыз: عَا — ٱلْعَا — ٱلْعَـٰلَمِينَ.",
-        "uz": "Ushbu ٱلْعَـٰلَمِينَ soʻzida ayn (ع) harfi eshitilmadi — «alamīn» boʻlib qoldi, usiz esa soʻz oʻzgaradi. Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Takrorlang: عَا — ٱلْعَا — ٱلْعَـٰلَمِينَ."
+        "uz": "Ushbu ٱلْعَـٰلَمِينَ soʻzida ayn (ع) harfi eshitilmadi — «alamīn» boʻlib qoldi, usiz esa soʻz oʻzgaradi. Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Takrorlang: عَا — ٱلْعَا — ٱلْعَـٰلَمِينَ.",
+        "en": "In the word ٱلْعَـٰلَمِينَ the letter ʿayn (ع) was not heard — it became “alamīn”, and without it the word changes. A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. Repeat: عَا — ٱلْعَا — ٱلْعَـٰلَمِينَ."
       }
     },
     {
@@ -165,30 +177,35 @@
       "названиеУровня": {
         "ru": "Проверьте себя",
         "kk": "Өзіңізді тексеріңіз",
-        "uz": "Oʻzingizni tekshiring"
+        "uz": "Oʻzingizni tekshiring",
+        "en": "Check yourself"
       },
       "услышано": "малики",
       "нужно": "мā",
       "правило": {
         "ru": "Мадд табии: «мā» тянется на 2 счёта.",
         "kk": "Табиғи мәд: «мā» 2 харакатқа созылады.",
-        "uz": "Tabiiy madd: «mā» 2 harakatga choʻziladi."
+        "uz": "Tabiiy madd: «mā» 2 harakatga choʻziladi.",
+        "en": "Madd tabi'i: “mā” is lengthened to 2 counts."
       },
       "чтоСделать": {
         "ru": "Тяните на 2 счёта, как два ваших коротких гласных подряд.",
         "kk": "Екі қысқа дауыстыңыз қатар тұрғандай, 2 харакатқа созыңыз.",
-        "uz": "Ikkita qisqa unlingiz ketma-ket kelgandek, 2 harakatga choʻzing."
+        "uz": "Ikkita qisqa unlingiz ketma-ket kelgandek, 2 harakatga choʻzing.",
+        "en": "Lengthen it to 2 counts, like two of your short vowels in a row."
       },
       "лестница": [],
       "текст": {
         "ru": "Проверьте себя: в слове مَـٰلِكِ здесь мадд — тяните на 2 счёта, как два ваших коротких гласных подряд: «мā». В чтении Хафс здесь долгий слог.",
         "kk": "Өзіңізді тексеріңіз: مَـٰلِكِ сөзінде мұнда мәд бар — екі қысқа дауыстыңыз қатар тұрғандай, 2 харакатқа созыңыз: «мā». Хафс оқуында мұнда ұзын буын.",
-        "uz": "Oʻzingizni tekshiring: مَـٰلِكِ soʻzida bu yerda madd bor — ikkita qisqa unlingiz ketma-ket kelgandek, 2 harakatga choʻzing: «mā». Hafs qiroatida bu yerda boʻgʻin uzun."
+        "uz": "Oʻzingizni tekshiring: مَـٰلِكِ soʻzida bu yerda madd bor — ikkita qisqa unlingiz ketma-ket kelgandek, 2 harakatga choʻzing: «mā». Hafs qiroatida bu yerda boʻgʻin uzun.",
+        "en": "Check yourself: in the word مَـٰلِكِ there is a madd here — lengthen it to 2 counts, like two of your short vowels in a row: “mā”. In the Hafs reading the syllable here is long."
       },
       "примечание": {
         "ru": "Короткое «малики» — законное чтение других риваятов, поэтому «другое слово» здесь не говорим. В чтении Хафс здесь долгий слог.",
         "kk": "Қысқа «малики» — басқа риуаяттардың заңды оқылуы, сондықтан мұнда «басқа сөз» демейміз. Хафс оқуында мұнда ұзын буын.",
-        "uz": "Qisqa «maliki» — boshqa rivoyatlarning joiz qiroati, shuning uchun bu yerda «boshqa soʻz» demaymiz. Hafs qiroatida bu yerda boʻgʻin uzun."
+        "uz": "Qisqa «maliki» — boshqa rivoyatlarning joiz qiroati, shuning uchun bu yerda «boshqa soʻz» demaymiz. Hafs qiroatida bu yerda boʻgʻin uzun.",
+        "en": "The short “maliki” is a valid reading of other riwayahs, so we do not say “a different word” here. In the Hafs reading the syllable here is long."
       }
     },
     {
@@ -203,25 +220,29 @@
       "названиеУровня": {
         "ru": "Проверьте себя",
         "kk": "Өзіңізді тексеріңіз",
-        "uz": "Oʻzingizni tekshiring"
+        "uz": "Oʻzingizni tekshiring",
+        "en": "Check yourself"
       },
       "услышано": "на’буду",
       "нужно": null,
       "правило": {
         "ru": "‘Айн — не пауза в горле, а звонкий звук.",
         "kk": "‘Айн — тамақтағы үзіліс емес, ұяң дыбыс.",
-        "uz": "Ayn — tomoqdagi pauza emas, jarangli tovush."
+        "uz": "Ayn — tomoqdagi pauza emas, jarangli tovush.",
+        "en": "ʿAyn is not a pause in the throat but a voiced sound."
       },
       "чтоСделать": {
         "ru": "Послушайте кари и сравните со своей записью. Голос кари появится после записи эталона.",
         "kk": "Қариді тыңдап, өз жазбаңызбен салыстырыңыз. Қари дауысы эталон жазылғаннан кейін қосылады.",
-        "uz": "Qorini tinglang va oʻz yozuvingiz bilan solishtiring. Qori ovozi namuna yozib olingandan keyin qoʻshiladi."
+        "uz": "Qorini tinglang va oʻz yozuvingiz bilan solishtiring. Qori ovozi namuna yozib olingandan keyin qoʻshiladi.",
+        "en": "Listen to the qari and compare with your recording. The qari voice will appear once the reference recording is made."
       },
       "лестница": [],
       "текст": {
         "ru": "Проверьте себя: послушайте, как кари читает نَعْبُدُ, и сравните со своей записью. ‘Айн — не пауза в горле, а звонкий звук: горло сжимается, и звук идёт с усилием.",
         "kk": "Өзіңізді тексеріңіз: қаридің نَعْبُدُ сөзін қалай оқитынын тыңдап, өз жазбаңызбен салыстырыңыз. ‘Айн — тамақтағы үзіліс емес, ұяң дыбыс: тамақ қысылып, дыбыс күшпен шығады.",
-        "uz": "Oʻzingizni tekshiring: qori نَعْبُدُ soʻzini qanday oʻqishini tinglang va oʻz yozuvingiz bilan solishtiring. Ayn — tomoqdagi pauza emas, jarangli tovush: tomoq qisiladi va tovush kuch bilan chiqadi."
+        "uz": "Oʻzingizni tekshiring: qori نَعْبُدُ soʻzini qanday oʻqishini tinglang va oʻz yozuvingiz bilan solishtiring. Ayn — tomoqdagi pauza emas, jarangli tovush: tomoq qisiladi va tovush kuch bilan chiqadi.",
+        "en": "Check yourself: listen to how the qari reads نَعْبُدُ and compare with your recording. ʿAyn is not a pause in the throat but a voiced sound: the throat tightens and the sound comes out with effort."
       }
     },
     {
@@ -236,19 +257,22 @@
       "названиеУровня": {
         "ru": "Ошибка",
         "kk": "Қате",
-        "uz": "Xato"
+        "uz": "Xato",
+        "en": "Mistake"
       },
       "услышано": "иддина",
       "нужно": null,
       "правило": {
         "ru": "Без буквы һа (ه) слово меняется.",
         "kk": "ه әрпінсіз сөз өзгереді.",
-        "uz": "Ha (ه) harfisiz soʻz oʻzgaradi."
+        "uz": "Ha (ه) harfisiz soʻz oʻzgaradi.",
+        "en": "Without the letter ha (ه) the word changes."
       },
       "чтоСделать": {
         "ru": "Лёгкий выдох из глубины горла; после него сразу «ди».",
         "kk": "Терең тамақтан шығатын жеңіл дем; одан кейін бірден «ди».",
-        "uz": "Tomoq tubidan yengil nafas; undan keyin darhol «di»."
+        "uz": "Tomoq tubidan yengil nafas; undan keyin darhol «di».",
+        "en": "A light breath from deep in the throat; right after it, “di”."
       },
       "лестница": [
         "إِهْ",
@@ -258,7 +282,8 @@
       "текст": {
         "ru": "В слове ٱهْدِنَا не прозвучала буква һа (ه) — получилось «иддина». Лёгкий выдох из глубины горла; после него сразу «ди». Повторите: إِهْ — ٱهْدِ — ٱهْدِنَا.",
         "kk": "ٱهْدِنَا сөзінде ه әрпі естілмеді — «иддина» болып шықты. Терең тамақтан шығатын жеңіл дем; одан кейін бірден «ди». Қайталаңыз: إِهْ — ٱهْدِ — ٱهْدِنَا.",
-        "uz": "Ushbu ٱهْدِنَا soʻzida ha (ه) harfi eshitilmadi — «iddina» boʻlib qoldi. Tomoq tubidan yengil nafas; undan keyin darhol «di». Takrorlang: إِهْ — ٱهْدِ — ٱهْدِنَا."
+        "uz": "Ushbu ٱهْدِنَا soʻzida ha (ه) harfi eshitilmadi — «iddina» boʻlib qoldi. Tomoq tubidan yengil nafas; undan keyin darhol «di». Takrorlang: إِهْ — ٱهْدِ — ٱهْدِنَا.",
+        "en": "In the word ٱهْدِنَا the letter ha (ه) was not heard — it became “iddina”. A light breath from deep in the throat; right after it, “di”. Repeat: إِهْ — ٱهْدِ — ٱهْدِنَا."
       }
     },
     {
@@ -273,19 +298,22 @@
       "названиеУровня": {
         "ru": "Ошибка",
         "kk": "Қате",
-        "uz": "Xato"
+        "uz": "Xato",
+        "en": "Mistake"
       },
       "услышано": "-ту",
       "нужно": "-та",
       "правило": {
         "ru": "От огласовки здесь зависит смысл: меняется лицо — «Ты» превращается в «я».",
         "kk": "Мұнда мағына харакатқа байланысты: «Сен» деген «мен» болып өзгереді.",
-        "uz": "Bu yerda maʼno harakatga bogʻliq: shaxs oʻzgaradi — «Sen» «men»ga aylanadi."
+        "uz": "Bu yerda maʼno harakatga bogʻliq: shaxs oʻzgaradi — «Sen» «men»ga aylanadi.",
+        "en": "The meaning depends on the vowel mark here: the person changes — “You” turns into “I”."
       },
       "чтоСделать": {
         "ru": "На букве та (ت) — фатха: «-та».",
         "kk": "ت әрпінде фатха бар: «-та».",
-        "uz": "To (ت) harfida — fatha: «-ta»."
+        "uz": "To (ت) harfida — fatha: «-ta».",
+        "en": "On the letter ta (ت) there is a fatha: “-ta”."
       },
       "лестница": [
         "تَ",
@@ -295,12 +323,14 @@
       "текст": {
         "ru": "В слове أَنْعَمْتَ на букве та (ت) — фатха («-та»), а прозвучало «-ту». От огласовки здесь зависит смысл: меняется лицо — «Ты» превращается в «я». Повторите: تَ — عَمْتَ — أَنْعَمْتَ.",
         "kk": "أَنْعَمْتَ сөзінде ت әрпінде фатха бар («-та»), ал сізде «-ту» болып естілді. Мұнда мағына харакатқа байланысты: «Сен» деген «мен» болып өзгереді. Қайталаңыз: تَ — عَمْتَ — أَنْعَمْتَ.",
-        "uz": "Ushbu أَنْعَمْتَ soʻzida to (ت) harfida — fatha («-ta»), eshitilgani esa «-tu». Bu yerda maʼno harakatga bogʻliq: shaxs oʻzgaradi — «Sen» «men»ga aylanadi. Takrorlang: تَ — عَمْتَ — أَنْعَمْتَ."
+        "uz": "Ushbu أَنْعَمْتَ soʻzida to (ت) harfida — fatha («-ta»), eshitilgani esa «-tu». Bu yerda maʼno harakatga bogʻliq: shaxs oʻzgaradi — «Sen» «men»ga aylanadi. Takrorlang: تَ — عَمْتَ — أَنْعَمْتَ.",
+        "en": "In the word أَنْعَمْتَ the letter ta (ت) has a fatha (“-ta”), but “-tu” was heard. The meaning depends on the vowel mark here: the person changes — “You” turns into “I”. Repeat: تَ — عَمْتَ — أَنْعَمْتَ."
       },
       "примечание": {
         "ru": "Перевод смысла в объяснении — только по карточке, проверенной устазом; до проверки — черновик.",
         "kk": "Түсіндірмедегі мағына аудармасы — тек ұстаз тексерген карточка бойынша; тексерілгенге дейін — жоба.",
-        "uz": "Tushuntirishdagi maʼno tarjimasi — faqat ustoz tekshirgan kartochka boʻyicha; tekshiruvgacha — qoralama."
+        "uz": "Tushuntirishdagi maʼno tarjimasi — faqat ustoz tekshirgan kartochka boʻyicha; tekshiruvgacha — qoralama.",
+        "en": "The translation of the meaning in the explanation comes only from a card reviewed by an ustaz; until the review it is a draft."
       }
     },
     {
@@ -315,30 +345,35 @@
       "названиеУровня": {
         "ru": "Ошибка",
         "kk": "Қате",
-        "uz": "Xato"
+        "uz": "Xato",
+        "en": "Mistake"
       },
       "услышано": null,
       "нужно": null,
       "правило": {
         "ru": "Мадд лязим: после алифа идёт буква с шаддой — тянется на 6 счётов.",
         "kk": "Ләзим мәд: алифтен кейін шәддалы әріп келеді — 6 харакатқа созылады.",
-        "uz": "Lozim madd: alifdan keyin shaddali harf keladi — 6 harakatga choʻziladi."
+        "uz": "Lozim madd: alifdan keyin shaddali harf keladi — 6 harakatga choʻziladi.",
+        "en": "Madd lazim: after the alif comes a letter with shaddah — it is lengthened to 6 counts."
       },
       "чтоСделать": {
         "ru": "В упражнении тяните, пока полоска не заполнится.",
         "kk": "Жаттығуда жолақ толғанша созыңыз.",
-        "uz": "Mashqda chiziq toʻlguncha choʻzing."
+        "uz": "Mashqda chiziq toʻlguncha choʻzing.",
+        "en": "In the exercise, hold it until the bar fills up."
       },
       "лестница": [],
       "текст": {
         "ru": "Здесь мадд лязим: после алифа идёт буква с шаддой, тянется на 6 счётов. У вас около 2. В упражнении тяните, пока полоска не заполнится.",
         "kk": "Мұнда ләзим мәд: алифтен кейін шәддалы әріп келеді, 6 харакатқа созылады. Сізде шамамен 2. Жаттығуда жолақ толғанша созыңыз.",
-        "uz": "Bu yerda lozim madd: alifdan keyin shaddali harf keladi, 6 harakatga choʻziladi. Sizda taxminan 2. Mashqda chiziq toʻlguncha choʻzing."
+        "uz": "Bu yerda lozim madd: alifdan keyin shaddali harf keladi, 6 harakatga choʻziladi. Sizda taxminan 2. Mashqda chiziq toʻlguncha choʻzing.",
+        "en": "Here there is madd lazim: after the alif comes a letter with shaddah, it is lengthened to 6 counts. Yours is about 2. In the exercise, hold it until the bar fills up."
       },
       "примечание": {
         "ru": "«Ошибка» здесь — после урока 31; до него — «Проверьте себя» с подсказкой «разберём в уроке 31».",
         "kk": "Мұнда «Қате» — 31-сабақтан кейін; оған дейін — «Өзіңізді тексеріңіз» және «31-сабақта өтеміз» деген кеңес.",
-        "uz": "Bu yerda «Xato» — 31-darsdan keyin; undan oldin — «Oʻzingizni tekshiring» va «31-darsda koʻrib chiqamiz» degan maslahat."
+        "uz": "Bu yerda «Xato» — 31-darsdan keyin; undan oldin — «Oʻzingizni tekshiring» va «31-darsda koʻrib chiqamiz» degan maslahat.",
+        "en": "“Mistake” here — after lesson 31; before it — “Check yourself” with the hint “we will cover this in lesson 31”."
       }
     }
   ],

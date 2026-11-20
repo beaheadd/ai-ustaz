@@ -197,7 +197,7 @@ export function видУпражнения(задание: Задание): Ви
 
 export function локально(текст: ЛокализованныйТекст | undefined, язык: Язык): string {
   if (!текст) return '';
-  // Нет перевода на язык интерфейса (uz добавлен позже, 20.11.2026) — русский, не ключ.
+  // Нет перевода на язык интерфейса (uz и en добавлены позже, 20.11.2026) — русский, не ключ.
   return текст[язык] || текст.ru || текст.kk || '';
 }
 
@@ -214,6 +214,7 @@ function этоЛокализованный(з: unknown): з is Локализо
     typeof т.ru === 'string' &&
     typeof т.kk === 'string' &&
     (т.uz === undefined || typeof т.uz === 'string') &&
+    (т.en === undefined || typeof т.en === 'string') &&
     (т.ru.length > 0 || т.kk.length > 0)
   );
 }

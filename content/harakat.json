@@ -8,23 +8,27 @@
     "название": {
       "ru": "фатха",
       "kk": "фатха",
-      "uz": "fatha"
+      "uz": "fatha",
+      "en": "fatha"
     },
     "звук": {
       "ru": "«а»",
       "kk": "«а»",
-      "uz": "«a»"
+      "uz": "«a»",
+      "en": "“a”"
     },
     "описание": {
       "ru": "Короткая косая черта над буквой. Звук «а».",
       "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-      "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+      "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+      "en": "A short slanted stroke above the letter. The sound “a”."
     },
     "урок": 1,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -36,23 +40,27 @@
     "название": {
       "ru": "кясра",
       "kk": "кәсра",
-      "uz": "kasra"
+      "uz": "kasra",
+      "en": "kasra"
     },
     "звук": {
       "ru": "«и»",
       "kk": "«и»",
-      "uz": "«i»"
+      "uz": "«i»",
+      "en": "“i”"
     },
     "описание": {
       "ru": "Короткая косая черта под буквой. Звук «и».",
       "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-      "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+      "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+      "en": "A short slanted stroke below the letter. The sound “i”."
     },
     "урок": 1,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -64,23 +72,27 @@
     "название": {
       "ru": "дамма",
       "kk": "дамма",
-      "uz": "damma"
+      "uz": "damma",
+      "en": "damma"
     },
     "звук": {
       "ru": "«у»",
       "kk": "«у»",
-      "uz": "«u»"
+      "uz": "«u»",
+      "en": "“u”"
     },
     "описание": {
       "ru": "Маленькая петелька над буквой, похожая на маленькую و. Звук «у».",
       "kk": "Әріптің үстіндегі кішкентай ілмек, кішкентай و әрпіне ұқсайды. Дыбысы — «у».",
-      "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u»."
+      "uz": "Harf ustidagi kichik ilmoq, kichkina و harfiga oʻxshaydi. Tovushi — «u».",
+      "en": "A small loop above the letter, like a small و. The sound “u”."
     },
     "урок": 1,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -92,23 +104,27 @@
     "название": {
       "ru": "сукун",
       "kk": "сукун",
-      "uz": "sukun"
+      "uz": "sukun",
+      "en": "sukun"
     },
     "звук": {
       "ru": "нет гласного",
       "kk": "дауысты жоқ",
-      "uz": "unli yoʻq"
+      "uz": "unli yoʻq",
+      "en": "no vowel"
     },
     "описание": {
       "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
       "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-      "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+      "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+      "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
     },
     "урок": 1,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -120,23 +136,27 @@
     "название": {
       "ru": "шадда",
       "kk": "шәдда",
-      "uz": "shadda"
+      "uz": "shadda",
+      "en": "shaddah"
     },
     "звук": {
       "ru": "буква дважды",
       "kk": "әріп екі рет",
-      "uz": "harf ikki marta"
+      "uz": "harf ikki marta",
+      "en": "letter doubled"
     },
     "описание": {
       "ru": "Буква звучит дважды: шадда = сукун + огласовка (رَبَّ = رَبْبَ). Задержите букву, как «сс» в русском «касса».",
       "kk": "Әріп екі рет айтылады: шәдда = сукун + харакат (رَبَّ = رَبْبَ). Әріпті «аппақ» сөзіндегі «пп» сияқты ұстаңыз.",
-      "uz": "Harf ikki marta aytiladi: shadda = sukun + harakat (رَبَّ = رَبْبَ). Harfni ruscha «kassa» soʻzidagi «ss» kabi ushlab turing."
+      "uz": "Harf ikki marta aytiladi: shadda = sukun + harakat (رَبَّ = رَبْبَ). Harfni ruscha «kassa» soʻzidagi «ss» kabi ushlab turing.",
+      "en": "The letter sounds twice: shaddah = sukun + vowel mark (رَبَّ = رَبْبَ). Hold the letter, like “ss” in the Russian word “kassa”."
     },
     "урок": 20,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -148,23 +168,27 @@
     "название": {
       "ru": "танвин с фатхой",
       "kk": "фатхалы тәнуин",
-      "uz": "fathali tanvin"
+      "uz": "fathali tanvin",
+      "en": "tanween with fatha"
     },
     "звук": {
       "ru": "«ан»",
       "kk": "«ан»",
-      "uz": "«an»"
+      "uz": "«an»",
+      "en": "“an”"
     },
     "описание": {
       "ru": "Две фатхи: в конце слова читается «ан» — фатха + нун с сукуном (ـً = ـَنْ).",
       "kk": "Екі фатха: сөз соңында «ан» болып оқылады — фатха + сукунды нун (ـً = ـَنْ).",
-      "uz": "Ikki fatha: soʻz oxirida «an» deb oʻqiladi — fatha + sukunli nun (ـً = ـَنْ)."
+      "uz": "Ikki fatha: soʻz oxirida «an» deb oʻqiladi — fatha + sukunli nun (ـً = ـَنْ).",
+      "en": "Two fathas: at the end of a word it is read “an” — fatha + nun with sukun (ـً = ـَنْ)."
     },
     "урок": 22,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -176,23 +200,27 @@
     "название": {
       "ru": "танвин с кясрой",
       "kk": "кәсралы тәнуин",
-      "uz": "kasrali tanvin"
+      "uz": "kasrali tanvin",
+      "en": "tanween with kasra"
     },
     "звук": {
       "ru": "«ин»",
       "kk": "«ин»",
-      "uz": "«in»"
+      "uz": "«in»",
+      "en": "“in”"
     },
     "описание": {
       "ru": "Две кясры: в конце слова читается «ин» — кясра + нун с сукуном.",
       "kk": "Екі кәсра: сөз соңында «ин» болып оқылады — кәсра + сукунды нун.",
-      "uz": "Ikki kasra: soʻz oxirida «in» deb oʻqiladi — kasra + sukunli nun."
+      "uz": "Ikki kasra: soʻz oxirida «in» deb oʻqiladi — kasra + sukunli nun.",
+      "en": "Two kasras: at the end of a word it is read “in” — kasra + nun with sukun."
     },
     "урок": 22,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -204,23 +232,27 @@
     "название": {
       "ru": "танвин с даммой",
       "kk": "дамма тәнуин",
-      "uz": "dammali tanvin"
+      "uz": "dammali tanvin",
+      "en": "tanween with damma"
     },
     "звук": {
       "ru": "«ун»",
       "kk": "«ун»",
-      "uz": "«un»"
+      "uz": "«un»",
+      "en": "“un”"
     },
     "описание": {
       "ru": "Две даммы: в конце слова читается «ун» — дамма + нун с сукуном.",
       "kk": "Екі дамма: сөз соңында «ун» болып оқылады — дамма + сукунды нун.",
-      "uz": "Ikki damma: soʻz oxirida «un» deb oʻqiladi — damma + sukunli nun."
+      "uz": "Ikki damma: soʻz oxirida «un» deb oʻqiladi — damma + sukunli nun.",
+      "en": "Two dammas: at the end of a word it is read “un” — damma + nun with sukun."
     },
     "урок": 22,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -232,23 +264,27 @@
     "название": {
       "ru": "мадд через алиф",
       "kk": "алиф арқылы мәд",
-      "uz": "alif orqali madd"
+      "uz": "alif orqali madd",
+      "en": "madd with alif"
     },
     "звук": {
       "ru": "«а̄» — 2 счёта",
       "kk": "«а̄» — 2 харакат",
-      "uz": "«ā» — 2 harakat"
+      "uz": "«ā» — 2 harakat",
+      "en": "“ā” — 2 counts"
     },
     "описание": {
       "ru": "Алиф после фатхи тянет «а» на 2 счёта. Долгий гласный — как два ваших коротких подряд, без разрыва.",
       "kk": "Фатхадан кейінгі алиф «а» дыбысын 2 харакатқа созады. Ұзын дауысты — өзіңіздің екі қысқа дауыстыңыз қатар, үзіліссіз айтылғандай.",
-      "uz": "Fathadan keyingi alif «a»ni 2 harakatga choʻzadi. Uzun unli — ikkita qisqa unlingiz ketma-ket, uzilishsiz aytilgandek."
+      "uz": "Fathadan keyingi alif «a»ni 2 harakatga choʻzadi. Uzun unli — ikkita qisqa unlingiz ketma-ket, uzilishsiz aytilgandek.",
+      "en": "Alif after a fatha lengthens “a” to 2 counts. A long vowel is like two of your short ones in a row, without a break."
     },
     "урок": 17,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -260,23 +296,27 @@
     "название": {
       "ru": "мадд через вав",
       "kk": "вав арқылы мәд",
-      "uz": "vov orqali madd"
+      "uz": "vov orqali madd",
+      "en": "madd with waw"
     },
     "звук": {
       "ru": "«ӯ» — 2 счёта",
       "kk": "«ӯ» — 2 харакат",
-      "uz": "«ū» — 2 harakat"
+      "uz": "«ū» — 2 harakat",
+      "en": "“ū” — 2 counts"
     },
     "описание": {
       "ru": "Вав после даммы тянет «у» на 2 счёта.",
       "kk": "Даммадан кейінгі вав «у» дыбысын 2 харакатқа созады.",
-      "uz": "Dammadan keyingi vov «u»ni 2 harakatga choʻzadi."
+      "uz": "Dammadan keyingi vov «u»ni 2 harakatga choʻzadi.",
+      "en": "Waw after a damma lengthens “u” to 2 counts."
     },
     "урок": 18,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   },
   {
@@ -288,23 +328,27 @@
     "название": {
       "ru": "мадд через йа",
       "kk": "йа арқылы мәд",
-      "uz": "yo orqali madd"
+      "uz": "yo orqali madd",
+      "en": "madd with ya"
     },
     "звук": {
       "ru": "«ӣ» — 2 счёта",
       "kk": "«ӣ» — 2 харакат",
-      "uz": "«ī» — 2 harakat"
+      "uz": "«ī» — 2 harakat",
+      "en": "“ī” — 2 counts"
     },
     "описание": {
       "ru": "Йа после кясры тянет «и» на 2 счёта.",
       "kk": "Кәсрадан кейінгі йа «и» дыбысын 2 харакатқа созады.",
-      "uz": "Kasradan keyingi yo «i»ni 2 harakatga choʻzadi."
+      "uz": "Kasradan keyingi yo «i»ni 2 harakatga choʻzadi.",
+      "en": "Ya after a kasra lengthens “i” to 2 counts."
     },
     "урок": 18,
     "примечание": {
       "ru": "Казахский термин не утверждён (программа курса §16, вопрос 9): арабские названия или тюркские из старых букварей.",
       "kk": "Қазақша термин бекітілмеген (бағдарлама §16, 9-сұрақ): арабша атаулар ма, әлде ескі әліппелердегі түркі атаулары ма.",
-      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi."
+      "uz": "Qozoqcha atama tasdiqlanmagan (kurs dasturi §16, 9-savol): arabcha nomlarmi yoki eski alifbolardagi turkiy nomlarmi.",
+      "en": "The Kazakh term is not approved yet (course programme §16, question 9): Arabic names or the Turkic ones from old primers."
     }
   }
 ]

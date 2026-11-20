@@ -6,7 +6,7 @@
 Документ — docs/дизайн/08-спросить-устаза.md; формат базы — docs/база-знаний.md; таблицы — миграция 004.
 
 Контракт API (JSON; ошибки — {ошибка: '<код>'}; присланное в ответ не возвращаем; Cache-Control: no-store):
-  POST /api/ask/v1  {q: строка (после обрезки 3…500 символов), lang: 'ru'|'kk'|'uz'}
+  POST /api/ask/v1  {q: строка (после обрезки 3…500 символов), lang: 'ru'|'kk'|'uz'|'en'}
     200 {вид: 'ответ'|'нет-в-базе'|'к-имаму'|'вне-темы', режим: 'поиск'|'ии', текст (на языке lang),
          источники: [{id, вид: 'коран'|'хадис'|'тафсир'|'статья'|'справка', заголовок, ссылка|null, текст, арабский|null,
                      источник, степень|null, кто_оценил|null, черновик, версия}], черновик}
@@ -15,7 +15,7 @@
     503 'kb' (база пуста или недоступна)
   GET /api/ask/health -> {ок: true, записей: <в выдаче: утверждённые (+ черновые при MUGALIM_ASK_DRAFTS=1)>, режим}
 Как отвечаем (правила CLAUDE.md 1, 2, 4, 5, 11 и «Данные и приватность»):
-  классифицировать() — детерминированно, словари фраз ru/kk/uz (черновик; проверяет устаз):
+  классифицировать() — детерминированно, словари фраз ru/kk/uz/en (черновик; проверяет устаз; en — владелец 20.11.2026):
     'вне-темы' — политика, течения, экстремизм, споры мазхабов/акыды, не-исламские темы → шаблон отказа;
     тафсир аята — ИИ-тафсира нет: запись вида 'тафсир' с той же ссылкой «сура:аят» показываем как есть, иначе отказ;
     'к-имаму' — личный вопрос фикха → шаблон «к имаму / в ДУМК / Imam AI» + общие материалы базы, если нашлись
@@ -49,7 +49,7 @@ from envnum import строка_из_окружения, целое_из_окр�
 
 журнал = logging.getLogger('mugalim.ask')
 
-ЯЗЫКИ = ('ru', 'kk', 'uz')
+ЯЗЫКИ = ('ru', 'kk', 'uz', 'en')
 МАКС_ТЕЛО = 8 * 1024
 МИН_ВОПРОС, МАКС_ВОПРОС = 3, 500
 ПРЕДЕЛ_ИСТОЧНИКОВ = 5
@@ -86,7 +86,7 @@ def _р(*шаблоны: str) -> re.Pattern:
     return re.compile('|'.join(f'(?:{ш})' for ш in шаблоны))
 
 
-# Политика, течения, экстремизм, споры мазхабов и акыды — ru, kk, uz (латиница без апострофов).
+# Политика, течения, экстремизм, споры мазхабов и акыды — ru, kk, uz (латиница без апострофов), en.
 ВНЕ_ТЕМЫ = _р(
     r'\bполитик', r'\bпрезидент', r'\bпарти[яиюей]\b', r'\bвыбор(ы|ах|ов)\b', r'\bдепутат', r'\bправительств', r'\bсанкци',
     r'\bвойн[аыеу]\b', r'\bмитинг', r'\bсект[аыуе]?\b', r'\bсектант', r'\bваххаб', r'\bсалафит', r'\bхизб\w*[ -]ут\b', r'\bтаблиг',
@@ -98,18 +98,26 @@ def _р(*шаблоны: str) -> re.Pattern:
     r'\bsiyosat', r'\bprezident', r'\bpartiya', r'\bsaylov', r'\bhukumat', r'\burush', r'\bsekta', r'\bvahhob',
     r'\bsalafi', r'\bhizb\w*[ -]ut\b', r'\btablig', r'\boqim', r'\bekstrem', r'\bterror', r'\bxalifat', r'\bjihod',
     r'\bqaysi mazhab (togri|yaxshi|haq)',
+    r'\bpolitic', r'\bpresident', r'\belection', r'\bparliament', r'\bgovernment', r'\bsanction', r'\bwars?\b',
+    r'\bprotest', r'\bsects?\b', r'\bsectarian', r'\bwahhab', r'\bsalafi', r'\btablighi', r'\bahmadi', r'\bqadiani',
+    r'\bshiite', r'\bextrem', r'\bterror', r'\bcaliphate', r'\bisis\b', r'\bdaesh\b', r'\bjihad', r'\btakfir',
+    r'\bwhich madhh?ab is (better|right|true|correct)', r'\b(ashari|athari|maturidi)\w* (or|vs|versus|against)\b',
 )
 # Не-исламские темы (небольшой список; остальное отсеет порог поиска — «нет в базе»).
 НЕ_ТЕМА = _р(
     r'\bпогод', r'\bфутбол', r'\bрецепт', r'\bгороскоп', r'\bкурс (доллар|валют|евро|рубл)', r'\bбиткоин', r'\bкриптовалют',
     r'\bанекдот', r'\bсериал', r'\bнапиши (код|программ|сочинени)', r'\bдомашн\w* задани',
     r'\bауа райы', r'\bдоллар бағам', r'\bob-?havo', r'\bfutbol', r'\bretsept', r'\bgoroskop', r'\bdollar kursi',
+    r'\bweather', r'\bfootball', r'\bsoccer', r'\brecipe', r'\bhoroscope', r'\bexchange rate', r'\bbitcoin', r'\bcrypto',
+    r'\bjokes?\b', r'\btv series', r'\bwrite (me )?(a |an )?(code|program|essay)', r'\bhomework',
 )
 # Просьба о толковании аята: ИИ-тафсира нет (правило 5) — только запись вида 'тафсир' из базы.
 ТАФСИР = _р(
     r'\bтафсир', r'\bтолковани', r'\bистолк', r'\bтолкуй', r'\bобъясни\w* (смысл|значени)\w* аят', r'\bчто (означает|значит) аят',
     r'\bсмысл\w* аят', r'\bзначени\w* аят', r'\bтәпсір', r'\bаят\w* (мағына|түсіндір)', r'\btafsir', r'\boyat\w* manos',
     r'\boyatni tushuntir', r'\btavil\b',
+    r'\binterpret', r'\bexegesis', r'\bmeaning of (the |this )?(ayah|verse)', r'\bexplain (the |this )?(ayah|verse)',
+    r'\bwhat does (the |this )?(ayah|verse)\w* mean',
 )
 # Личный вопрос фикха/фетвы → к имаму (правило 5). Сильные фразы — сами по себе.
 К_ИМАМУ = _р(
@@ -122,12 +130,16 @@ def _р(*шаблоны: str) -> re.Pattern:
     r'\btaloq', r'\bajrash', r'\bmeros', r'\bfatvo', r'\bharom ?mi\b', r'\bhalol ?mi\b', r'\bgunoh ?mi\b', r'\bjoiz ?mi\b',
     r'\bmenga (mumkin|joiz|ruxsat)', r'\bmumkinmi menga\b', r'\bbotil\b', r'\bhaqiqiy emas', r'\w(ishim|shim) kerakmi\b',
     r'\b(namozim|rozam|zakotim|nikohim|xotinim|tahoratim)\b',
+    r'\bdivorce', r'\btalaq', r'\binheritance', r'\bfatwa', r'\binvalid', r'\bis (my|it|this) \w+ (valid|accepted)\b',
+    r'\bis it (haram|halal|allowed|permissible|a sin)\b', r'\bam i allowed\b', r'\b(can|may|should|must) i\b',
+    r'\bdo i have to\b', r'\bmy (prayer|salah|fast|zakat|marriage|nikah|wife|husband|wudu)\b',
 )
 # Иначе: «я/мне/мой…» + тема фикха → личный вопрос.
 ЛИЧНОЕ = _р(
     r'\b(я|мне|меня|мной|мой|моя|мое|мои|моей|моего|моему|моим|моих|моем|нам|наш|наша|наше|наши|нашей|нашего)\b',
     r'\b(менің|маған|мені|менде|менен|өзім|өзімнің|біздің|бізге)\b', r'^мен\b',
     r'\b(men|mening|menga|meni|menda|mendan|ozim|ozimning|bizning|bizga)\b',
+    r'\b(i|me|my|mine|myself|we|us|our)\b',
 )
 ФИКХ = _р(
     r'\bнамаз', r'\bмолитв', r'\bпост\b', r'\bпоста\b', r'\bпостить', r'\bураз', r'\bзакят', r'\bзякят', r'\bсадак', r'\bфитр',
@@ -139,12 +151,18 @@ def _р(*шаблоны: str) -> re.Pattern:
     r'\bnamoz', r'\broza', r'\bzakot', r'\bfitr', r'\bsadaqa', r'\bnikoh', r'\buylan', r'\bxotin', r'\berim\b', r'\bharom',
     r'\bhalol', r'\bgunoh', r'\bfarz', r'\bvojib', r'\btahorat', r'\bgusl', r'\bhaj\b', r'\bumra', r'\bkredit', r'\bfoiz',
     r'\bqarz', r'\bqasam',
+    r'\bprayer', r'\bsalah\b', r'\bfast\b', r'\bfasting', r'\bramadan', r'\bzakat', r'\bsadaqa', r'\bfitr', r'\bmarriage',
+    r'\bnikah', r'\bmarry', r'\bwife', r'\bhusband', r'\bharam', r'\bhalal', r'\bsin\b', r'\bwudu', r'\bablution',
+    r'\bghusl', r'\bhajj', r'\bumrah', r'\bkaffarah', r'\bfidyah', r'\bloan', r'\bmortgage', r'\binterest\b', r'\bdebt',
+    r'\boath', r'\bvow\b',
 )
 # Вводные слова не делают вопрос личным: «хочу узнать про закят», «скажите мне, сколько закята…».
 ВВОДНЫЕ = _р(r'\b(я )?(хочу|хотел\w*|хотела) (узнать|знать|спросить)\b', r'\b(скажите|подскажите|объясните|расскажите)( мне)?\b',
-            r'\bя не знаю\b', r'\bбілгім келеді\b', r'\bbilmoqchiman\b')
+            r'\bя не знаю\b', r'\bбілгім келеді\b', r'\bbilmoqchiman\b',
+            r'\b(i )?(want|would like|wanted) to (know|ask)\b', r'\b(tell|explain to|show) me\b', r'\bi do not know\b',
+            r'\bi dont know\b')
 _СУРА = r'(?:сур\w*|сүре\w*|sura\w*|surah?)'
-_АЯТ = r'(?:аят\w*|oyat\w*|ayat\w*)'
+_АЯТ = r'(?:аят\w*|oyat\w*|ayat\w*|ayah\w*|verse\w*)'
 _ССЫЛКА_N_M = re.compile(r'\b(\d{1,3})\s*[:：]\s*(\d{1,3})\b')
 _СУРА_АЯТ = re.compile(_СУРА + r'\s*(?:№\s*)?(\d{1,3})\D{1,20}?' + _АЯТ + r'\s*(?:№\s*)?(\d{1,3})')
 _АЯТ_СУРА = re.compile(_АЯТ + r'\s*(?:№\s*)?(\d{1,3})\D{1,20}?' + _СУРА + r'\s*(?:№\s*)?(\d{1,3})')
@@ -176,7 +194,7 @@ def ссылка_на_аят(текст: str) -> str | None:
 
 
 def классифицировать(вопрос: str) -> Классификация:
-    """Чистая функция. Словари всех трёх языков применяются всегда: человек может спросить по-русски в kk-интерфейсе.
+    """Чистая функция. Словари всех четырёх языков применяются всегда: человек может спросить по-русски в kk-интерфейсе.
     Классифицируем обезличенный текст: «меня зовут …» не делает вопрос личным вопросом фикха."""
     т = нормализовать(обезличить(вопрос))
     if ВНЕ_ТЕМЫ.search(т):
@@ -207,6 +225,10 @@ def классифицировать(вопрос: str) -> Классифика�
 жоқ еді болса болады бола керек айтыңызшы түсіндіріңізші сұрақ
 qanday nima nega qachon qayerda qancha necha mi va bu shu uchun haqida kim qaysi bilan ham yoq bor kerak edi boladi
 iltimos savol aytib bering
+the and are was were been being have has had does did doing what which who whom whose when where why how this that
+these those there here from with about into for not but can could would should will shall may might must just only also
+please tell explain question answer you your yours they them their its any some all each more most other such than then
+very want know does like use using app application
 '''.split())
 
 
@@ -225,7 +247,8 @@ def _основа_ru(слово: str) -> str:
 
 def термы(вопрос: str, язык: str) -> list[str]:
     """Основы значимых слов вопроса для to_tsquery: только буквы (цифры — нет: «1000000 тенге» ищем по «тенге»), без
-    стоп-слов, до 12. ru — без падежного окончания; kk/uz (словарь 'simple', без стемминга) — усечённая основа.
+    стоп-слов, до 12. ru — без падежного окончания; kk/uz (словарь 'simple', без стемминга) и en (стеммер 'english'
+    в tsv, префикс — в tsv_simple) — усечённая основа.
     Префикс «:*» добавляет хранилище (основа от 4 букв)."""
     слова = re.findall(r'[^\W\d_]+', нормализовать(вопрос))
     итог: list[str] = []
@@ -280,7 +303,7 @@ def слишком_пусто(обезличенный: str) -> bool:
     return len(слова) < 2 or sum(len(с) for с in слова) < 8
 
 
-# ───────────── шаблоны ответов (ru; kk и uz — черновик для редактора-носителя) ─────────────
+# ───────────── шаблоны ответов (ru; kk, uz и en — черновик для редактора-носителя) ─────────────
 ШАБЛОНЫ = {
     'ru': {
         'ответ': 'Вот что есть в нашей базе по вашему вопросу. Откройте источник, чтобы прочитать его целиком.',
@@ -330,6 +353,23 @@ def слишком_пусто(обезличенный: str) -> bool:
         'тафсир-нет': "AI Ustaz'da sun'iy intellekt tafsiri yo'q: Qur'onni sharhlash — olimlarning ishi. Bu oyatning tafsiri "
                       "bazamizda hozircha yo'q. Nashr qilingan tafsirga yoki masjidingiz imomiga murojaat qiling.",
     },
+    'en': {
+        'ответ': 'Here is what our base has on your question. Open the source to read it in full.',
+        'черновик': 'Materials marked “draft” are still being reviewed by an ustaz.',
+        'нет-в-базе': 'Our base has no answer to this question yet. We have noted that such an answer is needed (we do not '
+                      'store the text of the question). Ask personal fiqh questions to the imam of your mosque, the Spiritual '
+                      'Administration of Muslims of Kazakhstan (muftyat.kz) or Imam AI.',
+        'нет-точного': 'Our base has no exact answer. Below are related materials from the base.',
+        'к-имаму': 'This is a personal question: the answer depends on your circumstances, and AI Ustaz does not issue fatwas. '
+                   'Ask the imam of your mosque, the Spiritual Administration of Muslims of Kazakhstan (muftyat.kz) or Imam AI.',
+        'к-имаму-материалы': 'Below is general information from our base. It is not an answer for your case.',
+        'вне-темы': 'AI Ustaz answers only from its own base about Islam, Quran reading and the app itself. We do not discuss '
+                    'politics, movements, disputes between madhhabs or other topics. Such questions are better asked of the '
+                    'imam of your mosque.',
+        'тафсир-есть': 'Tafsir from our base — shown as is, without an AI retelling.',
+        'тафсир-нет': 'AI Ustaz has no AI tafsir: interpreting the Quran is the work of scholars. Our base has no tafsir of '
+                      'this ayah yet. Refer to a published tafsir or to the imam of your mosque.',
+    },
 }
 
 
@@ -341,7 +381,7 @@ def шаблон(язык: str, ключ: str) -> str:
 СИСТЕМНЫЙ_ПРОМПТ = """Ты — справочный помощник приложения AI Ustaz (ислам, правильное чтение Корана). Тебе дают JSON: язык ответа, вопрос пользователя и записи из проверенной базы AI Ustaz.
 Правила:
 1. Отвечай ТОЛЬКО по приложенным записям. Ничего не добавляй от себя и из других источников. Если в записях нет ответа на вопрос — верни вид "нет-в-базе", пустой текст и пустой список источников.
-2. Кратко: не больше 120 слов, простым языком, на языке из поля "язык" (ru — русский, kk — казахский, uz — узбекский латиницей).
+2. Кратко: не больше 120 слов, простым языком, на языке из поля "язык" (ru — русский, kk — казахский, uz — узбекский латиницей, en — английский).
 3. Не цитируй аяты и хадисы дословно и не выдавай свой пересказ за текст Корана или хадиса. Укажи id записей в поле "источники"; в тексте можно назвать ссылку записи (например, 2:255 или «Сахих аль-Бухари, 1»), но не id.
 4. Не пиши арабским письмом и не пиши транслитерацию аятов.
 5. Не давай фетв и личных решений: не говори, действителен ли чей-то намаз, пост или брак; не пиши «вы обязаны», «вам харам». Если вопрос личный — напиши, что его нужно задать имаму мечети или в ДУМК, и приведи только общие сведения из записей.

@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы ك и ل",
     "kk": "ك және ل әріптері",
-    "uz": "ك va ل harflari"
+    "uz": "ك va ل harflari",
+    "en": "Letters ك and ل"
   },
   "цель": {
     "ru": "Новые буквы в коротких словах",
     "kk": "Жаңа әріптер қысқа сөздерде",
-    "uz": "Qisqa soʻzlarda yangi harflar"
+    "uz": "Qisqa soʻzlarda yangi harflar",
+    "en": "New letters in short words"
   },
   "новое": [
     "ك",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "каф",
         "kk": "каф",
-        "uz": "kof"
+        "uz": "kof",
+        "en": "kaf"
       },
       "формы": {
         "отдельная": "ك",
@@ -37,13 +40,15 @@
       "подсказка": {
         "ru": "Обычное «к» впереди; гласный после него — чистое «а». Не делайте его глубоким, как ق.",
         "kk": "Кәдімгі алдыңғы «к»; одан кейінгі «а» таза. Оны ق әрпіндей терең айтпаңыз.",
-        "uz": "Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang."
+        "uz": "Oddiy «k», oldinda; undan keyingi unli — sof «a». Uni ق kabi chuqur qilmang.",
+        "en": "An ordinary “k” at the front; the vowel after it is a pure “a”. Do not make it deep like ق."
       },
       "подмены": [
         {
           "ru": "ك слишком глубокое, как ق",
           "kk": "ك тым терең, ق сияқты айтылады",
-          "uz": "ك juda chuqur, ق kabi aytiladi"
+          "uz": "ك juda chuqur, ق kabi aytiladi",
+          "en": "ك too deep, like ق"
         }
       ],
       "примеры": [
@@ -61,7 +66,8 @@
       "вопрос": {
         "ru": "Найдите букву «каф».",
         "kk": "«каф» әрпін табыңыз.",
-        "uz": "«kof» harfini toping."
+        "uz": "«kof» harfini toping.",
+        "en": "Find the letter “kaf”."
       },
       "варианты": [
         {
@@ -81,7 +87,8 @@
       "пояснение": {
         "ru": "«каф» — это ك.",
         "kk": "«каф» — ك әрпі.",
-        "uz": "«kof» — bu ك."
+        "uz": "«kof» — bu ك.",
+        "en": "“kaf” is ك."
       }
     },
     {
@@ -91,7 +98,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «каф»?",
         "kk": "«каф» әрпінде қандай белгі тұр?",
-        "uz": "«kof» harfida qanday belgi bor?"
+        "uz": "«kof» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “kaf”?"
       },
       "показ": "كَ",
       "варианты": [
@@ -99,21 +107,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -121,7 +132,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -131,7 +143,8 @@
       "вопрос": {
         "ru": "Найдите начальную форму буквы «каф».",
         "kk": "«каф» әрпінің бастапқы түрін табыңыз.",
-        "uz": "«kof» harfining boshlangʻich shaklini toping."
+        "uz": "«kof» harfining boshlangʻich shaklini toping.",
+        "en": "Find the initial form of the letter “kaf”."
       },
       "варианты": [
         {
@@ -157,7 +170,8 @@
       "название": {
         "ru": "лям",
         "kk": "лям",
-        "uz": "lom"
+        "uz": "lom",
+        "en": "lam"
       },
       "формы": {
         "отдельная": "ل",
@@ -183,7 +197,8 @@
       "вопрос": {
         "ru": "Найдите букву «лям».",
         "kk": "«лям» әрпін табыңыз.",
-        "uz": "«lom» harfini toping."
+        "uz": "«lom» harfini toping.",
+        "en": "Find the letter “lam”."
       },
       "варианты": [
         {
@@ -203,7 +218,8 @@
       "пояснение": {
         "ru": "«лям» — это ل.",
         "kk": "«лям» — ل әрпі.",
-        "uz": "«lom» — bu ل."
+        "uz": "«lom» — bu ل.",
+        "en": "“lam” is ل."
       }
     },
     {
@@ -213,7 +229,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «лям»?",
         "kk": "«лям» әрпінде қандай белгі тұр?",
-        "uz": "«lom» harfida qanday belgi bor?"
+        "uz": "«lom» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “lam”?"
       },
       "показ": "إِلْ",
       "варианты": [
@@ -221,28 +238,32 @@
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         }
       ],
@@ -250,7 +271,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -260,7 +282,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «лям».",
         "kk": "«лям» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«lom» harfining oʻrta shaklini toping."
+        "uz": "«lom» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “lam”."
       },
       "варианты": [
         {
@@ -284,7 +307,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -320,7 +344,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -356,7 +381,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "كَ كِ كُ أَكْ إِكْ أُكْ"
@@ -369,7 +395,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -401,7 +428,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -429,7 +457,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "كَمْ كُنْ بَلْ"

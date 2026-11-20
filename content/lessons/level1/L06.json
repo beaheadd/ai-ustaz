@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы و и ه",
     "kk": "و және ه әріптері",
-    "uz": "و va ه harflari"
+    "uz": "و va ه harflari",
+    "en": "Letters و and ه"
   },
   "цель": {
     "ru": "Дифтонг «ау»; ه не глотаем",
     "kk": "«Ау» дифтонгы; ه әрпін жұтпаймыз",
-    "uz": "«av» diftongi; ه ni yutmaymiz"
+    "uz": "«av» diftongi; ه ni yutmaymiz",
+    "en": "The diphthong “aw”; do not swallow ه"
   },
   "новое": [
     "و",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "вав",
         "kk": "вав",
-        "uz": "vov"
+        "uz": "vov",
+        "en": "waw"
       },
       "формы": {
         "отдельная": "و",
@@ -51,7 +54,8 @@
       "вопрос": {
         "ru": "Найдите букву «вав».",
         "kk": "«вав» әрпін табыңыз.",
-        "uz": "«vov» harfini toping."
+        "uz": "«vov» harfini toping.",
+        "en": "Find the letter “waw”."
       },
       "варианты": [
         {
@@ -71,7 +75,8 @@
       "пояснение": {
         "ru": "«вав» — это و.",
         "kk": "«вав» — و әрпі.",
-        "uz": "«vov» — bu و."
+        "uz": "«vov» — bu و.",
+        "en": "“waw” is و."
       }
     },
     {
@@ -81,7 +86,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «вав»?",
         "kk": "«вав» әрпінде қандай белгі тұр?",
-        "uz": "«vov» harfida qanday belgi bor?"
+        "uz": "«vov» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “waw”?"
       },
       "показ": "وَ",
       "варианты": [
@@ -89,21 +95,24 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         }
       ],
@@ -111,7 +120,8 @@
       "пояснение": {
         "ru": "Короткая косая черта над буквой. Звук «а».",
         "kk": "Әріптің үстіндегі қысқа қиғаш сызық. Дыбысы — «а».",
-        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a»."
+        "uz": "Harf ustidagi qisqa qiya chiziq. Tovushi — «a».",
+        "en": "A short slanted stroke above the letter. The sound “a”."
       }
     },
     {
@@ -121,7 +131,8 @@
       "вопрос": {
         "ru": "Соберите слог: буква «вав» + кясра.",
         "kk": "Буын құраңыз: «вав» әрпі + кәсра.",
-        "uz": "Boʻgʻin yigʻing: «vov» harfi + kasra."
+        "uz": "Boʻgʻin yigʻing: «vov» harfi + kasra.",
+        "en": "Build the syllable: the letter “waw” + kasra."
       },
       "варианты": [
         {
@@ -138,7 +149,8 @@
       "пояснение": {
         "ru": "Короткая косая черта под буквой. Звук «и».",
         "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+        "en": "A short slanted stroke below the letter. The sound “i”."
       }
     },
     {
@@ -149,7 +161,8 @@
       "название": {
         "ru": "һа",
         "kk": "һа",
-        "uz": "ha"
+        "uz": "ha",
+        "en": "ha"
       },
       "формы": {
         "отдельная": "ه",
@@ -161,18 +174,21 @@
       "подсказка": {
         "ru": "Лёгкий выдох из глубины горла, тише ح. В конце слова не глотайте.",
         "kk": "Терең тамақтан шығатын жеңіл дем, ح әрпінен әлсіздеу. Сөз соңында жұтып қоймаңыз.",
-        "uz": "Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang."
+        "uz": "Tomoq tubidan yengil nafas, ح dan sokinroq. Soʻz oxirida yutib yubormang.",
+        "en": "A light breath from deep in the throat, softer than ح. Do not swallow it at the end of a word."
       },
       "подмены": [
         {
           "ru": "ه звучит как «х»",
           "kk": "ه «х» болып естіледі",
-          "uz": "ه «x» boʻlib eshitiladi"
+          "uz": "ه «x» boʻlib eshitiladi",
+          "en": "ه sounds like “kh”"
         },
         {
           "ru": "ه пропадает, особенно в конце слова",
           "kk": "ه түсіп қалады, әсіресе сөз соңында",
-          "uz": "ه tushib qoladi, ayniqsa soʻz oxirida"
+          "uz": "ه tushib qoladi, ayniqsa soʻz oxirida",
+          "en": "ه disappears, especially at the end of a word"
         }
       ],
       "примеры": [
@@ -190,7 +206,8 @@
       "вопрос": {
         "ru": "Найдите букву «һа».",
         "kk": "«һа» әрпін табыңыз.",
-        "uz": "«ha» harfini toping."
+        "uz": "«ha» harfini toping.",
+        "en": "Find the letter “ha”."
       },
       "варианты": [
         {
@@ -210,7 +227,8 @@
       "пояснение": {
         "ru": "«һа» — это ه.",
         "kk": "«һа» — ه әрпі.",
-        "uz": "«ha» — bu ه."
+        "uz": "«ha» — bu ه.",
+        "en": "“ha” is ه."
       }
     },
     {
@@ -220,7 +238,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «һа»?",
         "kk": "«һа» әрпінде қандай белгі тұр?",
-        "uz": "«ha» harfida qanday belgi bor?"
+        "uz": "«ha» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ha”?"
       },
       "показ": "أُهْ",
       "варианты": [
@@ -228,28 +247,32 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         }
       ],
@@ -257,7 +280,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -267,7 +291,8 @@
       "вопрос": {
         "ru": "Найдите срединную форму буквы «һа».",
         "kk": "«һа» әрпінің ортаңғы түрін табыңыз.",
-        "uz": "«ha» harfining oʻrta shaklini toping."
+        "uz": "«ha» harfining oʻrta shaklini toping.",
+        "en": "Find the medial form of the letter “ha”."
       },
       "варианты": [
         {
@@ -291,7 +316,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -319,7 +345,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -355,7 +382,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "وَ وِ وُ أَوْ"
@@ -368,12 +396,14 @@
       "заголовок": {
         "ru": "Дифтонг «ау»",
         "kk": "«Ау» дифтонгы",
-        "uz": "«Av» diftongi"
+        "uz": "«Av» diftongi",
+        "en": "The diphthong “aw”"
       },
       "текст": {
         "ru": "Если на و сукун, а перед ней фатха, звучит «ау».",
         "kk": "و әрпінде сукун, ал алдында фатха болса, «ау» естіледі.",
-        "uz": "Agar و da sukun, undan oldin esa fatha boʻlsa, «av» eshitiladi."
+        "uz": "Agar و da sukun, undan oldin esa fatha boʻlsa, «av» eshitiladi.",
+        "en": "If و has a sukun and a fatha comes before it, it sounds “aw”."
       },
       "примеры": [
         "يَوْمَ",
@@ -386,7 +416,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -418,7 +449,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -442,7 +474,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "يَوْمَ، لَوْ، هُمْ"

@@ -74,6 +74,19 @@ const СЛОВАРЬ = создатьСловарь({
     нет: 'Matn tekshirilgan baza bilan solishtiruvdan oʻtmadi — koʻrsatmaymiz.',
     черновик: 'Qismlarga boʻlish va maslahatlar — qoralama, ustoz tekshiryapti',
   },
+  en: {
+    заголовок: 'Ayah {сура}:{аят}',
+    где: '{сура}, ayah {аят} of {аятов}',
+    пояснение: 'Read the ayah aloud and record yourself. Only you hear the recording.',
+    пояснениеПроверка: 'Read the ayah aloud and record yourself. The recording stays on the device until you tap “Check”.',
+    черновикНазвания: 'Surah names in Latin script — draft',
+    пред: 'Previous ayah',
+    след: 'Next ayah',
+    кСуре: 'Whole surah',
+    нетАята: 'This surah has {аятов} — there is no ayah {аят}.',
+    нет: 'The text did not pass verification against the verified database — not shown.',
+    черновик: 'Splitting into parts and hints are a draft; an ustaz is reviewing them',
+  },
 });
 
 export function ПроверкаАята({ параметры }: ПропсыЭкрана<'проверкаАята'>) {

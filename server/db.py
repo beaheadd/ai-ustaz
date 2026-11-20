@@ -92,17 +92,20 @@ class Хранилище:
         with self._соединение() as с:
             ид = с.execute(
                 """
-                INSERT INTO push_subscriptions (endpoint, endpoint_hash, p256dh, auth, lang, lang_ui, city, schedule_end, refresh_sent, updated_at)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, FALSE, %s)
+                INSERT INTO push_subscriptions (endpoint, endpoint_hash, p256dh, auth, lang, lang_ui, lang_code, city, schedule_end,
+                                                refresh_sent, updated_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, FALSE, %s)
                 ON CONFLICT (endpoint_hash) DO UPDATE SET
                     endpoint = EXCLUDED.endpoint, p256dh = EXCLUDED.p256dh, auth = EXCLUDED.auth, lang = EXCLUDED.lang,
-                    lang_ui = EXCLUDED.lang_ui, city = EXCLUDED.city, schedule_end = EXCLUDED.schedule_end, refresh_sent = FALSE,
-                    updated_at = EXCLUDED.updated_at
+                    lang_ui = EXCLUDED.lang_ui, lang_code = EXCLUDED.lang_code, city = EXCLUDED.city,
+                    schedule_end = EXCLUDED.schedule_end, refresh_sent = FALSE, updated_at = EXCLUDED.updated_at
                 RETURNING id
                 """,
-                # lang — ограничение 001 (ru/kk): для uz запасной 'ru'; настоящий язык — lang_ui (миграция 004).
+                # Старые столбцы — с запасными значениями в пределах своих ограничений: lang (001) — ru/kk, иначе 'ru';
+                # lang_ui (005) — ru/kk/uz, иначе 'ru'. Настоящий язык — lang_code (миграция 006: ru, kk, uz, en).
                 (запрос.адрес, запрос.хэш, запрос.p256dh, запрос.auth, запрос.язык if запрос.язык in ('ru', 'kk') else 'ru',
-                 запрос.язык, запрос.город, _вр(запрос.конец or сейчас), _вр(сейчас)),
+                 запрос.язык if запрос.язык in ('ru', 'kk', 'uz') else 'ru', запрос.язык,
+                 запрос.город, _вр(запрос.конец or сейчас), _вр(сейчас)),
             ).fetchone()[0]
             # Невзятые пункты заменяем целиком (новый город, другие намазы, напоминание). Взятые (уже отправленные)
             # остаются до уборки: если новый пункт совпал с отправленным — он не вставится второй раз (PRIMARY KEY).
@@ -127,7 +130,7 @@ class Хранилище:
     def подписка(self, хэш: str) -> dict | None:
         with self._соединение() as с:
             р = с.execute(
-                'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE endpoint_hash = %s',
+                'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_code, lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE endpoint_hash = %s',
                 (хэш,),
             ).fetchone()
         return self._подписка(р) if р else None
@@ -158,7 +161,7 @@ class Хранилище:
             подписки = {
                 р[0]: self._подписка(р)
                 for р in с.execute(
-                    'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE id = ANY(%s)',
+                    'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_code, lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE id = ANY(%s)',
                     (ид,),
                 ).fetchall()
             }
@@ -171,7 +174,7 @@ class Хранилище:
     def для_обновления(self, сейчас: int, порог_мс: int) -> list[dict]:
         with self._соединение() as с:
             строки = с.execute(
-                """SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions
+                """SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_code, lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions
                    WHERE refresh_sent = FALSE AND schedule_end < %s ORDER BY id LIMIT 500""",
                 (_вр(сейчас + порог_мс),),
             ).fetchall()
@@ -333,9 +336,14 @@ class Хранилище:
                     (з.id, з.вид, з.ссылка, з.арабский, з.источник, з.степень, з.кто_оценил, з.статус, з.кто_проверил, когда,
                      з.версия, з.sha))
                 с.execute('DELETE FROM kb_texts WHERE entry_id = %s', (з.id,))
+                с.execute('DELETE FROM kb_texts_en WHERE entry_id = %s', (з.id,))
                 with с.cursor() as к:
+                    # en — в kb_texts_en (миграция 006: в kb_texts язык ограничен ru/kk/uz).
                     к.executemany('INSERT INTO kb_texts (entry_id, lang, title, body) VALUES (%s, %s, %s, %s)',
-                                  [(з.id, язык, т['заголовок'], т['текст']) for язык, т in sorted(з.тексты.items())])
+                                  [(з.id, язык, т['заголовок'], т['текст']) for язык, т in sorted(з.тексты.items()) if язык != 'en'])
+                    if 'en' in з.тексты:
+                        к.execute('INSERT INTO kb_texts_en (entry_id, title, body) VALUES (%s, %s, %s)',
+                                  (з.id, з.тексты['en']['заголовок'], з.тексты['en']['текст']))
                 итог['изменено' if старое else 'новых'] += 1
         return итог
 
@@ -345,7 +353,11 @@ class Хранилище:
 
     _ПОЛЯ_ЗАПИСИ = """e.id, e.kind, e.ref, e.arabic, e.source, e.grade, e.graded_by, e.status, e.version, e.sha,
                       x.lang, x.title, x.body, x.tsv, x.tsv_simple,
-                      CASE x.lang WHEN 'ru' THEN 'russian'::regconfig ELSE 'simple'::regconfig END AS cfg"""
+                      CASE x.lang WHEN 'ru' THEN 'russian'::regconfig WHEN 'en' THEN 'english'::regconfig
+                                  ELSE 'simple'::regconfig END AS cfg"""
+    # Тексты всех языков: kb_texts (ru, kk, uz) и kb_texts_en (en, миграция 006).
+    _ТЕКСТЫ = """(SELECT entry_id, lang, title, body, tsv, tsv_simple FROM kb_texts
+                  UNION ALL SELECT entry_id, lang, title, body, tsv, tsv_simple FROM kb_texts_en)"""
 
     @staticmethod
     def _запись_kb(р) -> dict:
@@ -364,7 +376,7 @@ class Хранилище:
                 f"""
                 WITH t AS (
                     SELECT DISTINCT ON (e.id) {self._ПОЛЯ_ЗАПИСИ}
-                    FROM kb_entries e JOIN kb_texts x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
+                    FROM kb_entries e JOIN {self._ТЕКСТЫ} x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
                     WHERE %(черновые)s OR e.status = 'утверждено'
                     ORDER BY e.id, (x.lang = %(язык)s) DESC
                 ), s AS (
@@ -382,7 +394,7 @@ class Хранилище:
                 """,
                 {'язык': язык, 'черновые': bool(черновые), 'термы': list(термы), 'предел': предел,
                  'всё': ' | '.join(т + ':*' if len(т) >= 4 else т for т in термы),
-                 'cfg': 'russian' if язык == 'ru' else 'simple'},
+                 'cfg': {'ru': 'russian', 'en': 'english'}.get(язык, 'simple')},
             ).fetchall()
         # всего — значимые для словаря языка вопроса термы (стоп-слова PostgreSQL не считаются)
         return [{**self._запись_kb(р), 'совпало': р[13], 'всего': р[14]} for р in строки]
@@ -392,7 +404,7 @@ class Хранилище:
             строки = с.execute(
                 f"""
                 SELECT DISTINCT ON (e.id) {self._ПОЛЯ_ЗАПИСИ}
-                FROM kb_entries e JOIN kb_texts x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
+                FROM kb_entries e JOIN {self._ТЕКСТЫ} x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
                 WHERE e.kind = %(вид)s AND e.ref = %(ссылка)s AND (%(черновые)s OR e.status = 'утверждено')
                 ORDER BY e.id, (x.lang = %(язык)s) DESC LIMIT %(предел)s
                 """,

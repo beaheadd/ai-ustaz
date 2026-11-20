@@ -5,12 +5,14 @@
   "название": {
     "ru": "Буквы غ и ع",
     "kk": "غ және ع әріптері",
-    "uz": "غ va ع harflari"
+    "uz": "غ va ع harflari",
+    "en": "Letters غ and ع"
   },
   "цель": {
     "ru": "Различаем غ и ع, ء и ع",
     "kk": "غ және ع, ء және ع әріптерін ажыратамыз",
-    "uz": "غ va ع, ء va ع ni farqlaymiz"
+    "uz": "غ va ع, ء va ع ni farqlaymiz",
+    "en": "Telling غ and ع, ء and ع apart"
   },
   "новое": [
     "غ",
@@ -25,7 +27,8 @@
       "название": {
         "ru": "ғайн",
         "kk": "ғайн",
-        "uz": "gʻayn"
+        "uz": "gʻayn",
+        "en": "ghayn"
       },
       "формы": {
         "отдельная": "غ",
@@ -37,13 +40,15 @@
       "подсказка": {
         "ru": "Звонкий звук из верхней части горла, ближе ко рту (там же, где خ), похож на картавое «р», но не «г». У казахов опора — «ғ».",
         "kk": "Тамақтың жоғарғы, ауызға жақын бөлігінен (خ шығатын жерден) айтылатын ұяң дыбыс — қазақтың «ғ» дыбысына жақын, «г» емес.",
-        "uz": "Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ»."
+        "uz": "Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ».",
+        "en": "A voiced sound from the upper part of the throat, closer to the mouth (the same place as خ), similar to a guttural “r”, but not “g”. For Kazakh speakers the anchor is “ғ”."
       },
       "подмены": [
         {
           "ru": "غ звучит как «г»",
           "kk": "غ «г» болып естіледі",
-          "uz": "غ «g» boʻlib eshitiladi"
+          "uz": "غ «g» boʻlib eshitiladi",
+          "en": "غ sounds like “g”"
         }
       ],
       "примеры": [
@@ -61,7 +66,8 @@
       "вопрос": {
         "ru": "Найдите букву «ғайн».",
         "kk": "«ғайн» әрпін табыңыз.",
-        "uz": "«gʻayn» harfini toping."
+        "uz": "«gʻayn» harfini toping.",
+        "en": "Find the letter “ghayn”."
       },
       "варианты": [
         {
@@ -81,7 +87,8 @@
       "пояснение": {
         "ru": "«ғайн» — это غ.",
         "kk": "«ғайн» — غ әрпі.",
-        "uz": "«gʻayn» — bu غ."
+        "uz": "«gʻayn» — bu غ.",
+        "en": "“ghayn” is غ."
       }
     },
     {
@@ -91,7 +98,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «ғайн»?",
         "kk": "«ғайн» әрпінде қандай белгі тұр?",
-        "uz": "«gʻayn» harfida qanday belgi bor?"
+        "uz": "«gʻayn» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ghayn”?"
       },
       "показ": "غِ",
       "варианты": [
@@ -99,21 +107,24 @@
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         }
       ],
@@ -121,7 +132,8 @@
       "пояснение": {
         "ru": "Короткая косая черта под буквой. Звук «и».",
         "kk": "Әріптің астындағы қысқа қиғаш сызық. Дыбысы — «и».",
-        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i»."
+        "uz": "Harf ostidagi qisqa qiya chiziq. Tovushi — «i».",
+        "en": "A short slanted stroke below the letter. The sound “i”."
       }
     },
     {
@@ -131,7 +143,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «ғайн».",
         "kk": "«ғайн» әрпінің соңғы түрін табыңыз.",
-        "uz": "«gʻayn» harfining oxirgi shaklini toping."
+        "uz": "«gʻayn» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ghayn”."
       },
       "варианты": [
         {
@@ -157,7 +170,8 @@
       "название": {
         "ru": "‘айн",
         "kk": "‘айн",
-        "uz": "ayn"
+        "uz": "ayn",
+        "en": "ʿayn"
       },
       "формы": {
         "отдельная": "ع",
@@ -169,23 +183,27 @@
       "подсказка": {
         "ru": "Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».",
         "kk": "Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.",
-        "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas."
+        "uz": "Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.",
+        "en": "A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”."
       },
       "подмены": [
         {
           "ru": "‘айн пропадает",
           "kk": "ع түсіп қалады",
-          "uz": "ayn tushib qoladi"
+          "uz": "ayn tushib qoladi",
+          "en": "ʿayn disappears"
         },
         {
           "ru": "‘айн заменён хамзой («на’буду»)",
           "kk": "ع хамзамен ауысады («на’буду»)",
-          "uz": "ayn hamza bilan almashgan («naʼbudu»)"
+          "uz": "ayn hamza bilan almashgan («naʼbudu»)",
+          "en": "ʿayn replaced by hamza (“naʾbudu”)"
         },
         {
           "ru": "‘айн звучит как «ғ»",
           "kk": "ع «ғ» болып естіледі",
-          "uz": "ayn «gʻ» boʻlib eshitiladi"
+          "uz": "ayn «gʻ» boʻlib eshitiladi",
+          "en": "ʿayn sounds like “ғ”"
         }
       ],
       "примеры": [
@@ -203,7 +221,8 @@
       "вопрос": {
         "ru": "Найдите букву «‘айн».",
         "kk": "«‘айн» әрпін табыңыз.",
-        "uz": "«ayn» harfini toping."
+        "uz": "«ayn» harfini toping.",
+        "en": "Find the letter “ʿayn”."
       },
       "варианты": [
         {
@@ -223,7 +242,8 @@
       "пояснение": {
         "ru": "«‘айн» — это ع.",
         "kk": "«‘айн» — ع әрпі.",
-        "uz": "«ayn» — bu ع."
+        "uz": "«ayn» — bu ع.",
+        "en": "“ʿayn” is ع."
       }
     },
     {
@@ -233,7 +253,8 @@
       "вопрос": {
         "ru": "Какой знак на букве «‘айн»?",
         "kk": "«‘айн» әрпінде қандай белгі тұр?",
-        "uz": "«ayn» harfida qanday belgi bor?"
+        "uz": "«ayn» harfida qanday belgi bor?",
+        "en": "Which mark is on the letter “ʿayn”?"
       },
       "показ": "أَعْ",
       "варианты": [
@@ -241,28 +262,32 @@
           "текст": {
             "ru": "кясра («и»)",
             "kk": "кәсра («и»)",
-            "uz": "kasra («i»)"
+            "uz": "kasra («i»)",
+            "en": "kasra (“i”)"
           }
         },
         {
           "текст": {
             "ru": "фатха («а»)",
             "kk": "фатха («а»)",
-            "uz": "fatha («a»)"
+            "uz": "fatha («a»)",
+            "en": "fatha (“a”)"
           }
         },
         {
           "текст": {
             "ru": "дамма («у»)",
             "kk": "дамма («у»)",
-            "uz": "damma («u»)"
+            "uz": "damma («u»)",
+            "en": "damma (“u”)"
           }
         },
         {
           "текст": {
             "ru": "сукун (нет гласного)",
             "kk": "сукун (дауысты жоқ)",
-            "uz": "sukun (unli yoʻq)"
+            "uz": "sukun (unli yoʻq)",
+            "en": "sukun (no vowel)"
           }
         }
       ],
@@ -270,7 +295,8 @@
       "пояснение": {
         "ru": "Маленький кружок над буквой. Слог закрыт: после буквы гласного нет.",
         "kk": "Әріптің үстіндегі кішкентай дөңгелек. Буын жабық: әріптен кейін дауысты жоқ.",
-        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq."
+        "uz": "Harf ustidagi kichik doiracha. Boʻgʻin yopiq: harfdan keyin unli yoʻq.",
+        "en": "A small circle above the letter. The syllable is closed: there is no vowel after the letter."
       }
     },
     {
@@ -280,7 +306,8 @@
       "вопрос": {
         "ru": "Найдите конечную форму буквы «‘айн».",
         "kk": "«‘айн» әрпінің соңғы түрін табыңыз.",
-        "uz": "«ayn» harfining oxirgi shaklini toping."
+        "uz": "«ayn» harfining oxirgi shaklini toping.",
+        "en": "Find the final form of the letter “ʿayn”."
       },
       "варианты": [
         {
@@ -304,7 +331,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -340,7 +368,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -376,7 +405,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "غَ غِ غُ أَغْ إِغْ أُغْ"
@@ -389,12 +419,14 @@
       "заголовок": {
         "ru": "Различаем ع, غ и ء",
         "kk": "ع, غ және ء әріптерін ажыратамыз",
-        "uz": "ع, غ va ء harflarini farqlaymiz"
+        "uz": "ع, غ va ء harflarini farqlaymiz",
+        "en": "Telling ع, غ and ء apart"
       },
       "текст": {
         "ru": "ع — Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».\nغ — Звонкий звук из верхней части горла, ближе ко рту (там же, где خ), похож на картавое «р», но не «г». У казахов опора — «ғ».\nء — Короткая смычка в горле, как перерыв в «а-а!».",
         "kk": "ع — Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.\nغ — Тамақтың жоғарғы, ауызға жақын бөлігінен (خ шығатын жерден) айтылатын ұяң дыбыс — қазақтың «ғ» дыбысына жақын, «г» емес.\nء — Тамақтағы қысқа тоқтау, «а-а!» дегендегі үзіліс сияқты.",
-        "uz": "ع — Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.\nغ — Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ».\nء — Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi."
+        "uz": "ع — Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.\nغ — Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ».\nء — Tomoqdagi qisqa toʻxtash, «a-a!» dagi uzilish kabi.",
+        "en": "ع — A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”.\nغ — A voiced sound from the upper part of the throat, closer to the mouth (the same place as خ), similar to a guttural “r”, but not “g”. For Kazakh speakers the anchor is “ғ”.\nء — A short stop in the throat, like the break in “uh-oh!”."
       },
       "примеры": [
         "عَ",
@@ -409,7 +441,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "غَيْنْ",
       "варианты": [
@@ -424,7 +457,8 @@
       "пояснение": {
         "ru": "غ: Звонкий звук из верхней части горла, ближе ко рту (там же, где خ), похож на картавое «р», но не «г». У казахов опора — «ғ».",
         "kk": "غ: Тамақтың жоғарғы, ауызға жақын бөлігінен (خ шығатын жерден) айтылатын ұяң дыбыс — қазақтың «ғ» дыбысына жақын, «г» емес.",
-        "uz": "غ: Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ»."
+        "uz": "غ: Tomoqning yuqori, ogʻizga yaqin qismidan (خ chiqadigan joydan) chiqadigan jarangli tovush, burro «r»ga oʻxshaydi, lekin «g» emas. Qozoqlarda tayanch — «ғ».",
+        "en": "غ: A voiced sound from the upper part of the throat, closer to the mouth (the same place as خ), similar to a guttural “r”, but not “g”. For Kazakh speakers the anchor is “ғ”."
       }
     },
     {
@@ -434,7 +468,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "بَلَعَ",
       "варианты": [
@@ -449,7 +484,8 @@
       "пояснение": {
         "ru": "ع: Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».",
         "kk": "ع: Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.",
-        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas."
+        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.",
+        "en": "ع: A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”."
       }
     },
     {
@@ -459,7 +495,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "عَلِمَ",
       "варианты": [
@@ -474,7 +511,8 @@
       "пояснение": {
         "ru": "ع: Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».",
         "kk": "ع: Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.",
-        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas."
+        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.",
+        "en": "ع: A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”."
       }
     },
     {
@@ -484,7 +522,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "أَمَلْ",
       "варианты": [
@@ -504,7 +543,8 @@
       "вопрос": {
         "ru": "Какая из этих букв есть в слове?",
         "kk": "Сөзде осы әріптердің қайсысы бар?",
-        "uz": "Bu harflardan qaysi biri soʻzda bor?"
+        "uz": "Bu harflardan qaysi biri soʻzda bor?",
+        "en": "Which of these letters is in the word?"
       },
       "показ": "سَعَلَ",
       "варианты": [
@@ -519,7 +559,8 @@
       "пояснение": {
         "ru": "ع: Звонкий звук из середины горла: горло сжимается, и «а» выходит с усилием. Это не пауза и не «ғ».",
         "kk": "ع: Тамақтың ортасынан шығатын ұяң дыбыс: тамақ қысылып, «а» күшпен шығады. Бұл үзіліс те, «ғ» да емес.",
-        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas."
+        "uz": "ع: Tomoqning oʻrtasidan chiqadigan jarangli tovush: tomoq qisiladi va «a» kuch bilan chiqadi. Bu pauza ham, «gʻ» ham emas.",
+        "en": "ع: A voiced sound from the middle of the throat: the throat tightens and the “a” comes out with effort. It is not a pause and not “ғ”."
       }
     },
     {
@@ -528,7 +569,8 @@
       "подсказка": {
         "ru": "Прочитайте пары. Слова различаются одной буквой.",
         "kk": "Жұптарды оқыңыз. Сөздер бір әріппен ажыратылады.",
-        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi."
+        "uz": "Juftliklarni oʻqing. Soʻzlar bitta harf bilan farqlanadi.",
+        "en": "Read the pairs. The words differ by one letter."
       },
       "строки": [
         {
@@ -572,7 +614,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -604,7 +647,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух. Не уверены — откройте подсказку под слогом.",
         "kk": "Дауыстап оқыңыз. Сенімді болмасаңыз, буын астындағы көмекті ашыңыз.",
-        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching."
+        "uz": "Ovoz chiqarib oʻqing. Ishonchingiz komil boʻlmasa — boʻgʻin ostidagi maslahatni oching.",
+        "en": "Read aloud. Not sure — open the hint under the syllable."
       },
       "строки": [
         {
@@ -620,7 +664,8 @@
       "подсказка": {
         "ru": "Прочитайте вслух и запишите себя, затем послушайте запись.",
         "kk": "Дауыстап оқып, өзіңізді жазып алыңыз, содан кейін жазбаны тыңдаңыз.",
-        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang."
+        "uz": "Ovoz chiqarib oʻqing va oʻzingizni yozib oling, soʻng yozuvni tinglang.",
+        "en": "Read aloud and record yourself, then listen to the recording."
       },
       "читать": {
         "учебный": "غَيْرِ، مَغْرِبْ، عَمَلْ"
@@ -633,7 +678,8 @@
       "подсказка": {
         "ru": "Лестница: читайте по ступеням — от слога к слову. Запишите каждую ступень.",
         "kk": "Баспалдақ: буыннан сөзге дейін саты-сатымен оқыңыз. Әр сатыны жазып алыңыз.",
-        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling."
+        "uz": "Narvon: pogʻonama-pogʻona oʻqing — boʻgʻindan soʻzgacha. Har bir pogʻonani yozib oling.",
+        "en": "Ladder: read step by step — from the syllable to the word. Record each step."
       },
       "ступени": [
         {
