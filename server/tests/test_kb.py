@@ -82,7 +82,7 @@ def test_коран_годный_и_без_арабского():
     ({'id': 'Плохой id'}, 'id'),
     ({'вид': 'фетва'}, 'вид'),
     ({'тексты': {'kk': {'заголовок': 'а', 'текст': 'б'}}}, 'ru'),
-    ({'тексты': {'ru': {'заголовок': 'а', 'текст': 'б'}, 'en': {'заголовок': 'a', 'текст': 'b'}}}, 'язык'),
+    ({'тексты': {'ru': {'заголовок': 'а', 'текст': 'б'}, 'de': {'заголовок': 'a', 'текст': 'b'}}}, 'язык'),
     ({'тексты': {'ru': {'заголовок': 'а', 'текст': ''}}}, 'текст'),
     ({'тексты': {'ru': {'заголовок': 'а', 'текст': 'б', 'лишнее': 1}}}, 'только'),
     ({'источник': ''}, 'источник'),
@@ -137,7 +137,7 @@ def test_стартовая_справка():
     записи = kb.разобрать_jsonl(СПРАВКА.read_text(encoding='utf-8'))
     assert 8 <= len(записи) <= 12
     for з in записи:
-        assert з.вид == 'справка' and з.статус == 'черновик' and set(з.тексты) == {'ru', 'kk'}
+        assert з.вид == 'справка' and з.статус == 'черновик' and set(з.тексты) == {'ru', 'kk', 'en'}  # en — 20.11.2026
         assert з.арабский is None and з.ссылка is None
         for т in з.тексты.values():
             assert not ask.ФЕТВА.search(ask.нормализовать(т['текст'])), з.id
@@ -210,7 +210,15 @@ def test_бд_загрузка_и_поиск_справки(база, pg_адр�
     assert первый('Намаз уақыты қайдан алынады?', 'kk') == 'spravka-vremya-namaza'
     з = база.kb_найти(ask.термы('Намаз уақыты қайдан алынады?', 'kk'), 'kk', True, 5)[0]
     assert з['язык'] == 'kk' and з['заголовок'].startswith('Намаз уақыты') and з['черновик'] is True
-    assert з['версия'].startswith('1.') and len(з['версия']) == 10
+    assert з['версия'].startswith('2.') and len(з['версия']) == 10   # версия 2 — добавлен en (20.11.2026)
+    # en (миграция 006: тексты — в kb_texts_en, словарь 'english')
+    assert первый('Where do the prayer times come from?', 'en') == 'spravka-vremya-namaza'
+    assert первый('Are there ads? Is the app paid?', 'en') == 'spravka-besplatno'
+    з = база.kb_найти(ask.термы('How do prayer notifications work?', 'en'), 'en', True, 5)[0]
+    assert з['id'] == 'spravka-uvedomleniya' and з['язык'] == 'en' and з['заголовок'] == 'Prayer time notifications'
+    with psycopg.connect(pg_адрес) as с:
+        assert с.execute('SELECT count(*) FROM kb_texts_en').fetchone()[0] == 11
+        assert с.execute("SELECT count(*) FROM kb_texts WHERE lang = 'en'").fetchone()[0] == 0
     assert база.kb_найти(ask.термы('Сколько закята с 1000000 тенге', 'ru'), 'ru', True, 5) == []
     assert база.kb_найти(ask.термы('Как включить уведомления', 'ru'), 'ru', False, 5) == []   # черновики скрыты
     # спецсимволы tsquery в вопросе не ломают поиск
@@ -306,3 +314,8 @@ def test_бд_эндпоинт_целиком(база):
     д = к.post('/api/ask/v1', json={'q': 'Как работает проверка чтения голосом?', 'lang': 'uz'}).json()
     assert д['вид'] == 'ответ' and д['источники'][0]['id'] == 'spravka-proverka-golosom'   # uz-текста нет — ru
     assert д['текст'].startswith("Savolingiz bo'yicha")
+    д = к.post('/api/ask/v1', json={'q': 'How does the voice reading check work?', 'lang': 'en'}).json()
+    assert д['вид'] == 'ответ' and д['источники'][0]['id'] == 'spravka-proverka-golosom'
+    assert д['источники'][0]['заголовок'].startswith('How the voice reading check works') and д['текст'].startswith('Here is what')
+    д = к.post('/api/ask/v1', json={'q': 'Is my prayer valid?', 'lang': 'en'}).json()
+    assert д['вид'] == 'к-имаму' and 'does not issue fatwas' in д['текст']

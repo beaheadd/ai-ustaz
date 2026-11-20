@@ -139,6 +139,18 @@ def спросить(к, q, lang='ru', **заголовки):
     ('Taloq haqida savol', 'к-имаму'),
     ('Siyosat haqida gapiring', 'вне-темы'),
     ("Oyatning ma'nosi nima, 2:255?", 'тафсир'),
+    # en (владелец 20.11.2026)
+    ('Where do the prayer times come from?', 'поиск'),
+    ('What is AI Ustaz?', 'поиск'),
+    ('I want to know about zakat', 'поиск'),
+    ('Is my prayer valid?', 'к-имаму'),
+    ('Do I have to pay zakat?', 'к-имаму'),
+    ('Is it haram to take a mortgage?', 'к-имаму'),
+    ('A question about divorce', 'к-имаму'),
+    ('What do you think about the president?', 'вне-темы'),
+    ('Which madhhab is better?', 'вне-темы'),
+    ('What will the weather be tomorrow?', 'вне-темы'),
+    ('What is the meaning of the verse 2:255?', 'тафсир'),
 ])
 def test_классификатор(вопрос, вид):
     assert ask.классифицировать(вопрос).вид == вид
@@ -164,6 +176,8 @@ def test_термы():
     assert all(set(т) <= set('абвгдежзийклмнопрстуфхцчшщъыьэюяәғқңөұүһіabcdefghijklmnopqrstuvwxyz')
                for т in ask.термы('"; DROP TABLE kb_entries; -- <script> закят & | ! :*', 'ru'))
     assert ask.термы('как что где', 'ru') == []
+    assert ask.термы('Where do the prayer times come from?', 'en') == ['praye', 'times', 'come']
+    assert ask.термы("What is the Jumu'ah prayer?", 'en') == ['jumua', 'praye']   # апостроф убран, основа
 
 
 def test_отобрать_порог():
@@ -325,7 +339,7 @@ def test_здоровье():
     ({'q': 123, 'lang': 'ru'}, 'question'),
     ({'lang': 'ru'}, 'question'),
     ([1, 2], 'question'),
-    ({'q': 'Что такое закят?', 'lang': 'en'}, 'lang'),
+    ({'q': 'Что такое закят?', 'lang': 'de'}, 'lang'),
     ({'q': 'Что такое закят?'}, 'lang'),
 ])
 def test_400(тело, код):
