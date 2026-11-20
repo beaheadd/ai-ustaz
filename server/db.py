@@ -84,15 +84,17 @@ class Хранилище:
         with self._соединение() as с:
             ид = с.execute(
                 """
-                INSERT INTO push_subscriptions (endpoint, endpoint_hash, p256dh, auth, lang, city, schedule_end, refresh_sent, updated_at)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, FALSE, %s)
+                INSERT INTO push_subscriptions (endpoint, endpoint_hash, p256dh, auth, lang, lang_ui, city, schedule_end, refresh_sent, updated_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, FALSE, %s)
                 ON CONFLICT (endpoint_hash) DO UPDATE SET
                     endpoint = EXCLUDED.endpoint, p256dh = EXCLUDED.p256dh, auth = EXCLUDED.auth, lang = EXCLUDED.lang,
-                    city = EXCLUDED.city, schedule_end = EXCLUDED.schedule_end, refresh_sent = FALSE, updated_at = EXCLUDED.updated_at
+                    lang_ui = EXCLUDED.lang_ui, city = EXCLUDED.city, schedule_end = EXCLUDED.schedule_end, refresh_sent = FALSE,
+                    updated_at = EXCLUDED.updated_at
                 RETURNING id
                 """,
-                (запрос.адрес, запрос.хэш, запрос.p256dh, запрос.auth, запрос.язык, запрос.город,
-                 _вр(запрос.конец or сейчас), _вр(сейчас)),
+                # lang — ограничение 001 (ru/kk): для uz запасной 'ru'; настоящий язык — lang_ui (миграция 004).
+                (запрос.адрес, запрос.хэш, запрос.p256dh, запрос.auth, запрос.язык if запрос.язык in ('ru', 'kk') else 'ru',
+                 запрос.язык, запрос.город, _вр(запрос.конец or сейчас), _вр(сейчас)),
             ).fetchone()[0]
             # Невзятые пункты заменяем целиком (новый город, другие намазы, напоминание). Взятые (уже отправленные)
             # остаются до уборки: если новый пункт совпал с отправленным — он не вставится второй раз (PRIMARY KEY).
@@ -117,7 +119,7 @@ class Хранилище:
     def подписка(self, хэш: str) -> dict | None:
         with self._соединение() as с:
             р = с.execute(
-                'SELECT id, endpoint, endpoint_hash, p256dh, auth, lang, city, schedule_end, refresh_sent FROM push_subscriptions WHERE endpoint_hash = %s',
+                'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE endpoint_hash = %s',
                 (хэш,),
             ).fetchone()
         return self._подписка(р) if р else None
@@ -148,7 +150,7 @@ class Хранилище:
             подписки = {
                 р[0]: self._подписка(р)
                 for р in с.execute(
-                    'SELECT id, endpoint, endpoint_hash, p256dh, auth, lang, city, schedule_end, refresh_sent FROM push_subscriptions WHERE id = ANY(%s)',
+                    'SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions WHERE id = ANY(%s)',
                     (ид,),
                 ).fetchall()
             }
@@ -161,7 +163,7 @@ class Хранилище:
     def для_обновления(self, сейчас: int, порог_мс: int) -> list[dict]:
         with self._соединение() as с:
             строки = с.execute(
-                """SELECT id, endpoint, endpoint_hash, p256dh, auth, lang, city, schedule_end, refresh_sent FROM push_subscriptions
+                """SELECT id, endpoint, endpoint_hash, p256dh, auth, COALESCE(lang_ui, lang), city, schedule_end, refresh_sent FROM push_subscriptions
                    WHERE refresh_sent = FALSE AND schedule_end < %s ORDER BY id LIMIT 500""",
                 (_вр(сейчас + порог_мс),),
             ).fetchall()
