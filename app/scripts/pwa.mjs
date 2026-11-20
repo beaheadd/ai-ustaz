@@ -10,8 +10,9 @@
  *     display standalone, ru, цвета токенов: фон «слоновая кость» #F7F2E8, тема — изумруд #0F4C45);
  *   ЦВЕТ_ТЕМЫ_СВЕТЛАЯ / ЦВЕТ_ТЕМЫ_ТЁМНАЯ — <meta name="theme-color"> (фон экрана, app/src/theme/tokens.ts).
  * Манифест — JSON с md5 содержимого в имени (pwa/manifest.<md5>.json): SW batr.kz кэширует по URL навсегда;
- * .json, а не .webmanifest — у любого nginx верный тип application/json. Service worker не добавляем: Chrome ставит
- * приложение и без него, а свой SW в области /aiustaz/ на batr.kz спорил бы с SW сайта BATR.
+ * .json, а не .webmanifest — у любого nginx верный тип application/json. Для установки service worker не нужен: Chrome
+ * ставит приложение и без него. С 20.11.2026 есть push-sw.js — только для уведомлений о времени намаза и только на
+ * aiustaz.pro (на batr.kz его не регистрируем: там свой SW со scope «/»; app/src/notify/push.ts).
  * Решение владельца 19.11.2026: TWA и установка на экран «Домой» (aiustaz.pro).
  */
 
