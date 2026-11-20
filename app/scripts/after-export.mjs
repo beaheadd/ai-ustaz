@@ -23,6 +23,10 @@
  *    <link rel="apple-touch-icon" sizes="180x180">, apple-mobile-web-app-capable / -title / -status-bar-style,
  *    mobile-web-app-capable, два <meta name="theme-color"> (светлая и тёмная — фон экрана) вместо одного от Expo.
  *    Помечены data-aiustaz-pwa — повторный запуск заменяет их. Манифест — того же сайта (CSP default-src 'self').
+ * 6) Уведомления о времени намаза (владелец 20.11.2026): в dist/push-sw.js (service worker из app/public, только push и
+ *    notificationclick, без кэша) подставляет адреса значков: __ЗНАЧОК__ → /aiustaz/pwa/icon-192.<md5>.png,
+ *    __ЗНАЧОК_МОНО__ → /aiustaz/pwa/icon-mono-512.<md5>.png. CSP worker-src 'self' — только этот worker своего сайта
+ *    (регистрирует его app/src/notify/push.ts и только на aiustaz.pro).
  * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
@@ -46,7 +50,7 @@ export const ПОЛИТИКА = [
   "font-src 'self' data:",
   "media-src 'self' blob:", // своя запись (object URL); видео и аудио партнёров — только свои файлы media/…
   "connect-src 'self'",
-  "worker-src 'none'",
+  "worker-src 'self'", // только /aiustaz/push-sw.js (уведомления о времени намаза, 20.11.2026; регистрируется лишь на aiustaz.pro)
   "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
@@ -131,4 +135,18 @@ export const МЕТКА_PWA = 'aiustaz-pwa';
   const новый = без.replace(после, `$1\n    ${теги.join('\n    ')}`);
   fs.writeFileSync(файл, новый);
   console.log('PWA:', `${ПАПКА_PWA}/${имяМанифеста};`, 'значки:', Object.values(значки).join(', '));
+}
+
+export const ФАЙЛ_SW = 'push-sw.js';
+{
+  const путь = path.join(папка, ФАЙЛ_SW);
+  if (!fs.existsSync(путь)) throw new Error(`нет ${ФАЙЛ_SW} в сборке — он лежит в app/public/${ФАЙЛ_SW}`);
+  const значки = найтиЗначки(fs.readdirSync(path.join(папка, ПАПКА_PWA)));
+  const текст = fs.readFileSync(путь, 'utf8');
+  const новый = текст
+    .replace(/'(__ЗНАЧОК__|\/aiustaz\/pwa\/icon-192\.[0-9a-f]{32}\.png)'/, `'/aiustaz/${ПАПКА_PWA}/${значки['icon-192']}'`)
+    .replace(/'(__ЗНАЧОК_МОНО__|\/aiustaz\/pwa\/icon-mono-512\.[0-9a-f]{32}\.png)'/, `'/aiustaz/${ПАПКА_PWA}/${значки['icon-mono-512']}'`);
+  if (новый.includes('__ЗНАЧОК')) throw new Error(`не удалось подставить значки в ${ФАЙЛ_SW}`);
+  fs.writeFileSync(путь, новый);
+  console.log(`Service worker уведомлений: ${ФАЙЛ_SW} — значки ${значки['icon-192']}, ${значки['icon-mono-512']}`);
 }

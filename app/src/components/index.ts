@@ -20,6 +20,7 @@ export { Экран, useПрокрутка, прокрутитьЭкранВве
 export { Вкладки, type Вкладка, type СвойстваВкладок } from './Tabs';
 export { Текст, стильТекста, type ВидТекста, type СвойстваТекста } from './Text';
 export { ПереключательТемы } from './ThemeSwitch';
+export { СтрокаПереключателя, type СвойстваСтрокиПереключателя } from './Switch';
 export { ЭмблемаУстаза, type ВариантЭмблемы, type СвойстваЭмблемы, type СостояниеЭмблемы } from './UstazEmblem';
 export { РепликаУстаза, type СвойстваРеплики } from './UstazReply';
 // Время намаза (components/prayer): «Арка дня», выбор города, «урок после намаза».

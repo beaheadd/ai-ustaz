@@ -42,6 +42,12 @@
  *     — текста Корана нет в JS-чанках: ни один арабский отрезок JS длиной ≥ 25 символов не входит в текст сур 2–114,
  *       кроме отрезков аль-Фатихи (чанк fatiha-demo по замыслу; 1:1 дословно есть и в 27:30). Суры грузятся fetch'ем
  *       по одной (src/quran/data.ts).
+ * 10. Service worker уведомлений о времени намаза (владелец 20.11.2026: уведомления о времени намаза): push-sw.js —
+ *     единственный файл без хэша кроме index.html/metadata.json/privacy.html (адрес worker'а должен быть постоянным);
+ *     в нём только push и notificationclick: нет обработчика fetch, Cache API, importScripts, fetch(), внешних адресов;
+ *     значки — существующие pwa/icon-192 и pwa/icon-mono-512 (подставляет after-export), меток __ЗНАЧОК нет; ≤ 8 КБ;
+ *     CSP worker-src 'self' (не шире); регистрирует его только app/src/notify/push.ts (scope /aiustaz/) и только на
+ *     aiustaz.pro — на batr.kz у сайта свой SW со scope «/».
  * Запуск: npm run check:dist  [папка-сборки=dist]
  */
 import { execFileSync } from 'node:child_process';
@@ -81,7 +87,12 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // синонимам в списке сур, «Весь аят» и текущая часть в панели записи, фокус и live-регионы, состояние «файл не найден».
 // Владелец 19.11.2026: установка приложения (ветка install-pwa, слита с Кораном): +33 641 байт JS — экран #/install (ru + kk,
 // шаги для Android, iPhone, встроенных браузеров), строка на главной и в «Ещё», шесть значков: 1350 → 1383 КБ.
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1383);
+// Владелец 20.11.2026: уведомления о времени намаза. 1383 → 1430 КБ — ровно измеренный прирост +48 488 байт (47,4 КБ):
+// сборка до (fb39fb4) — 1 415 347 байт JS, после — 1 463 835. Состав: экран #/notifications ru + kk (пояснение, отказ,
+// iPhone, batr.kz, приватность), notify/ (расписание на 30 дней, связь с PushManager и /api/push/, настройки,
+// синхронизация при открытии), строка в «Ещё», колокольчик на главной, переключатель, два значка, раздел «Сервер» в
+// «Лицензиях»; push-sw.js — 5 066 байт (тоже .js). JS после — 1430 из 1430 КБ: следующая правка — только с решением владельца.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1430);
 // Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
 // Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
 // + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
@@ -90,7 +101,9 @@ const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 
 // Запись и проверка аята: всего 4718 → 4736 КБ — тот же прирост JS (+17 969 байт); записей голоса в сборке нет.
 // Экраны Корана: всего 4736 → 4770 КБ — тот же прирост JS (+34 879 байт); новых статических файлов нет.
 // Установка приложения: значки pwa/, манифест, privacy.html и тот же прирост JS — всего 4770 → 4930 КБ (замер после слияния: 3579 КБ, в т. ч. схемы махраджей в public/makharij — в работе; лимит с запасом до их окончательного размера).
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 4930);
+// Уведомления о времени намаза (владелец 20.11.2026): всего 4930 → 4986 КБ — по факту, +56 729 байт (55,4 КБ): JS выше,
+// privacy.html (+ раздел об уведомлениях ru/kk/en), чанк списка пакетов сервера. Замер: 4 050 361 → 4 107 090 байт.
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 4986);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
@@ -99,7 +112,10 @@ const ВСТРАИВАНИЕ = /youtube\.com\/embed|youtube-nocookie\.com|ytimg\
 // privacy.html — политика конфиденциальности для Google Play: нужен постоянный адрес
 // https://aiustaz.pro/aiustaz/privacy.html (владелец 19.11.2026: «подготовить файлы, чтобы загрузить на Play Market»).
 // На aiustaz.pro SW нет, nginx отдаёт её с no-cache; на batr.kz её может закэшировать SW сайта — для Play адрес aiustaz.pro.
-const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json', 'privacy.html']);
+// push-sw.js — УЗКОЕ ИСКЛЮЧЕНИЕ. Владелец 20.11.2026: уведомления о времени намаза. Адрес service worker'а должен быть
+// постоянным (браузер сверяет его при каждой проверке обновления); кэш SW batr.kz тут не мешает: на batr.kz наш worker
+// не регистрируется, а на aiustaz.pro SW сайта нет и nginx отдаёт /aiustaz/ с no-cache. Что внутри — п. 10 ниже.
+const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json', 'privacy.html', 'push-sw.js']);
 const ХЭШ_В_ИМЕНИ = /[.-]([0-9a-f]{20,})\.[a-z0-9]+$/i;
 
 /** Разрешённые URL-строки в коде зависимостей: префикс → почему это не запрос. */
@@ -395,11 +411,35 @@ for (const { абс, отн } of файлы) {
   if (/https?:\/\/[^"'`\s]*\/api\/speech/i.test(fs.readFileSync(абс, 'utf8'))) ошибка(`абсолютный адрес речевого сервиса в ${отн} — только относительный /api/speech/…`);
 }
 
+// 10. Service worker уведомлений о времени намаза (владелец 20.11.2026).
+let строкаSW = 'нет push-sw.js';
+{
+  const путь = path.join(папка, 'push-sw.js');
+  if (!fs.existsSync(путь)) ошибка('нет push-sw.js в сборке (app/public/push-sw.js; после него — npm run export:web)');
+  else {
+    const текст = fs.readFileSync(путь, 'utf8');
+    const код = текст.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    if (fs.statSync(путь).size > 8 * 1024) ошибка('push-sw.js больше 8 КБ — в нём должны быть только push и notificationclick');
+    if (/addEventListener\(\s*['"]fetch['"]|onfetch\b/.test(код)) ошибка('push-sw.js перехватывает запросы (fetch) — нельзя: worker только показывает уведомления');
+    if (/\bcaches\b|importScripts|\bfetch\s*\(|XMLHttpRequest|indexedDB|https?:\/\//.test(код)) ошибка('push-sw.js: кэш, импорт, сетевые запросы или внешние адреса — нельзя');
+    if (/__ЗНАЧОК/.test(текст)) ошибка('push-sw.js: не подставлены значки (__ЗНАЧОК__) — запускать сборку через npm run export:web');
+    const значки = [...текст.matchAll(/'\/aiustaz\/(pwa\/[^']+\.png)'/g)].map((м) => м[1]);
+    if (значки.length !== 2 || !значки.every((з) => файлы.some((ф) => ф.отн === з)) || !значки.some((з) => з.startsWith('pwa/icon-192.')) || !значки.some((з) => з.startsWith('pwa/icon-mono-512.')))
+      ошибка(`push-sw.js: значки должны быть существующими pwa/icon-192 и pwa/icon-mono-512 (сейчас: ${значки.join(', ') || 'нет'})`);
+    for (const соб of ['push', 'notificationclick']) if (!new RegExp(`addEventListener\\(\\s*'${соб}'`).test(код)) ошибка(`push-sw.js: нет обработчика ${соб}`);
+    строкаSW = `${кб(fs.statSync(путь).size)} КБ, только push и notificationclick, значки ${значки.map((з) => path.basename(з)).join(', ')}`;
+  }
+  const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/)?.[1] ?? '';
+  const worker = csp.split(';').map((ч) => ч.trim()).find((ч) => ч.startsWith('worker-src ')) ?? '';
+  if (worker !== "worker-src 'self'") ошибка(`CSP: нужен worker-src 'self' (только свой push-sw.js), сейчас «${worker}»`);
+}
+
 // Итог.
 console.log(`Сборка: ${path.relative(корень, папка)} — файлов ${файлы.length}, всего ${кб(всего)} КБ; JS ${кб(js)} КБ (gzip ≈ ${кб(jsGzip)} КБ)`);
 for (const { абс, отн } of файлы) console.log(`  ${отн}  ${кб(fs.statSync(абс).size)} КБ`);
 console.log(`batr-world .gitignore: ${проверкаGit}`);
 console.log(`Коран (dist/quran): ${строкаКорана}`);
+console.log(`Service worker уведомлений (push-sw.js): ${строкаSW}`);
 console.log(`Проверка голосом: ${меткаПроверки === 'on' ? 'ВКЛЮЧЕНА в сборке' + (СВОЙ_ДОМЕН ? ' (MUGALIM_TARGET=own-domain)' : '') : 'выключена (сборка для batr.kz)'}`);
 console.log(`Предпросмотр видео и аудио партнёров: ${меткаПредпросмотра === 'on' ? 'ВКЛЮЧЁН (только для владельца' + (ПРЕДПРОСМОТР_РАЗРЕШЁН ? ', MUGALIM_TARGET=preview)' : ')') : 'выключен'}`);
 if (встреченоРазрешённых.size) {

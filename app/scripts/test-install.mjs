@@ -191,12 +191,13 @@ const имяМанифеста = `manifest.${crypto.createHash('md5').update(jso
 
 console.log('установка: пакет TWA (twa/)');
 const twa = JSON.parse(fs.readFileSync(path.join(корень, '..', 'twa', 'twa-manifest.json'), 'utf8'));
-тест('twa-manifest: pro.aiustaz.app, aiustaz.pro, /aiustaz/?source=twa, Play Billing и уведомления выключены, customtabs', () => {
+тест('twa-manifest: pro.aiustaz.app, aiustaz.pro, /aiustaz/?source=twa, Play Billing выключен, уведомления включены (20.11.2026), customtabs', () => {
   assert.equal(twa.packageId, 'pro.aiustaz.app');
   assert.equal(twa.host, 'aiustaz.pro');
   assert.equal(twa.startUrl, '/aiustaz/?source=twa');
   assert.equal(twa.features.playBilling.enabled, false);
-  assert.equal(twa.enableNotifications, false);
+  // Владелец 20.11.2026: уведомления о времени намаза — Chrome делегирует уведомления сайта приложению (twa/README.md).
+  assert.equal(twa.enableNotifications, true);
   assert.equal(twa.fallbackType, 'customtabs');
   assert.equal(twa.display, 'standalone');
   assert.ok(!String(twa.signingKey.path).includes('mugalim'), 'ключ — вне репозитория');

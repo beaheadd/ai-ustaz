@@ -22,6 +22,7 @@ import { Коран } from './QuranScreen';
 import { ПроверкаАята } from './AyahCheckScreen';
 import { Сура } from './SuraScreen';
 import { Установка } from './InstallScreen';
+import { Уведомления } from './NotificationsScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -41,4 +42,5 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   хадисы: Хадисы,
   ещё: Ещё,
   установка: Установка,
+  уведомления: Уведомления,
 };

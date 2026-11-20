@@ -7,6 +7,7 @@
   Создаёт `app/scripts/gen-licenses.mjs` (`npm run licenses` в `app/`), руками не править.
 - `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`; источник — в первой строке «# …»).
 - `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник).
+- `server/` — тексты лицензий пакетов сервера уведомлений (раздел «Сервер AI Ustaz» ниже).
 - `upstream/` — тексты MIT для пакетов, у которых в npm нет файла LICENSE (источник с тегом — в шапке файла):
   - `react-native-LICENSE.txt` — facebook/react-native@v0.88.1, для `@react-native/js-polyfills`, `@react-native/normalize-colors`;
   - `metro-LICENSE.txt` — facebook/metro@v0.87.1, для `metro-runtime`.
@@ -33,6 +34,28 @@
 
 Копилефта (GPL, AGPL, LGPL, SSPL), некоммерческих лицензий и NPL в бандле нет — генератор это проверяет.
 Аналитики, рекламы и трекеров в зависимостях нет.
+
+## Сервер AI Ustaz — уведомления о времени намаза (20.11.2026)
+
+Владелец 20.11.2026: «правильные, красивые уведомления время намаза приходило к клиенту». Сервер `server/` (API 127.0.0.1:8031
+и фоновые задачи `mugalim-jobs`) работает в Казахстане; в приложение и веб-бандл эти пакеты НЕ попадают. Версии закреплены
+в `server/requirements.txt`; список виден и на экране «Лицензии» (раздел «Сервер AI Ustaz», `app/src/legal/server-licenses.json`).
+Полные тексты — `licenses/server/` (из колёс PyPI, без изменений; источник — в первой строке «# …»).
+
+| Пакет | Версия | Лицензия | Зачем |
+|---|---|---|---|
+| pywebpush | 2.5.0 | MPL-2.0 | отправка Web Push: шифрование aes128gcm и подпись VAPID; используется как библиотека, без изменений (файлы MPL не меняем — условий раскрытия своего кода нет) |
+| py-vapid | 1.9.6 | MPL-2.0 | подпись VAPID (зависимость pywebpush), без изменений |
+| http-ece | 1.2.1 | MIT | шифрование тела push (зависимость pywebpush); файла лицензии в колесе нет — поле License: MIT в METADATA (автор Martin Thomson) |
+| cryptography | 50.0.1 | Apache-2.0 OR BSD-3-Clause (берём BSD-3-Clause) | ключи P-256, создание VAPID-ключей на сервере (`server/vapid.py`) |
+| requests | 2.34.2 | Apache-2.0 | HTTP к push-сервисам браузеров |
+| fastapi | 0.165.0 | MIT | API `/api/push/` |
+| uvicorn | 0.54.0 | BSD-3-Clause | процесс API |
+| psycopg (+ psycopg-binary) | 3.3.9 | LGPL-3.0-only | PostgreSQL (своя база `mugalim`); динамически подключаемая библиотека без изменений — условие LGPL «можно заменить библиотеку» выполняется (пакет ставится pip отдельно) |
+
+Только на сервере, наружу ходит лишь к push-сервисам браузеров (fcm.googleapis.com, updates.push.services.mozilla.com,
+web.push.apple.com, *.notify.windows.com). Firebase SDK, аналитики и рекламы нет: Web Push — стандарт браузера, ключи
+VAPID создаются только на сервере (`/etc/mugalim.env`, права 600).
 
 ## Контент
 

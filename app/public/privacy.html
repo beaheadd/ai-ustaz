@@ -38,7 +38,7 @@
 
     <section id="ru" lang="ru">
       <h1>Политика конфиденциальности AI Ustaz</h1>
-      <p class="мелко">Версия 1.0 от 19.11.2026. Действует для сайта aiustaz.pro и приложения AI Ustaz для Android (pro.aiustaz.app).</p>
+      <p class="мелко">Версия 1.1 от 20.11.2026 (добавлены уведомления о времени намаза, п. 6). Действует для сайта aiustaz.pro и приложения AI Ustaz для Android (pro.aiustaz.app).</p>
 
       <h2>1. Кто мы</h2>
       <p>AI Ustaz — бесплатный ИИ-наставник для обучения правильному чтению Корана по методике «Муаллим сани». Проект финансирует бизнес владельца. Оператор: [оператор]. Связь по вопросам данных: [контакт].</p>
@@ -50,10 +50,11 @@
         <li>Данные пользователей мы не продаём и не передаём третьим лицам.</li>
         <li>Прогресс уроков и настройки хранятся только на вашем устройстве.</li>
         <li>Запись голоса уходит на наш сервер только по вашему нажатию «Проверить», обрабатывается на сервере в Казахстане и удаляется сразу после разбора.</li>
+        <li>Уведомления о времени намаза — по желанию: на сервер уходят подписка браузера, язык, название города и расписание, без координат; выключили — всё удаляется сразу (п. 6).</li>
       </ul>
 
       <h2>3. Что хранится на устройстве</h2>
-      <p>Пройденные уроки, дни занятий, выбранный язык, оформление и город для времени намаза хранятся в памяти браузера на вашем устройстве. На наш сервер они не отправляются. Удалить их можно, очистив данные сайта aiustaz.pro в настройках браузера или удалив приложение.</p>
+      <p>Пройденные уроки, дни занятий, выбранный язык, оформление и город для времени намаза хранятся в памяти браузера на вашем устройстве. На наш сервер они не отправляются (кроме названия города — только если вы включили уведомления о времени намаза, п. 6). Удалить их можно, очистив данные сайта aiustaz.pro в настройках браузера или удалив приложение.</p>
 
       <h2>4. Запись голоса</h2>
       <ul>
@@ -67,26 +68,37 @@
       <h2>5. Местоположение</h2>
       <p>Для времени намаза и направления киблы можно выбрать город вручную. Если вы нажмёте «Определить по геолокации», браузер спросит разрешение; координаты используются только на устройстве, чтобы найти ближайший город, и на сервер не отправляются.</p>
 
-      <h2>6. Технический журнал сервера</h2>
+      <h2>6. Уведомления о времени намаза</h2>
+      <p>Уведомления выключены по умолчанию и включаются только на сайте aiustaz.pro (и в приложении для Android): «Ещё» → «Уведомления о намазе». Перед запросом разрешения приложение объясняет, что придёт и что уходит на сервер.</p>
+      <ul>
+        <li>Время намаза считает ваше устройство. Координаты на сервер не отправляются.</li>
+        <li>На наш сервер в Казахстане уходят: подписка браузера на уведомления (адрес push-сервиса браузера и ключи шифрования — без имени и телефона), язык, название выбранного города строкой и расписание на 30 дней (время каждого выбранного намаза и напоминаний).</li>
+        <li>Уведомление доставляет push-сервис вашего браузера (для Chrome — Google, для Safari — Apple) в зашифрованном виде: только текст «Аср · 14:39 · город». Мы не используем Firebase SDK, аналитику и рекламу.</li>
+        <li>Срок хранения: пока уведомления включены. Расписание обновляется, когда вы открываете AI Ustaz; если его не открывать, расписание кончится через 30 дней, а ещё через 30 дней подписка удаляется сама.</li>
+        <li>Как удалить: выключите уведомления в «Ещё» → «Уведомления о намазе» — подписка, город и расписание удаляются с сервера сразу. Если вы отозвали разрешение в настройках браузера или удалили приложение, подписка удаляется при первой же попытке отправки.</li>
+        <li>В журнале сервера уведомлений — только хэш адреса подписки, событие и время (90 дней), без адреса целиком.</li>
+      </ul>
+
+      <h2>7. Технический журнал сервера</h2>
       <p>Как любой сайт, сервер aiustaz.pro может вести технический журнал запросов (IP-адрес, время, запрошенный адрес страницы, тип браузера) — для защиты от атак и поиска сбоев. Журнал хранится ограниченный срок ([срок]), не используется для рекламы и не передаётся третьим лицам. Содержимое записей голоса в журнал не попадает.</p>
 
-      <h2>7. Возраст</h2>
+      <h2>8. Возраст</h2>
       <p>AI Ustaz рассчитан на пользователей от 16 лет. Подросткам 13–17 лет — только с согласия родителя или иного законного представителя. Детям до 13 лет приложение не предназначено.</p>
 
-      <h2>8. ИИ-предупреждение</h2>
+      <h2>9. ИИ-предупреждение</h2>
       <p>AI Ustaz использует искусственный интеллект. Подсказки ИИ могут быть неточными: это помощь в учёбе, а не оценка и не замена учителя (устаза); приложение не выдаёт иджазу и не даёт фетв. Полный текст ИИ-предупреждения — на арабском и на языке интерфейса — показывается до первого использования и всегда доступен в приложении: «Ещё» → «ИИ-предупреждение».</p>
 
-      <h2>9. Ваши права</h2>
-      <p>Вы можете узнать, какие данные о вас есть, попросить исправить или удалить их и отозвать согласие (Закон Республики Казахстан «О персональных данных и их защите»). Поскольку аккаунтов нет, а записи голоса удаляются сразу после разбора, на сервере обычно нет данных, связанных с вами. Запросы — [контакт]; ответ — в течение 30 дней.</p>
+      <h2>10. Ваши права</h2>
+      <p>Вы можете узнать, какие данные о вас есть, попросить исправить или удалить их и отозвать согласие (Закон Республики Казахстан «О персональных данных и их защите»). Поскольку аккаунтов нет, а записи голоса удаляются сразу после разбора, на сервере обычно нет данных, связанных с вами; если включены уведомления — только подписка, город и расписание (удаляются выключением уведомлений). Запросы — [контакт]; ответ — в течение 30 дней.</p>
 
-      <h2>10. Изменения</h2>
+      <h2>11. Изменения</h2>
       <p>Новую версию политики мы публикуем по этому адресу с датой. Если изменения существенные — сообщим в приложении.</p>
     </section>
 
     <section id="kk" lang="kk">
       <h1>AI Ustaz құпиялылық саясаты</h1>
       <p class="черновик">Қазақша мәтін — редактордың тексеруіне арналған жоба. Даулы жағдайда орысша мәтін басым.</p>
-      <p class="мелко">1.0 нұсқа, 19.11.2026. aiustaz.pro сайтына және Android-қа арналған AI Ustaz қолданбасына (pro.aiustaz.app) қолданылады.</p>
+      <p class="мелко">1.1 нұсқа, 20.11.2026 (намаз уақыты туралы хабарландырулар қосылды, 6-тармақ). aiustaz.pro сайтына және Android-қа арналған AI Ustaz қолданбасына (pro.aiustaz.app) қолданылады.</p>
 
       <h2>1. Біз кімбіз</h2>
       <p>AI Ustaz — «Муаллим сани» әдістемесі бойынша Құранды дұрыс оқуды үйрететін тегін ЖИ-тәлімгер. Жобаны иесінің бизнесі қаржыландырады. Оператор: [оператор]. Деректер бойынша байланыс: [контакт].</p>
@@ -98,10 +110,11 @@
         <li>Пайдаланушы деректерін сатпаймыз және үшінші тұлғаларға бермейміз.</li>
         <li>Сабақ прогресі мен баптаулар тек сіздің құрылғыңызда сақталады.</li>
         <li>Дауыс жазбасы біздің серверге тек сіз «Тексеру» басқанда жіберіледі, Қазақстандағы серверде өңделеді және талдаудан кейін бірден жойылады.</li>
+        <li>Намаз уақыты туралы хабарландыру — қалау бойынша: серверге браузер жазылымы, тіл, қала атауы және кесте жіберіледі, координатсыз; өшірсеңіз — бәрі бірден жойылады (6-тармақ).</li>
       </ul>
 
       <h2>3. Құрылғыда не сақталады</h2>
-      <p>Өткен сабақтар, сабақ күндері, таңдалған тіл, безендіру және намаз уақытына арналған қала құрылғыңыздағы браузер жадында сақталады. Олар біздің серверге жіберілмейді. Оларды браузер баптауларында aiustaz.pro сайтының деректерін тазалап немесе қолданбаны жойып өшіруге болады.</p>
+      <p>Өткен сабақтар, сабақ күндері, таңдалған тіл, безендіру және намаз уақытына арналған қала құрылғыңыздағы браузер жадында сақталады. Олар біздің серверге жіберілмейді (қала атауынан басқа — тек намаз уақыты туралы хабарландыруды қоссаңыз, 6-тармақ). Оларды браузер баптауларында aiustaz.pro сайтының деректерін тазалап немесе қолданбаны жойып өшіруге болады.</p>
 
       <h2>4. Дауыс жазбасы</h2>
       <ul>
@@ -115,25 +128,36 @@
       <h2>5. Орналасқан жер</h2>
       <p>Намаз уақыты мен құбыла бағыты үшін қаланы қолмен таңдауға болады. «Геолокация бойынша анықтау» бассаңыз, браузер рұқсат сұрайды; координаттар тек құрылғыда ең жақын қаланы табу үшін пайдаланылады және серверге жіберілмейді.</p>
 
-      <h2>6. Сервердің техникалық журналы</h2>
+      <h2>6. Намаз уақыты туралы хабарландырулар</h2>
+      <p>Хабарландырулар әдепкі бойынша өшірулі және тек aiustaz.pro сайтында (және Android қолданбасында) қосылады: «Тағы» → «Намаз хабарландырулары». Рұқсат сұрамас бұрын қолданба не келетінін және серверге не жіберілетінін түсіндіреді.</p>
+      <ul>
+        <li>Намаз уақытын құрылғыңыз есептейді. Координаттар серверге жіберілмейді.</li>
+        <li>Қазақстандағы біздің серверге жіберіледі: браузердің хабарландыруға жазылымы (браузердің push-қызметінің мекенжайы мен шифрлау кілттері — аты-жөнсіз, телефонсыз), тіл, таңдалған қаланың атауы және 30 күндік кесте (таңдалған әр намаз бен еске салу уақыты).</li>
+        <li>Хабарландыруды браузеріңіздің push-қызметі (Chrome үшін — Google, Safari үшін — Apple) шифрланған түрде жеткізеді. Біз Firebase SDK, аналитика және жарнама қолданбаймыз.</li>
+        <li>Сақтау мерзімі: хабарландыру қосулы тұрғанда. Кесте AI Ustaz-ты ашқан сайын жаңарады; ашпасаңыз, кесте 30 күннен кейін бітеді, тағы 30 күннен кейін жазылым өзі жойылады.</li>
+        <li>Қалай жою керек: «Тағы» → «Намаз хабарландырулары» бөлімінде өшіріңіз — жазылым, қала және кесте серверден бірден жойылады. Браузер баптауларында рұқсатты қайтарып алсаңыз немесе қолданбаны жойсаңыз, жазылым бірінші жіберу әрекетінде жойылады.</li>
+        <li>Хабарландыру серверінің журналында — тек жазылым мекенжайының хэші, оқиға және уақыт (90 күн), мекенжайдың өзі жоқ.</li>
+      </ul>
+
+      <h2>7. Сервердің техникалық журналы</h2>
       <p>Кез келген сайт сияқты, aiustaz.pro сервері шабуылдардан қорғау және ақауларды іздеу үшін сұраулардың техникалық журналын (IP-мекенжай, уақыт, сұралған бет мекенжайы, браузер түрі) жүргізуі мүмкін. Журнал шектеулі мерзім ([мерзім]) сақталады, жарнамаға пайдаланылмайды және үшінші тұлғаларға берілмейді. Дауыс жазбаларының мазмұны журналға түспейді.</p>
 
-      <h2>7. Жас</h2>
+      <h2>8. Жас</h2>
       <p>AI Ustaz 16 жастан асқан пайдаланушыларға арналған. 13–17 жастағы жасөспірімдерге — тек ата-анасының немесе өзге заңды өкілінің келісімімен. 13 жасқа толмаған балаларға арналмаған.</p>
 
-      <h2>8. ЖИ туралы ескерту</h2>
+      <h2>9. ЖИ туралы ескерту</h2>
       <p>AI Ustaz жасанды интеллектіні пайдаланады. ЖИ кеңестері дәл болмауы мүмкін: бұл оқудағы көмек, баға емес және мұғалімді (ұстазды) алмастырмайды; қолданба ижаза бермейді және пәтуа шығармайды. ЖИ туралы ескертудің толық мәтіні — арабша және интерфейс тілінде — алғашқы пайдаланудан бұрын көрсетіледі және қолданбада әрдайым қолжетімді: «Тағы» → «ЖИ туралы ескерту».</p>
 
-      <h2>9. Сіздің құқықтарыңыз</h2>
+      <h2>10. Сіздің құқықтарыңыз</h2>
       <p>Сіз туралы қандай деректер бар екенін білуге, оларды түзетуді немесе жоюды сұрауға және келісімді қайтарып алуға құқығыңыз бар (Қазақстан Республикасының «Дербес деректер және оларды қорғау туралы» Заңы). Аккаунт болмағандықтан және дауыс жазбалары талдаудан кейін бірден жойылатындықтан, серверде әдетте сізге байланысты деректер болмайды. Сұраулар — [контакт]; жауап — 30 күн ішінде.</p>
 
-      <h2>10. Өзгерістер</h2>
+      <h2>11. Өзгерістер</h2>
       <p>Саясаттың жаңа нұсқасын осы мекенжайда күнімен жариялаймыз. Өзгерістер елеулі болса — қолданбада хабарлаймыз.</p>
     </section>
 
     <section id="en" lang="en">
       <h1>AI Ustaz Privacy Policy</h1>
-      <p class="мелко">Version 1.0, 19 November 2026. Applies to the website aiustaz.pro and the AI Ustaz app for Android (pro.aiustaz.app).</p>
+      <p class="мелко">Version 1.1, 20 November 2026 (prayer time notifications added, section 6). Applies to the website aiustaz.pro and the AI Ustaz app for Android (pro.aiustaz.app).</p>
 
       <h2>1. Who we are</h2>
       <p>AI Ustaz is a free AI tutor that teaches correct Quran reading using the “Muallim Sani” method. The project is funded by the owner’s business. Operator: [operator]. Contact for data questions: [contact].</p>
@@ -145,10 +169,11 @@
         <li>We do not sell user data or share it with third parties.</li>
         <li>Lesson progress and settings are stored only on your device.</li>
         <li>A voice recording is sent to our server only when you tap “Check”; it is processed on our server in Kazakhstan and deleted immediately after analysis.</li>
+        <li>Prayer time notifications are optional: the browser subscription, language, city name and schedule are sent to the server, without coordinates; turn them off and everything is deleted immediately (section 6).</li>
       </ul>
 
       <h2>3. What is stored on your device</h2>
-      <p>Completed lessons, study days, interface language, theme and the city for prayer times are kept in the browser storage on your device. They are not sent to our server. You can delete them by clearing site data for aiustaz.pro in your browser settings or by uninstalling the app.</p>
+      <p>Completed lessons, study days, interface language, theme and the city for prayer times are kept in the browser storage on your device. They are not sent to our server (except the city name — only if you turn on prayer time notifications, section 6). You can delete them by clearing site data for aiustaz.pro in your browser settings or by uninstalling the app.</p>
 
       <h2>4. Voice recordings</h2>
       <ul>
@@ -162,19 +187,30 @@
       <h2>5. Location</h2>
       <p>For prayer times and the qibla direction you can pick a city manually. If you tap “Detect by geolocation”, the browser asks for permission; coordinates are used on the device only to find the nearest city and are not sent to the server.</p>
 
-      <h2>6. Server technical log</h2>
+      <h2>6. Prayer time notifications</h2>
+      <p>Notifications are off by default and can be turned on only on aiustaz.pro (and in the Android app): “More” → “Prayer notifications”. Before asking for permission the app explains what will arrive and what is sent to the server.</p>
+      <ul>
+        <li>Prayer times are calculated on your device. Coordinates are never sent to the server.</li>
+        <li>Sent to our server in Kazakhstan: the browser’s push subscription (the browser push service address and encryption keys — no name or phone), the language, the name of the chosen city as text, and a 30-day schedule (the time of each selected prayer and reminder).</li>
+        <li>The notification is delivered, encrypted, by your browser’s push service (Google for Chrome, Apple for Safari). We do not use the Firebase SDK, analytics or ads.</li>
+        <li>Retention: while notifications are on. The schedule is refreshed when you open AI Ustaz; if you do not, it ends after 30 days, and the subscription is deleted automatically 30 days later.</li>
+        <li>How to delete: turn notifications off in “More” → “Prayer notifications” — the subscription, city and schedule are deleted from the server immediately. If you revoke the permission in browser settings or uninstall the app, the subscription is deleted on the next delivery attempt.</li>
+        <li>The notification server log keeps only a hash of the subscription address, the event and time (90 days), never the address itself.</li>
+      </ul>
+
+      <h2>7. Server technical log</h2>
       <p>Like any website, the aiustaz.pro server may keep a technical request log (IP address, time, requested page address, browser type) to protect against attacks and troubleshoot failures. The log is kept for a limited period ([period]), is not used for advertising and is not shared with third parties. The content of voice recordings never goes into the log.</p>
 
-      <h2>7. Age</h2>
+      <h2>8. Age</h2>
       <p>AI Ustaz is intended for users aged 16 and over. Teenagers aged 13–17 may use it only with the consent of a parent or other legal guardian. It is not intended for children under 13.</p>
 
-      <h2>8. AI notice</h2>
+      <h2>9. AI notice</h2>
       <p>AI Ustaz uses artificial intelligence. AI hints may be inaccurate: they are a study aid, not a grade and not a replacement for a teacher (ustaz); the app does not grant ijazah and does not issue fatwas. The full AI notice — in Arabic and in the interface language — is shown before first use and is always available in the app: “More” → “AI notice”.</p>
 
-      <h2>9. Your rights</h2>
+      <h2>10. Your rights</h2>
       <p>You may ask what data we hold about you, request correction or deletion, and withdraw consent (Law of the Republic of Kazakhstan “On Personal Data and Their Protection”). Since there are no accounts and voice recordings are deleted right after analysis, the server normally holds no data linked to you. Requests: [contact]; we reply within 30 days.</p>
 
-      <h2>10. Changes</h2>
+      <h2>11. Changes</h2>
       <p>We publish new versions of this policy at this address with a date. If changes are significant, we will tell you in the app.</p>
     </section>
   </body>

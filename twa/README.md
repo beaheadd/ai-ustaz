@@ -23,7 +23,7 @@
 | Ярлык (долгое нажатие на значок) | «Таджвид» → `#/course` |
 | Ключ подписи | `C:\aiustaz-build\twa\signing.keystore`, alias **`aiustaz`** — только у вас, **НЕ в git**, не в чат |
 | Оплата Google Play | выключена (`playBilling: false`) — приложение бесплатное |
-| Уведомления | выключены (`enableNotifications: false`) |
+| Уведомления | **включены** (`enableNotifications: true`, владелец 20.11.2026: уведомления о времени намаза) — Chrome передаёт уведомления сайта aiustaz.pro приложению (раздел «Уведомления о времени намаза» ниже) |
 | Значки | `https://aiustaz.pro/aiustaz/pwa/…png` (рисует `tools/icons/make-icons.mjs`, имена — с md5) |
 | Микрофон | разрешение **сайта** aiustaz.pro в Chrome: при первой записи Chrome спросит сам. Отозвать — долгое нажатие на значок → «Настройки сайта» (`enableSiteSettingsShortcut`) |
 
@@ -85,7 +85,8 @@ dir /s /b "%USERPROFILE%\.bubblewrap\android_sdk\build-tools\aapt2.exe"
 "<путь к aapt2.exe>" dump permissions C:\aiustaz-build\twa\app-release-signed.apk
 "<путь к aapt2.exe>" dump permissions C:\aiustaz-build\twa\app-release-signed.apk | findstr /i "AD_ID"
 ```
-Вторая команда **ничего не должна вывести**. В списке — только `INTERNET` и служебные разрешения TWA.
+Вторая команда **ничего не должна вывести**. В списке — только `INTERNET`, `POST_NOTIFICATIONS` (уведомления о времени
+намаза, Android 13+) и служебные разрешения TWA.
 Если `com.google.android.gms.permission.AD_ID` появился (его может принести библиотека), откройте
 `C:\aiustaz-build\twa\app\src\main\AndroidManifest.xml`, добавьте в тег `<manifest …>` атрибут
 `xmlns:tools="http://schemas.android.com/tools"`, а внутрь — строку
@@ -94,6 +95,23 @@ dir /s /b "%USERPROFILE%\.bubblewrap\android_sdk\build-tools\aapt2.exe"
 ```
 затем снова `bubblewrap build` (без `update` — он перезаписывает проект) и проверку. После каждого
 `bubblewrap update` эту правку повторить. В Play Console в «Рекламный идентификатор» отвечать «Нет».
+
+## Уведомления о времени намаза (владелец 20.11.2026)
+- **Как работает в приложении.** Уведомления присылает сам сайт aiustaz.pro (Web Push, свой сервер AI Ustaz в РК —
+  `server/`). С `enableNotifications: true` Bubblewrap добавляет в APK службу делегирования уведомлений
+  (`DelegationService` из androidbrowserhelper) и разрешение `POST_NOTIFICATIONS`. Chrome **делегирует** уведомления
+  сайта приложению: они приходят от «AI Ustaz» (значок приложения в шторке, свои настройки в «Настройки → Приложения →
+  AI Ustaz → Уведомления»), а не от Chrome. Firebase SDK, аналитики и рекламы в APK это не добавляет.
+- **Разрешение.** На Android 13+ при «Разрешить уведомления» на экране «Ещё → Уведомления о намазе» система спросит
+  разрешение для приложения AI Ustaz (до этого приложение объясняет, что придёт и что координаты не уходят). Отказ —
+  экран покажет, где включить в настройках телефона.
+- **После включения** (уже есть в этом манифесте): `bubblewrap update` → `bubblewrap build` → шаг 4 (в списке
+  разрешений появится `android.permission.POST_NOTIFICATIONS` — это ожидаемо) → в Play Console обновить анкету
+  «Безопасность данных» (`twa/play/data-safety.md`: идентификатор подписки и город для расписания). Если приложение уже
+  загружено в Play — поднять `appVersionCode`.
+- **Проверка на телефоне.** Установить AAB/APK → открыть → «Ещё» → «Уведомления о намазе» → включить → «Проверить
+  уведомление»: в шторке «Проверка уведомлений · AI Ustaz» со значком приложения; нажатие открывает «Время намаза».
+- Своего звука (азана) нет: системный звук уведомлений. Запись азана кари — только по договору, будущая опция.
 
 ## Шаг 5. Отпечаток ключа → прислать агенту (для assetlinks)
 ```bat

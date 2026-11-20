@@ -11,7 +11,7 @@
   "navigationDividerColor": "#E2D9C8",
   "navigationDividerColorDark": "#2E423D",
   "backgroundColor": "#F7F2E8",
-  "enableNotifications": false,
+  "enableNotifications": true,
   "startUrl": "/aiustaz/?source=twa",
   "iconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-512.3ff1b0d24ea109ac4248186160db1965.png",
   "maskableIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-maskable-512.7f48982dfa012cde0b34a71a65ca69b6.png",
