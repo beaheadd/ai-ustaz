@@ -91,10 +91,10 @@ class Хранилище:
             with с.cursor() as к:
                 к.executemany(
                     """
-                    INSERT INTO push_items (subscription_id, at, prayer, local_time, before_min, next_prayer, next_time)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
+                    INSERT INTO push_items (subscription_id, at, prayer, local_time, before_min, next_prayer, next_time, utc_offset_min)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
                     """,
-                    [(ид, _вр(п.момент), п.ключ, п.время, п.заранее, п.след_ключ, п.след_время) for п in запрос.пункты],
+                    [(ид, _вр(п.момент), п.ключ, п.время, п.заранее, п.след_ключ, п.след_время, п.смещение) for п in запрос.пункты],
                 )
             с.execute('INSERT INTO push_log (endpoint_hash, event) VALUES (%s, %s)', (запрос.хэш, 'subscribe'))
             return ид
@@ -129,7 +129,7 @@ class Хранилище:
                 )
                 UPDATE push_items i SET sent_at = %s FROM due d
                 WHERE i.subscription_id = d.subscription_id AND i.at = d.at AND i.prayer = d.prayer AND i.before_min = d.before_min
-                RETURNING i.subscription_id, i.at, i.prayer, i.local_time, i.before_min, i.next_prayer, i.next_time
+                RETURNING i.subscription_id, i.at, i.prayer, i.local_time, i.before_min, i.next_prayer, i.next_time, i.utc_offset_min
                 """,
                 (_вр(сейчас), предел, _вр(сейчас)),
             ).fetchall()
@@ -144,9 +144,9 @@ class Хранилище:
                 ).fetchall()
             }
         итог = []
-        for сид, at, ключ, время, заранее, сл, св in sorted(строки, key=lambda с: (с[1], с[4])):
+        for сид, at, ключ, время, заранее, сл, св, смещение in sorted(строки, key=lambda с: (с[1], с[4])):
             if сид in подписки:
-                итог.append((подписки[сид], Пункт(_мс(at), ключ, время, заранее, сл, св)))
+                итог.append((подписки[сид], Пункт(_мс(at), ключ, время, заранее, сл, св, смещение)))
         return итог
 
     def для_обновления(self, сейчас: int, порог_мс: int) -> list[dict]:

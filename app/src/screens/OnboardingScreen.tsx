@@ -38,7 +38,8 @@ import { useНавигация } from '../engine/navigation';
 import type { ПропсыЭкрана } from '../engine/routes';
 import { создатьСловарь, useПеревод, useСловарь, type ПараметрыСтроки } from '../i18n';
 import { НАЗВАНИЯ } from '../prayer/day';
-import { useМестоНамаза } from '../prayer/store';
+import { методСтраны, подписьМетода } from '../prayer/methods';
+import { useМазхаб, useМестоНамаза } from '../prayer/store';
 import { КЛЮЧИ_ВРЕМЁН } from '../prayer/times';
 import { useТема } from '../theme';
 
@@ -319,6 +320,7 @@ function ШагНамаз({ т }: { т: Т }) {
   const { язык } = useПеревод();
   const { отступ, цвет, радиус } = useТема();
   const { место, выбрано } = useМестоНамаза();
+  const { мазхаб } = useМазхаб();
   const город = место[язык];
   return (
     <View style={{ gap: отступ.l }} testID="онбординг-шаг-3">
@@ -361,7 +363,8 @@ function ШагНамаз({ т }: { т: Т }) {
           })}
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: отступ.s }}>
-          <Текст вид="мелкий">{т('ш3.метод')}</Текст>
+          {/* Метод — по стране выбранного места (владелец 20.11.2026: мир); для Астаны по умолчанию — «по методу ДУМК (±1 мин)». */}
+          <Текст вид="мелкий">{подписьМетода(методСтраны(место.страна), мазхаб, язык)}</Текст>
           <Плашка вид="черновик" надпись={т('ш3.черновик')} />
         </View>
       </Карточка>

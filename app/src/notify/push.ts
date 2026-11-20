@@ -8,7 +8,8 @@
  *   разрешение() → 'granted' | 'denied' | 'default' | 'нет' — Notification.permission.
  *   включить(данные) → ИтогВключения — вызывать ТОЛЬКО из нажатия (системный запрос разрешения), после пояснения:
  *     запрос разрешения → service worker /aiustaz/push-sw.js (scope /aiustaz/) → публичный ключ GET /api/push/key →
- *     PushManager.subscribe (userVisibleOnly) → POST /api/push/subscribe { subscription, lang, city, items }.
+ *     PushManager.subscribe (userVisibleOnly) → POST /api/push/subscribe { subscription, lang, city, items } (у пункта —
+ *     off: смещение пояса места в минутах, владелец 20.11.2026: время намаза для любой страны).
  *   обновить(данные) → ИтогВключения — то же без запроса разрешения (уже 'granted'): при открытии приложения и смене
  *     города/настроек; подписки нет — подписаться заново (разрешение уже есть, окна не будет).
  *   выключить() → 'выключено' | 'нет-сети' — отписка в браузере, POST /api/push/unsubscribe (сервер удаляет подписку и

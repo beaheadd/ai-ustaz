@@ -11,7 +11,16 @@
  *                      обратный отсчёт (вверх до минуты), «урок после намаза» (окно 40 мин, не восход), подписи.
  *   prayer/places.ts — список мест (168, id уникальны, Астана по умолчанию совпадает), поиск kk/ru/латиница,
  *                      ближайшее место, своя точка (≈ 1 км), оговорка точности, проверка сохранённого.
- * Модули — TypeScript без импортов своих файлов (кроме `import type`): node ≥ 22.18 снимает типы сам.
+ *   Мир (владелец 20.11.2026: «Мы мировое приложение»):
+ *   prayer/methods.ts — метод по стране, подпись метода; сверка с опубликованными таблицами (fixtures/prayer-official.json:
+ *                      Узбекистан — Ташкент, Самарканд, Нукус; Мекка — Умм аль-Кура; Стамбул — Диянет; Каир; Куала-Лумпур —
+ *                      JAKIM) — расхождения печатаются, допуск — у набора;
+ *   prayer/day.ts    — день и время в поясе места (Стамбул, Нью-Йорк с переходом на летнее время, Etc/GMT-5);
+ *   места Узбекистана — places-uz.json (176, все центры вилоятов, ru и uz, в границах);
+ *   prayer/world.ts  — свёртка = Python (ключи шардов совпадают на всех ~34 тыс. мест), поиск по миру (Самарканд,
+ *                      Samarqand, Стамбул, Istanbul, Мекка), ближайшее по плиткам (Ташкент → Ташкент и метод УМУз,
+ *                      Стамбул → Стамбул и Диянет), склонение по сетке ≈ точному.
+ * Модули — TypeScript; свои импорты — с расширением .ts (node ≥ 22.18 снимает типы сам).
  */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -26,6 +35,10 @@ const places = await import('../src/prayer/places.ts');
 
 const ФИКСТУРА = JSON.parse(fs.readFileSync(path.join(корень, 'scripts', 'fixtures', 'prayer-reference.json'), 'utf8'));
 const ДАННЫЕ_МЕСТ = JSON.parse(fs.readFileSync(path.join(корень, 'src', 'prayer', 'places-kz.json'), 'utf8'));
+const ДАННЫЕ_УЗ = JSON.parse(fs.readFileSync(path.join(корень, 'src', 'prayer', 'places-uz.json'), 'utf8'));
+const methods = await import('../src/prayer/methods.ts');
+const world = await import('../src/prayer/world.ts');
+const ОФИЦИАЛЬНЫЕ = JSON.parse(fs.readFileSync(path.join(корень, 'scripts', 'fixtures', 'prayer-official.json'), 'utf8'));
 
 // Дочерний режим: напечатать расчёт фикстуры как JSON (для проверки часовых поясов).
 if (process.argv[2] === '--вывод') {
@@ -265,7 +278,7 @@ const список = places.разобратьМеста(ДАННЫЕ_МЕСТ);
   assert.equal(ид('өскемен', 'kk')[0], 'ust-kamenogorsk');
   assert.equal(ид('almaty')[0], 'almaty');
   assert.deepEqual(ид('   '), []);
-  assert.deepEqual(ид('zzzz'), []);
+  assert.deepEqual(ид('xyzq'), []);
   assert.ok(places.найтиМеста(список, 'а', 'ru', 5).length === 5);
 });
 тест('ближайшее место и расстояние', () => {
@@ -277,7 +290,7 @@ const список = places.разобратьМеста(ДАННЫЕ_МЕСТ);
   const км = places.расстояниеКм({ широта: 51.1801, долгота: 71.44598 }, { широта: 43.25249, долгота: 76.9115 });
   assert.ok(км > 960 && км < 980, String(км));
 });
-тест('вне РК — не считаем (Москва, Стамбул); в РК — да', () => {
+тест('вКазахстане (для оговорок): Москва, Стамбул — нет; в РК — да', () => {
   const проверить = (ш, д) => places.вКазахстане({ широта: ш, долгота: д }, places.ближайшееМесто(список, { широта: ш, долгота: д }).км);
   assert.equal(проверить(55.75, 37.62), false);
   assert.equal(проверить(41.01, 28.97), false);
@@ -300,12 +313,225 @@ const список = places.разобратьМеста(ДАННЫЕ_МЕСТ);
   assert.equal(places.оговоркаТочности(кз, ['Кызылординская область']), 'до3мин');
   assert.equal(places.оговоркаТочности(places.МЕСТО_ПО_УМОЛЧАНИЮ, ['Кызылординская область']), null);
 });
-тест('сохранённое место: мусор и место вне РК отбрасываются', () => {
+тест('сохранённое место: мусор отбрасывается; место любой страны — да; старое место РК без страны — да', () => {
   assert.equal(places.этоМесто(null), false);
   assert.equal(places.этоМесто({ id: 'x' }), false);
   assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, широта: 'a' }), false);
-  assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, широта: 21.42, долгота: 39.83 }), false);
+  assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, широта: 21.42, долгота: 39.83, страна: 'SA', пояс: 'Asia/Riyadh' }), true);
+  assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, широта: 91 }), false);
+  assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, страна: 'Узбекистан' }), false);
+  const { страна: _с, пояс: _п, ...старое } = places.МЕСТО_ПО_УМОЛЧАНИЮ;
+  assert.equal(places.этоМесто(старое), true);
   assert.equal(places.этоМесто({ ...places.МЕСТО_ПО_УМОЛЧАНИЮ, вид: 'другое' }), false);
+});
+
+// ───────────────────────── мир (владелец 20.11.2026) ─────────────────────────
+console.log('methods — метод по стране и подпись');
+тест('метод по стране: KZ — ДУМК, UZ — УМУз, TR — Диянет, SA — Умм аль-Кура, нет в таблице — MWL', () => {
+  assert.equal(methods.методСтраны('KZ').id, 'dumk');
+  assert.equal(methods.методСтраны('UZ').id, 'umuz');
+  assert.equal(methods.методСтраны('TR').id, 'diyanet');
+  assert.equal(methods.методСтраны('SA').id, 'ummalqura');
+  assert.equal(methods.методСтраны('MY').id, 'jakim');
+  assert.equal(methods.методСтраны('FR').id, 'mwl');
+  assert.equal(methods.методСтраны(undefined).id, 'mwl');
+  for (const [страна, id] of Object.entries(methods.МЕТОД_СТРАНЫ)) assert.ok(methods.МЕТОДЫ[id], страна);
+});
+тест('KZ по умолчанию = прежний ДУМК: временаДня без опций = с { страна: KZ, мазхаб: hanafi }', () => {
+  const а = временаДня({ широта: 43.25, долгота: 76.91 }, '2026-11-20');
+  assert.deepEqual(временаДня({ широта: 43.25, долгота: 76.91 }, '2026-11-20', { страна: 'KZ', мазхаб: 'hanafi' }), а);
+  const ш = временаДня({ широта: 43.25, долгота: 76.91 }, '2026-11-20', { страна: 'KZ', мазхаб: 'shafi' });
+  assert.ok(ш.asr < а.asr, 'шафиитский аср раньше ханафитского');
+  for (const к of ['fajr', 'sunrise', 'dhuhr', 'maghrib', 'isha']) assert.equal(ш[к], а[к], к);
+});
+тест('подпись метода: ДУМК (±1 мин), УМУз (уточняется), стандарт MWL; аср не как у ведомства — дописан', () => {
+  const п = (с, м, я = 'ru') => methods.подписьМетода(methods.методСтраны(с), м, я);
+  assert.equal(п('KZ', 'hanafi'), 'Расчёт по методу ДУМК (±1 мин)');
+  assert.equal(п('KZ', 'hanafi', 'kk'), 'ҚМДБ әдісімен есептелді (±1 мин)');
+  assert.equal(п('UZ', 'hanafi'), 'Расчёт по методу Управления мусульман Узбекистана (уточняется)');
+  assert.equal(п('KG', 'hanafi'), 'Расчёт по стандарту Центральной Азии (15°/15°)');
+  assert.equal(п('TR', 'hanafi'), 'Расчёт по методу Диянет (Турция) (±1 мин) · аср — ханафитский');
+  assert.equal(п('TR', 'shafi'), 'Расчёт по методу Диянет (Турция) (±1 мин)');
+  assert.equal(п('FR', 'shafi'), 'Расчёт по методу Всемирной исламской лиги (MWL)');
+});
+тест('сверка с опубликованными таблицами (UZ, SA, TR, EG, MY): в пределах допуска набора', () => {
+  const расхождения = [];
+  const худшее = {};
+  for (const н of ОФИЦИАЛЬНЫЕ.наборы) {
+    let макс = 0;
+    let всего = 0;
+    let точно = 0;
+    for (const [день, ряд] of н.строки) {
+      const в = временаДня({ широта: н.точка[0], долгота: н.точка[1] }, день, { страна: н.страна, мазхаб: н.мазхаб });
+      for (const [к, чм] of Object.entries(ряд)) {
+        const наше = day.чч_мм(в[к], н.пояс);
+        const мин = (х) => Number(х.slice(0, 2)) * 60 + Number(х.slice(3));
+        const р = мин(наше) - мин(чм);
+        всего += 1;
+        if (р === 0) точно += 1;
+        макс = Math.max(макс, Math.abs(р));
+        if (р !== 0) расхождения.push(`${н.id} ${день} ${к}: наше ${наше}, таблица ${чм} (${р > 0 ? '+' : ''}${р})`);
+      }
+    }
+    худшее[н.id] = макс;
+    console.log(`    ${н.id}: ${всего} значений, точно ${точно}, наибольшее расхождение ${макс} мин (допуск ${н.допуск})`);
+  }
+  for (const р of расхождения) console.log('      ' + р);
+  for (const н of ОФИЦИАЛЬНЫЕ.наборы) assert.ok(худшее[н.id] <= н.допуск, `${н.id}: ${худшее[н.id]} мин > допуска ${н.допуск}`);
+});
+тест('полярные широты: нет восхода/заката — ошибка расчёта, а не неверное время (Тромсё, 21.12)', () => {
+  assert.throws(() => временаДня({ широта: 69.65, долгота: 18.96 }, '2026-12-21', { страна: 'NO' }));
+  const в = временаДня({ широта: 59.33, долгота: 18.06 }, '2026-06-21', { страна: 'SE' }); // Стокгольм летом — правило высоких широт
+  for (let i = 1; i < КЛЮЧИ_ВРЕМЁН.length; i++) assert.ok(в[КЛЮЧИ_ВРЕМЁН[i - 1]] < в[КЛЮЧИ_ВРЕМЁН[i]]);
+});
+
+console.log('day — пояс места');
+тест('Стамбул UTC+3, Нью-Йорк — летнее время (EDT −4 → EST −5 1.11.2026), Etc/GMT-5 = UTC+5', () => {
+  const т = Date.parse('2026-11-01T05:30:00Z');
+  assert.equal(day.чч_мм(т, 'Europe/Istanbul'), '08:30');
+  assert.equal(day.смещениеПояса('America/New_York', Date.parse('2026-10-31T12:00:00Z')), -240);
+  assert.equal(day.смещениеПояса('America/New_York', Date.parse('2026-11-02T12:00:00Z')), -300);
+  assert.equal(day.деньРК(Date.parse('2026-11-01T03:30:00Z'), 'America/New_York'), '2026-10-31');
+  assert.equal(day.смещениеПояса('Etc/GMT-5', т), 300);
+  assert.equal(day.смещениеПояса('Asia/Kolkata', т), 330);
+  assert.equal(day.чч_мм(т), day.чч_мм(т, 'Asia/Tashkent'));
+  assert.equal(day.подписьСмещения(330), 'UTC+5:30');
+  assert.equal(day.подписьСмещения(-240), 'UTC−4');
+  assert.equal(day.подписьСмещения(0), 'UTC');
+  assert.equal(day.поясОтличается('Europe/Istanbul', т, 180), false);
+  assert.equal(day.поясОтличается('Europe/Istanbul', т, 300), true);
+});
+
+console.log('места Узбекистана');
+const список_уз = places.разобратьМеста(ДАННЫЕ_УЗ);
+тест('176 мест: id уникальны, в границах УЗ, ru и uz (оʻ/gʻ — U+02BB), страна UZ, пояс Asia/Tashkent', () => {
+  assert.equal(список_уз.length, 176);
+  assert.equal(new Set(список_уз.map((м) => м.id)).size, 176);
+  for (const м of список_уз) {
+    assert.ok(м.широта >= 37.1 && м.широта <= 45.6 && м.долгота >= 55.9 && м.долгота <= 73.2, м.id);
+    assert.ok(м.ru && м.uz && м.kk, м.id);
+    assert.doesNotMatch(м.uz, /['’‘`]/, м.id);
+    assert.doesNotMatch(м.ru, /[A-Za-z]/, м.id);
+    assert.equal(м.страна, 'UZ');
+    assert.equal(м.пояс, 'Asia/Tashkent');
+    assert.ok(м.склонение > 3 && м.склонение < 9, м.id);
+    assert.ok(м.область?.uz, м.id);
+  }
+  const центры = список_уз.filter((м) => ['столица', 'центр вилоята'].includes(м.тип)).map((м) => м.uz).sort();
+  assert.deepEqual(центры, ['Andijon', 'Buxoro', 'Fargʻona', 'Guliston', 'Jizzax', 'Namangan', 'Navoiy', 'Nukus', 'Nurafshon', 'Qarshi', 'Samarqand', 'Termiz', 'Toshkent', 'Urganch']);
+});
+тест('поиск по своим спискам: Самарканд = Samarqand = Samarkand; Ташкент, Toshkent; Бухара = Buxoro; Fargʻona', () => {
+  const все = [...список, ...список_уз];
+  const ид = (з, я = 'ru') => places.найтиМеста(все, з, я)[0]?.id;
+  assert.equal(ид('Самарканд'), 'samarqand');
+  assert.equal(ид('Samarqand'), 'samarqand');
+  assert.equal(ид('samarkand'), 'samarqand');
+  assert.equal(ид('Ташкент'), 'toshkent');
+  assert.equal(ид('Toshkent'), 'toshkent');
+  assert.equal(ид('Бухара'), 'buxoro');
+  assert.equal(ид('Buxoro'), 'buxoro');
+  assert.equal(ид('Fargʻona'), 'fargona');
+  assert.equal(ид("farg'ona"), 'fargona');
+  assert.equal(ид('Нукус', 'kk'), 'nukus');
+  assert.equal(ид('Алматы'), 'almaty');
+});
+тест('геолокация в Ташкенте → Ташкент, метод УМУз; Шахимардан (эксклав) — пояс УЗ', () => {
+  const все = [...список, ...список_уз];
+  const б = places.ближайшееМесто(все, { широта: 41.30, долгота: 69.24 });
+  assert.equal(б.место.id, 'toshkent');
+  assert.ok(б.км < 10);
+  assert.equal(methods.методСтраны(б.место.страна).id, 'umuz');
+  const т = places.своёМесто({ широта: 41.3, долгота: 69.24 }, б);
+  assert.equal(т.страна, 'UZ');
+  assert.equal(т.пояс, 'Asia/Tashkent');
+  assert.equal(список_уз.find((м) => м.uz === 'Shohimardon').пояс, 'Asia/Tashkent');
+});
+
+console.log('world — данные мира (public/prayer)');
+const манифест = fs.readFileSync(path.join(корень, 'src', 'prayer', 'world.generated.ts'), 'utf8');
+const файлМира = /мир: '([^']+)'/.exec(манифест)[1];
+const индекс = world.разобратьИндекс(JSON.parse(fs.readFileSync(path.join(корень, 'public', файлМира), 'utf8')));
+const кэшШардов = new Map();
+const шард = (п) => {
+  if (!индекс.шарды[п]) return null;
+  if (!кэшШардов.has(п)) кэшШардов.set(п, world.разобратьШард(индекс, п, JSON.parse(fs.readFileSync(path.join(корень, 'public', 'prayer', индекс.шарды[п]), 'utf8'))));
+  return кэшШардов.get(п);
+};
+function искать(запрос, предел = 20) {
+  for (let i = 0; i < 4; i++) {
+    const р = world.найтиВМире(индекс, запрос, шард, предел);
+    if (!р.нужныШарды.length) return р.места;
+    for (const п of р.нужныШарды) шард(п);
+  }
+  return world.найтиВМире(индекс, запрос, шард, предел).места;
+}
+тест('индекс: ≥ 30 тыс. мест, без KZ и UZ, шарды и плитки существуют, сумма файлов = манифест', () => {
+  assert.ok(индекс.мест > 30000, String(индекс.мест));
+  const коды = индекс.страны.map((с) => с[0]);
+  assert.ok(!коды.includes('KZ') && !коды.includes('UZ'));
+  for (const ф of [...Object.values(индекс.шарды).map((ф) => 'prayer/' + ф), ...Object.values(индекс.плитки).map((ф) => 'prayer/' + ф)])
+    assert.ok(fs.existsSync(path.join(корень, 'public', ф)), ф);
+  const байт = Number(/байт: (\d+)/.exec(манифест)[1]);
+  let сумма = 0;
+  const обход = (п) => {
+    for (const з of fs.readdirSync(п, { withFileTypes: true })) з.isDirectory() ? обход(path.join(п, з.name)) : (сумма += fs.statSync(path.join(п, з.name)).size);
+  };
+  обход(path.join(корень, 'public', 'prayer'));
+  assert.equal(сумма, байт);
+  assert.ok(байт <= 3_000_000, String(байт));
+});
+тест('свёртка JS = Python: каждое место лежит в шарде по свёртке своего английского имени', () => {
+  let мест = 0;
+  for (const п of Object.keys(индекс.шарды)) {
+    for (const м of шард(п).места) {
+      if (!м) continue;
+      мест += 1;
+      assert.equal(world.префиксШарда(world.свернуть(м.en)), п, `${м.en} в шарде ${п}`);
+    }
+    for (const [ключ] of шард(п).ключи) assert.equal(world.префиксШарда(ключ), п, `ключ ${ключ} в шарде ${п}`);
+  }
+  assert.equal(мест, индекс.мест);
+  assert.equal(world.свернуть('Самарканд'), world.свернуть('Samarkand'));
+  assert.equal(world.свернуть('Samarqand'), world.свернуть('Samarkand'));
+  assert.equal(world.свернуть('Мекка'), world.свернуть('Mecca'));
+  assert.equal(world.свернуть('İstanbul'), 'istanbul');
+});
+тест('поиск по миру: Стамбул, Istanbul, Мекка, Mecca, Makkah, Бишкек, Kazan; у мест — страна, пояс, регион', () => {
+  const первый = (з) => искать(з)[0];
+  const ст = первый('Стамбул');
+  assert.equal(ст.en, 'Istanbul');
+  assert.equal(ст.страна, 'TR');
+  assert.equal(ст.пояс, 'Europe/Istanbul');
+  assert.equal(первый('Istanbul').en, 'Istanbul');
+  assert.equal(первый('istan').en, 'Istanbul', 'с начала имени, крупный город первым');
+  // GeoNames называет Мекку «Makkah» (и Медину — «Madinah»); по «Mecca» и «Мекка» — тоже она.
+  assert.equal(первый('Мекка').en, 'Makkah');
+  assert.equal(первый('Mecca').ru, 'Мекка');
+  assert.equal(первый('Makkah').страна, 'SA');
+  assert.equal(первый('Медина').en, 'Madinah');
+  assert.equal(первый('Бишкек').страна, 'KG');
+  assert.equal(первый('Казань').en, 'Kazan');
+  assert.ok(первый('Лондон').область?.ru, 'регион');
+  assert.deepEqual(искать('щщщщщ'), []);
+  assert.deepEqual(искать('с'), [], 'мир — с двух букв');
+});
+тест('ближайшее по плиткам: Стамбул → место в Стамбуле (Диянет), Мекка → Мекка; Сидней, Аляска; склонение по сетке', () => {
+  const плитки = (т) => Object.fromEntries(world.плиткиВокруг(т).filter((к) => индекс.плитки[к]).map((к) => [к, JSON.parse(fs.readFileSync(path.join(корень, 'public', 'prayer', индекс.плитки[к]), 'utf8'))]));
+  const найти = (т) => {
+    const б = world.ближайшееВПлитках(т, плитки(т));
+    return { ...б, место: шард(б.шард).места[б.номер] };
+  };
+  const ст = найти({ широта: 41.01, долгота: 28.97 });
+  assert.equal(ст.место.область?.ru, 'Istanbul', ст.место.en); // ближайшее — район Стамбула (Eminönü), это верно
+  assert.ok(ст.км < 3);
+  assert.equal(methods.методСтраны(ст.место.страна).id, 'diyanet');
+  assert.equal(найти({ широта: 21.42, долгота: 39.83 }).место.ru, 'Мекка');
+  assert.equal(найти({ широта: -33.87, долгота: 151.2 }).место.страна, 'AU');
+  assert.equal(найти({ широта: 64.84, долгота: -147.72 }).место.страна, 'US');
+  assert.deepEqual(world.плиткиВокруг({ широта: 1, долгота: 179 }).filter((к) => к.endsWith('_-18')).length, 3, 'через 180°');
+  // склонение: Астана по сетке ≈ точному WMM (10,1°), Стамбул ≈ +6°
+  assert.ok(Math.abs(world.склонениеВТочке(индекс, 51.18, 71.45) - 10.1) < 1.5);
+  assert.ok(Math.abs(world.склонениеВТочке(индекс, 41.01, 28.97) - 6) < 1.5);
 });
 
 console.log(`OK: ${проверок} проверок`);

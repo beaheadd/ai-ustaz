@@ -1,9 +1,14 @@
 /**
  * День РК, состояние дня намаза, подписи и обратный отсчёт — чистые функции (без React, без сети).
  *
- * Контракт:
- *   деньРК(мс) → 'ГГГГ-ММ-ДД' по UTC+5 (= датаАлматы() из engine/progress); сдвигДня(день, n).
- *   чч_мм(мс) → '05:59' по UTC+5 (24 ч), не по поясу телефона.
+ * Контракт (пояс — IANA места, prayer/places.ts «Место.пояс»; по умолчанию ПОЯС_РК = UTC+5 без летнего времени):
+ *   деньРК(мс, пояс?) → 'ГГГГ-ММ-ДД' — календарный день в поясе места (для РК = датаАлматы() из engine/progress);
+ *   сдвигДня(день, n).
+ *   чч_мм(мс, пояс?) → '05:59' в поясе места (24 ч), не по поясу телефона; часРК(мс, пояс?) → 0–23.
+ *   смещениеПояса(пояс, мс) → минуты к востоку от UTC в этот момент (летнее время — через Intl); неизвестный
+ *     пояс — смещение телефона (Intl не знает имя — лучше время телефона, чем ошибка).
+ *   поясОтличается(пояс, мс, смещениеТелефонаМин) → у телефона другое время, чем у места (подпись «Время по месту»).
+ *   подписьСмещения(мин) → 'UTC+5', 'UTC−3:30', 'UTC'.
  *   состояниеДня(сейчас, сегодня, завтра) → СостояниеДня (что показать в 6 блоках, что следующее).
  *   обратныйОтсчёт(мс, язык) → 'через 1 ч 05 мин' / '1 сағ 05 мин қалды' (вверх до минуты; kk — черновик).
  *   приглашениеПослеНамаза(сейчас, сегодня, окноМин = 40, сМин = 10) → { ключ, начало, прошлоМин } | null —
@@ -21,16 +26,64 @@
  * шығуы», чтобы не путать «күн» = «день»), ru — как на muftyat.kz/ru. kk — черновик для редактора-носителя.
  * Модуль без импортов своих файлов, кроме типов (node снимает типы сам — scripts/test-prayer.mjs).
  * Решение владельца 19.11.2026: главный экран — 6 блоков времени намаза, ниже обучение.
+ * Владелец 20.11.2026 («Мы мировое приложение»): день и время — в поясе места (IANA), а не всегда UTC+5.
  */
 import type { ВременаДня, ДеньРК, КлючВремени } from './times';
 
 type Язык = 'ru' | 'kk';
 
-const СДВИГ_РК_МС = 5 * 60 * 60_000;
 const МИНУТА = 60_000;
 
-export function деньРК(мс: number): ДеньРК {
-  return new Date(мс + СДВИГ_РК_МС).toISOString().slice(0, 10);
+/** Пояс РК: UTC+5 без летнего времени (вся РК с 01.03.2024). 'Etc/GMT-5' — фиксированное +5 и на старых телефонах,
+ * где база поясов ещё держит Asia/Almaty = UTC+6. */
+export const ПОЯС_РК = 'Etc/GMT-5';
+
+const ФИКСИРОВАННЫЕ = /^Etc\/GMT([+-])(\d{1,2})$/;
+const форматы = new Map<string, Intl.DateTimeFormat | null>();
+
+function формат(пояс: string): Intl.DateTimeFormat | null {
+  if (!форматы.has(пояс)) {
+    let ф: Intl.DateTimeFormat | null = null;
+    try {
+      ф = new Intl.DateTimeFormat('en-US', { timeZone: пояс, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch {
+      ф = null;
+    }
+    форматы.set(пояс, ф);
+  }
+  return форматы.get(пояс) ?? null;
+}
+
+/** Смещение пояса места в момент мс, минуты к востоку от UTC (Asia/Tashkent → 300, Europe/London летом → 60). */
+export function смещениеПояса(пояс: string, мс: number): number {
+  const ф = ФИКСИРОВАННЫЕ.exec(пояс);
+  if (ф) return (ф[1] === '-' ? 60 : -60) * Number(ф[2]); // знак Etc/GMT обратный: Etc/GMT-5 = UTC+5
+  const фмт = формат(пояс);
+  if (!фмт) return -new Date(мс).getTimezoneOffset();
+  const ч: Record<string, number> = {};
+  for (const п of фмт.formatToParts(new Date(мс))) if (п.type !== 'literal') ч[п.type] = Number(п.value);
+  const местное = Date.UTC(ч.year, ч.month - 1, ч.day, ч.hour === 24 ? 0 : ч.hour, ч.minute, ч.second);
+  return Math.round((местное - Math.floor(мс / 1000) * 1000) / МИНУТА);
+}
+
+function местное(мс: number, пояс: string): Date {
+  return new Date(мс + смещениеПояса(пояс, мс) * МИНУТА);
+}
+
+export function деньРК(мс: number, пояс: string = ПОЯС_РК): ДеньРК {
+  return местное(мс, пояс).toISOString().slice(0, 10);
+}
+
+/** 'UTC+5', 'UTC+5:30', 'UTC−3', 'UTC'. */
+export function подписьСмещения(мин: number): string {
+  if (мин === 0) return 'UTC';
+  const а = Math.abs(мин);
+  return `UTC${мин > 0 ? '+' : '−'}${Math.floor(а / 60)}${а % 60 ? ':' + String(а % 60).padStart(2, '0') : ''}`;
+}
+
+/** У телефона сейчас другое время, чем у места (смещениеТелефонаМин — как -Date#getTimezoneOffset()). */
+export function поясОтличается(пояс: string, мс: number, смещениеТелефонаМин: number): boolean {
+  return смещениеПояса(пояс, мс) !== смещениеТелефонаМин;
 }
 
 export function сдвигДня(день: ДеньРК, n: number): ДеньРК {
@@ -38,16 +91,16 @@ export function сдвигДня(день: ДеньРК, n: number): ДеньР�
   return new Date(Date.UTC(г, м - 1, ч + n)).toISOString().slice(0, 10);
 }
 
-export function чч_мм(мс: number): string {
-  return new Date(мс + СДВИГ_РК_МС).toISOString().slice(11, 16);
+export function чч_мм(мс: number, пояс: string = ПОЯС_РК): string {
+  return местное(мс, пояс).toISOString().slice(11, 16);
 }
 
-/** Час 0–23 по UTC+5 (не по поясу телефона). */
-export function часРК(мс: number): number {
-  return new Date(мс + СДВИГ_РК_МС).getUTCHours();
+/** Час 0–23 в поясе места (не по поясу телефона). */
+export function часРК(мс: number, пояс: string = ПОЯС_РК): number {
+  return местное(мс, пояс).getUTCHours();
 }
 
-/** Пояс телефона — не UTC+5 (за границей или часы на «Москве»): показываем «Время по Казахстану (UTC+5)». */
+/** Пояс телефона — не UTC+5 (за границей или часы на «Москве»). Для мира — поясОтличается(). */
 export function поясНеРК(смещениеМин: number): boolean {
   return смещениеМин !== -300;
 }
