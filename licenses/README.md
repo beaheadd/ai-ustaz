@@ -52,11 +52,14 @@
 | fastapi | 0.165.0 | MIT | API `/api/push/` |
 | uvicorn | 0.54.0 | BSD-3-Clause | процесс API |
 | adhanpy | 1.0.5 | MIT | своя проверка официального времени намаза КЗ/УЗ и правило УМУз (`server/prayer.py`; округление — своё, как adhan-js); владелец 20.11.2026 |
+| anthropic | 2.11.0 | Apache-2.0 (пакет перешёл с MIT на Apache-2.0 в 2.0.0; текст — `licenses/server/anthropic-Apache-2.0.txt`) | официальный SDK Claude для «Спросить AI Ustaz» (`server/ask.py`), только режим «ии» и только при `MUGALIM_ASK_LLM=1` и ключе в `/etc/mugalim.env`; без флага не импортируется. Ставит с собой (pip, без изменений): httpx2 и httpcore2 2.16.2 (BSD-3-Clause), anyio 4.16 (MIT), jiter 0.19 (MIT), docstring-parser 0.18 (MIT), opentelemetry-api 1.45 (Apache-2.0; телеметрию никуда не шлём — экспортёра нет), sniffio (MIT OR Apache-2.0), truststore 0.10 (MIT); pydantic и typing-extensions уже есть через fastapi. Владелец 20.11.2026 |
 | psycopg (+ psycopg-binary) | 3.3.9 | LGPL-3.0-only | PostgreSQL (своя база `mugalim`); динамически подключаемая библиотека без изменений — условие LGPL «можно заменить библиотеку» выполняется (пакет ставится pip отдельно) |
 
 Только на сервере, наружу ходит лишь к push-сервисам браузеров (fcm.googleapis.com, updates.push.services.mozilla.com,
 web.push.apple.com, *.notify.windows.com) и к источникам официального времени намаза (api.muftyat.kz — ДУМК,
-new.islom.uz — список регионов УМУз; только служба mugalim-jobs). Firebase SDK, аналитики и рекламы нет: Web Push — стандарт браузера, ключи
+new.islom.uz — список регионов УМУз; только служба mugalim-jobs). «Спросить AI Ustaz» по умолчанию наружу не ходит
+(поиск по своей базе); api.anthropic.com — только если владелец включит режим «ии» (`MUGALIM_ASK_LLM=1`, решение
+и границы — `docs/дизайн/08-спросить-устаза.md`): уходит обезличенный вопрос и найденные записи базы, без аудио и IP. Firebase SDK, аналитики и рекламы нет: Web Push — стандарт браузера, ключи
 VAPID создаются только на сервере (`/etc/mugalim.env`, права 600).
 
 ## Контент

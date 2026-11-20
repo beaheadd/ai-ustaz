@@ -21,18 +21,26 @@
   .попросить_намаз(src, place, год, сейчас) — очередь «клиент просил»; .нужные_намаза(предел, попытка_до) -> list
   .отметить_попытку_намаза(src, place, год, сейчас); .недавние_попытки_намаза(после) -> set
   .журнал_намаза(src, place, год, итог, подробно); .мета_намаза(ключ) -> {данные, при} | None; .записать_мету_намаза(…)
+«Спросить AI Ustaz» (server/ask.py, kb.py, kb_load.py, миграция 004; владелец 20.11.2026):
+  .kb_загрузить(записи: list[kb.Запись]) -> {новых, изменено, статус, без_изменений} — всё или ничего (одна транзакция);
+        содержание изменилось (другой sha), а версия не выросла — kb.ОшибкаБазы, ничего не записано
+  .kb_число(черновые) -> int;  .kb_найти(термы, язык, черновые, предел) -> list[dict записи + 'совпало', 'всего']
+  .kb_по_ссылке(вид, ссылка, язык, черновые, предел) -> list[dict];  .ask_записать(вид, режим, причина, источников)
+  .ask_не_нашли(сейчас) — только счётчик по дню Алматы (текст вопроса не храним)
+  .учесть(…, смещение_мс=0) — окно, сдвинутое на смещение (сутки по Алматы: 5 ч); ключи «askd:» живут 2 суток
 Соединение на операцию (нагрузка маленькая; пула нет — зависимостей меньше). Транзакция на операцию.
 """
 from __future__ import annotations
 
 import pathlib
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import psycopg
 from psycopg.types.json import Jsonb
 
 import boot
+import kb
 from push import ДЕНЬ_МС, Запрос, Пункт
 
 ПАПКА_МИГРАЦИЙ = pathlib.Path(__file__).resolve().parent / 'migrations'
@@ -172,8 +180,8 @@ class Хранилище:
             с.execute('UPDATE push_subscriptions SET refresh_sent = TRUE WHERE id = %s', (ид,))
 
     # ───────────── лимиты, журнал, уборка ─────────────
-    def учесть(self, ключ: str, окно_сек: int, предел: int, сейчас: int) -> bool:
-        начало = сейчас - сейчас % (окно_сек * 1000)
+    def учесть(self, ключ: str, окно_сек: int, предел: int, сейчас: int, смещение_мс: int = 0) -> bool:
+        начало = сейчас - (сейчас + смещение_мс) % (окно_сек * 1000)
         with self._соединение() as с:
             раз = с.execute(
                 """INSERT INTO push_limits (key, window_start, hits) VALUES (%s, %s, 1)
@@ -189,14 +197,18 @@ class Хранилище:
     def убрать_старое(self, сейчас: int) -> dict:
         with self._соединение() as с:
             пункты = с.execute('DELETE FROM push_items WHERE sent_at IS NOT NULL AND at < %s', (_вр(сейчас - ДЕНЬ_МС),)).rowcount
-            лимиты = с.execute('DELETE FROM push_limits WHERE window_start < %s', (_вр(сейчас - 3_600_000),)).rowcount
+            лимиты = с.execute("DELETE FROM push_limits WHERE window_start < %s AND key NOT LIKE 'askd:%%'",
+                               (_вр(сейчас - 3_600_000),)).rowcount
+            лимиты += с.execute("DELETE FROM push_limits WHERE window_start < %s AND key LIKE 'askd:%%'",
+                                (_вр(сейчас - 2 * ДЕНЬ_МС),)).rowcount
             журнал = с.execute('DELETE FROM push_log WHERE at < %s', (_вр(сейчас - 90 * ДЕНЬ_МС),)).rowcount
             подписки = с.execute('DELETE FROM push_subscriptions WHERE schedule_end < %s', (_вр(сейчас - 30 * ДЕНЬ_МС),)).rowcount
             год = datetime.fromtimestamp(сейчас / 1000, tz=timezone.utc).year
             намаз = с.execute('DELETE FROM prayer_log WHERE at < %s', (_вр(сейчас - 365 * ДЕНЬ_МС),)).rowcount
             намаз += с.execute('DELETE FROM prayer_wanted WHERE asked_at < %s', (_вр(сейчас - 7 * ДЕНЬ_МС),)).rowcount
             намаз += с.execute('DELETE FROM prayer_official WHERE year < %s', (год - 1,)).rowcount
-        return {'пункты': пункты, 'лимиты': лимиты, 'журнал': журнал, 'подписки': подписки, 'намаз': намаз}
+            вопросы = с.execute('DELETE FROM ask_log WHERE at < %s', (_вр(сейчас - 90 * ДЕНЬ_МС),)).rowcount
+        return {'пункты': пункты, 'лимиты': лимиты, 'журнал': журнал, 'подписки': подписки, 'намаз': намаз, 'вопросы': вопросы}
 
     # ───────────── официальное время намаза ─────────────
     def таблица_намаза(self, src: str, place: str, год: int) -> dict | None:
@@ -280,3 +292,119 @@ class Хранилище:
             с.execute("""INSERT INTO prayer_meta (key, value, updated_at) VALUES (%s, %s, %s)
                          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = EXCLUDED.updated_at""",
                       (ключ, Jsonb(значение), _вр(сейчас)))
+
+    # ───────────── база знаний «Спросить AI Ustaz» ─────────────
+    def kb_загрузить(self, записи: list) -> dict:
+        итог = {'новых': 0, 'изменено': 0, 'статус': 0, 'без_изменений': 0}
+        ошибки: list[str] = []
+        with self._соединение() as с:
+            с.execute('SELECT pg_advisory_xact_lock(724104)')  # два загрузчика разом не пишут
+            было = {р[0]: (р[1], р[2], р[3], р[4], р[5]) for р in с.execute(
+                'SELECT id, version, sha, status, reviewed_by, reviewed_on FROM kb_entries WHERE id = ANY(%s) FOR UPDATE',
+                ([з.id for з in записи],)).fetchall()}
+            for з in записи:
+                старое = было.get(з.id)
+                if старое and старое[1] != з.sha and з.версия <= старое[0]:
+                    ошибки.append(f'{з.id}: содержание изменилось — поднимите версию (в базе {старое[0]}, в файле {з.версия})')
+                elif старое and з.версия < старое[0]:
+                    ошибки.append(f'{з.id}: версия в файле {з.версия} меньше, чем в базе ({старое[0]})')
+            if ошибки:
+                raise kb.ОшибкаБазы(ошибки)  # выход из with → откат: ничего не записано
+            for з in записи:
+                старое = было.get(з.id)
+                когда = з.когда or None
+                if старое and старое[1] == з.sha and старое[0] == з.версия:
+                    if (старое[2], старое[3], старое[4] and старое[4].isoformat()) == (з.статус, з.кто_проверил, когда):
+                        итог['без_изменений'] += 1
+                        continue
+                    с.execute('UPDATE kb_entries SET status = %s, reviewed_by = %s, reviewed_on = %s, loaded_at = now() WHERE id = %s',
+                              (з.статус, з.кто_проверил, когда, з.id))
+                    итог['статус'] += 1
+                    continue
+                с.execute(
+                    """INSERT INTO kb_entries (id, kind, ref, arabic, source, grade, graded_by, status, reviewed_by, reviewed_on, version, sha)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                       ON CONFLICT (id) DO UPDATE SET kind = EXCLUDED.kind, ref = EXCLUDED.ref, arabic = EXCLUDED.arabic,
+                           source = EXCLUDED.source, grade = EXCLUDED.grade, graded_by = EXCLUDED.graded_by,
+                           status = EXCLUDED.status, reviewed_by = EXCLUDED.reviewed_by, reviewed_on = EXCLUDED.reviewed_on,
+                           version = EXCLUDED.version, sha = EXCLUDED.sha, loaded_at = now()""",
+                    (з.id, з.вид, з.ссылка, з.арабский, з.источник, з.степень, з.кто_оценил, з.статус, з.кто_проверил, когда,
+                     з.версия, з.sha))
+                с.execute('DELETE FROM kb_texts WHERE entry_id = %s', (з.id,))
+                with с.cursor() as к:
+                    к.executemany('INSERT INTO kb_texts (entry_id, lang, title, body) VALUES (%s, %s, %s, %s)',
+                                  [(з.id, язык, т['заголовок'], т['текст']) for язык, т in sorted(з.тексты.items())])
+                итог['изменено' if старое else 'новых'] += 1
+        return итог
+
+    def kb_число(self, черновые: bool) -> int:
+        with self._соединение() as с:
+            return с.execute("SELECT count(*) FROM kb_entries WHERE %s OR status = 'утверждено'", (bool(черновые),)).fetchone()[0]
+
+    _ПОЛЯ_ЗАПИСИ = """e.id, e.kind, e.ref, e.arabic, e.source, e.grade, e.graded_by, e.status, e.version, e.sha,
+                      x.lang, x.title, x.body, x.tsv, x.tsv_simple,
+                      CASE x.lang WHEN 'ru' THEN 'russian'::regconfig ELSE 'simple'::regconfig END AS cfg"""
+
+    @staticmethod
+    def _запись_kb(р) -> dict:
+        return {'id': р[0], 'вид': р[1], 'ссылка': р[2], 'арабский': р[3], 'источник': р[4], 'степень': р[5],
+                'кто_оценил': р[6], 'черновик': р[7] != 'утверждено', 'версия': f'{р[8]}.{р[9][:8]}', 'язык': р[10],
+                'заголовок': р[11], 'текст': р[12]}
+
+    def kb_найти(self, термы: list[str], язык: str, черновые: bool, предел: int = 5) -> list[dict]:
+        """Термы — уже очищенные основы слов запроса (ask.термы: только буквы). Терм найден, если он есть в tsv словаря
+        текста (стеммер) или как префикс в tsv_simple. Текст — на языке вопроса, если его нет — ru. Совпало — сколько
+        термов нашлось в записи; всего — значимые для словаря языка вопроса (порог доли решает ask.отобрать)."""
+        if not термы:
+            return []
+        with self._соединение() as с:
+            строки = с.execute(
+                f"""
+                WITH t AS (
+                    SELECT DISTINCT ON (e.id) {self._ПОЛЯ_ЗАПИСИ}
+                    FROM kb_entries e JOIN kb_texts x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
+                    WHERE %(черновые)s OR e.status = 'утверждено'
+                    ORDER BY e.id, (x.lang = %(язык)s) DESC
+                ), s AS (
+                    SELECT t.*,
+                           (SELECT count(*) FROM unnest(%(термы)s::text[]) w
+                            WHERE t.tsv @@ to_tsquery(t.cfg, w)
+                               OR t.tsv_simple @@ to_tsquery('simple', CASE WHEN length(w) >= 4 THEN w || ':*' ELSE w END)) AS hit,
+                           (SELECT count(*) FROM unnest(%(термы)s::text[]) w
+                            WHERE numnode(to_tsquery(%(cfg)s::regconfig, w)) > 0) AS total,
+                           ts_rank(t.tsv_simple, to_tsquery('simple', %(всё)s)) AS rank
+                    FROM t
+                )
+                SELECT id, kind, ref, arabic, source, grade, graded_by, status, version, sha, lang, title, body, hit, total
+                FROM s WHERE hit > 0 ORDER BY hit DESC, rank DESC, id LIMIT %(предел)s
+                """,
+                {'язык': язык, 'черновые': bool(черновые), 'термы': list(термы), 'предел': предел,
+                 'всё': ' | '.join(т + ':*' if len(т) >= 4 else т for т in термы),
+                 'cfg': 'russian' if язык == 'ru' else 'simple'},
+            ).fetchall()
+        # всего — значимые для словаря языка вопроса термы (стоп-слова PostgreSQL не считаются)
+        return [{**self._запись_kb(р), 'совпало': р[13], 'всего': р[14]} for р in строки]
+
+    def kb_по_ссылке(self, вид: str, ссылка: str, язык: str, черновые: bool, предел: int = 3) -> list[dict]:
+        with self._соединение() as с:
+            строки = с.execute(
+                f"""
+                SELECT DISTINCT ON (e.id) {self._ПОЛЯ_ЗАПИСИ}
+                FROM kb_entries e JOIN kb_texts x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
+                WHERE e.kind = %(вид)s AND e.ref = %(ссылка)s AND (%(черновые)s OR e.status = 'утверждено')
+                ORDER BY e.id, (x.lang = %(язык)s) DESC LIMIT %(предел)s
+                """,
+                {'язык': язык, 'вид': вид, 'ссылка': ссылка, 'черновые': bool(черновые), 'предел': предел},
+            ).fetchall()
+        return [self._запись_kb(р) for р in строки]
+
+    def ask_записать(self, вид: str, режим: str, причина: str | None, источников: int) -> None:
+        with self._соединение() as с:
+            с.execute('INSERT INTO ask_log (kind, mode, reason, sources) VALUES (%s, %s, %s, %s)',
+                      (вид[:20], режим[:10], (причина or None) and причина[:40], max(0, min(источников, 99))))
+
+    def ask_не_нашли(self, сейчас: int) -> None:
+        день = datetime.fromtimestamp(сейчас / 1000, tz=timezone.utc) + timedelta(hours=5)  # сутки — по Алматы
+        with self._соединение() as с:
+            с.execute('INSERT INTO ask_misses (day, misses) VALUES (%s, 1) ON CONFLICT (day) DO UPDATE SET misses = ask_misses.misses + 1',
+                      (день.date(),))
