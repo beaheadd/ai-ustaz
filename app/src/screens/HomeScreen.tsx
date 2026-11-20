@@ -172,13 +172,44 @@ const СЛОВАРЬ = создатьСловарь({
     вход: 'Kirish',
     этапКоротко: '{номер}-bosqich',
     сейчасНаПути: 'Hozir: {этап}',
+    языкКратко: 'Eng',
+    языкПодсказка: 'Interfeysni ingliz tiliga oʻtkazish',
+  },
+  en: {
+    начатьУрок0: 'Start with lesson 0',
+    продолжитьУрок: 'Continue: lesson {метка}',
+    следующийУрок: 'Start lesson {метка}',
+    всёПройдено: 'To the tajweed lessons',
+    урок0: 'Lesson 0',
+    урок0Название: 'AI notice and first voice recording',
+    урокМетка: 'Lesson {метка}',
+    этап: 'Stage {номер}: {пройдено} of {всего} lessons completed',
+    всёМетка: 'Prototype lessons completed',
+    'время.утро': 'Morning — a calm time for letters.',
+    'время.день': 'Five minutes between tasks — a lesson.',
+    'время.вечер': 'Evening — time to revise the letters.',
+    'время.ночь': 'It is late — the lesson will wait until morning.',
+    'время.доФаджра': 'There is still time before Fajr.',
+    приглашение: 'After {намаз} — 5 minutes of a lesson?',
+    неСейчас: 'Not now',
+    'шаг.урок0': 'Let us start with lesson 0: a short notice and your first voice recording.',
+    'шаг.начат': 'Let us continue lesson {метка} from where you stopped.',
+    'шаг.новый': 'Next step — lesson {метка}.',
+    'шаг.карта': 'Prototype lessons completed — you can repeat any of them in the “Tajweed” section.',
+    путь: 'Learning path',
+    путьКарта: 'Tajweed',
+    путьДиктор: 'Learning path — the “Tajweed” section',
+    путьДевиз: 'Letters → syllables → words → surahs',
+    вход: 'Introduction',
+    этапКоротко: 'Stage {номер}',
+    сейчасНаПути: 'Now: {этап}',
     языкКратко: 'Рус',
-    языкПодсказка: 'Interfeysni rus tiliga oʻtkazish',
+    языкПодсказка: 'Switch the interface to Russian',
   },
 });
 
-/** Быстрый язык в шапке главной: по кругу ru → kk → uz → ru (надпись — следующий язык). */
-const СЛЕДУЮЩИЙ_ЯЗЫК: Record<Язык, Язык> = { ru: 'kk', kk: 'uz', uz: 'ru' };
+/** Быстрый язык в шапке главной: по кругу ru → kk → uz → en → ru (надпись — следующий язык). */
+const СЛЕДУЮЩИЙ_ЯЗЫК: Record<Язык, Язык> = { ru: 'kk', kk: 'uz', uz: 'en', en: 'ru' };
 
 export type СледующийШаг = { вид: 'урок0' } | { вид: 'урок'; номер: number; начат: boolean } | { вид: 'карта' };
 

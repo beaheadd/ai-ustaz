@@ -65,6 +65,20 @@ const СЛОВАРЬ = создатьСловарь({
     кУрокам: 'Taʼlimni davom ettirish',
     черновик: 'Qoralama — ustoz tekshiryapti',
   },
+  en: {
+    заголовок: 'Only verified collections',
+    готовим: 'In preparation',
+    вступление: 'This section is being prepared. Each hadith will have its collection and number, its grade of authenticity and who gave that grade.',
+    какБудет: 'How it will work',
+    п1: 'Text — from a verified database, unchanged',
+    п2: 'Collection and hadith number',
+    п3: 'Grade of authenticity and who gave it',
+    п4: 'Translation — only a verified one',
+    ии: 'AI does not write, retell or grade hadith.',
+    имам: 'If someone sent you a hadith, check its source with an imam.',
+    кУрокам: 'Continue learning',
+    черновик: 'Draft — under review by an ustaz',
+  },
 });
 
 export function Хадисы(_: ПропсыЭкрана<'хадисы'>) {

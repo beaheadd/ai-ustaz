@@ -24,9 +24,9 @@
 import { createContext, createElement, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { прочитатьJSON, записатьJSON } from './storage';
 
-/** Язык интерфейса. kk и uz (узбекский, латиница) — черновики для редактора-носителя (CLAUDE.md). */
-export type Язык = 'ru' | 'kk' | 'uz';
-export const ВСЕ_ЯЗЫКИ: readonly Язык[] = ['ru', 'kk', 'uz'];
+/** Язык интерфейса. kk, uz (узбекский, латиница) и en (английский, владелец 20.11.2026) — черновики для редактора-носителя (CLAUDE.md). */
+export type Язык = 'ru' | 'kk' | 'uz' | 'en';
+export const ВСЕ_ЯЗЫКИ: readonly Язык[] = ['ru', 'kk', 'uz', 'en'];
 
 export type ИтогУрока = {
   /** Урок пройден хотя бы раз (по критерию урока). */

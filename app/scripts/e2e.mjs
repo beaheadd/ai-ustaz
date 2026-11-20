@@ -20,6 +20,9 @@
  *   6б. узбекский (латиница; владелец 20.11.2026): «Oʻzbekcha» в «Ещё» → lang="uz-Latn", «Yana», главная — «Bomdod»,
  *       урок 1 на uz с плашкой черновика; отдельно (один раз, E2E_UZ=0 — пропустить) — онбординг с браузером uz-UZ:
  *       «Oʻzbekcha» первым и кнопка «Oʻzbek tilida davom etish», язык сам не меняется;
+ *   6в. английский (владелец 20.11.2026): «English» в «Ещё» → lang="en", «More», главная — «Fajr», урок 1 на en
+ *       с плашкой черновика; отдельно (E2E_EN=0 — пропустить) — онбординг с браузером en-US: «English» первым и
+ *       кнопка «Continue in English», язык сам не меняется; ИИ-предупреждение QML — официальный английский NOTICE;
  *   7. отказ в доступе к микрофону → понятное сообщение, урок продолжается;
  *   8. (один раз) все уроки L01–L16 и К1 на узком телефоне 360×740: каждое задание верным ответом,
  *      плашка на месте, нет горизонтальной прокрутки, итог «Урок пройден» (E2E_ALL_LESSONS=0 — пропустить);
@@ -405,6 +408,51 @@ async function узбекскийОнбординг(браузер, база) {
   await контекст.close();
 }
 
+/**
+ * Онбординг с браузером на английском (locale en-US): «English» первым в переключателе и кнопка «Continue in English»,
+ * язык сам не меняется; после нажатия — en, «As-salamu alaykum!», 4 языка без горизонтальной прокрутки, главная — Fajr,
+ * ИИ-предупреждение в «Ещё» — официальный английский текст NOTICE и арабский рядом.
+ */
+async function английскийОнбординг(браузер, база) {
+  console.log('\n══ Онбординг: браузер на английском ══');
+  const проблемы = [];
+  const контекст = await браузер.newContext({ ...ПРОФИЛИ.телефон, locale: 'en-US' });
+  const стр = await контекст.newPage();
+  наблюдать(стр, база, проблемы);
+  const п = помощники(стр, 'en', проблемы);
+  await стр.goto(база + '/aiustaz');
+  await п.э('экран-онбординг').waitFor({ timeout: 20000 });
+  п.проверить((await стр.evaluate(() => navigator.language)) === 'en-US', 'navigator.language = en-US');
+  п.проверить((await стр.evaluate(() => document.documentElement.lang)) === 'ru', 'язык сам не сменился (ru, пока человек не выберет)');
+  const порядок = await стр.$$eval('[data-testid^="язык-"]', (э) => э.map((х) => х.getAttribute('data-testid')));
+  п.проверить(порядок[0] === 'язык-en' && порядок.length === 4, `«English» — первым из 4 языков (${порядок.join(', ')})`);
+  п.проверить((await п.э('онбординг-язык-браузера').innerText()).includes('Continue in English'), 'кнопка «Continue in English»');
+  await п.снимок('онбординг-en-до');
+  await п.э('онбординг-язык-браузера').click();
+  await стр.waitForFunction(() => document.documentElement.lang === 'en');
+  п.проверить((await п.текст()).includes('As-salamu alaykum!'), 'онбординг на английском: «As-salamu alaykum!»');
+  п.проверить(!(await п.есть('онбординг-язык-браузера')), 'после выбора кнопка подсказки скрыта');
+  await п.безГоризонтальнойПрокрутки('онбординг en, 4 языка в переключателе');
+  await п.снимок('онбординг-en');
+  await п.э('онбординг-пропустить').click();
+  await п.э('экран-главная').waitFor();
+  п.проверить((await п.э('намаз-блок-fajr').innerText()).includes('Fajr'), 'главная на английском: Fajr');
+  const пр = await п.прогресс();
+  п.проверить(пр?.язык === 'en', 'язык en сохранён в прогрессе');
+  await стр.goto(база + '/aiustaz/index.html#/more');
+  await п.э('экран-ещё').waitFor();
+  await стр.getByTestId('ещё-предупреждение').first().click().catch(() => {});
+  await стр.waitForTimeout(300);
+  const текст = await п.текст();
+  if (текст.includes('AI notice') && (await п.есть('предупреждение-текст'))) {
+    const т = await п.э('предупреждение-текст').innerText();
+    п.проверить(т.includes('This Quranic Teacher is an artificial-intelligence model') && АРАБСКИЙ.test(await п.э('предупреждение-ar').innerText()),
+      'ИИ-предупреждение QML — официальный английский NOTICE и арабский');
+  }
+  await п.безПроблем('онбординг en: нет ошибок в консоли, чужих запросов и нарушений CSP');
+  await контекст.close();
+}
+
 async function сценарийПрофиля(браузер, база, профиль) {
   console.log(`\n══ Профиль: ${профиль} ══`);
   const проблемы = [];
@@ -715,6 +763,32 @@ async function сценарийПрофиля(браузер, база, проф
   проверить((await э('плашка-прототипа').innerText()).includes('Dars qoralamasi'), 'урок на uz — с плашкой «черновик» (Prototip. Dars qoralamasi)');
   проверить(/Oʻngdan chapga oʻqish/.test(await п.текст()), 'цель урока 1 из контента — на узбекском (content/course.json uz)');
   await снимок('урок1-uz');
+  await стр.goto(база + '/aiustaz/index.html#/more');
+  await э('экран-ещё').waitFor();
+
+  // ── 6в. Английский (владелец 20.11.2026) — тот же переключатель в «Ещё» ──
+  console.log('6в. Английский интерфейс');
+  await э('язык-en').click();
+  await стр.waitForFunction(() => document.documentElement.lang === 'en');
+  проверить((await п.текст()).includes('Settings') && (await э('меню-ещё').innerText()).includes('More'), 'английский интерфейс («More», «Settings», lang="en")');
+  await п.безГоризонтальнойПрокрутки('«Ещё» en');
+  await снимок('ещё-en');
+  await стр.goto(база + '/aiustaz/index.html#/');
+  await э('экран-главная').waitFor();
+  проверить((await э('намаз-блок-fajr').innerText()).includes('Fajr'), 'главная на английском: Fajr');
+  проверить(!/[а-яё]/i.test(await э('намаз-блок-fajr').innerText()), 'блок фаджра — без кириллицы');
+  await п.безГоризонтальнойПрокрутки('главная en');
+  await снимок('главная-en');
+  await стр.reload();
+  await э('экран-главная').waitFor();
+  проверить((await стр.evaluate(() => document.documentElement.lang)) === 'en', 'язык en сохранён после перезагрузки');
+  await э('главная-карта').click();
+  await э('карта-урок-1').click();
+  await э('урок-вступление').waitFor();
+  проверить((await э('урок-начать').innerText()).includes('Start the lesson'), 'урок на английском');
+  проверить((await э('плашка-прототипа').innerText()).includes('Draft lesson'), 'урок на en — с плашкой «черновик» (Prototype. Draft lesson)');
+  проверить(/Reading right to left/.test(await п.текст()), 'цель урока 1 из контента — на английском (content/course.json en)');
+  await снимок('урок1-en');
   await стр.goto(база + '/aiustaz/index.html#/more');
   await э('экран-ещё').waitFor();
   await э('язык-ru').click();
@@ -1273,6 +1347,16 @@ try {
       итоги.push(['онбординг uz (язык браузера первым, не молча)', 'OK']);
     } catch (е) {
       итоги.push(['онбординг uz (язык браузера первым, не молча)', 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_EN !== '0') {
+    try {
+      await английскийОнбординг(браузер, сервер.адрес);
+      итоги.push(['онбординг en (язык браузера первым, не молча)', 'OK']);
+    } catch (е) {
+      итоги.push(['онбординг en (язык браузера первым, не молча)', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
     }

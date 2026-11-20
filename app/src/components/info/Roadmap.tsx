@@ -70,6 +70,24 @@ const СЛОВАРЬ = создатьСловарь({
     потом3: 'Qurʼonni yod olayotganlar uchun «Tinglovchi».',
     сноска: 'Muddatlar — moʻljal: keyingi qadam tayyor va tekshirilgan paytda chiqadi.',
   },
+  en: {
+    заголовок: 'What we have and what is coming',
+    есть: 'Available now (November 2026)',
+    есть1: 'lesson 0: the AI notice and your first voice recording;',
+    есть2: 'level 1 lessons (letters, vowel marks, sukun) — voice recording without a verdict;',
+    есть3: 'the course map and an example of how AI Ustaz explains a mistake, on al-Fatiha;',
+    есть5: "prayer times for any country (in Kazakhstan — by the SAMK method, in other countries — by their authority's method) and the qibla direction — calculated on the phone;",
+    есть4: 'Russian, Kazakh, Uzbek (Latin script) and English.',
+    скоро: 'Coming weeks (target — December 2026)',
+    скоро1: 'qari voice: reference recording of letters, syllables and al-Fatiha;',
+    скоро2: 'voice check on our own server in Kazakhstan: first a gentle “Check yourself”; the recording is deleted right after analysis;',
+    скоро3: 'checkpoint K1 and sending a recording to an ustaz you know.',
+    потом: 'Next 1–3 months',
+    потом1: 'lessons 17–31: madd, shaddah, tanween → al-Fatiha;',
+    потом2: 'an Android app; iOS — later;',
+    потом3: '“Listener” for those memorising the Quran.',
+    сноска: 'Dates are targets: the next step ships when it is ready and checked.',
+  },
 });
 
 export function ЧтоЕстьЧтоБудет({ testID = 'главная-что-будет' }: { testID?: string }) {

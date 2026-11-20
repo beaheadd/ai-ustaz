@@ -17,8 +17,9 @@
  * Тон (каталог §10.1): «вы», без «ошибка/неправильно/неверно»; уровни на старте — только «Проверьте себя»
  * и «Подсказка» (правило 7). Если замечаний нет — «Мы не услышали расхождений…», без похвалы «верно».
  *
- * СТАТУС: ЧЕРНОВИК (правило 11) — шаблоны проверяет устаз; казахский и узбекский (латиница, владелец 20.11.2026) —
- * черновики для редактора-носителя. uz переведён с русского шаблона по смыслу; единица длительности — «harakat», как в kk.
+ * СТАТУС: ЧЕРНОВИК (правило 11) — шаблоны проверяет устаз; казахский, узбекский (латиница) и английский (владелец
+ * 20.11.2026) — черновики для редактора-носителя. uz переведён с русского шаблона по смыслу; единица длительности —
+ * «harakat», как в kk. en — с русского по смыслу; единица — «count», кавычки “…”, транскрипция — трEn (ḥ, kh, ʿ, ʾ).
  * После проверки устазом перенести в /content (генератор tools/build_content.py) с версией и хешем.
  *
  * Контракт:
@@ -28,7 +29,7 @@
  */
 import type { Замечание, ОшибкаПроверки, ПричинаПлохогоЗвука, Звук } from './answer';
 
-export type ЯзыкПодсказок = 'ru' | 'kk' | 'uz';
+export type ЯзыкПодсказок = 'ru' | 'kk' | 'uz' | 'en';
 
 export const ВЕРСИЯ_ШАБЛОНОВ = '0.2';
 export const СТАТУС_ШАБЛОНОВ = 'черновик' as const;
@@ -43,60 +44,67 @@ export function счётаRu(n: number): string {
   return `${n} счётов`;
 }
 
+/** 1 count, 2 counts. */
+export function счётаEn(n: number): string {
+  return `${n} ${n === 1 ? 'count' : 'counts'}`;
+}
+
 /** Названия букв и учебная транскрипция — как в content/letters.json (тест scripts/test-speech.mjs сверяет).
- * uz и трUz — латиница (черновик; названия — как в content/letters.json «название.uz»). */
-export const НАЗВАНИЯ_БУКВ: Readonly<Record<string, { ru: string; kk: string; uz: string; тр: string; трUz: string }>> = {
-  alif: { ru: 'алиф', kk: 'алиф', uz: 'alif', тр: '', трUz: '' },
-  hamza: { ru: 'хамза', kk: 'хамза', uz: 'hamza', тр: '’', трUz: 'ʼ' },
-  ra: { ru: 'ра', kk: 'ра', uz: 'ro', тр: 'р', трUz: 'r' },
-  zay: { ru: 'зай', kk: 'зай', uz: 'zay', тр: 'з', трUz: 'z' },
-  mim: { ru: 'мим', kk: 'мим', uz: 'mim', тр: 'м', трUz: 'm' },
-  ta: { ru: 'та', kk: 'та', uz: 'to', тр: 'т', трUz: 't' },
-  nun: { ru: 'нун', kk: 'нун', uz: 'nun', тр: 'н', трUz: 'n' },
-  ya: { ru: 'йа', kk: 'йа', uz: 'yo', тр: 'й', трUz: 'y' },
-  ba: { ru: 'ба', kk: 'ба', uz: 'bo', тр: 'б', трUz: 'b' },
-  kaf: { ru: 'каф', kk: 'каф', uz: 'kof', тр: 'к', трUz: 'k' },
-  lam: { ru: 'лям', kk: 'лям', uz: 'lom', тр: 'л', трUz: 'l' },
-  waw: { ru: 'вав', kk: 'вав', uz: 'vov', тр: 'в', трUz: 'v' },
-  ha: { ru: 'һа', kk: 'һа', uz: 'ha', тр: 'һ', трUz: 'h' },
-  fa: { ru: 'фа', kk: 'фа', uz: 'fo', тр: 'ф', трUz: 'f' },
-  qaf: { ru: 'қаф', kk: 'қаф', uz: 'qof', тр: 'қ', трUz: 'q' },
-  shin: { ru: 'шин', kk: 'шин', uz: 'shin', тр: 'ш', трUz: 'sh' },
-  sin: { ru: 'син', kk: 'син', uz: 'sin', тр: 'с', трUz: 's' },
-  tha: { ru: 'с̱а', kk: 'с̱а', uz: 's̱o', тр: 'с̱', трUz: 's̱' },
-  sad: { ru: 'с̣ад', kk: 'с̣ад', uz: 'ṣod', тр: 'с̣', трUz: 'ṣ' },
-  tta: { ru: 'т̣а', kk: 'т̣а', uz: 'ṭo', тр: 'т̣', трUz: 'ṭ' },
-  jim: { ru: 'джим', kk: 'джим', uz: 'jim', тр: 'дж', трUz: 'j' },
-  kha: { ru: 'ха', kk: 'ха', uz: 'xo', тр: 'х', трUz: 'x' },
-  hha: { ru: 'х̣а', kk: 'х̣а', uz: 'ḥo', тр: 'х̣', трUz: 'ḥ' },
-  ghain: { ru: 'ғайн', kk: 'ғайн', uz: 'gʻayn', тр: 'ғ', трUz: 'gʻ' },
-  ain: { ru: '‘айн', kk: '‘айн', uz: 'ayn', тр: '‘', трUz: '‘' },
-  dal: { ru: 'даль', kk: 'даль', uz: 'dol', тр: 'д', трUz: 'd' },
-  dad: { ru: 'д̣ад', kk: 'д̣ад', uz: 'ḍod', тр: 'д̣', трUz: 'ḍ' },
-  dhal: { ru: 'з̱аль', kk: 'з̱аль', uz: 'ẕol', тр: 'з̱', трUz: 'ẕ' },
-  zza: { ru: 'з̣а', kk: 'з̣а', uz: 'ẓo', тр: 'з̣', трUz: 'ẓ' },
+ * uz и трUz — латиница (черновик; названия — как в content/letters.json «название.uz»); en и трEn — английская
+ * латиница (черновик; «название.en»; ʿ — ‘айн U+02BF, ʾ — хамза U+02BE, точка снизу — эмфатические ṣ ṭ ḍ ẓ, ḥ). */
+export const НАЗВАНИЯ_БУКВ: Readonly<Record<string, { ru: string; kk: string; uz: string; en: string; тр: string; трUz: string; трEn: string }>> = {
+  alif: { ru: 'алиф', kk: 'алиф', uz: 'alif', en: 'alif', тр: '', трUz: '', трEn: '' },
+  hamza: { ru: 'хамза', kk: 'хамза', uz: 'hamza', en: 'hamza', тр: '’', трUz: 'ʼ', трEn: 'ʾ' },
+  ra: { ru: 'ра', kk: 'ра', uz: 'ro', en: 'ra', тр: 'р', трUz: 'r', трEn: 'r' },
+  zay: { ru: 'зай', kk: 'зай', uz: 'zay', en: 'zay', тр: 'з', трUz: 'z', трEn: 'z' },
+  mim: { ru: 'мим', kk: 'мим', uz: 'mim', en: 'mim', тр: 'м', трUz: 'm', трEn: 'm' },
+  ta: { ru: 'та', kk: 'та', uz: 'to', en: 'ta', тр: 'т', трUz: 't', трEn: 't' },
+  nun: { ru: 'нун', kk: 'нун', uz: 'nun', en: 'nun', тр: 'н', трUz: 'n', трEn: 'n' },
+  ya: { ru: 'йа', kk: 'йа', uz: 'yo', en: 'ya', тр: 'й', трUz: 'y', трEn: 'y' },
+  ba: { ru: 'ба', kk: 'ба', uz: 'bo', en: 'ba', тр: 'б', трUz: 'b', трEn: 'b' },
+  kaf: { ru: 'каф', kk: 'каф', uz: 'kof', en: 'kaf', тр: 'к', трUz: 'k', трEn: 'k' },
+  lam: { ru: 'лям', kk: 'лям', uz: 'lom', en: 'lam', тр: 'л', трUz: 'l', трEn: 'l' },
+  waw: { ru: 'вав', kk: 'вав', uz: 'vov', en: 'waw', тр: 'в', трUz: 'v', трEn: 'w' },
+  ha: { ru: 'һа', kk: 'һа', uz: 'ha', en: 'ha', тр: 'һ', трUz: 'h', трEn: 'h' },
+  fa: { ru: 'фа', kk: 'фа', uz: 'fo', en: 'fa', тр: 'ф', трUz: 'f', трEn: 'f' },
+  qaf: { ru: 'қаф', kk: 'қаф', uz: 'qof', en: 'qaf', тр: 'қ', трUz: 'q', трEn: 'q' },
+  shin: { ru: 'шин', kk: 'шин', uz: 'shin', en: 'shin', тр: 'ш', трUz: 'sh', трEn: 'sh' },
+  sin: { ru: 'син', kk: 'син', uz: 'sin', en: 'sin', тр: 'с', трUz: 's', трEn: 's' },
+  tha: { ru: 'с̱а', kk: 'с̱а', uz: 's̱o', en: 'tha', тр: 'с̱', трUz: 's̱', трEn: 'th' },
+  sad: { ru: 'с̣ад', kk: 'с̣ад', uz: 'ṣod', en: 'ṣad', тр: 'с̣', трUz: 'ṣ', трEn: 'ṣ' },
+  tta: { ru: 'т̣а', kk: 'т̣а', uz: 'ṭo', en: 'ṭa', тр: 'т̣', трUz: 'ṭ', трEn: 'ṭ' },
+  jim: { ru: 'джим', kk: 'джим', uz: 'jim', en: 'jim', тр: 'дж', трUz: 'j', трEn: 'j' },
+  kha: { ru: 'ха', kk: 'ха', uz: 'xo', en: 'kha', тр: 'х', трUz: 'x', трEn: 'kh' },
+  hha: { ru: 'х̣а', kk: 'х̣а', uz: 'ḥo', en: 'ḥa', тр: 'х̣', трUz: 'ḥ', трEn: 'ḥ' },
+  ghain: { ru: 'ғайн', kk: 'ғайн', uz: 'gʻayn', en: 'ghayn', тр: 'ғ', трUz: 'gʻ', трEn: 'gh' },
+  ain: { ru: '‘айн', kk: '‘айн', uz: 'ayn', en: 'ʿayn', тр: '‘', трUz: '‘', трEn: 'ʿ' },
+  dal: { ru: 'даль', kk: 'даль', uz: 'dol', en: 'dal', тр: 'д', трUz: 'd', трEn: 'd' },
+  dad: { ru: 'д̣ад', kk: 'д̣ад', uz: 'ḍod', en: 'ḍad', тр: 'д̣', трUz: 'ḍ', трEn: 'ḍ' },
+  dhal: { ru: 'з̱аль', kk: 'з̱аль', uz: 'ẕol', en: 'dhal', тр: 'з̱', трUz: 'ẕ', трEn: 'dh' },
+  zza: { ru: 'з̣а', kk: 'з̣а', uz: 'ẓo', en: 'ẓa', тр: 'з̣', трUz: 'ẓ', трEn: 'ẓ' },
 };
 
-/** Огласовки: название (content/harakat.json) и звук. Казахский и узбекский — черновики. */
-const ХАРАКАТ: Record<string, { ru: string; kk: string; uz: string; звукRu: string; звукKk: string; звукUz: string }> = {
-  fatha: { ru: 'фатха', kk: 'фатха', uz: 'fatha', звукRu: 'краткое „а“', звукKk: 'қысқа „а“', звукUz: 'qisqa „a“' },
-  kasra: { ru: 'кясра', kk: 'кәсра', uz: 'kasra', звукRu: 'краткое „и“', звукKk: 'қысқа „и“', звукUz: 'qisqa „i“' },
-  damma: { ru: 'дамма', kk: 'дамма', uz: 'damma', звукRu: 'краткое „у“', звукKk: 'қысқа „у“', звукUz: 'qisqa „u“' },
-  sukun: { ru: 'сукун', kk: 'сукун', uz: 'sukun', звукRu: 'без гласного', звукKk: 'дауыссыз', звукUz: 'unlisiz' },
-  shadda: { ru: 'шадда', kk: 'шәдда', uz: 'shadda', звукRu: 'буква дважды', звукKk: 'әріп екі рет', звукUz: 'harf ikki marta' },
-  'tanwin-fath': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ан“', звукKk: '„ан“', звукUz: '„an“' },
-  'tanwin-kasr': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ин“', звукKk: '„ин“', звукUz: '„in“' },
-  'tanwin-damm': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ун“', звукKk: '„ун“', звукUz: '„un“' },
+/** Огласовки: название (content/harakat.json) и звук. Казахский, узбекский и английский — черновики. */
+const ХАРАКАТ: Record<string, { ru: string; kk: string; uz: string; en: string; звукRu: string; звукKk: string; звукUz: string; звукEn: string }> = {
+  fatha: { ru: 'фатха', kk: 'фатха', uz: 'fatha', звукRu: 'краткое „а“', звукKk: 'қысқа „а“', звукUz: 'qisqa „a“', en: 'fatha', звукEn: 'short “a”' },
+  kasra: { ru: 'кясра', kk: 'кәсра', uz: 'kasra', звукRu: 'краткое „и“', звукKk: 'қысқа „и“', звукUz: 'qisqa „i“', en: 'kasra', звукEn: 'short “i”' },
+  damma: { ru: 'дамма', kk: 'дамма', uz: 'damma', звукRu: 'краткое „у“', звукKk: 'қысқа „у“', звукUz: 'qisqa „u“', en: 'damma', звукEn: 'short “u”' },
+  sukun: { ru: 'сукун', kk: 'сукун', uz: 'sukun', звукRu: 'без гласного', звукKk: 'дауыссыз', звукUz: 'unlisiz', en: 'sukun', звукEn: 'no vowel' },
+  shadda: { ru: 'шадда', kk: 'шәдда', uz: 'shadda', звукRu: 'буква дважды', звукKk: 'әріп екі рет', звукUz: 'harf ikki marta', en: 'shaddah', звукEn: 'letter doubled' },
+  'tanwin-fath': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ан“', звукKk: '„ан“', звукUz: '„an“', en: 'tanween', звукEn: '“an”' },
+  'tanwin-kasr': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ин“', звукKk: '„ин“', звукUz: '„in“', en: 'tanween', звукEn: '“in”' },
+  'tanwin-damm': { ru: 'танвин', kk: 'тәнуин', uz: 'tanvin', звукRu: '„ун“', звукKk: '„ун“', звукUz: '„un“', en: 'tanween', звукEn: '“un”' },
 };
 
 const ПОРЯДКОВЫЕ_RU = ['первом', 'втором', 'третьем', 'четвёртом', 'пятом', 'шестом', 'седьмом', 'восьмом', 'девятом', 'десятом'];
 const ПОРЯДКОВЫЕ_KK = ['бірінші', 'екінші', 'үшінші', 'төртінші', 'бесінші', 'алтыншы', 'жетінші', 'сегізінші', 'тоғызыншы', 'оныншы'];
 const ПОРЯДКОВЫЕ_UZ = ['birinchi', 'ikkinchi', 'uchinchi', 'toʻrtinchi', 'beshinchi', 'oltinchi', 'yettinchi', 'sakkizinchi', 'toʻqqizinchi', 'oʻninchi'];
+const ПОРЯДКОВЫЕ_EN = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
 
-/** Гласный от сервиса проверки (кириллица учебной транскрипции: а, и, у, а̄…) → латиница для uz. */
+/** Гласный от сервиса проверки (кириллица учебной транскрипции: а, и, у, а̄…) → латиница для uz и en. */
 const ГЛАСНЫЕ_UZ: Record<string, string> = { а: 'a', и: 'i', у: 'u', 'а̄': 'ā', 'ӣ': 'ī', 'ӯ': 'ū' };
 function гласныйЯзыка(г: string, язык: ЯзыкПодсказок): string {
-  return язык === 'uz' ? (ГЛАСНЫЕ_UZ[г] ?? г) : г;
+  return язык === 'uz' || язык === 'en' ? (ГЛАСНЫЕ_UZ[г] ?? г) : г;
 }
 const ИМЕНИТ_RU = ['первый', 'второй', 'третий', 'четвёртый', 'пятый', 'шестой', 'седьмой', 'восьмой', 'девятый', 'десятый'];
 
@@ -109,9 +117,11 @@ function вПорядковом(н: number): string | null {
 function чтение(з: Замечание, язык: ЯзыкПодсказок): string {
   const п = з.повторы;
   if (!п || з.повторов < 2) return '';
-  if (п.length >= з.повторов) return язык === 'kk' ? 'әр оқуда, ' : язык === 'uz' ? 'har bir oʻqishda, ' : 'в каждом чтении, ';
+  if (п.length >= з.повторов)
+    return язык === 'kk' ? 'әр оқуда, ' : язык === 'uz' ? 'har bir oʻqishda, ' : язык === 'en' ? 'in every reading, ' : 'в каждом чтении, ';
   if (язык === 'kk') return `${п.map((н) => ПОРЯДКОВЫЕ_KK[н - 1]).join(' және ')} оқуда, `;
   if (язык === 'uz') return `${п.map((н) => ПОРЯДКОВЫЕ_UZ[н - 1]).join(' va ')} oʻqishda, `;
+  if (язык === 'en') return `in the ${п.map((н) => ПОРЯДКОВЫЕ_EN[н - 1]).join(' and ')} reading, `;
   const [первый, ...ещё] = п.map((н) => ПОРЯДКОВЫЕ_RU[н - 1]);
   return `${п[0] === 2 ? 'во' : 'в'} ${[первый, ...ещё].join(' и ')} чтении, `;
 }
@@ -128,6 +138,10 @@ function где(з: Замечание, язык: ЯзыкПодсказок): s
       const п = з.слогов && з.слогов > 1 ? ПОРЯДКОВЫЕ_UZ[з.слог - 1] : null;
       return `${ч}${п ? п + ' ' : ''}«${з.слогТекст}» boʻgʻinida`;
     }
+    if (язык === 'en') {
+      const п = з.слогов && з.слогов > 1 ? ПОРЯДКОВЫЕ_EN[з.слог - 1] : null;
+      return `${ч}in the ${п ? п + ' ' : ''}syllable “${з.слогТекст}”`;
+    }
     const п = з.слогов && з.слогов > 1 ? вПорядковом(з.слог) : 'в';
     return `${ч}${п ?? `в слоге №${з.слог}`}${п ? ' слоге' : ''} «${з.слогТекст}»`;
   }
@@ -139,6 +153,10 @@ function где(з: Замечание, язык: ЯзыкПодсказок): s
     if (з.фрагмент) return `${ч}«${з.фрагмент}» ${з.слово ? 'soʻzida' : 'joyida'}`;
     return `${ч}bir joyda`;
   }
+  if (язык === 'en') {
+    if (з.фрагмент) return `${ч}in ${з.слово ? 'the word ' : ''}“${з.фрагмент}”`;
+    return `${ч}in one place`;
+  }
   if (з.фрагмент) return `${ч}в ${з.слово ? 'слове ' : ''}«${з.фрагмент}»`;
   return `${ч}в одном месте`;
 }
@@ -148,8 +166,8 @@ function харакат(з: Замечание, язык: ЯзыкПодсказ
   const о = з.огласовка ? ХАРАКАТ[з.огласовка.id] : null;
   if (!о || !з.огласовка) return '';
   const шадда =
-    з.огласовка.шадда && з.огласовка.id !== 'shadda' ? { ru: 'шадда и ', kk: 'шәдда мен ', uz: 'shadda va ' }[язык] : '';
-  const звук = { ru: о.звукRu, kk: о.звукKk, uz: о.звукUz }[язык];
+    з.огласовка.шадда && з.огласовка.id !== 'shadda' ? { ru: 'шадда и ', kk: 'шәдда мен ', uz: 'shadda va ', en: 'shaddah and ' }[язык] : '';
+  const звук = { ru: о.звукRu, kk: о.звукKk, uz: о.звукUz, en: о.звукEn }[язык];
   return ` (${шадда}${о[язык]} — ${звук})`;
 }
 
@@ -157,13 +175,18 @@ function харакат(з: Замечание, язык: ЯзыкПодсказ
 function буква(з: Замечание, язык: ЯзыкПодсказок): string | null {
   if (!з.буква) return null;
   const н = НАЗВАНИЯ_БУКВ[з.буква.id];
-  return н ? `«${з.буква.знак}» (${н[язык]})` : `«${з.буква.знак}»`;
+  const [о, з2] = язык === 'en' ? ['“', '”'] : ['«', '»'];
+  return н ? `${о}${з.буква.знак}${з2} (${н[язык]})` : `${о}${з.буква.знак}${з2}`;
 }
 
 /** Согласный коротко: «„х“ (خ)» — если у буквы есть буквенная транскрипция, иначе «хамза (ء)». */
 function короткийЗвук(звук: { буква: string; id: string }, язык: ЯзыкПодсказок): { текст: string; звучит: boolean } {
   const н = НАЗВАНИЯ_БУКВ[звук.id];
-  const тр = (язык === 'uz' ? н?.трUz : н?.тр) ?? '';
+  const тр = (язык === 'uz' ? н?.трUz : язык === 'en' ? н?.трEn : н?.тр) ?? '';
+  if (язык === 'en') {
+    if (/[a-zḥṣṭḍẓ]/i.test(тр)) return { текст: `“${тр}” (${звук.буква})`, звучит: true };
+    return { текст: `${н ? н.en + ' ' : ''}(${звук.буква})`, звучит: false };
+  }
   if (/[а-яёәіңғүұқөһa-z]/i.test(тр)) return { текст: `„${тр}“ (${звук.буква})`, звучит: true };
   return { текст: `${н ? н[язык] + ' ' : ''}(${звук.буква})`, звучит: false };
 }
@@ -171,6 +194,7 @@ function короткийЗвук(звук: { буква: string; id: string }, 
 /** Описание одного звука: «краткое „и“», «долгое „а“», «звук „х“ (خ)», «хамза (ء)» — без арабского текста слов. */
 export function описаниеЗвука(звук: Звук, язык: ЯзыкПодсказок): string {
   if (язык === 'uz') return описаниеЗвукаUz(звук);
+  if (язык === 'en') return описаниеЗвукаEn(звук);
   const kk = язык === 'kk';
   switch (звук.вид) {
     case 'гласный':
@@ -213,6 +237,26 @@ function описаниеЗвукаUz(звук: Звук): string {
   }
 }
 
+function описаниеЗвукаEn(звук: Звук): string {
+  switch (звук.вид) {
+    case 'гласный':
+      return звук.счёт <= 1 ? `short “${гласныйЯзыка(звук.гласный, 'en')}”` : `long “${гласныйЯзыка(звук.гласный, 'en')}”`;
+    case 'продление':
+      return `drawn-out “${гласныйЯзыка(звук.гласный, 'en')}”`;
+    case 'согласный': {
+      const к = короткийЗвук(звук, 'en');
+      const двойной = звук.удвоен ? 'doubled ' : '';
+      return к.звучит ? `the ${двойной}sound ${к.текст}` : `${двойной}${к.текст}`;
+    }
+    case 'гунна':
+      return 'a nasal sound (ghunnah)';
+    case 'калькаля':
+      return 'a bounce (qalqalah)';
+    default:
+      return 'another sound';
+  }
+}
+
 type Согласный = Extract<Звук, { вид: 'согласный' }>;
 type Гласный = Extract<Звук, { вид: 'гласный' | 'продление' }>;
 const первыйСогласный = (з: Звук[]) => з.find((x): x is Согласный => x.вид === 'согласный');
@@ -222,6 +266,7 @@ const продление = (з: Звук[]) => з.find((x): x is Гласный 
 function начало(з: Замечание, язык: ЯзыкПодсказок): string {
   if (язык === 'kk') return з.уровень === 'подсказка' ? 'Кеңес: ' : 'Өзіңізді тексеріңіз: ';
   if (язык === 'uz') return з.уровень === 'подсказка' ? 'Maslahat: ' : 'Oʻzingizni tekshiring: ';
+  if (язык === 'en') return з.уровень === 'подсказка' ? 'Hint: ' : 'Check yourself: ';
   return з.уровень === 'подсказка' ? 'Подсказка: ' : 'Проверьте себя: ';
 }
 
@@ -251,6 +296,13 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       if (N) return `${г} madd bor — ${N} harakatga choʻzing.`;
       return `${г} madd bor — bu yerda unli choʻziladi. Yozuvingizni tinglang.`;
     },
+    en: (з, г) => {
+      const N = з.счётОжидался;
+      const M = з.счётУслышан;
+      if (N && M != null) return `${г} there is a madd — hold it for ${счётаEn(N)}, yours sounded about ${M}.`;
+      if (N) return `${г} there is a madd — hold it for ${счётаEn(N)}.`;
+      return `${г} there is a madd — the vowel is lengthened here. Listen to your recording.`;
+    },
   },
   // C2 — мадд длиннее нормы.
   C2: {
@@ -272,6 +324,12 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       if (N && M != null) return `${г} madd — ${N} harakat, sizda uzunroq, taxminan ${M}. Bir tekis surʼatni saqlang, kuylab yubormang.`;
       return `${г} unli meʼyordan uzunroq choʻzilganga oʻxshaydi. Bir tekis surʼatni saqlang, kuylab yubormang.`;
     },
+    en: (з, г) => {
+      const N = з.счётОжидался;
+      const M = з.счётУслышан;
+      if (N && M != null) return `${г} the madd is ${счётаEn(N)}, yours is longer, about ${M}. Keep an even pace, do not sing it out.`;
+      return `${г} the vowel seems to be held longer than normal. Keep an even pace, do not sing it out.`;
+    },
   },
   // S5.Тайиба — мунфасиль около 2: мягкая подсказка без штрафа (каталог §10.2; кнопки «Не согласен» пока нет).
   'C1.мунфасиль/подсказка': {
@@ -281,26 +339,32 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       'сіз мунфасил мәдді 2 харакатқа оқисыз. Бұлай «Тайибат ан-нашр» бойынша кейбір жолдарда оқиды, онда басқа шарттар да бар. Біздің курста (Шатибия) — 4–5 харакат.',
     uz: () =>
       'siz munfasil maddni 2 harakatga oʻqiyapsiz. Bunday oʻqish «Tayyibat an-nashr»ning baʼzi yoʻllarida bor, u yerda boshqa shartlar ham amal qiladi. Bizning kursda (Shotibiya) — 4–5 harakat.',
+    en: () =>
+      'you read munfasil at 2 counts. This is how it is read in some routes of “Tayyibat an-Nashr”, where other conditions also apply. In our course (Shatibiyyah) — 4–5 counts.',
   },
   F1: {
     ru: (_, г) => `${г} калькаля — на букве с сукуном лёгкий отскок без гласного. Послушайте свою запись.`,
     kk: (_, г) => `${г} қалқала бар — сукунды әріпте дауыссыз жеңіл серпіліс. Жазбаңызды тыңдаңыз.`,
     uz: (_, г) => `${г} qalqala bor — sukunli harfda unlisiz yengil sapchish. Yozuvingizni tinglang.`,
+    en: (_, г) => `${г} there is qalqalah — on a letter with sukun, a light bounce without a vowel. Listen to your recording.`,
   },
   F3: {
     ru: (_, г) => `${г} отскока нет — калькаля бывает только у букв ق ط ب ج د. Закройте слог спокойно.`,
     kk: (_, г) => `${г} серпіліс болмайды — қалқала тек ق ط ب ج د әріптерінде. Буынды тыныш жабыңыз.`,
     uz: (_, г) => `${г} sapchish boʻlmaydi — qalqala faqat ق ط ب ج د harflarida boʻladi. Boʻgʻinni xotirjam yoping.`,
+    en: (_, г) => `${г} there is no bounce — qalqalah occurs only on the letters ق ط ب ج د. Close the syllable calmly.`,
   },
   D2: {
     ru: (з, г) => `${г} гунна — носовой звук держится 2 счёта.${з.счётУслышан != null ? ` У вас около ${з.счётУслышан}.` : ''}`,
     kk: (з, г) => `${г} ғұнна бар — мұрын дыбысы 2 харакат ұсталады.${з.счётУслышан != null ? ` Сізде шамамен ${з.счётУслышан}.` : ''}`,
     uz: (з, г) => `${г} gʻunna bor — burun tovushi 2 harakat ushlab turiladi.${з.счётУслышан != null ? ` Sizda taxminan ${з.счётУслышан}.` : ''}`,
+    en: (з, г) => `${г} there is ghunnah — the nasal sound is held for 2 counts.${з.счётУслышан != null ? ` Yours is about ${з.счётУслышан}.` : ''}`,
   },
   E1: {
     ru: (_, г) => `${г} нун с сукуном (или танвин) переходит в следующую букву — «н» отдельно не звучит. Читайте слитно.`,
     kk: (_, г) => `${г} сукунды нун (не тәнуин) келесі әріпке кірігеді — «н» бөлек айтылмайды. Біріктіріп оқыңыз.`,
     uz: (_, г) => `${г} sukunli nun (yoki tanvin) keyingi harfga qoʻshilib ketadi — «n» alohida aytilmaydi. Qoʻshib oʻqing.`,
+    en: (_, г) => `${г} nun with sukun (or tanween) merges into the next letter — the “n” is not pronounced separately. Read it joined.`,
   },
   // B1 / B1 (слог) — каталог §10.3: «на букве {буква_рус} — {харакат_ru}, а прозвучало «{услышано}»» (услышано — описание).
   B1: {
@@ -331,6 +395,15 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
         return `${г} ${б} harfida — ${о.uz} (${о.звукUz}), sizda esa ${описаниеЗвука(усл, 'uz')} eshitildi. Belgiga qarab, qayta oʻqing.`;
       return `${г}${харакат(з, 'uz')} harakat boshqacha eshitildi. Harfning ustidagi yoki ostidagi belgiga qarab, qayta oʻqing.`;
     },
+    en: (з, г) => {
+      const б = буква(з, 'en');
+      const о = з.огласовка ? ХАРАКАТ[з.огласовка.id] : null;
+      const усл = первыйГласный(з.звукУслышан);
+      const ожид = первыйГласный(з.звукОжидался);
+      if (б && о && усл && !(ожид && ожид.гласный === усл.гласный && ожид.счёт === усл.счёт))
+        return `${г} on the letter ${б} — ${о.en} (${о.звукEn}), but we heard ${описаниеЗвука(усл, 'en')}. Look at the mark and read again.`;
+      return `${г}${харакат(з, 'en')} the vowel mark sounded different. Look at the mark above or below the letter and read again.`;
+    },
   },
   // B2 — каталог §10.3: краткий гласный протянут (1 счёт). Сервис: вставка букв мадда после своего гласного.
   B2: {
@@ -348,6 +421,11 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       const п = продление(з.звукУслышан);
       const около = п ? `, taxminan ${п.счёт} harakat` : '';
       return `${г}${харакат(з, 'uz')} unli choʻzilib eshitildi${около}. Bu qisqa unli — 1 harakat, uni choʻzmang.`;
+    },
+    en: (з, г) => {
+      const п = продление(з.звукУслышан);
+      const около = п ? `, about ${счётаEn(п.счёт)}` : '';
+      return `${г}${харакат(з, 'en')} the vowel sounded drawn out${около}. This is a short vowel — 1 count, do not lengthen it.`;
     },
   },
   // A1 — каталог §10.3: «буква {буква_рус} прозвучала как «{услышано}»» (услышано — звук с буквой, не слово).
@@ -373,6 +451,13 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       if (б) return `${г} ${б} harfi ${иначе} eshitildi. Bu harf qanday talaffuz qilinishini eslang va qayta oʻqing.`;
       return `${г} harf boshqacha eshitildi. Shu harf darsidagi talaffuz maslahatini eslang va qayta oʻqing.`;
     },
+    en: (з, г) => {
+      const б = буква(з, 'en');
+      const усл = первыйСогласный(з.звукУслышан);
+      const иначе = усл && усл.буква !== з.буква?.знак ? `like ${описаниеЗвука(усл, 'en')}` : 'different';
+      if (б) return `${г} the letter ${б} sounded ${иначе}. Recall how this letter is pronounced and read again.`;
+      return `${г} the letter sounded different. Recall the pronunciation tip from this letter's lesson and read again.`;
+    },
   },
   A2: {
     ru: (з, г) => {
@@ -386,6 +471,10 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
     uz: (з, г) => {
       const б = буква(з, 'uz');
       return `${г} ${б ? б + ' harfi' : 'bir harf'} eshitilmadi — usiz soʻz oʻzgaradi. Uni tushirib qoldirmasdan qayta oʻqing.`;
+    },
+    en: (з, г) => {
+      const б = буква(з, 'en');
+      return `${г} the letter${б ? ' ' + б : ''} was not heard — without it the word changes. Read again without skipping it.`;
     },
   },
   // A3 — каталог §10.3: «прозвучал лишний звук «{услышано}». Прочитайте без него». После гласного — «коротко».
@@ -414,6 +503,14 @@ const ТЕЛА: Record<string, Record<ЯзыкПодсказок, Тело>> = {
       const коротко = з.вставка === 'после_гласного' ? 'Qisqa, usiz' : 'Usiz';
       return `${г}${харакат(з, 'uz')} ${после}ortiqcha ${товуш} eshitildi. ${коротко} oʻqing.`;
     },
+    en: (з, г) => {
+      const усл = первыйСогласный(з.звукУслышан);
+      const к = усл ? короткийЗвук(усл, 'en') : null;
+      const что = к ? (к.звучит ? ` ${к.текст}` : ` — ${к.текст} —`) : '';
+      const после = з.вставка === 'после_гласного' ? ' after the vowel' : з.вставка === 'после_согласного' ? ' after the letter' : '';
+      const коротко = з.вставка === 'после_гласного' ? 'briefly, ' : '';
+      return `${г}${харакат(з, 'en')} an extra sound${что} was heard${после}. Read it ${коротко}without it.`;
+    },
   },
 };
 
@@ -425,6 +522,8 @@ const ОБЩИЙ = {
     з.фрагмент ? `«${з.фрагмент}» тұсын мұқият қайта оқып, жазбаңызды тыңдаңыз.` : 'мұқият қайта оқып, жазбаңызды тыңдаңыз.',
   uz: (з: Замечание) =>
     з.фрагмент ? `«${з.фрагмент}» joyini diqqat bilan qayta oʻqing va yozuvingizni tinglang.` : 'diqqat bilan qayta oʻqing va yozuvingizni tinglang.',
+  en: (з: Замечание) =>
+    з.фрагмент ? `read “${з.фрагмент}” again carefully and listen to your recording.` : 'read again carefully and listen to your recording.',
 };
 
 function ключШаблона(з: Замечание): string | null {
@@ -457,6 +556,14 @@ export function подписьПодсветки(з: Замечание, язы�
     }
     return `Belgilandi: «${з.фрагмент}» — ${уровень}`;
   }
+  if (язык === 'en') {
+    const уровень = з.уровень === 'подсказка' ? 'hint' : 'check yourself';
+    if (з.слог && з.слогТекст) {
+      const п = ПОРЯДКОВЫЕ_EN[з.слог - 1];
+      return `Highlighted: ${п ? п + ' ' : ''}syllable “${з.слогТекст}” — ${уровень}`;
+    }
+    return `Highlighted: “${з.фрагмент}” — ${уровень}`;
+  }
   const kk = язык === 'kk';
   const уровень = з.уровень === 'подсказка' ? (kk ? 'кеңес' : 'подсказка') : kk ? 'өзіңізді тексеріңіз' : 'проверьте себя';
   if (з.слог && з.слогТекст) {
@@ -472,6 +579,7 @@ export function текстБезЗамечаний(язык: ЯзыкПодск�
     ru: 'Мы не услышали расхождений. Проверка ИИ может ошибаться.',
     kk: 'Біз айырмашылық естімедік. ЖИ тексеруі қателесуі мүмкін.',
     uz: 'Biz farq eshitmadik. SI tekshiruvi xato qilishi mumkin.',
+    en: 'We did not hear any differences. The AI check can make mistakes.',
   }[язык];
 }
 
@@ -480,36 +588,43 @@ const ПЛОХОЙ_ЗВУК: Record<ПричинаПлохогоЗвука, Reco
     ru: 'Плохо слышно: запись слишком короткая. Это не ошибка — запишите ещё раз.',
     kk: 'Нашар естіледі: жазба тым қысқа. Бұл қате емес — қайта жазыңыз.',
     uz: 'Yaxshi eshitilmayapti: yozuv juda qisqa. Bu xato emas — qayta yozib oling.',
+    en: 'Hard to hear: the recording is too short. This is not a mistake — record again.',
   },
   длинно: {
     ru: 'Запись длиннее 20 секунд — такую проверка не принимает. Это не ошибка — прочитайте задание и запишите ещё раз.',
     kk: 'Жазба 20 секундтан ұзын — тексеру мұндайды қабылдамайды. Бұл қате емес — тапсырманы оқып, қайта жазыңыз.',
     uz: 'Yozuv 20 soniyadan uzun — tekshiruv bunday yozuvni qabul qilmaydi. Bu xato emas — topshiriqni oʻqing va qayta yozib oling.',
+    en: 'The recording is longer than 20 seconds — the check does not accept it. This is not a mistake — read the task and record again.',
   },
   тихо: {
     ru: 'Плохо слышно: слишком тихо. Это не ошибка — запишите ещё раз, чуть громче или ближе к микрофону.',
     kk: 'Нашар естіледі: дыбыс тым ақырын. Бұл қате емес — сәл қаттырақ не микрофонға жақынырақ болып, қайта жазыңыз.',
     uz: 'Yaxshi eshitilmayapti: juda past. Bu xato emas — biroz balandroq yoki mikrofonga yaqinroq boʻlib, qayta yozib oling.',
+    en: 'Hard to hear: too quiet. This is not a mistake — record again, a little louder or closer to the microphone.',
   },
   перегруз: {
     ru: 'Плохо слышно: звук перегружен — слишком громко или близко. Это не ошибка — запишите ещё раз чуть дальше от микрофона.',
     kk: 'Нашар естіледі: дыбыс тым қатты не тым жақын. Бұл қате емес — микрофоннан сәл алысырақ болып, қайта жазыңыз.',
     uz: 'Yaxshi eshitilmayapti: ovoz haddan tashqari baland yoki juda yaqin. Bu xato emas — mikrofondan biroz uzoqroq boʻlib, qayta yozib oling.',
+    en: 'Hard to hear: the sound is overloaded — too loud or too close. This is not a mistake — record again a little further from the microphone.',
   },
   испорчено: {
     ru: 'Плохо слышно: запись не разобрать. Это не ошибка — запишите ещё раз.',
     kk: 'Нашар естіледі: жазбаны тану мүмкін болмады. Бұл қате емес — қайта жазыңыз.',
     uz: 'Yaxshi eshitilmayapti: yozuvni tushunib boʻlmadi. Bu xato emas — qayta yozib oling.',
+    en: 'Hard to hear: the recording could not be made out. This is not a mistake — record again.',
   },
   не_то: {
     ru: 'Похоже, прочитано не то, что в задании. Послушайте задание и запишите ещё раз.',
     kk: 'Тапсырмадағыдан басқа нәрсе оқылған сияқты. Тапсырманы тыңдап, қайта жазыңыз.',
     uz: 'Topshiriqdagidan boshqa narsa oʻqilganga oʻxshaydi. Topshiriqni tinglang va qayta yozib oling.',
+    en: 'It seems something other than the task was read. Listen to the task and record again.',
   },
   другое: {
     ru: 'Плохо слышно. Это не ошибка — запишите ещё раз в тихом месте.',
     kk: 'Нашар естіледі. Бұл қате емес — тыныш жерде қайта жазыңыз.',
     uz: 'Yaxshi eshitilmayapti. Bu xato emas — tinch joyda qayta yozib oling.',
+    en: 'Hard to hear. This is not a mistake — record again in a quiet place.',
   },
 };
 
@@ -522,33 +637,39 @@ const ОШИБКИ: Record<ОшибкаПроверки, Record<ЯзыкПодс
     ru: 'Нет связи с сервером проверки. Проверьте интернет и нажмите «Проверить» ещё раз.',
     kk: 'Тексеру серверімен байланыс жоқ. Интернетті тексеріп, «Тексеру» түймесін қайта басыңыз.',
     uz: 'Tekshiruv serveri bilan aloqa yoʻq. Internetni tekshiring va «Tekshirish» tugmasini yana bosing.',
+    en: 'No connection to the check server. Check your internet and tap “Check” again.',
   },
   занят: {
     ru: 'Сервис проверки сейчас занят. Попробуйте ещё раз через несколько секунд.',
     kk: 'Тексеру қызметі қазір бос емес. Бірнеше секундтан кейін қайталап көріңіз.',
     uz: 'Tekshiruv xizmati hozir band. Bir necha soniyadan keyin yana urinib koʻring.',
+    en: 'The check service is busy right now. Try again in a few seconds.',
   },
   таймаут: {
     ru: 'Проверка не успела ответить за 20 секунд. Попробуйте ещё раз.',
     kk: 'Тексеру 20 секундта жауап бере алмады. Қайталап көріңіз.',
     uz: 'Tekshiruv 20 soniya ichida javob bera olmadi. Yana urinib koʻring.',
+    en: 'The check did not respond within 20 seconds. Please try again.',
   },
   запись: {
     ru: 'Не получилось подготовить запись для проверки. Запишите ещё раз.',
     kk: 'Жазбаны тексеруге дайындау мүмкін болмады. Қайта жазыңыз.',
     uz: 'Yozuvni tekshiruvga tayyorlab boʻlmadi. Qayta yozib oling.',
+    en: 'Could not prepare the recording for the check. Record again.',
   },
   большая: {
     ru: 'Запись слишком большая для проверки. Прочитайте короче и запишите ещё раз.',
     kk: 'Жазба тексеру үшін тым үлкен. Қысқарақ оқып, қайта жазыңыз.',
     uz: 'Yozuv tekshiruv uchun juda katta. Qisqaroq oʻqing va qayta yozib oling.',
+    en: 'The recording is too large for the check. Read a shorter part and record again.',
   },
   недоступно: {
     ru: 'Проверка сейчас недоступна. Запись можно послушать самому.',
     kk: 'Тексеру қазір қолжетімсіз. Жазбаны өзіңіз тыңдай аласыз.',
     uz: 'Tekshiruv hozir mavjud emas. Yozuvni oʻzingiz tinglashingiz mumkin.',
+    en: 'The check is unavailable right now. You can listen to the recording yourself.',
   },
-  отменено: { ru: '', kk: '', uz: '' },
+  отменено: { ru: '', kk: '', uz: '', en: '' },
 };
 
 export function текстОшибкиПроверки(ошибка: ОшибкаПроверки, язык: ЯзыкПодсказок): string {

@@ -28,7 +28,7 @@ export const ОБЛАСТЬ_SW = '/aiustaz/';
 const API = '/api/push/';
 const ТАЙМАУТ_МС = 15_000;
 
-export type ДанныеРасписания = { язык: 'ru' | 'kk' | 'uz'; город: string; пункты: readonly ПунктРасписания[] };
+export type ДанныеРасписания = { язык: 'ru' | 'kk' | 'uz' | 'en'; город: string; пункты: readonly ПунктРасписания[] };
 export type ИтогВключения = 'включено' | 'отказ' | 'закрыто' | 'нет-поддержки' | 'нет-сети' | 'ошибка' | 'нет-разрешения';
 
 type Окно = typeof globalThis & { PushManager?: unknown; Notification?: { permission: string; requestPermission: () => Promise<string> } };

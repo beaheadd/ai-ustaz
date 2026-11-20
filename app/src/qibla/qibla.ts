@@ -7,7 +7,7 @@
  *   КААБА                                   { широта: 21.422487, долгота: 39.826206 }
  *   направлениеКиблы(ш, д)                  → ° [0, 360) по часовой от ИСТИННОГО севера (начальный азимут большого круга)
  *   расстояниеДоКаабыКм(ш, д)               → км по большому кругу (R = 6371,0088)
- *   румб(°, язык)                           → 'юго-запад' / 'оңтүстік-батыс' / 'janubi-gʻarb' (16 румбов; kk, uz — черновики)
+ *   румб(°, язык)                           → 'юго-запад' / 'оңтүстік-батыс' / 'janubi-gʻarb' / 'southwest' (16 румбов; kk, uz, en — черновики)
  *   уголЭкрана(окно)                        → поворот экрана 0 | 90 | 180 | 270
  *   курсИзСобытия(событие, уголЭкрана)      → { курс (МАГНИТНЫЙ), точность (° | null), источник, вертикально } | null
  *   истинныйКурс(магнитный, склонение)      → магнитный + склонение (к востоку — плюс)
@@ -67,7 +67,7 @@ export function расстояниеДоКаабыКм(широта: number, д�
   return 2 * 6371.0088 * Math.asin(Math.min(1, Math.sqrt(a)));
 }
 
-export type ЯзыкКиблы = 'ru' | 'kk' | 'uz';
+export type ЯзыкКиблы = 'ru' | 'kk' | 'uz' | 'en';
 
 const РУМБЫ: Record<ЯзыкКиблы, readonly string[]> = {
   ru: [
@@ -83,6 +83,11 @@ const РУМБЫ: Record<ЯзыкКиблы, readonly string[]> = {
   uz: [
     'shimol', 'shimol-shimoli-sharq', 'shimoli-sharq', 'sharq-shimoli-sharq', 'sharq', 'sharq-janubi-sharq', 'janubi-sharq', 'janub-janubi-sharq',
     'janub', 'janub-janubi-gʻarb', 'janubi-gʻarb', 'gʻarb-janubi-gʻarb', 'gʻarb', 'gʻarb-shimoli-gʻarb', 'shimoli-gʻarb', 'shimol-shimoli-gʻarb',
+  ],
+  // en — черновик для редактора-носителя
+  en: [
+    'north', 'north-northeast', 'northeast', 'east-northeast', 'east', 'east-southeast', 'southeast', 'south-southeast',
+    'south', 'south-southwest', 'southwest', 'west-southwest', 'west', 'west-northwest', 'northwest', 'north-northwest',
   ],
 };
 

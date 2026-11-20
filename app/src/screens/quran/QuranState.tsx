@@ -31,6 +31,11 @@ const СЛОВАРЬ = создатьСловарь({
     обновить: 'Sahifani yangilash',
     нет: 'Matn tekshirilgan baza bilan solishtiruvdan oʻtmadi — koʻrsatmaymiz.',
   },
+  en: {
+    нетФайла: 'The text file was not found — perhaps a new version has been released. Refresh the page.',
+    обновить: 'Refresh the page',
+    нет: 'The text did not pass verification against the verified database — not shown.',
+  },
 });
 
 export function ТекстКоранаНедоступен({ состояние }: { состояние: { нетСвязи: boolean; причина: ПричинаОтказа; повторить: () => void } }) {

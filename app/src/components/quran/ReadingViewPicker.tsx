@@ -63,6 +63,20 @@ const СЛОВАРЬ = создатьСловарь({
     ночьЦвета: 'Tunda tajvid ranglari',
     ночьЦветаПодпись: 'Qorongʻi sahifada xira ranglar',
   },
+  en: {
+    подпись: 'Quran reading view',
+    кнопка: 'View: {вид}',
+    обычный: 'Standard',
+    мусхаф: 'Page',
+    таджвид: 'Tajweed',
+    ночной: 'Night',
+    обычныйПолно: 'standard',
+    мусхафПолно: 'mushaf page',
+    таджвидПолно: 'mushaf + tajweed colours',
+    ночнойПолно: 'night mushaf',
+    ночьЦвета: 'Tajweed colours at night',
+    ночьЦветаПодпись: 'Muted colours on a dark page',
+  },
 });
 
 export function ПереключательВидаЧтения() {

@@ -1,21 +1,21 @@
 /**
- * Тексты плеера чтения кари (ru; kk и uz — ЧЕРНОВИКИ для редактора-носителя) и подписи для Media Session.
+ * Тексты плеера чтения кари (ru; kk, uz и en — ЧЕРНОВИКИ для редактора-носителя) и подписи для Media Session.
  *
  * Правило 9 CLAUDE.md: без текста Корана в уведомлениях. Media Session (экран блокировки, шторка Android) получает
  * только номер суры и аята, транслитерацию названия суры (ru, черновик — tools/quran/quran_common.py ТРАНСЛИТ_РУ)
  * и имя кари. Ни арабского текста аята, ни арабского имени суры. Для kk транслитерации пока нет — «2-сүре · 255-аят»;
- * uz — «Baqara surasi · 255-oyat» (ТРАНСЛИТ_UZ, черновик).
+ * uz — «Baqara surasi · 255-oyat» (ТРАНСЛИТ_UZ, черновик); en — «Surah Al-Baqara · ayah 255» (ТРАНСЛИТ_EN — Tanzil tname).
  * Правило 3: синтеза нет — плеер играет только записи кари; пока разрешения нет — причина вместо кнопки.
  *
  * Контракт (чистые функции, без импортов — проверяются в node: scripts/test-audio.mjs):
- *   ТЕКСТЫ_ПЛЕЕРА: { ru, kk, uz } — одинаковые ключи (компоненты оборачивают их в создатьСловарь из i18n);
- *   языкПлеера(язык интерфейса) → 'ru' | 'kk' | 'uz' (неизвестный язык — ru, пока не добавят тексты);
+ *   ТЕКСТЫ_ПЛЕЕРА: { ru, kk, uz, en } — одинаковые ключи (компоненты оборачивают их в создатьСловарь из i18n);
+ *   языкПлеера(язык интерфейса) → 'ru' | 'kk' | 'uz' | 'en' (неизвестный язык — ru, пока не добавят тексты);
  *   подставитьВ(строка, параметры) — {имя} → значение;
  *   названиеДляСессии({ язык, сура, аят, транслит, бисмилла, повтор, из }) → строка без арабских букв;
  *   ЕСТЬ_АРАБСКИЙ — проверка «в подписи нет арабских букв».
  */
 
-export type ЯзыкПлеера = 'ru' | 'kk' | 'uz';
+export type ЯзыкПлеера = 'ru' | 'kk' | 'uz' | 'en';
 
 const ru = {
   'плеер': 'Плеер чтения кари',
@@ -135,11 +135,50 @@ const uz: Record<КлючПлеера, string> = {
   'объявление': 'Ijro etilmoqda: {название}. {кари}',
 };
 
-export const ТЕКСТЫ_ПЛЕЕРА: Record<ЯзыкПлеера, Record<КлючПлеера, string>> = { ru, kk, uz };
+/** en — черновик для редактора-носителя (CLAUDE.md). Названия сур — транслитерация Tanzil (ТРАНСЛИТ_EN). */
+const en: Record<КлючПлеера, string> = {
+  'плеер': 'Qari recitation player',
+  'слушать': 'Listen',
+  'слушать-суру': 'Listen to the surah',
+  'слушать-с-аята': 'Listen from ayah {аят}',
+  'пауза': 'Pause',
+  'продолжить': 'Continue',
+  'назад': 'Previous ayah',
+  'вперёд': 'Next ayah',
+  'стоп': 'Stop recitation',
+  'повтор-аята': 'Repeat ayah: ×{n}',
+  'повтор-аята-подсказка': 'How many times to recite each ayah — for memorising',
+  'по-кругу': 'Loop the passage',
+  'по-кругу-подсказка': 'After the last ayah of the passage — back to the first',
+  'кари': 'Recitation: {кари}',
+  'название': 'Surah {имя} · ayah {аят}',
+  'название-номер': 'Surah {сура} · ayah {аят}',
+  'бисмилла': 'Surah {имя} · basmala',
+  'бисмилла-номер': 'Surah {сура} · basmala',
+  'повтор': 'repeat {n} of {из}',
+  'состояние.загрузка': 'Loading…',
+  'состояние.играет': 'Playing',
+  'состояние.пауза': 'Paused',
+  'причина.нет-разрешения': 'Audio will appear once the qari grants permission',
+  'причина.не-на-этом-сайте': 'Qari recitation — on the AI Ustaz website: aiustaz.pro',
+  'причина.не-поддерживается': 'Qari recitation does not play here yet — open the web version',
+  'ошибка.нет-источника': 'Audio will appear once the qari grants permission',
+  'ошибка.нет-связи': 'No connection — the recitation did not load',
+  'ошибка.нет-файла': 'Could not load the recitation of this ayah',
+  'ошибка.не-поддерживается': 'The browser cannot play this file',
+  'повторить': 'Retry',
+  'развернуть': 'Show player buttons',
+  'свернуть': 'Hide player buttons',
+  'подпись-повтор': 'Ayah ×{n}',
+  'подпись-отрезок': 'Passage',
+  'объявление': 'Playing: {название}. {кари}',
+};
+
+export const ТЕКСТЫ_ПЛЕЕРА: Record<ЯзыкПлеера, Record<КлючПлеера, string>> = { ru, kk, uz, en };
 
 /** Язык интерфейса → язык текстов плеера (неизвестный язык — русский, пока не добавят тексты). */
 export function языкПлеера(язык: string): ЯзыкПлеера {
-  return язык === 'kk' || язык === 'uz' ? язык : 'ru';
+  return язык === 'kk' || язык === 'uz' || язык === 'en' ? язык : 'ru';
 }
 
 /** Арабские буквы и знаки (основной блок, дополнения, формы представления). */

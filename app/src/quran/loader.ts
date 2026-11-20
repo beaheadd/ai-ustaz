@@ -37,8 +37,9 @@ export type МанифестКорана = {
 };
 
 /** Транслитерация арабского имени суры (не перевод смыслов); черновик. kk пока null — показывать номер и арабское имя. */
-/** Транслитерация названия суры (черновик). kk пока нет (null) — подпись номером; uz — латиница (ТРАНСЛИТ_UZ). */
-export type Транслит = { ru: string | null; kk: string | null; uz: string | null };
+/** Транслитерация названия суры (черновик). kk пока нет (null) — подпись номером; uz — латиница (ТРАНСЛИТ_UZ);
+ * en — транслитерация Tanzil Quran Metadata (tname, CC BY 3.0; ТРАНСЛИТ_EN). */
+export type Транслит = { ru: string | null; kk: string | null; uz: string | null; en: string | null };
 
 export type ЗаписьСуры = {
   сура: number;
@@ -139,7 +140,7 @@ export function проверитьИндекс(сырые: unknown, м: Мани
     const син = з.синонимы === undefined ? [] : з.синонимы;
     if (!Array.isArray(син) || !син.every(строка)) return null;
     аятов += з.аятов;
-    суры.push({ сура: i + 1, имя: з.имя, аятов: з.аятов, файл: з.файл, sha256: з.sha256, транслит: { ru: т.ru, kk: т.kk, uz: строка(т.uz) ? т.uz : null }, синонимы: син });
+    суры.push({ сура: i + 1, имя: з.имя, аятов: з.аятов, файл: з.файл, sha256: з.sha256, транслит: { ru: т.ru, kk: т.kk, uz: строка(т.uz) ? т.uz : null, en: строка(т.en) ? т.en : null }, синонимы: син });
   }
   if (аятов !== м.аятов) return null;
   return {
