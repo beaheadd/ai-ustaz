@@ -28,7 +28,7 @@ import { НижнееМеню } from './src/components/BottomNav';
 import { МиниПлеер } from './src/components/quran/PlayerBar';
 import { ПоставщикНавигации, useНавигация } from './src/engine/navigation';
 import { ПоставщикПрогресса, useПрогресс } from './src/engine/progress';
-import { ФОКУСНЫЕ, type ПропсыЭкрана } from './src/engine/routes';
+import { ФОКУСНЫЕ, ПОЛНОЭКРАННЫЕ, type ПропсыЭкрана } from './src/engine/routes';
 import { ПоставщикЯзыка } from './src/i18n';
 import { СинхронизацияУведомлений } from './src/notify/useNotify';
 import { ЭКРАНЫ } from './src/screens';
@@ -47,6 +47,7 @@ function ТекущийЭкран() {
 function Каркас() {
   const { текущий } = useНавигация();
   const фокусный = ФОКУСНЫЕ.has(текущий.экран);
+  const безМеню = фокусный || ПОЛНОЭКРАННЫЕ.has(текущий.экран);
   // Урок, урок 0, онбординг: свой закреплённый низ и свой звук (запись, клипы) — чтение кари ставим на паузу,
   // мини-плеер прячем; после урока он снова над меню (в паузе, «▶» продолжит).
   useEffect(() => {
@@ -59,8 +60,8 @@ function Каркас() {
       <View style={{ flex: 1 }}>
         <ТекущийЭкран />
       </View>
-      {фокусный ? null : <МиниПлеер />}
-      {фокусный ? null : <НижнееМеню />}
+      {безМеню ? null : <МиниПлеер />}
+      {безМеню ? null : <НижнееМеню />}
       <СинхронизацияУведомлений />
     </View>
   );
