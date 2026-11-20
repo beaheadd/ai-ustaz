@@ -13,9 +13,9 @@
   "backgroundColor": "#F7F2E8",
   "enableNotifications": true,
   "startUrl": "/aiustaz/?source=twa",
-  "iconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-512.3ff1b0d24ea109ac4248186160db1965.png",
-  "maskableIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-maskable-512.7f48982dfa012cde0b34a71a65ca69b6.png",
-  "monochromeIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-mono-512.e846a2f0056bddb5b0506a81ad76b9a3.png",
+  "iconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-512.8b67da689b0df8a059a6562f5be4518f.png",
+  "maskableIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-maskable-512.d2cc79135fce116d16cef6eb16bc3f01.png",
+  "monochromeIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-mono-512.525d816309347a384a949ddfde7490f7.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:/aiustaz-build/twa/signing.keystore",
@@ -28,11 +28,11 @@
       "name": "Таджвид",
       "shortName": "Таджвид",
       "url": "/aiustaz/?source=twa#/course",
-      "chosenIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-192.60c90efa3478d9f36bcc87a5ebc113c0.png"
+      "chosenIconUrl": "https://aiustaz.pro/aiustaz/pwa/icon-192.f5a3e2b7ef00a9a92c4becec3f2a3353.png"
     }
   ],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://aiustaz.pro/aiustaz/pwa/manifest.6e35d0ea3dff25b2b887db184aa3405e.json",
+  "webManifestUrl": "https://aiustaz.pro/aiustaz/pwa/manifest.d48ee3c69df7b9ba3c5266694bd95aa0.json",
   "fallbackType": "customtabs",
   "features": {
     "playBilling": {

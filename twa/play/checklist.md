@@ -7,7 +7,7 @@
 
 ## 0. До Play Console
 - [ ] Выкачена сборка AI Ustaz со значками и политикой: открываются `https://aiustaz.pro/aiustaz/privacy.html` и
-      `https://aiustaz.pro/aiustaz/pwa/icon-512.3ff1b0d24ea109ac4248186160db1965.png`.
+      `https://aiustaz.pro/aiustaz/pwa/icon-512.8b67da689b0df8a059a6562f5be4518f.png`.
 - [ ] В политике заменены `[оператор]`, `[контакт]`, `[срок]` (агент поправит по вашему ответу).
 - [ ] Собран `app-release-bundle.aab` и пройдена проверка AD_ID (`twa/README.md`, шаги 1–4).
 

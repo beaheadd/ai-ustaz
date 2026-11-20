@@ -31,7 +31,7 @@
 
 ## Шаг 0. Один раз
 - Должна быть выкачена сборка AI Ustaz со значками: откройте в телефоне
-  `https://aiustaz.pro/aiustaz/pwa/icon-512.3ff1b0d24ea109ac4248186160db1965.png` — картинка открывается.
+  `https://aiustaz.pro/aiustaz/pwa/icon-512.8b67da689b0df8a059a6562f5be4518f.png` — картинка открывается.
   (Для batr-world нужно исключение в `.gitignore`: `!web/public/aiustaz/pwa/*.png` — иначе выкатка из GitHub
   потеряет значки.)
 - Node.js на компьютере. Java (JDK 17) и Android SDK Bubblewrap скачает сам.
