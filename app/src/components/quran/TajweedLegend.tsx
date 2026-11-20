@@ -34,6 +34,13 @@ const СЛОВАРЬ = создатьСловарь({
     урокПодпись: '{н}-сабақ — курс картасын ашу',
     линия: 'Ережелер — Хафс ‘Асымнан аш-Шатибия жолымен, жалғап оқығанда; тоқтау — аят соңында. Бояуды AI Ustaz ережелері құрады, ЖИ-сіз.',
   },
+  uz: {
+    черновик: 'Tajvid ranglari — qoralama, ustoz tekshiradi',
+    легенда: 'Ranglar nimani bildiradi',
+    урок: '{н}-dars',
+    урокПодпись: '{н}-dars — kurs xaritasini ochish',
+    линия: 'Qoidalar — Hafs anʼ Osim, Shotibiya yoʻli boʻyicha, ulab oʻqilganda; toʻxtash — oyat oxirida. Ranglarni AI Ustaz qoidalari beradi, SIsiz.',
+  },
 });
 
 /** Плашка «Цвета таджвида — черновик, проверяет устаз» (правило 11) — над страницей с цветами. */
@@ -70,7 +77,7 @@ export function ЛегендаТаджвида({ ночь = false, плашка 
                   <View style={{ width: 16, height: 16, borderRadius: 4, backgroundColor: цвета[код] }} />
                 </View>
                 <Текст вид="второй" стиль={{ flex: 1 }}>
-                  {язык === 'kk' ? п.kk : п.ru}
+                  {п[язык === 'kk' || язык === 'uz' ? язык : 'ru']}
                 </Текст>
                 <Pressable
                   accessibilityRole="link"

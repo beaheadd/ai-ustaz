@@ -56,6 +56,22 @@ from dataclasses import dataclass, field
                     'alef=true, tatweel=true, stanween=true')
 
 # Транслитерация арабских имён сур (как в Tanzil) кириллицей — ЧЕРНОВИК, не перевод смыслов.
+# Узбекские названия сур латиницей (владелец 20.11.2026: узбекский язык интерфейса) — как в узбекских переводах
+# смыслов; ЧЕРНОВИК для редактора-носителя и устаза. «ʻ» — U+02BB, «ʼ» — U+02BC.
+ТРАНСЛИТ_UZ = (
+    'Fotiha', 'Baqara', 'Oli Imron', 'Niso', 'Moida', 'Anʼom', 'Aʼrof', 'Anfol', 'Tavba', 'Yunus', 'Hud', 'Yusuf',
+    'Raʼd', 'Ibrohim', 'Hijr', 'Nahl', 'Isro', 'Kahf', 'Maryam', 'Toha', 'Anbiyo', 'Haj', 'Moʼminun', 'Nur',
+    'Furqon', 'Shuaro', 'Naml', 'Qasas', 'Ankabut', 'Rum', 'Luqmon', 'Sajda', 'Ahzob', 'Saba', 'Fotir', 'Yosin',
+    'Soffot', 'Sod', 'Zumar', 'Gʻofir', 'Fussilat', 'Shuro', 'Zuxruf', 'Duxon', 'Josiya', 'Ahqof', 'Muhammad',
+    'Fath', 'Hujurot', 'Qof', 'Zoriyot', 'Tur', 'Najm', 'Qamar', 'Rahmon', 'Voqea', 'Hadid', 'Mujodala', 'Hashr',
+    'Mumtahana', 'Sof', 'Juma', 'Munofiqun', 'Tagʻobun', 'Taloq', 'Tahrim', 'Mulk', 'Qalam', 'Hoqqa', 'Maorij',
+    'Nuh', 'Jin', 'Muzzammil', 'Muddassir', 'Qiyomat', 'Inson', 'Mursalot', 'Naba', 'Noziot', 'Abasa', 'Takvir',
+    'Infitor', 'Mutaffifin', 'Inshiqoq', 'Buruj', 'Toriq', 'Aʼlo', 'Gʻoshiya', 'Fajr', 'Balad', 'Shams', 'Layl',
+    'Zuho', 'Sharh', 'Tin', 'Alaq', 'Qadr', 'Bayyina', 'Zalzala', 'Odiyot', 'Qoriʼa', 'Takosur', 'Asr', 'Humaza',
+    'Fil', 'Quraysh', 'Moʼun', 'Kavsar', 'Kofirun', 'Nasr', 'Masad', 'Ixlos', 'Falaq', 'Nos',
+)
+assert len(ТРАНСЛИТ_UZ) == 114
+
 ТРАНСЛИТ_RU = (
     'аль-Фатиха', 'аль-Бакара', 'Аль Имран', 'ан-Ниса', 'аль-Маида', 'аль-Анам', 'аль-Араф', 'аль-Анфаль',
     'ат-Тауба', 'Юнус', 'Худ', 'Юсуф', 'ар-Раад', 'Ибрахим', 'аль-Хиджр', 'ан-Нахль', 'аль-Исра', 'аль-Кахф',
@@ -153,12 +169,13 @@ def собрать(путь_xml=ПУТЬ_XML, имя_xml=None):
         файлы[f'{ПОДПАПКА}/{имя}'] = байты
         записи.append({'сура': с.номер, 'имя': с.имя, 'аятов': len(с.аяты), 'файл': f'{ПОДПАПКА}/{имя}',
                        'sha256': sha256_байтов(байты),
-                       'транслит': {'ru': ТРАНСЛИТ_RU[с.номер - 1], 'kk': None},
+                       'транслит': {'ru': ТРАНСЛИТ_RU[с.номер - 1], 'kk': None, 'uz': ТРАНСЛИТ_UZ[с.номер - 1]},
                        'синонимы': [ТРАНСЛИТ_LAT[с.номер - 1], *СИНОНИМЫ.get(с.номер, ())]})
     индекс = {**общее, 'сур': СУР, 'аятов': АЯТОВ,
               'статусТранслита': 'черновик',
               'транслитПримечание': 'Транслитерация арабского имени суры, не перевод смыслов. ru — черновик для '
-                                    'проверки устазом и редактором; kk пока нет (показывать номер и арабское имя).',
+                                    'проверки устазом и редактором; uz (латиница) — черновик для редактора-носителя; '
+                                    'kk пока нет (показывать номер и арабское имя).',
               'суры': записи, 'копирайт': копия.копирайт}
     байты_индекса = _json(индекс)
     имя_индекса = _имя('index', байты_индекса)

@@ -92,6 +92,7 @@ def test_язык_и_город():
     ошибка(тело(город='<script>'), 'city')
     assert push.разобрать_подписку(тело(город='Алматы‮\n'), СЕЙЧАС).город == 'Алматы'
     assert push.разобрать_подписку(тело(город='Усть-Каменогорск', язык='kk'), СЕЙЧАС).язык == 'kk'
+    assert push.разобрать_подписку(тело(город='Samarqand', язык='uz'), СЕЙЧАС).язык == 'uz'
 
 
 def test_пункты_проверка():
@@ -153,6 +154,22 @@ def test_текст_kk_и_джума():
     assert у['body'] == 'Намаз уақыты кірді · Алматы. Келесі — Екінті, 15:20'
     п2 = push.Пункт(момент('2026-11-21', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # суббота
     assert push.уведомление(п2, 'ru', 'Алматы')['title'] == 'Зухр · 13:05'
+
+
+def test_текст_uz():
+    """uz (латиница, владелец 20.11.2026): Bomdod, Quyosh, Peshin, Asr, Shom, Xufton; пятница — Juma namozi."""
+    п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
+    у = push.уведомление(п, 'uz', 'Toshkent')
+    assert у['title'] == 'Juma namozi · 13:05' and у['lang'] == 'uz'
+    assert у['body'] == 'Namoz vaqti kirdi · Toshkent. Keyingi — Asr, 15:20'
+    assert [к['title'] for к in у['actions']] == ['Namoz vaqti', 'Qibla']
+    п2 = push.Пункт(момент('2026-11-21', '05:50'), 'fajr', '06:00', 10, 'sunrise', '07:30')
+    assert push.уведомление(п2, 'uz', 'Toshkent')['title'] == '10 daqiqadan keyin — Bomdod (06:00)'
+    assert push.уведомление_обновить('uz', СЕЙЧАС)['body'] == 'Namoz vaqtini yangilash uchun AI Ustazni oching'
+    assert set(push.НАЗВАНИЯ['uz'].values()) == {'Bomdod', 'Quyosh', 'Peshin', 'Asr', 'Shom', 'Xufton'}
+    for с in [*push.ТЕКСТЫ['uz'].values(), *push.НАЗВАНИЯ['uz'].values(), push.ДЖУМА['uz']]:
+        assert not re.search(r'[а-яёәіңғүұқөһ]', re.sub(r'\{[^}]+\}', '', с), re.I), с  # латиница (кроме {подстановок})
+        assert not re.search(r'(?i)\bsura|oyat|hadis', с), с
 
 
 def test_напоминание_и_восход():

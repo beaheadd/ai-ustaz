@@ -35,6 +35,7 @@ import { Path, Svg } from '../primitives/svg';
 const СЛОВАРЬ = создатьСловарь({
   ru: { конец: 'конец аята {а}' },
   kk: { конец: '{а}-аяттың соңы' },
+  uz: { конец: '{а}-oyat oxiri' },
 });
 
 const ВЕБ = Platform.OS === 'web';

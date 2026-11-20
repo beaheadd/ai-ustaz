@@ -68,6 +68,22 @@ const СЛОВАРЬ = создатьСловарь({
     'статус.подписан-советом': 'кеңес бекіткен',
     наГлавную: 'Басты бетке',
   },
+  uz: {
+    понятно: 'Tushunarli, davom etish',
+    далее: 'Keyingi',
+    завершить: '0-darsni yakunlash',
+    назадШаг: 'Oldingi qadam',
+    предупреждениеВступление: 'Boshlashdan oldin, iltimos, oʻqib chiqing:',
+    маршрутПояснение: 'Javob faqat shu darsdan keyin qayerga borishni maslahat berish uchun kerak. U hech qayerda saqlanmaydi.',
+    намерениеПояснение: 'Oʻtkazib yuborish mumkin.',
+    справаНалево: 'Shu yerdan oʻqiymiz',
+    готовится: '0-dars hali tayyorlanmoqda. Keyinroq kiring.',
+    версия: 'Dars versiyasi: {версия} · {статус}',
+    'статус.черновик': 'qoralama',
+    'статус.проверен-устазом': 'ustoz tekshirgan',
+    'статус.подписан-советом': 'kengash imzolagan',
+    наГлавную: 'Bosh sahifaga',
+  },
 });
 
 type Шаг = { вид: 'предупреждение' } | { вид: 'маршрут' } | { вид: 'намерение' } | { вид: 'задание'; задание: Задание; индекс: number };

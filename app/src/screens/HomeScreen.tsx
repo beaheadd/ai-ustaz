@@ -74,7 +74,7 @@ import { useНавигация } from '../engine/navigation';
 import { загрузитьИндексСур } from '../quran/data';
 import { useПрогресс, type Прогресс } from '../engine/progress';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { создатьСловарь, useПеревод, useСловарь, type Язык } from '../i18n';
 import { деньРК, фазаДня, часРК } from '../prayer/day';
 import { useЧасы, временаДняКэш } from '../prayer/hooks';
 import { загрузитьМеста, useМестоНамаза } from '../prayer/store';
@@ -141,10 +141,44 @@ const СЛОВАРЬ = создатьСловарь({
     вход: 'Кіріспе',
     этапКоротко: '{номер}-кезең',
     сейчасНаПути: 'Қазір: {этап}',
+    языкКратко: 'Oʻz',
+    языкПодсказка: 'Интерфейсті өзбек тіліне ауыстыру',
+  },
+  uz: {
+    начатьУрок0: '0-darsdan boshlash',
+    продолжитьУрок: 'Davom etish: {метка}-dars',
+    следующийУрок: '{метка}-darsni boshlash',
+    всёПройдено: 'Tajvid darslariga',
+    урок0: '0-dars',
+    урок0Название: 'SI haqida ogohlantirish va ilk ovoz yozuvi',
+    урокМетка: '{метка}-dars',
+    этап: '{номер}-bosqich: {всего} ta darsdan {пройдено} tasi oʻtildi',
+    всёМетка: 'Prototip darslari oʻtildi',
+    'время.утро': 'Tong — harflar uchun osoyishta vaqt.',
+    'время.день': 'Ishlar orasida besh daqiqa — dars.',
+    'время.вечер': 'Kechqurun — harflarni takrorlash vaqti.',
+    'время.ночь': 'Kech boʻldi — dars ertalabgacha kutib turadi.',
+    'время.доФаджра': 'Bomdodgacha hali vaqt bor.',
+    приглашение: '{намаз} keyin — 5 daqiqalik dars?',
+    неСейчас: 'Hozir emas',
+    'шаг.урок0': '0-darsdan boshlaymiz: qisqa ogohlantirish va ilk ovoz yozuvi.',
+    'шаг.начат': '{метка}-darsni toʻxtagan joydan davom ettiramiz.',
+    'шаг.новый': 'Keyingi qadam — {метка}-dars.',
+    'шаг.карта': 'Prototip darslari oʻtildi — istalganini «Tajvid» boʻlimida takrorlash mumkin.',
+    путь: 'Taʼlim yoʻli',
+    путьКарта: 'Tajvid',
+    путьДиктор: 'Taʼlim yoʻli — «Tajvid» boʻlimi',
+    путьДевиз: 'Harflar → boʻgʻinlar → soʻzlar → suralar',
+    вход: 'Kirish',
+    этапКоротко: '{номер}-bosqich',
+    сейчасНаПути: 'Hozir: {этап}',
     языкКратко: 'Рус',
-    языкПодсказка: 'Интерфейсті орыс тіліне ауыстыру',
+    языкПодсказка: 'Interfeysni rus tiliga oʻtkazish',
   },
 });
+
+/** Быстрый язык в шапке главной: по кругу ru → kk → uz → ru (надпись — следующий язык). */
+const СЛЕДУЮЩИЙ_ЯЗЫК: Record<Язык, Язык> = { ru: 'kk', kk: 'uz', uz: 'ru' };
 
 export type СледующийШаг = { вид: 'урок0' } | { вид: 'урок'; номер: number; начат: boolean } | { вид: 'карта' };
 
@@ -298,7 +332,7 @@ export function Главная(_: ПропсыЭкрана<'главная'>) {
           значок="язык"
           надпись={т('языкКратко')}
           подсказка={т('языкПодсказка')}
-          приНажатии={() => установитьЯзык(язык === 'ru' ? 'kk' : 'ru')}
+          приНажатии={() => установитьЯзык(СЛЕДУЮЩИЙ_ЯЗЫК[язык])}
           testID="главная-язык"
         />
       }

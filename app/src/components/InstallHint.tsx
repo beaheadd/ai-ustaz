@@ -19,6 +19,7 @@ import { Текст } from './Text';
 const СЛОВАРЬ = создатьСловарь({
   ru: { строка: 'Поставить AI Ustaz на телефон', скрыть: 'Скрыть подсказку об установке' },
   kk: { строка: 'AI Ustaz-ты телефонға орнату', скрыть: 'Орнату туралы кеңесті жасыру' },
+  uz: { строка: 'AI Ustazni telefonga oʻrnatish', скрыть: 'Oʻrnatish haqidagi maslahatni yashirish' },
 });
 
 export function ПодсказкаУстановки() {

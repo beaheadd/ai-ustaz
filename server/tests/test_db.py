@@ -18,7 +18,7 @@ def база(pg_адрес):
     from db import Хранилище
 
     х = Хранилище(pg_адрес)
-    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb']
+    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz']
     assert х.применить_миграции() == []  # второй раз — ничего
     return х
 
@@ -36,6 +36,14 @@ def test_сохранить_заменить_удалить(база, pg_адр�
     подписать(база, [пункт('2026-11-21', '15:20')], город='Астана', язык='kk')
     п = база.подписка(з.хэш)
     assert п['город'] == 'Астана' and п['язык'] == 'kk'
+    # uz (миграция 004): в lang — запасной 'ru' (ограничение 001), язык текста — lang_ui.
+    подписать(база, [пункт('2026-11-21', '15:20')], город='Toshkent', язык='uz')
+    п = база.подписка(з.хэш)
+    assert п['город'] == 'Toshkent' and п['язык'] == 'uz'
+    with psycopg.connect(pg_адрес) as с:
+        assert с.execute('SELECT lang, lang_ui FROM push_subscriptions').fetchone() == ('ru', 'uz')
+    подписать(база, [пункт('2026-11-21', '15:20')], город='Астана', язык='kk')
+    assert база.подписка(з.хэш)['язык'] == 'kk'
     with psycopg.connect(pg_адрес) as с:
         assert с.execute('SELECT count(*) FROM push_items').fetchone()[0] == 1
         assert с.execute('SELECT count(*) FROM push_subscriptions').fetchone()[0] == 1

@@ -97,9 +97,10 @@ const ХАТАМ = 'M92 92H108V108H92ZM100 88.7L111.3 100L100 111.3L88.7 100Z';
 // Неподвижная отметка «верх телефона».
 const ОТМЕТКА = 'M100 13L95 4H105Z';
 
-const СТОРОНЫ: Record<'ru' | 'kk', readonly [string, string, string, string]> = {
+const СТОРОНЫ: Record<'ru' | 'kk' | 'uz', readonly [string, string, string, string]> = {
   ru: ['С', 'В', 'Ю', 'З'],
   kk: ['С', 'Ш', 'О', 'Б'], // солтүстік, шығыс, оңтүстік, батыс — черновик для редактора-носителя
+  uz: ['Sh', 'Shq', 'J', 'Gʻ'], // shimol, sharq, janub, gʻarb — черновик для редактора-носителя
 };
 
 export type СвойстваЦиферблата = {
@@ -107,7 +108,7 @@ export type СвойстваЦиферблата = {
   курс: number | null;
   совпало?: boolean;
   размер?: number;
-  язык: 'ru' | 'kk';
+  язык: 'ru' | 'kk' | 'uz';
   подпись: string;
   testID?: string;
 };

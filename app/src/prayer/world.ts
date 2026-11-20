@@ -23,7 +23,7 @@
  */
 import type { Место } from './places';
 
-type Язык = 'ru' | 'kk';
+type Язык = 'ru' | 'kk' | 'uz';
 
 export type ИндексМира = {
   страны: [string, string][];
@@ -239,8 +239,8 @@ export function склонениеВТочке(индекс: Pick<ИндексМ
 }
 
 const СВОИ_СТРАНЫ: Record<string, Record<Язык, string>> = {
-  KZ: { ru: 'Казахстан', kk: 'Қазақстан' },
-  UZ: { ru: 'Узбекистан', kk: 'Өзбекстан' },
+  KZ: { ru: 'Казахстан', kk: 'Қазақстан', uz: 'Qozogʻiston' },
+  UZ: { ru: 'Узбекистан', kk: 'Өзбекстан', uz: 'Oʻzbekiston' },
 };
 const имена = new Map<Язык, Intl.DisplayNames | null>();
 
@@ -249,7 +249,9 @@ export function названиеСтраны(код: string, язык: Язык,
   if (!имена.has(язык)) {
     let и: Intl.DisplayNames | null = null;
     try {
-      и = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames([язык, 'ru'], { type: 'region' }) : null;
+      // uz — латиница: запасной язык английский (латиница), не русский.
+      const теги = язык === 'uz' ? ['uz-Latn', 'en'] : [язык, 'ru'];
+      и = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames(теги, { type: 'region' }) : null;
     } catch {
       и = null;
     }

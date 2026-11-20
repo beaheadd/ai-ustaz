@@ -30,7 +30,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
-import { КРУПНЫЕ, ближайшееМесто, найтиМеста, своёМесто, type Место } from '../../prayer/places';
+import { КРУПНЫЕ, ближайшееМесто, названиеМеста, названиеОбласти, найтиМеста, своёМесто, type Место } from '../../prayer/places';
 import { ближайшееВМире, загрузитьМеста, искатьВМире, useМестоНамаза } from '../../prayer/store';
 import { названиеСтраны, свернуть } from '../../prayer/world';
 import { ШРИФТ_ИНТЕРФЕЙСА, useТема } from '../../theme';
@@ -106,6 +106,39 @@ const СЛОВАРЬ = создатьСловарь({
     районный: 'аудан орталығы',
     город: 'қала',
     км: '{город} қаласынан {км} км',
+  },
+  uz: {
+    текущий: 'Hozir: {место}',
+    поУмолчанию: '{место} — standart boʻyicha',
+    гео: 'Geolokatsiya orqali aniqlash',
+    геоПояснение: 'Koordinatalar namoz vaqti va qibla uchun eng yaqin shaharni topishga kerak. Ular shu telefonda qoladi va hech qayerga yuborilmaydi: Qozogʻiston va Oʻzbekistonning rasmiy vaqti uchun serverga faqat roʻyxatdagi shahar yuboriladi.',
+    мир: 'Boshqa mamlakatlar',
+    мирИщем: 'Butun dunyo boʻyicha qidirilmoqda…',
+    мирНетСвязи: 'Aloqa yoʻq — boshqa mamlakatlar boʻyicha qidiruv yuklanmadi.',
+    мирПодсказка: 'Boshqa mamlakatlar — qidiruv orqali: «Istanbul», «Makka», «Bishkek».',
+    разрешить: 'Ruxsat berish',
+    вручную: 'Qoʻlda tanlash',
+    ищем: 'Joy aniqlanmoqda…',
+    ближайший: 'Roʻyxatdagi eng yaqin shahar — {город}, {км} km.',
+    далеко: 'Shahargacha 30 km dan ortiq: nuqtangiz uchun vaqt 1–2 daqiqa farq qilishi mumkin. Toʻgʻridan-toʻgʻri shu nuqta uchun hisoblash mumkin.',
+    выбрать: 'Tanlash: {город}',
+    точка: 'Mening nuqtam uchun hisoblash',
+    точкаПояснение: 'Faqat taxminan 1 km aniqlikdagi joyni saqlaymiz — shu telefonda.',
+    отказ: 'Geolokatsiyaga ruxsat berilmadi. Roʻyxatdan shaharni tanlang — bu ham aniq.',
+    неУдалось: 'Joyni aniqlab boʻlmadi. Roʻyxatdan shaharni tanlang.',
+    нетГео: 'Bu yerda geolokatsiya mavjud emas. Roʻyxatdan shaharni tanlang.',
+    поиск: 'Shaharni topish — istalgan mamlakatda',
+    крупные: 'Yirik shaharlar',
+    все: 'Barcha joylar ({число})',
+    свернуть: 'Faqat yirik shaharlar',
+    ничего: 'Hech narsa topilmadi. Boshqacha yozib koʻring: «Samarqand» yoki «Samarkand», «Oral» yoki «Uralsk».',
+    загрузка: 'Roʻyxat yuklanmoqda…',
+    нетСвязи: 'Aloqa yoʻq — joylar roʻyxati yuklanmadi.',
+    повторить: 'Qayta urinish',
+    нетСписка: 'Aloqa yoʻq — joylar roʻyxati yuklanmadi. Internetni tekshiring va yana urinib koʻring.',
+    районный: 'tuman markazi',
+    город: 'shahar',
+    км: '{город} shahridan {км} km',
   },
 });
 
@@ -188,7 +221,7 @@ export function ВыборГорода({ приВыборе, testID = 'выбо�
     const порядок = (м: Место) => (КРУПНЫЕ.indexOf(м.тип) <= 1 ? 0 : 1);
     const группы = new Map<string, Место[]>();
     for (const м of места ?? []) if (КРУПНЫЕ.includes(м.тип)) группы.set(м.страна, [...(группы.get(м.страна) ?? []), м]);
-    for (const список of группы.values()) список.sort((а, б) => порядок(а) - порядок(б) || а[язык].localeCompare(б[язык], язык));
+    for (const список of группы.values()) список.sort((а, б) => порядок(а) - порядок(б) || названиеМеста(а, язык).localeCompare(названиеМеста(б, язык), язык));
     return [...группы.entries()].sort(([а], [б]) => (а === текущее.страна ? -1 : б === текущее.страна ? 1 : а.localeCompare(б)));
   }, [места, язык, текущее.страна]);
 
@@ -230,18 +263,21 @@ export function ВыборГорода({ приВыборе, testID = 'выбо�
   };
 
   const подписьМеста = (м: Место) => {
-    const обл = м.область ? м.область[язык] : '';
+    const обл = м.область ? названиеОбласти(м.область, язык) : '';
     const вид = м.тип === 'районный центр' ? т('районный') : '';
-    const uz = м.uz && м.uz !== м[язык] ? м.uz : '';
-    const en = !uz && м.en && м.en !== м[язык] ? м.en : '';
-    return [...new Set([uz || en, обл, вид, названиеСтраны(м.страна, язык)].filter(Boolean))].join(' · ');
+    const имя = названиеМеста(м, язык);
+    // uz: второе имя — русское (у мест КЗ основное — русское латиницей); ru/kk — узбекское или английское.
+    const uz = язык !== 'uz' && м.uz && м.uz !== имя ? м.uz : '';
+    const en = язык !== 'uz' && !uz && м.en && м.en !== имя ? м.en : '';
+    const ru = язык === 'uz' && м.ru !== имя ? м.ru : '';
+    return [...new Set([uz || en || ru, обл, вид, названиеСтраны(м.страна, язык)].filter(Boolean))].join(' · ');
   };
 
   const строка = (м: Место) => (
     <СтрокаСписка
       key={м.id}
       вид="плоская"
-      заголовок={м[язык]}
+      заголовок={названиеМеста(м, язык)}
       подпись={подписьМеста(м)}
       выбрана={текущее.вид === 'место' && текущее.id === м.id}
       приНажатии={() => взять(м)}
@@ -253,7 +289,7 @@ export function ВыборГорода({ приВыборе, testID = 'выбо�
   const поОбластям = useMemo(() => {
     const группы = new Map<string, Место[]>();
     for (const м of места ?? []) {
-      const к = м.страна + '\u0000' + (м.область ? м.область[язык] : '');
+      const к = м.страна + '\u0000' + (м.область ? названиеОбласти(м.область, язык) : '');
       группы.set(к, [...(группы.get(к) ?? []), м]);
     }
     const страна = (к: string) => к.split('\u0000')[0];
@@ -286,8 +322,8 @@ export function ВыборГорода({ приВыборе, testID = 'выбо�
   return (
     <View style={{ gap: отступ.l }} testID={testID}>
       <Текст вид="второй" testID="город-текущий">
-        {выбрано ? т('текущий', { место: текущее[язык] }) : т('поУмолчанию', { место: текущее[язык] })}
-        {текущее.вид === 'точка' && текущее.ближайшее ? ' (' + т('км', { км: текущее.ближайшее.км, город: текущее[язык].replace(/^≈ /, '') }) + ')' : ''}
+        {выбрано ? т('текущий', { место: названиеМеста(текущее, язык) }) : т('поУмолчанию', { место: названиеМеста(текущее, язык) })}
+        {текущее.вид === 'точка' && текущее.ближайшее ? ' (' + т('км', { км: текущее.ближайшее.км, город: названиеМеста(текущее, язык).replace(/^≈ /, '') }) + ')' : ''}
       </Текст>
 
       {гео.вид === 'пояснение' ? (
@@ -318,13 +354,13 @@ export function ВыборГорода({ приВыборе, testID = 'выбо�
       ) : null}
       {гео.вид === 'итог' ? (
         <Карточка testID="город-гео-итог">
-          <Текст accessibilityLiveRegion="polite">{т('ближайший', { город: гео.ближайшее.место[язык], км: Math.round(гео.ближайшее.км) })}</Текст>
+          <Текст accessibilityLiveRegion="polite">{т('ближайший', { город: названиеМеста(гео.ближайшее.место, язык), км: Math.round(гео.ближайшее.км) })}</Текст>
           {гео.ближайшее.км > 30 ? (
             <Текст вид="второй" testID="город-гео-далеко">
               {т('далеко')}
             </Текст>
           ) : null}
-          <Кнопка надпись={т('выбрать', { город: гео.ближайшее.место[язык] })} приНажатии={() => взять(гео.ближайшее.место)} testID="город-гео-выбрать" />
+          <Кнопка надпись={т('выбрать', { город: названиеМеста(гео.ближайшее.место, язык) })} приНажатии={() => взять(гео.ближайшее.место)} testID="город-гео-выбрать" />
           <Кнопка
             вид="вторичная"
             надпись={т('точка')}

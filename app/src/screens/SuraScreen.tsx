@@ -99,6 +99,29 @@ const СЛОВАРЬ = создатьСловарь({
     безЦветов: 'Тәжуид түстері мәтінмен салыстырудан өтпеді — түссіз көрсетеміз.',
     бисмилла: 'Бисмилла',
   },
+  uz: {
+    назад: 'Orqaga',
+    вид: 'Koʻrinish va matn oʻlchami',
+    закрыть: 'Yopish',
+    нетАята: 'Bu surada {аятов} oyat bor — {аят}-oyat yoʻq. Boshidan koʻrsatamiz.',
+    аят: '{аят}-oyat',
+    выбрать: '{аят}-oyatni tanlash',
+    снятьВыбор: '{аят}-oyat tanlovini bekor qilish',
+    свиток: 'Sura oyatlari',
+    черновик: 'Sura nomlarining tarjimasi — qoralama',
+    слушать: '{аят}-oyatdan tinglash',
+    пауза: 'Pauza',
+    продолжить: 'Qori oʻqishini davom ettirish',
+    записать: '{аят}-oyatni oʻqib, tekshirish',
+    лист: '{сура}:{аят} oyat — oʻqib, tekshirish',
+    пред: 'Oldingi oyat',
+    след: 'Keyingi oyat',
+    следующая: 'Keyingi sura',
+    предыдущая: 'Oldingi sura',
+    источник: 'Matn — Tanzil Uthmani v1.1, nazorat summasi boʻyicha tekshirilgan. Oyat raqamlari matndan alohida.',
+    безЦветов: 'Tajvid ranglari matn bilan solishtiruvdan oʻtmadi — ranglarsiz koʻrsatamiz.',
+    бисмилла: 'Basmala',
+  },
 });
 
 const ВЕБ = Platform.OS === 'web';
@@ -158,7 +181,7 @@ export function Сура({ параметры }: ПропсыЭкрана<'су�
         <МенюВида
           закрыть={() => установитьМеню(false)}
           сура={сура.состояние === 'есть' ? сура.данные : null}
-          естьТранслит={!!суры?.[н - 1]?.транслит[язык === 'kk' ? 'kk' : 'ru']}
+          естьТранслит={!!суры?.[н - 1]?.транслит[язык]}
         />
       ) : null}
     </View>

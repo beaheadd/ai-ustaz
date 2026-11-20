@@ -52,6 +52,19 @@ const СЛОВАРЬ = создатьСловарь({
     код: 'Қателер каталогындағы коды: {код}',
     кари: 'Жаттығуға арналған қари дауысы эталон жазылғаннан кейін қосылады.',
   },
+  uz: {
+    где: 'Qayerda',
+    гдеТекст: '{сура}:{аят}-oyat, {слово}-soʻz',
+    буква: 'harf',
+    прозвучало: 'Nima eshitildi',
+    надо: 'Qanday boʻlishi kerak',
+    правило: 'Qoida',
+    сделать: 'Nima qilish kerak',
+    повторите: 'Pogʻonalar boʻyicha takrorlang:',
+    текст: 'Tushuntirish shunday eshitiladi',
+    код: 'Xatolar katalogidagi kod: {код}',
+    кари: 'Mashq uchun qori ovozi namuna yozib olingandan keyin qoʻshiladi.',
+  },
 });
 
 export function ЧипУровня({ пример }: { пример: ПримерОбъяснения }) {

@@ -80,6 +80,28 @@ const СЛОВАРЬ = создатьСловарь({
     сервер: 'AI Ustaz сервері',
     серверПояснение: 'Намаз уақыты хабарландыруы серверінің пакеттері (Қазақстанда). Қосымшаға кірмейді; өзгеріссіз қолданылады. Лицензиялардың толық мәтіні — репозиторийдің licenses/server қалтасында.',
   },
+  uz: {
+    источники: 'Kontent manbalari',
+    источникиПояснение: 'Qurʼon matni, SI haqida ogohlantirish, shrift va uslub qayerdan olingan.',
+    что: 'Nimani olamiz',
+    лицензия: 'Litsenziya',
+    атрибуция: 'Atributsiya',
+    примечание: 'Izoh',
+    прочитано: 'Oʻqilgan sana: {дата}',
+    условия: 'Foydalanish shartlari (manbadagidek)',
+    показатьУсловия: 'Shartlarni koʻrsatish',
+    скрытьУсловия: 'Shartlarni yashirish',
+    зависимости: 'Ilova paketlari',
+    зависимостиПояснение: 'package.json dagi toʻgʻridan-toʻgʻri bogʻliqliklar. Roʻyxatni scripts/gen-licenses.mjs yaratadi.',
+    'вид.приложение': 'ilovada',
+    'вид.сборка': 'faqat yigʻish uchun',
+    бандл: 'Yigʻmadagi barcha paketlar',
+    бандлПояснение: 'Kodi veb-versiyaga kirgan har bir paket. Litsenziya matnini oʻqish uchun bosing.',
+    нетИсточников: 'Manbalar roʻyxati yuklanmadi.',
+    нетТекста: 'Paketda litsenziya fayli yoʻq — uning package.json faylidagi license maydoni amal qiladi.',
+    сервер: 'AI Ustaz serveri',
+    серверПояснение: 'Namoz vaqti haqidagi bildirishnomalar serveri paketlari (Qozogʻistonda). Ilovaga kirmaydi; oʻzgartirishsiz ishlatiladi. Litsenziyalarning toʻliq matnlari — repozitoriydagi licenses/server papkasida.',
+  },
 });
 
 /** Домен в начале строки ссылки источника: 'tanzil.net', 'github.com/aliftype/amiri — …'. */

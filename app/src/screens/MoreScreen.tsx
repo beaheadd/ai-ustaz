@@ -27,6 +27,7 @@ import { useНавигация } from '../engine/navigation';
 import type { ПропсыЭкрана } from '../engine/routes';
 import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useУстановка } from '../install/useInstall';
+import { названиеМеста } from '../prayer/places';
 import { useМестоНамаза } from '../prayer/store';
 import { useНастройкиУведомлений } from '../notify/store';
 import { useПоддержкаУведомлений } from '../notify/useNotify';
@@ -103,6 +104,40 @@ const СЛОВАРЬ = создатьСловарь({
     'модуль.дуаПояснение': 'Дереккөзімен, ұстаз тексерген',
     безВхода: 'Кіру мен аккаунт жоқ: прогресс тек осы құрылғыда сақталады.',
   },
+  uz: {
+    хадисы: 'Hadislar',
+    хадисыПодпись: 'Faqat tekshirilgan toʻplamlar — tayyorlanmoqda',
+    установка: 'Ilovani oʻrnatish',
+    установкаПояснение: '«Uy» ekranida belgi, manzil satrisiz',
+    установкаЕсть: 'Bu telefonda allaqachon oʻrnatilgan',
+    установкаBatr: 'aiustaz.pro saytidan oʻrnatiladi',
+    настройки: 'Sozlamalar',
+    язык: 'Interfeys tili',
+    тема: 'Bezak',
+    город: 'Namoz vaqti uchun shahar',
+    уведомления: 'Namoz haqida bildirishnomalar',
+    уведомленияВкл: 'Yoqilgan',
+    уведомленияВыкл: 'Oʻchirilgan',
+    уведомленияIOS: 'iPhoneʼda — «Uy» ekranidan',
+    уведомленияНет: 'Bu brauzerda mavjud emas',
+    уведомленияBatr: 'Namoz vaqti haqida bildirishnomalar — aiustaz.pro saytida',
+    предупреждение: 'SI haqida ogohlantirish',
+    предупреждениеПояснение: 'Arabcha va interfeys tilida',
+    как: 'AI Ustaz xatoni qanday tushuntiradi',
+    какПояснение: 'Al-Fotiha misolida — oʻqishingizni tekshirish emas',
+    оПроектеРаздел: 'Loyiha va manbalar haqida',
+    оПроекте: 'Loyiha haqida',
+    оПроектеПояснение: 'Prototip: nima bor va nima boʻladi; bepul, reklamasiz; maxfiylik; QMDB yoʻnalishi',
+    лицензии: 'Litsenziyalar va manbalar',
+    лицензииПояснение: 'Qurʼon matni, shriftlar, vaqt hisobi, paketlar',
+    готовим: 'Tayyorlanmoqda',
+    готовимПояснение: 'Bu boʻlimlar tayyorlanmoqda. Hozir asosiysi — oʻqish darslari.',
+    'модуль.намаз': 'Namozni oʻrganish',
+    'модуль.намазПояснение': 'Istalgan mamlakat: usul — joyga qarab',
+    'модуль.дуа': 'Duo',
+    'модуль.дуаПояснение': 'Manba bilan va ustoz tekshiruvidan oʻtgan',
+    безВхода: 'Kirish va akkauntlar yoʻq: natijalar faqat shu qurilmada saqlanadi.',
+  },
 });
 
 /** Раздел страницы: заголовок и содержимое. */
@@ -152,7 +187,7 @@ export function Ещё(_: ПропсыЭкрана<'ещё'>) {
         <РазмерАрабского testID="ещё-размер-арабского" />
         {/* Вид чтения Корана (владелец 20.11.2026: «3–4 варианта … чтобы человек выбрал»); тот же выбор — в шапке суры. */}
         <ВыборВидаЧтения />
-        <СтрокаСписка заголовок={т('город')} подпись={место[язык]} значок="город" приНажатии={() => перейти('городНамаза')} testID="ещё-город" />
+        <СтрокаСписка заголовок={т('город')} подпись={названиеМеста(место, язык)} значок="город" приНажатии={() => перейти('городНамаза')} testID="ещё-город" />
         {/* Уведомления о времени намаза (владелец 20.11.2026): только aiustaz.pro; на batr.kz — пояснение без нажатия. */}
         {поддержка === 'batr' ? (
           <Текст вид="мелкий" testID="ещё-уведомления-batr">

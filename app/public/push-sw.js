@@ -50,7 +50,7 @@ function разобрать(данные) {
       tag: строка(д.tag, 80) || 'aiustaz',
       icon: ЗНАЧОК,
       badge: ЗНАЧОК_МОНО,
-      lang: д.lang === 'kk' ? 'kk' : 'ru',
+      lang: д.lang === 'kk' ? 'kk' : д.lang === 'uz' ? 'uz-Latn' : 'ru',
       dir: 'ltr',
       silent: д.silent === true,
       renotify: false,

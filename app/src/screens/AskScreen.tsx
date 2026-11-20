@@ -119,6 +119,46 @@ const СЛОВАРЬ = создатьСловарь({
     'ошибка.сбой': 'Бірдеңе дұрыс болмады — қайта көріңіз.',
     выключено: 'AI Ustaz біздің жеке сайтымызда жауап береді: aiustaz.pro.',
   },
+  uz: {
+    заголовок: 'AI Ustazdan soʻrang',
+    границы: 'Faqat tekshirilgan bazamiz boʻyicha javob beraman: Qurʼon, hadislar, tafsir va ustoz tekshirgan materiallar. Bu fatvo emas: shaxsiy savolni imomga bering.',
+    пример1: 'AI Ustaz nima?',
+    пример2: 'Oʻqishni tekshirish qanday ishlaydi?',
+    пример3: 'Namoz vaqtlari qayerdan olinadi?',
+    пример4: 'Zakot kimga farz?',
+    примеры: 'Masalan',
+    поле: 'Savolingiz',
+    полеПодсказка: 'Savol bering…',
+    отправить: 'Yuborish',
+    личное: 'Ism, telefon va boshqa shaxsiy maʼlumotlarni yozmang.',
+    ждём: 'Bazamizdan qidiryapman…',
+    вы: 'Siz',
+    устаз: 'AI Ustaz',
+    режимПоиск: 'Bazamizdan topildi',
+    режимИИ: 'Bazamiz boʻyicha qisqacha — SI, manbalar bilan solishtiring',
+    шаблонОтвет: 'Savolingiz boʻyicha bazamizda quyidagilar bor:',
+    шаблонНет: 'Bazamizda bu savolga hozircha javob yoʻq. Bazani toʻldiryapmiz — keyinroq qarang yoki imomdan soʻrang.',
+    шаблонИмам: 'Bu shaxsiy fiqh savoli — unga imom javob beradi. Uni masjidingiz imomiga yoki Oʻzbekiston musulmonlari idorasiga bering. AI Ustaz fatvo bermaydi.',
+    шаблонВне: 'Bu yerda faqat bazamiz boʻyicha savollarga javob beramiz: Qurʼon, hadislar, tafsir, tajvid va AI Ustazdan qanday foydalanish.',
+    общие: 'Bazamizdagi umumiy maʼlumotlar — sizning holatingizga javob emas:',
+    источники: 'Manbalar',
+    черновик: 'Qoralama — ustoz tekshiradi',
+    коран: 'Qurʼon, {с}',
+    открыть: '{с} oyatini Qurʼonda ochish',
+    хадис: 'Hadis',
+    степень: 'Darajasi: {с} (baholagan: {к})',
+    тафсир: 'Tafsir',
+    статья: 'Material',
+    справка: 'Ilova haqida',
+    источник: 'Manba: {и}',
+    аятЗагрузка: 'Oyat yuklanmoqda…',
+    'ошибка.вопрос': 'Savol 3 tadan 500 tagacha belgidan iborat boʻlishi kerak.',
+    'ошибка.лимит': 'Savollar juda koʻp — bir daqiqa kuting.',
+    'ошибка.нет-базы': 'Bilim bazasi hozir mavjud emas. Keyinroq urinib koʻring.',
+    'ошибка.нет-связи': 'Aloqa yoʻq — savol yuborilmadi. Internetni tekshiring.',
+    'ошибка.сбой': 'Nimadir notoʻgʻri ketdi — qayta urinib koʻring.',
+    выключено: 'AI Ustaz alohida saytimizda javob beradi: aiustaz.pro.',
+  },
 });
 type Ключ = Parameters<ReturnType<typeof useСловарь<keyof (typeof СЛОВАРЬ)['ru']>>>[0];
 
@@ -163,7 +203,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
     установитьЗаписи((з) => [...з, { кто: 'вы', текст: q }]);
     установитьЖдём(true);
     отмена.current = typeof AbortController === 'function' ? new AbortController() : null;
-    const итог = await спросить(q, язык as 'ru' | 'kk', { signal: отмена.current?.signal });
+    const итог = await спросить(q, язык, { signal: отмена.current?.signal });
     установитьЖдём(false);
     if (итог.ок) установитьЗаписи((з) => [...з, { кто: 'устаз', ответ: итог.ответ }]);
     else установитьОшибку(итог.причина);

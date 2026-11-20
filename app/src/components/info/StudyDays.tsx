@@ -40,6 +40,14 @@ const СЛОВАРЬ = создатьСловарь({
     давно: '30 күн бұрын',
     сегодня: 'бүгін',
   },
+  uz: {
+    заголовок: 'Mashgʻulot kunlaringiz',
+    пусто: 'Belgi darsni tugatgan kuningiz paydo boʻladi.',
+    приватно: 'Faqat sizga koʻrinadi va faqat shu qurilmada saqlanadi. Seriyalar va reytinglarsiz.',
+    полоска: 'Oxirgi 30 kun, bugun — oʻngda',
+    давно: '30 kun oldin',
+    сегодня: 'bugun',
+  },
 });
 
 export function ДниЗанятий({ testID = 'главная-дни-занятий' }: { testID?: string }) {

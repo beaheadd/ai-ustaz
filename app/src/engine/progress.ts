@@ -24,7 +24,9 @@
 import { createContext, createElement, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { прочитатьJSON, записатьJSON } from './storage';
 
-export type Язык = 'ru' | 'kk';
+/** Язык интерфейса. kk и uz (узбекский, латиница) — черновики для редактора-носителя (CLAUDE.md). */
+export type Язык = 'ru' | 'kk' | 'uz';
+export const ВСЕ_ЯЗЫКИ: readonly Язык[] = ['ru', 'kk', 'uz'];
 
 export type ИтогУрока = {
   /** Урок пройден хотя бы раз (по критерию урока). */
@@ -124,7 +126,7 @@ export function нормализоватьПрогресс(сырые: unknown):
     : [];
   return {
     версия: 1,
-    язык: с.язык === 'ru' || с.язык === 'kk' ? с.язык : null,
+    язык: (ВСЕ_ЯЗЫКИ as readonly unknown[]).includes(с.язык) ? (с.язык as Язык) : null,
     предупреждениеПоказано: с.предупреждениеПоказано === true,
     пояснениеМикрофонаПоказано: с.пояснениеМикрофонаПоказано === true,
     согласиеПроверкиГолосом: с.согласиеПроверкиГолосом === true,

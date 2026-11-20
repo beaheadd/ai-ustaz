@@ -51,6 +51,20 @@ const СЛОВАРЬ = создатьСловарь({
     кУрокам: 'Оқуды жалғастыру',
     черновик: 'Жоба — ұстаз тексеріп жатыр',
   },
+  uz: {
+    заголовок: 'Faqat tekshirilgan toʻplamlar',
+    готовим: 'Tayyorlanmoqda',
+    вступление: 'Boʻlim tayyorlanmoqda. Har bir hadisning toʻplami va raqami, ishonchlilik darajasi va uni kim berganligi koʻrsatiladi.',
+    какБудет: 'Qanday tuzilgan boʻladi',
+    п1: 'Matn — tekshirilgan bazadan, oʻzgartirishsiz',
+    п2: 'Hadis toʻplami va raqami',
+    п3: 'Ishonchlilik darajasi va uni kim bergani',
+    п4: 'Tarjima — faqat tekshirilgan',
+    ии: 'SI hadis yozmaydi, qayta hikoya qilmaydi va baholamaydi.',
+    имам: 'Sizga hadis yuborishgan boʻlsa, manbasini imomdan aniqlang.',
+    кУрокам: 'Taʼlimni davom ettirish',
+    черновик: 'Qoralama — ustoz tekshiryapti',
+  },
 });
 
 export function Хадисы(_: ПропсыЭкрана<'хадисы'>) {

@@ -101,6 +101,29 @@ const СЛОВАРЬ = создатьСловарь({
       'Жазба құрылғыңызда қалады. Қазақстандағы серверге тек «Тексеру» түймесін басқанда жіберіледі және бірден өшіріледі.',
     слово: '{н}-сөз: өзіңізді тексеріңіз',
   },
+  uz: {
+    часть: 'Qism: {н} / {всего} · {с}–{по}-soʻzlar',
+    назад: 'Oldingi qism',
+    вперёд: 'Keyingi qism',
+    вынужденная: 'Bu yerda toʻxtash belgisi yoʻq. Ajratilgan qismni oʻqing; qayerda toʻxtash va qayerdan boshlashni ustozdan aniqlang.',
+    возврат: 'Bu qism oldingi qism tugagan soʻzdan boshlanadi. Toʻxtagandan keyin qayerdan boshlashni ustozdan aniqlang.',
+    весьАят: 'Butun oyat',
+    скрытьАят: 'Butun oyatni yashirish',
+    отмечены: 'Belgilangan soʻzlar: {список}',
+    уровеньПроверьте: 'oʻzingizni tekshiring',
+    уровеньПодсказка: 'maslahat',
+    черновикЧастей: 'Oyatni qismlarga boʻlish — qoralama, uni ustoz tasdiqlaydi.',
+    бисмилла: 'Sura oldidagi basmala tekshiruvga kirmaydi — faqat oyatni yozib oling.',
+    сравнить: 'Qori bilan solishtirish',
+    остановитьКари: 'Qori qiroatini toʻxtatish',
+    кариЦеликом: 'Qori oyatni toʻliq oʻqiydi.',
+    кариНет: 'Qori qiroati ruxsatdan keyin qoʻshiladi.',
+    наСвоёмСайте:
+      'Yozuv qurilmangizda qoladi va oyatdan chiqib ketganingizda oʻchiriladi. Ovoz bilan tekshirish alohida saytimizda paydo boʻladi.',
+    приватность:
+      'Yozuv qurilmangizda qoladi. U Qozogʻistondagi serverga faqat «Tekshirish» tugmasini bosganingizda yuboriladi va darhol oʻchiriladi.',
+    слово: '{н}-soʻz: oʻzingizni tekshiring',
+  },
 });
 
 export type УправлениеКари = { играет: boolean; играть: () => void; стоп: () => void };
@@ -357,7 +380,7 @@ function useКариИзПлеера(сура: number, аят: number): Упра
   return {
     играет: (снимок.состояние === 'играет' || снимок.состояние === 'загрузка') && т?.сура === сура && т.аят === аят && !т.бисмилла,
     играть: () => {
-      if (язык === 'ru' || язык === 'kk') установитьЯзыкПлеера(язык);
+      установитьЯзыкПлеера(язык);
       // Синхронно из нажатия: первый play() браузеры разрешают только из жеста.
       плеер.играть({ сура, сАята: аят, поАят: аят, повторАята: 1, повторОтрезка: false, бисмиллаПеред: false });
     },

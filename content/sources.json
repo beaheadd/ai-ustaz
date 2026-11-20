@@ -49,7 +49,7 @@
     },
     {
       "id": "quran-muaalem-notice",
-      "что": "ИИ-предупреждение (lesson0.json): ar и ru — официальные тексты; kk — наш перевод, черновик",
+      "что": "ИИ-предупреждение (lesson0.json): ar и ru — официальные тексты; kk и uz — наш перевод, черновик",
       "название": "quran-muaalem NOTICE",
       "лицензия": "QML-1.0",
       "ссылка": "github.com/obadx/quran-muaalem — файл NOTICE",
