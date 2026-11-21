@@ -38,6 +38,11 @@ content/quran/quran-uthmani-marks.xml (с 19.11.2026). Всё, что показ
   (ж) media.json — видео и аудио учителей-партнёров: tools/media/check_media.py (youtube_id есть в плейлистах,
       основное видео у уроков уровней 1–2, ничего не показывается без «разрешено» автора, только свои
       относительные файлы media/…).
+  (к) хадисы аль-Бухари из HadeethEnc.com (владелец 21.11.2026) — tools/hadith/check_hadith.py: манифест → индекс →
+      заголовки и порции app/public/hadith (sha256, хэш в имени, лишних файлов нет), русский перевод у каждого
+      хадиса полный, хадисы из content/hadith/на-проверку-устаза.json без одобрения не опубликованы; если сырые
+      выгрузки скачаны (content/hadith/raw, вне git) — каждое поле посимвольно = выгрузке и файлы = свежей сборке,
+      иначе — предупреждение (полная сверка: python3 -I -B tools/hadith/build_hadith.py --check).
   (и) audio-sources.json — источники чтения Корана для плеера: tools/audio/check_audio.py («разрешено» — только с датой,
       условиями и базой на своём домене; без разрешения база пустая; шаблон с {sura3}{aya3}; аудиофайлов Корана
       в app/public, app/src и content нет).
@@ -51,7 +56,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'media'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'hadith'))
 import check_audio  # noqa: E402
+import check_hadith  # noqa: E402
 import check_media  # noqa: E402
 import check_quran  # noqa: E402
 import check_tajweed  # noqa: E402
@@ -361,11 +368,21 @@ def main():
     for к, в in счёт_аудио.items():
         отчёт.счёт('чтение кари: ' + к, в)
 
+    # Хадисы аль-Бухари из HadeethEnc (владелец 21.11.2026): целостность и скрытые всегда; дословность — если сырьё скачано.
+    предупреждения_хадисов = []
+    if КОНТЕНТ == КОРЕНЬ / 'content':
+        ошибки_х, счёт_х, предупреждения_хадисов = check_hadith.проверить(требовать_сырьё=False)
+        отчёт.ошибки.extend(ошибки_х)
+        for к, в in счёт_х.items():
+            отчёт.счёт(к, в)
+
     print('Проверка контента AI Ustaz')
     print(f'  Tanzil: {путь}')
     print(f'  sha256: {sha}')
     for к, в in отчёт.проверено.items():
         print(f'  {к}: {в}')
+    for п in предупреждения_хадисов:
+        print('  ПРЕДУПРЕЖДЕНИЕ: ' + п)
     if отчёт.ошибки:
         print(f'ОШИБКИ ({len(отчёт.ошибки)}):')
         for е in отчёт.ошибки:

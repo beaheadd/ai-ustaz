@@ -48,6 +48,99 @@
       "примечание": "Файл хранится побайтно (sha256 — tools/quran/build_tajweed.py ЭТАЛОН_SHA256_МЕТАДАННЫХ). Берём только Page, Juz, HizbQaurter и tname из Sura; Sajda (с пометками фикха) не используем — знак ۩ есть в самом тексте. Разметку таджвида не содержит: её строят свои правила tools/quran/tajweed_rules.py."
     },
     {
+      "id": "hadeethenc",
+      "что": "Раздел «Хадисы»: хадисы «Сахиха» аль-Бухари с русским, английским и узбекским переводом (казахского у HadeethEnc нет — показываем русский с пометкой), арабский текст, степень, такхридж, разъяснение, польза, значения слов и ссылки — дословно и целиком, у каждого хадиса — ссылка на его страницу HadeethEnc.com (app/public/hadith — tools/hadith/build_hadith.py). Владелец 21.11.2026: «Добавь хадисы Аль-Бухари ещё перевод!»",
+      "название": "HadeethEnc.com — Translated Prophetic Hadiths",
+      "лицензия": "Условия HadeethEnc.com: без изменений, добавлений и удалений; ясная ссылка на издателя и источник (HadeethEnc.com)",
+      "ссылка": "hadeethenc.com",
+      "атрибуция": "Источник: HadeethEnc.com — Encyclopedia of Translated Prophetic Hadiths (hadeethenc.com). Текст, перевод, степень и разъяснение — без изменений.",
+      "условия": "Contents of the project can be used, with the following terms and conditions:\n1. No modification, addition, or deletion of the content.\n2. Clearly referring to the publisher and the source (HadeethEnc.com).\n\n— hadeethenc.com/HadeethEnc.com-API-v1.postman_collection_new.json (описание официальной коллекции API), проверено 21.11.2026",
+      "прочитано": "2026-11-21",
+      "примечание": "Сырые выгрузки (SQLite и CSV, ≈ 48 МБ) — вне git, в content/hadith/raw/: скачивает python3 -I -B tools/hadith/build_hadith.py --download, sha256 — ниже и в tools/hadith/hadith_common.py. Разъяснения HadeethEnc готовили в Эр-Рияде: хадисы акыды, джихада, худуда, шариатской политики и с цитатой Корана в арабском тексте не показываются, пока их не одобрит устаз (content/hadith/на-проверку-устаза.json); остальные — с плашкой «Черновик — проверяет устаз».",
+      "выгрузки": [
+        {
+          "язык": "ar",
+          "вид": "csv",
+          "файл": "HadeethEnc.com_ar-v1.8.0.csv",
+          "адрес": "hadeethenc.com/downloads/csv/HadeethEnc.com_ar-v1.8.0.csv",
+          "версия": "1.8.0",
+          "дата": "2026-10-14",
+          "sha256": "81d58b15f67efe56a8e12dd274953019ad643e13b28500978c33bd6ecdcfed74",
+          "байт": 10451301
+        },
+        {
+          "язык": "ar",
+          "вид": "sqlite",
+          "файл": "ar.sqlite.zip",
+          "адрес": "hadeethenc.com/downloads/sqlite/ar.sqlite.zip",
+          "версия": "1.8.0",
+          "дата": "2026-10-14",
+          "sha256": "1d5a2b5e89c07903550883af37a29f720e291eb8ca1ab28121bb0e7437fb6c70",
+          "байт": 4289165
+        },
+        {
+          "язык": "ru",
+          "вид": "csv",
+          "файл": "HadeethEnc.com_ru-v2.25.0.csv",
+          "адрес": "hadeethenc.com/downloads/csv/HadeethEnc.com_ru-v2.25.0.csv",
+          "версия": "2.25.0",
+          "дата": "2026-06-20",
+          "sha256": "74f946f2246fec4eeee827237ace1d03a7dedc4535026c39c81aed4a713249ca",
+          "байт": 14264727
+        },
+        {
+          "язык": "ru",
+          "вид": "sqlite",
+          "файл": "ru.sqlite.zip",
+          "адрес": "hadeethenc.com/downloads/sqlite/ru.sqlite.zip",
+          "версия": "2.25.0",
+          "дата": "2026-06-20",
+          "sha256": "818f7a7b617c229199e465af921cbd4929fa5476819cffa95c330cd790b0c325",
+          "байт": 2578107
+        },
+        {
+          "язык": "en",
+          "вид": "csv",
+          "файл": "HadeethEnc.com_en-v1.25.0.csv",
+          "адрес": "hadeethenc.com/downloads/csv/HadeethEnc.com_en-v1.25.0.csv",
+          "версия": "1.25.0",
+          "дата": "2026-05-10",
+          "sha256": "a65e73317685f69cee26e56d2376516e375557b2e48a1d109a7eff5a6f07f48a",
+          "байт": 10958600
+        },
+        {
+          "язык": "en",
+          "вид": "sqlite",
+          "файл": "en.sqlite.zip",
+          "адрес": "hadeethenc.com/downloads/sqlite/en.sqlite.zip",
+          "версия": "1.25.0",
+          "дата": "2026-05-10",
+          "sha256": "d428fb67eabbce2fd9ad2dbe8f45d55241ba26441aa06d3d716220ca30bb0a2b",
+          "байт": 2011447
+        },
+        {
+          "язык": "uz",
+          "вид": "csv",
+          "файл": "HadeethEnc.com_uz-v1.20.0.csv",
+          "адрес": "hadeethenc.com/downloads/csv/HadeethEnc.com_uz-v1.20.0.csv",
+          "версия": "1.20.0",
+          "дата": "2026-06-23",
+          "sha256": "157e35ac2ac4321a2f69f9cc6752f597b60e52d1c14242dc6d27e5859cb3de41",
+          "байт": 2240970
+        },
+        {
+          "язык": "uz",
+          "вид": "sqlite",
+          "файл": "uz.sqlite.zip",
+          "адрес": "hadeethenc.com/downloads/sqlite/uz.sqlite.zip",
+          "версия": "1.20.0",
+          "дата": "2026-06-23",
+          "sha256": "6535488b55573d5e0331664b8f994bc871b443fd7afcb007ad2f9fa5f131de59",
+          "байт": 456245
+        }
+      ]
+    },
+    {
       "id": "quran-muaalem-notice",
       "что": "ИИ-предупреждение (lesson0.json): ar, ru и en — официальные тексты; kk и uz — наш перевод, черновик",
       "название": "quran-muaalem NOTICE",

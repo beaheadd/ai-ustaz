@@ -51,6 +51,10 @@ playwright-report/
 app/test-artifacts/
 coverage/
 
+# Сырые выгрузки HadeethEnc (≈ 48 МБ; sha256 — content/sources.json «hadeethenc»; скачивает
+# python3 -I -B tools/hadith/build_hadith.py --download)
+content/hadith/raw/
+
 # Байткод Python (проверки контента запускать с -B: python3 -I -B tools/…)
 __pycache__/
 *.py[cod]

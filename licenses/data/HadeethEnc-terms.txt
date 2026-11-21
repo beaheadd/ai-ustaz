@@ -1,0 +1,15 @@
+# Источник: HadeethEnc.com — описание официальной коллекции API
+# (hadeethenc.com/HadeethEnc.com-API-v1.postman_collection_new.json), проверено 21.11.2026.
+# Где в приложении: раздел «Хадисы» — хадисы «Сахиха» аль-Бухари с переводом (app/public/hadith,
+# tools/hadith/build_hadith.py; владелец 21.11.2026: «Добавь хадисы Аль-Бухари ещё перевод!»).
+# Выгрузки (вне git, content/hadith/raw/): ar v1.8.0 (14.10.2026), ru v2.25.0 (20.06.2026), en v1.25.0 (10.05.2026),
+# uz v1.20.0 (23.06.2026) — SQLite и CSV; sha256 — content/sources.json, запись «hadeethenc».
+# Как соблюдаем: текст хадиса, перевод, степень, такхридж, разъяснение, польза, значения слов и ссылки — дословно и
+# целиком (tools/hadith/check_hadith.py сверяет каждое поле посимвольно с выгрузкой); у каждого хадиса — «Источник:
+# HadeethEnc.com» и ссылка на его страницу; на экране «Лицензии» — эти условия.
+
+HadeethEnc.com — Translated Prophetic Hadiths
+
+Contents of the project can be used, with the following terms and conditions:
+1. No modification, addition, or deletion of the content.
+2. Clearly referring to the publisher and the source (HadeethEnc.com).

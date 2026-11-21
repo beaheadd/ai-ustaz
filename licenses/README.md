@@ -6,7 +6,7 @@
 - `app-web-bundle.txt` — каждый пакет, попавший в веб-бандл, с версией и полным текстом лицензии.
   Создаёт `app/scripts/gen-licenses.mjs` (`npm run licenses` в `app/`), руками не править.
 - `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`; источник — в первой строке «# …»).
-- `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник), `Tanzil-Metadata-CC-BY-3.0.txt` (страницы мусхафа, 20.11.2026).
+- `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник), `Tanzil-Metadata-CC-BY-3.0.txt` (страницы мусхафа, 20.11.2026), `HadeethEnc-terms.txt` (хадисы аль-Бухари с переводом — условия HadeethEnc.com дословно, 21.11.2026).
 - `server/` — тексты лицензий пакетов сервера уведомлений (раздел «Сервер AI Ustaz» ниже).
 - `upstream/` — тексты MIT для пакетов, у которых в npm нет файла LICENSE (источник с тегом — в шапке файла):
   - `react-native-LICENSE.txt` — facebook/react-native@v0.88.1, для `@react-native/js-polyfills`, `@react-native/normalize-colors`;
