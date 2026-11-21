@@ -9,6 +9,8 @@ import { ОПроекте } from './AboutScreen';
 import { КартаКурса } from './CourseMapScreen';
 import { Главная } from './HomeScreen';
 import { Хадисы } from './HadithScreen';
+import { РазделХадисов } from './HadithCategoryScreen';
+import { Хадис } from './HadithItemScreen';
 import { КакОбъясняем } from './HowWeExplainScreen';
 import { Урок0 } from './Lesson0Screen';
 import { Урок } from './LessonScreen';
@@ -41,6 +43,8 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   сура: Сура,
   проверкаАята: ПроверкаАята,
   хадисы: Хадисы,
+  разделХадисов: РазделХадисов,
+  хадис: Хадис,
   устаз: СпроситьУстаза,
   ещё: Ещё,
   установка: Установка,
