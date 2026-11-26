@@ -58,7 +58,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'hadith'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'dhikr'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'makharij'))
 import build_dhikr  # noqa: E402
+import build_index as индекс_махраджей  # noqa: E402
 import check_audio  # noqa: E402
 import check_hadith  # noqa: E402
 import check_media  # noqa: E402
@@ -195,7 +197,7 @@ def проверить_id(имя, данные, отчёт, общие):
             общие[id_] = f'{имя}:{путь}'
 
 
-БЕЗ_UZ = {'makharij.json'}  # не подключён к приложению (speech/hints.ts TODO) — uz и en при подключении
+БЕЗ_UZ = {'makharij.json'}  # uz и en пока нет: экран «Как произносить буквы» показывает русский с пометкой
 # Кириллица в en допустима только как казахские буквы-звуки («қ», «ғ» — опора в подсказках каталога §8, как в uz)
 # и в названии канала партнёра (как у автора).
 КИРИЛЛИЦА_EN_МОЖНО = ('Ұстаз Еркінбек Шоқай', '“қ”', '“ғ”')
@@ -382,6 +384,11 @@ def main():
         отчёт.ошибки.extend(ошибки_з)
         предупреждения_хадисов.extend(предупреждения_з)
         for к, в in счёт_з.items():
+            отчёт.счёт(к, в)
+        # Индекс махраджей для экранов «Как произносить буквы» (владелец 26.11.2026): = свежей сборке.
+        ошибки_м, счёт_м = индекс_махраджей.проверить()
+        отчёт.ошибки.extend(ошибки_м)
+        for к, в in счёт_м.items():
             отчёт.счёт(к, в)
 
     print('Проверка контента AI Ustaz')

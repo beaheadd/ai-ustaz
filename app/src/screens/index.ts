@@ -28,6 +28,8 @@ import { Уведомления } from './NotificationsScreen';
 import { СпроситьУстаза } from './AskScreen';
 import { Зикры } from './DhikrScreen';
 import { СчётчикЗикра } from './DhikrCounterScreen';
+import { Махраджи } from './MakharijScreen';
+import { БукваМахраджаЭкран } from './MakharijLetterScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -50,6 +52,8 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   устаз: СпроситьУстаза,
   зикры: Зикры,
   зикр: СчётчикЗикра,
+  махраджи: Махраджи,
+  букваМахраджа: БукваМахраджаЭкран,
   ещё: Ещё,
   установка: Установка,
   уведомления: Уведомления,

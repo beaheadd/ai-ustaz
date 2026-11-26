@@ -47,6 +47,8 @@ export const en: Record<КлючСтроки, string> = {
   'экран.хадисы': 'Hadith',
   'экран.зикры': 'Dhikr',
   'экран.зикр': 'Dhikr',
+  'экран.махраджи': 'How to pronounce letters',
+  'экран.букваМахраджа': 'Letter makhraj',
   'экран.ещё': 'More',
 
   'главная.подзаголовок': 'A trainer for correct Quran reading using the method of Ahmadhadi Maksudi',

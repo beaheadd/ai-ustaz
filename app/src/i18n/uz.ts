@@ -46,6 +46,8 @@ export const uz: Record<КлючСтроки, string> = {
   'экран.хадисы': 'Hadislar',
   'экран.зикры': 'Zikrlar',
   'экран.зикр': 'Zikr',
+  'экран.махраджи': 'Harflarni qanday aytish',
+  'экран.букваМахраджа': 'Harf maxraji',
   'экран.ещё': 'Yana',
 
   'главная.подзаголовок': 'Ahmadhodiy Maqsudiy uslubi boʻyicha Qurʼonni toʻgʻri oʻqish murabbiyi',
