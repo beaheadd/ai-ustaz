@@ -30,6 +30,7 @@ import { ПоставщикНавигации, useНавигация } from './s
 import { ПоставщикПрогресса, useПрогресс } from './src/engine/progress';
 import { ФОКУСНЫЕ, ПОЛНОЭКРАННЫЕ, type ПропсыЭкрана } from './src/engine/routes';
 import { ПоставщикЯзыка } from './src/i18n';
+import { запуститьАвтообновление } from './src/prayer/autoLocation';
 import { СинхронизацияУведомлений } from './src/notify/useNotify';
 import { ЭКРАНЫ } from './src/screens';
 import { ШРИФТЫ_ПРИЛОЖЕНИЯ, ПоставщикАрабскогоШрифта, ПоставщикТемы, useТема } from './src/theme';
@@ -92,6 +93,8 @@ function Содержимое({ шрифтГотов }: { шрифтГотов: 
 
 export default function App() {
   const [шрифтЗагружен, ошибкаШрифта] = useFonts(ШРИФТЫ_ПРИЛОЖЕНИЯ);
+  // Место по геолокации — обновляем сами при запуске и возвращении во вкладку (владелец 26.11.2026).
+  useEffect(() => запуститьАвтообновление(), []);
   const [терпениеКончилось, установитьТерпение] = useState(false);
   useEffect(() => {
     const таймер = setTimeout(() => установитьТерпение(true), ТЕРПЕНИЕ_ШРИФТА_МС);

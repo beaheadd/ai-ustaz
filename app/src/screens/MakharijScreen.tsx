@@ -41,7 +41,7 @@ const СЛОВАРЬ = создатьСловарь({
     букваПодпись: '{буква} — {название}',
   },
   en: {
-    вступление: 'A makhraj is the place a letter’s sound comes from. Tap a letter: the diagram shows what moves and where it touches.',
+    вступление: "A makhraj is the place a letter's sound comes from. Tap a letter: the diagram shows what moves and where it touches.",
     гунна: 'Ghunnah',
     букваПодпись: '{буква} — {название}',
   },
