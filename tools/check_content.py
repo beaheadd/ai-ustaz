@@ -57,6 +57,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'media'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'hadith'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'dhikr'))
+import build_dhikr  # noqa: E402
 import check_audio  # noqa: E402
 import check_hadith  # noqa: E402
 import check_media  # noqa: E402
@@ -374,6 +376,12 @@ def main():
         ошибки_х, счёт_х, предупреждения_хадисов = check_hadith.проверить(требовать_сырьё=False)
         отчёт.ошибки.extend(ошибки_х)
         for к, в in счёт_х.items():
+            отчёт.счёт(к, в)
+        # Зикры (владелец 26.11.2026): целостность и Tanzil всегда; дословность фрагментов HadeethEnc — если сырьё есть.
+        ошибки_з, счёт_з, предупреждения_з = build_dhikr.проверить()
+        отчёт.ошибки.extend(ошибки_з)
+        предупреждения_хадисов.extend(предупреждения_з)
+        for к, в in счёт_з.items():
             отчёт.счёт(к, в)
 
     print('Проверка контента AI Ustaz')

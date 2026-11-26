@@ -45,6 +45,8 @@ export const en: Record<КлючСтроки, string> = {
   'экран.лицензии': 'Licenses',
   'экран.коран': 'Quran',
   'экран.хадисы': 'Hadith',
+  'экран.зикры': 'Dhikr',
+  'экран.зикр': 'Dhikr',
   'экран.ещё': 'More',
 
   'главная.подзаголовок': 'A trainer for correct Quran reading using the method of Ahmadhadi Maksudi',
