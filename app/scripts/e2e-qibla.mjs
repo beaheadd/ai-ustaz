@@ -49,6 +49,8 @@ export async function киблаСквозной(браузер, база, { с�
 
   async function открыть(профиль, { язык = 'ru', тёмная = false, ios = null, время = null } = {}) {
     const контекст = await браузер.newContext({ ...профиль, deviceScaleFactor: масштаб, locale: 'ru-RU', colorScheme: тёмная ? 'dark' : 'light' });
+    // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
+    if (тёмная) await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
     await контекст.addInitScript(
       ({ ключ, значение, ios }) => {
         window.__csp = [];

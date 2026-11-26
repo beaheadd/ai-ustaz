@@ -142,6 +142,8 @@ let проверок = 0;
 
 async function новаяСтраница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', схема = 'light', снимки = false, источник = false, прогресс = ПРОГРЕСС(язык) } = {}) {
   const контекст = await браузер.newContext({ ...ТЕЛЕФОН(ширина, высота, снимки), colorScheme: схема, locale: 'ru-RU', timezoneId: 'Asia/Almaty' });
+  // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
+  if (схема === 'dark') await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
   await контекст.addInitScript(
     ({ прогресс }) => {
       window.__csp = [];

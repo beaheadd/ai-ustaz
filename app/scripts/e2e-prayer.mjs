@@ -73,6 +73,8 @@ async function новаяСтраница(браузер, база, { язык =
     ...(гео ? { geolocation: гео } : {}),
     permissions: разрешитьГео ? ['geolocation'] : [],
   });
+  // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
+  if (схема === 'dark') await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
   await контекст.addInitScript((прогресс) => {
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
@@ -427,7 +429,7 @@ export async function времяНамаза(браузер, база, { пап�
     await стр.goto(база + '/aiustaz/index.html#/');
     await п.э('карточка-намаза').waitFor();
     await контекст.setOffline(true);
-    await п.э('намаз-город').click();
+    await п.э('главная-город').click();
     await п.э('город-нет-связи').waitFor();
     п.проверить(/Нет связи — список мест не загрузился/.test(await п.текстЭ('город-нет-связи')) && !/Все места \(0\)/.test(await п.текстЭ('выбор-города')), 'нет сети: «Нет связи — список мест не загрузился», а не «Все места (0)»');
     await контекст.setOffline(false);
@@ -436,7 +438,8 @@ export async function времяНамаза(браузер, база, { пап�
     await стр.goBack();
     await п.э('карточка-намаза').waitFor();
     await контекст.setOffline(true);
-    await п.э('главная-начать').click();
+    // Урок с главной убран (владелец 26.11.2026) — открываем урок 1 по адресу без перезагрузки страницы.
+    await стр.evaluate(() => { location.hash = '#/lesson/1'; });
     await п.э('урок-нет-связи').waitFor();
     п.проверить(!(await п.есть('урок-не-найден')), 'нет сети: «Нет связи: урок не загрузился», а не «Урок не найден»');
     await контекст.setOffline(false);

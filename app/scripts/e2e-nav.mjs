@@ -87,6 +87,8 @@ let проверок = 0;
 async function новаяСтраница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', схема = 'light', прогресс = ПРОГРЕСС(язык), снимки = false, клавиатура = false } = {}) {
   const профиль = клавиатура ? { viewport: { width: ширина, height: высота }, deviceScaleFactor: 1 } : ТЕЛЕФОН(ширина, высота, снимки);
   const контекст = await браузер.newContext({ ...профиль, colorScheme: схема, locale: 'ru-RU', timezoneId: 'Asia/Almaty' });
+  // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
+  if (схема === 'dark') await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
   await контекст.addInitScript(
     ({ прогресс }) => {
       window.__csp = [];
@@ -541,7 +543,7 @@ export async function навигацияСквозной(браузер, баз�
   }
 
   // ── 8. Главная: замер «карточка намаза / урок / меню» ──
-  console.log('\n══ Главная: замер (карточка намаза, кнопка урока, меню) ══');
+  console.log('\n══ Главная: замер (карточка намаза, значки разделов, меню) ══');
   for (const [ширина, высота] of [
     [412, 800],
     [360, 640],
@@ -553,13 +555,13 @@ export async function навигацияСквозной(браузер, баз�
     await п.э('карточка-намаза').waitFor();
     await стр.waitForTimeout(300);
     const карточка = await рамка(стр, 'карточка-намаза');
-    const кнопка = await рамка(стр, 'главная-начать');
+    // Владелец 26.11.2026: на главной — время намаза и значки разделов; урок — в «Таджвиде».
+    const кнопка = await рамка(стр, 'главная-модули');
     const меню = await рамка(стр, 'нижнее-меню');
-    const итог = `карточка ${карточка.y.toFixed(0)}–${(карточка.y + карточка.height).toFixed(0)} (${((100 * карточка.height) / высота).toFixed(0)} % окна), кнопка урока ${кнопка.y.toFixed(0)}–${(кнопка.y + кнопка.height).toFixed(0)}, меню с ${меню.y.toFixed(0)}`;
+    const итог = `карточка ${карточка.y.toFixed(0)}–${(карточка.y + карточка.height).toFixed(0)} (${((100 * карточка.height) / высота).toFixed(0)} % окна), значки разделов ${кнопка.y.toFixed(0)}–${(кнопка.y + кнопка.height).toFixed(0)}, меню с ${меню.y.toFixed(0)}`;
     console.log(`  · ${ширина}×${высота}: ${итог}`);
     п.проверить(Math.abs(меню.y + меню.height - высота) <= 1, `${ширина}×${высота}: меню внизу окна`);
-    if (ширина === 412) п.проверить(карточка.y + карточка.height <= 430 && кнопка.y + кнопка.height <= меню.y, `${ширина}×${высота}: низ карточки ≤ 430 и кнопка урока над меню (${итог})`);
-    else п.проверить(карточка.height <= 0.55 * высота, `${ширина}×${высота}: карточка ≤ 55 % окна (${итог})`);
+    п.проверить(карточка.height <= 0.4 * высота && кнопка.y + кнопка.height <= меню.y, `${ширина}×${высота}: карточка намаза ≤ 40 % окна, значки разделов над меню (${итог})`);
     await п.безПроблем(`главная ${ширина}×${высота}: без ошибок`);
     await контекст.close();
   }
@@ -739,14 +741,14 @@ export async function навигацияСквозной(браузер, баз�
       return {
         ru: [атр('язык-ru', 'role'), атр('язык-ru', 'aria-checked')],
         kk: атр('язык-kk', 'aria-checked'),
-        тема: [тема?.getAttribute('role'), атр('тема-система', 'role'), атр('тема-система', 'aria-checked'), атр('тема-тёмная', 'aria-checked')],
+        тема: [тема?.getAttribute('role'), атр('тема-светлая', 'role'), атр('тема-светлая', 'aria-checked'), атр('тема-система', 'aria-checked')],
         раскрыт: атр('ещё-предупреждение', 'aria-expanded'),
         main: document.querySelectorAll('main, [role="main"]').length,
         уровни: [...document.querySelectorAll('[data-testid="экран-ещё"] [role="heading"], [data-testid="экран-ещё"] h1, [data-testid="экран-ещё"] h2')].map((е) => е.getAttribute('aria-level') ?? е.tagName),
       };
     });
     п.проверить(а.ru.join() === 'radio,true' && а.kk === 'false', `язык: radio с aria-checked (${JSON.stringify(а.ru)}, kk ${а.kk})`);
-    п.проверить(а.тема.join() === 'radiogroup,radio,true,false', `тема: radiogroup / radio с aria-checked (${а.тема.join(', ')})`);
+    п.проверить(а.тема.join() === 'radiogroup,radio,true,false', `тема: radiogroup / radio с aria-checked; по умолчанию — «Светлая» (владелец 26.11.2026) (${а.тема.join(', ')})`);
     await п.э('ещё-предупреждение').click();
     const раскрытПосле = await п.э('ещё-предупреждение').getAttribute('aria-expanded');
     п.проверить(а.раскрыт === 'false' && раскрытПосле === 'true', `ИИ-предупреждение: aria-expanded ${а.раскрыт} → ${раскрытПосле}`);

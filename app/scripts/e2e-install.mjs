@@ -170,7 +170,7 @@ export async function установкаСквозной(браузер, баз�
     await ждать(стр, 'главная-установка-установить');
     проверить((await текст(стр, 'главная-установка')).includes('Установите AI Ustaz на телефон'), 'главная (aiustaz.pro, Android): баннер «Установите AI Ustaz на телефон»');
     проверить(await есть(стр, 'главная-установка-сценарий-кнопка'), 'Android + beforeinstallprompt → в баннере кнопка «Установить»');
-    const [yБаннера, yНамаза] = await стр.evaluate(() => ['главная-установка', 'намаз-город'].map((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().top ?? -1));
+    const [yБаннера, yНамаза] = await стр.evaluate(() => ['главная-установка', 'карточка-намаза'].map((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().top ?? -1));
     проверить(yБаннера >= 0 && yНамаза > yБаннера, `баннер выше времени намаза (${Math.round(yБаннера)} < ${Math.round(yНамаза)})`);
     await стр.waitForFunction(() => window.__отменено !== undefined);
     проверить(await стр.evaluate(() => window.__отменено === true), 'beforeinstallprompt перехвачен (preventDefault — без всплывающей полоски Chrome)');
