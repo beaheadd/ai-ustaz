@@ -46,13 +46,18 @@ function изолироватьПравила(п: Record<КодТаджвида,
   return выход;
 }
 
-/** Названия правил (ru; kk, uz и en — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7). */
+/**
+ * Названия правил (ru; kk, uz и en — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7).
+ * Длительность гунны в идгаме с гунной, ихфе и иклябе — «4 счёта» по исправлению кари-рецензента (владелец передал
+ * 27.11.2026). Норма детектора в docs/каталог-ошибок.md §3 (гунна — 2) не меняется, пока совет/устаз не утвердит
+ * политику: засчитываются оба варианта (правило 6 — все допустимые варианты).
+ */
 export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, ПравилоТаджвида>> = изолироватьПравила({
   g: { ru: 'Гунна: نّ и مّ — 2 счёта', kk: 'Ғұнна: نّ және مّ — 2 санақ', uz: 'Gʻunna: نّ va مّ — 2 harakat', en: 'Ghunnah: نّ and مّ — 2 counts', урок: '21', уроки: [21] },
-  n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan', en: 'Idgham with ghunnah: nun/tanween before ي ن م و', урок: '33, 36', уроки: [33, 36] },
+  n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و — 4 счёта', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында — 4 санақ', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan — 4 harakat', en: 'Idgham with ghunnah: nun/tanween before ي ن م و — 4 counts', урок: '33, 36', уроки: [33, 36] },
   b: { ru: 'Идгам без гунны: нун/танвин перед ل ر', kk: 'Ғұннасыз идғам: нун/тәнуин ل ر алдында', uz: 'Gʻunnasiz idgʻom: nun/tanvin ل ر oldidan', en: 'Idgham without ghunnah: nun/tanween before ل ر', урок: '33', уроки: [33] },
-  k: { ru: 'Ихфа: нун/танвин перед 15 буквами, мим перед ب', kk: 'Ихфа: 15 әріп алдында нун/тәнуин, ب алдында мим', uz: 'Ixfo: nun/tanvin 15 harf oldidan, mim ب oldidan', en: 'Ikhfa: nun/tanween before 15 letters, mim before ب', урок: '35, 36', уроки: [35, 36] },
-  q: { ru: 'Икляб: нун/танвин перед ب', kk: 'Иқлаб: ب алдында нун/тәнуин', uz: 'Iqlob: nun/tanvin ب oldidan', en: 'Iqlab: nun/tanween before ب', урок: '34', уроки: [34] },
+  k: { ru: 'Ихфа: нун/танвин перед 15 буквами, мим перед ب — 4 счёта', kk: 'Ихфа: 15 әріп алдында нун/тәнуин, ب алдында мим — 4 санақ', uz: 'Ixfo: nun/tanvin 15 harf oldidan, mim ب oldidan — 4 harakat', en: 'Ikhfa: nun/tanween before 15 letters, mim before ب — 4 counts', урок: '35, 36', уроки: [35, 36] },
+  q: { ru: 'Икляб: нун/танвин перед ب — 4 счёта', kk: 'Иқлаб: ب алдында нун/тәнуин — 4 санақ', uz: 'Iqlob: nun/tanvin ب oldidan — 4 harakat', en: 'Iqlab: nun/tanween before ب — 4 counts', урок: '34', уроки: [34] },
   c: { ru: 'Калькаля: ق ط ب ج د с сукуном и при остановке', kk: 'Қалқала: сукунды және тоқтағанда ق ط ب ج د', uz: 'Qalqala: ق ط ب ج د sukun bilan va toʻxtaganda', en: 'Qalqalah: ق ط ب ج د with sukun and when stopping', урок: '37', уроки: [37] },
   t: { ru: 'Мадд табии — 2 счёта', kk: 'Табиғи мәд — 2 санақ', uz: 'Tabiiy madd — 2 harakat', en: 'Madd tabi\'i — 2 counts', урок: '17, 18, 24', уроки: [17, 18, 24] },
   m: { ru: 'Мадд муттасиль — 4–5 (хамза в том же слове)', kk: 'Муттасыл мәд — 4–5 (хамза сол сөзде)', uz: 'Muttasil madd — 4–5 (hamza oʻsha soʻzda)', en: 'Madd muttasil — 4–5 (hamza in the same word)', урок: '23, 38', уроки: [23, 38] },
