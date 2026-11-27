@@ -32,7 +32,29 @@
 | `prayer.py` | официальное время намаза КЗ/УЗ: `GET /api/prayer/official`, скачивание и проверка таблиц ДУМК, правило УМУз в точке региона, фоновое обновление (раздел ниже) |
 | `prayer_places.json` | пункты наших списков (KZ 168 → пункт ДУМК, UZ 176 → координаты); собирает `tools/prayer/build_server_places.py` |
 | `migrations/NNN_*.sql` | только добавляющие (тест `test_миграции_только_добавляющие`); 003 — таблицы времени намаза; 004 — база знаний «Спросить AI Ustaz»; 005 — язык uz (столбец `lang_ui`: ограничение `lang` из 001 не меняем, для uz там запасной `ru`); 006 — язык en (столбец `lang_code` ru/kk/uz/en — db.py читает `COALESCE(lang_code, lang_ui, lang)`, в `lang` и `lang_ui` для en пишет запасной `ru`; таблица `kb_texts_en` — английские тексты базы знаний, словарь `english`: в `kb_texts` язык ограничен ru/kk/uz). **Сервер выкатывать раньше клиента:** старый сервер ответит на en-подписку и en-вопрос 400 `lang` |
+| `stats.py` | своя анонимная статистика: `POST /api/stats/e` (только aiustaz.pro; без cookie, IP, строки браузера, мест), суточные итоги, сводка для админки; сырые события 90 дней (владелец 27.11.2026) |
+| `admin.py` | админка: вход по коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
+| `content_admin.py` | настройки содержимого: чтецы (включены, по умолчанию), хадисы (скрыть, проверено устазом) — только отметки, без текста; `GET /api/content/config` для приложения; версии с sha256 |
+| `admin_static/` | собранная админка (`node admin/build.mjs`, вне git mugalim) — nginx отдаёт на https://aiustaz.pro/admin/ |
 | `deploy/` | `mugalim-api.service`, `mugalim-jobs.service`, `setup-server.sh` |
+
+## Админка и статистика (007; владелец 27.11.2026 — docs/дизайн/12-админка-и-статистика.md)
+
+| Метод | Путь | Кто | Что |
+|---|---|---|---|
+| POST | `/api/stats/e` | приложение (aiustaz.pro) | события `{v:1, sid, sess, lang, dev, os, st, ref, ver, ev:[{t:'o'\|'v'\|'b', s?, n?, d?}]}` → 204; 60/мин с IP, 30/мин на устройство |
+| GET | `/api/content/config` | приложение | `{формат, версия, sha256, чтецы:{включены, поУмолчанию}, хадисы:{скрыты, проверены}}`, ETag, 5 мин |
+| POST | `/api/admin/login/code`, `/login/verify`, `/logout` | все | вход по коду из письма; ответ «код отправлен» одинаков для любой почты |
+| GET | `/api/admin/me`, `/sessions`; POST `/sessions/revoke` | вошедший | кто я, мои входы |
+| GET/POST | `/api/admin/users`, `/users/update`, `/users/remove` | владелец | админы; владельца из `MUGALIM_ADMIN_OWNER_EMAILS` не изменить |
+| GET | `/api/admin/stats?days=1\|7\|30\|90` | просмотр+ | сводка для первой страницы |
+| GET | `/api/admin/audit` | админ+ | журнал действий |
+| GET | `/api/admin/content`; POST `/content/reciters`, `/content/hadith`; GET `/content/hadith/approved` | просмотр+ / админ+ | чтецы и отметки хадисов, выгрузка для `content/hadith/одобрено.json` |
+
+Изменения в админке — только POST с `X-Aiustaz-Admin: 1` и своим Origin. Окружение: `MUGALIM_ADMIN_SECRET` (создаёт
+setup-server.sh), `MUGALIM_ADMIN_OWNER_EMAILS` (через запятую; ставит workflow batr-world «AI Ustaz admin: set owner» из
+секрета `AIUSTAZ_ADMIN_OWNER_EMAIL`, затем перезапуск mugalim-api). Тесты: `server/tests/test_admin.py` (временная база),
+`admin/e2e-admin.mjs` (Playwright против `admin/test_server.py` с выдуманными данными).
 
 ## API
 

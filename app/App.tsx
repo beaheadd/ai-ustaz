@@ -21,19 +21,21 @@
  * без проверки голоса ИИ, без голоса кари, без сервера и аналитики.
  */
 import { useFonts } from 'expo-font';
-import { useEffect, useState, type ComponentType } from 'react';
+import { useEffect, useRef, useState, type ComponentType } from 'react';
 import { ActivityIndicator, Platform, View } from 'react-native';
 import { плеер } from './src/audio/player';
 import { НижнееМеню } from './src/components/BottomNav';
 import { МиниПлеер } from './src/components/quran/PlayerBar';
 import { ПоставщикНавигации, useНавигация } from './src/engine/navigation';
 import { ПоставщикПрогресса, useПрогресс } from './src/engine/progress';
-import { ФОКУСНЫЕ, ПОЛНОЭКРАННЫЕ, type ПропсыЭкрана } from './src/engine/routes';
-import { ПоставщикЯзыка } from './src/i18n';
+import { ФОКУСНЫЕ, ПОЛНОЭКРАННЫЕ, вХэш, type ПропсыЭкрана } from './src/engine/routes';
+import { обновитьНастройкиСодержимого } from './src/content/remoteConfig';
+import { ПоставщикЯзыка, useПеревод } from './src/i18n';
 import { запуститьАвтообновление } from './src/prayer/autoLocation';
 import { СинхронизацияУведомлений } from './src/notify/useNotify';
 import { включитьОфлайн } from './src/offline/offline';
 import { ЭКРАНЫ } from './src/screens';
+import { запуститьСтатистику, отметитьЭкран } from './src/stats/stats';
 import { ШРИФТЫ_ПРИЛОЖЕНИЯ, ПоставщикАрабскогоШрифта, ПоставщикТемы, useТема } from './src/theme';
 
 /** Не держать арабский текст прозрачным дольше этого (нативно — не ждать экран дольше этого). */
@@ -43,6 +45,21 @@ function ТекущийЭкран() {
   const { текущий } = useНавигация();
   const Компонент = ЭКРАНЫ[текущий.экран] as ComponentType<ПропсыЭкрана<typeof текущий.экран>>;
   return <Компонент key={текущий.ключ} параметры={текущий.параметры} />;
+}
+
+/**
+ * Своя анонимная статистика (владелец 27.11.2026: «какие страницы смотрели, сколько времени»; src/stats/stats.ts):
+ * только на aiustaz.pro, выключатель — «Ещё» → «Анонимная статистика». Отмечает верхний экран при каждой смене.
+ */
+function СчётчикПосещений() {
+  const { текущий } = useНавигация();
+  const { язык } = useПеревод();
+  const языкСсылка = useRef(язык);
+  языкСсылка.current = язык;
+  useEffect(() => запуститьСтатистику(() => языкСсылка.current), []);
+  const хэш = вХэш(текущий);
+  useEffect(() => отметитьЭкран(хэш), [текущий.ключ, хэш]);
+  return null;
 }
 
 /** Экран, под ним мини-плеер чтения кари и нижнее меню (кроме фокусных экранов). */
@@ -65,6 +82,7 @@ function Каркас() {
       {безМеню ? null : <МиниПлеер />}
       {безМеню ? null : <НижнееМеню />}
       <СинхронизацияУведомлений />
+      <СчётчикПосещений />
     </View>
   );
 }
@@ -98,6 +116,8 @@ export default function App() {
   useEffect(() => запуститьАвтообновление(), []);
   // Без сети (владелец 27.11.2026): worker на aiustaz.pro, фоновая докачка Корана, зикров и махраджей.
   useEffect(() => включитьОфлайн(), []);
+  // Настройки содержимого из админки (чтецы, скрытые и проверенные хадисы) — один раз при запуске; без сети — прежние.
+  useEffect(() => void обновитьНастройкиСодержимого(), []);
   const [терпениеКончилось, установитьТерпение] = useState(false);
   useEffect(() => {
     const таймер = setTimeout(() => установитьТерпение(true), ТЕРПЕНИЕ_ШРИФТА_МС);

@@ -74,3 +74,4 @@ play-graphics/
 
 # Рабочие копии агентов Claude Code (временные, не для git)
 .claude/worktrees/
+server/admin_static/

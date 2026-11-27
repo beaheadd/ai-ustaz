@@ -15,6 +15,9 @@ aiustaz.pro (/api/push/, /api/prayer/).
 unsubscribe — 20 в минуту с IP; test — 3 за 10 минут на подписку и 10 в минуту с IP. Превышение — 429.
 Тело — не больше 64 КБ (413). Origin, если есть, — только свой домен (MUGALIM_PUSH_ORIGINS), иначе 403.
 Координаты на сервер не приходят: клиент сам считает время намаза (app/src/notify/schedule.ts).
+  POST /api/stats/e — события своей статистики (server/stats.py); /api/admin/… — админка (server/admin.py,
+                              server/content_admin.py); GET /api/content/config — настройки содержимого для приложения
+                              (владелец 27.11.2026: «Создай админ панель… статистика… Коран… хадисы»).
   GET  /api/prayer/official?src=dumk|umuz&place=<id>&year=<год> — годовая таблица ведомства по id пункта из нашего списка
                               (server/prayer.py; владелец 20.11.2026: «Время намаза Казахстан, Узбекистан бери из
                               официальных источников»). Лимит — 60 в минуту с IP (хэш), ETag и Cache-Control.
@@ -39,10 +42,13 @@ from fastapi import FastAPI, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 
+import admin
 import ask
 import boot
+import content_admin
 import prayer
 import push
+import stats
 from envnum import строка_из_окружения
 
 журнал = logging.getLogger('mugalim.api')
@@ -191,6 +197,22 @@ def создать_приложение() -> FastAPI:
         источники=строка_из_окружения('MUGALIM_PUSH_ORIGINS', СВОИ_ИСТОЧНИКИ),
     )
     prayer.register(app, хранилище=хранилище, ключ_лимита=хэш_ip)
+    # Статистика и админка (владелец 27.11.2026: «Создай админ панель… первая страница — статистика»;
+    # docs/дизайн/12-админка-и-статистика.md). Первый владелец — MUGALIM_ADMIN_OWNER_EMAILS (не в git).
+    источники = строка_из_окружения('MUGALIM_PUSH_ORIGINS', СВОИ_ИСТОЧНИКИ)
+    статистика = stats.ХранилищеСтатистики(хранилище)
+    stats.register(app, статистика=статистика, хранилище=хранилище, ключ_лимита=хэш_ip, источники=источники)
+    админы = admin.ХранилищеАдминов(хранилище)
+    владельцы = frozenset(п for п in (admin.норм_почта(с) for с in строка_из_окружения('MUGALIM_ADMIN_OWNER_EMAILS', '').split(','))
+                          if п)
+    if владельцы:
+        админы.обеспечить_владельцев(sorted(владельцы))
+    секрет = строка_из_окружения('MUGALIM_ADMIN_SECRET', '')
+    if not секрет:
+        журнал.warning('нет MUGALIM_ADMIN_SECRET в /etc/mugalim.env — вход в админку недоступен (503)')
+    доступ = admin.register(app, админы=админы, хранилище=хранилище, статистика=статистика,
+                            отправить_код=admin.письмо_через_smtp, секрет=секрет, ключ_лимита=хэш_ip, владельцы=владельцы, источники=источники)
+    content_admin.register(app, содержимое=content_admin.ХранилищеСодержимого(хранилище), доступ=доступ, админы=админы)
     # «Спросить AI Ustaz» — только при MUGALIM_ASK=1 (владелец 20.11.2026: «AI Ustaz пока не будем выкатывать»):
     # без флага маршрутов /api/ask/ нет вовсе (миграция 004 с таблицами базы знаний применяется — она только добавляющая).
     if строка_из_окружения('MUGALIM_ASK', '0') == '1':

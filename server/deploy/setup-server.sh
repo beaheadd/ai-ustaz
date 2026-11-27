@@ -44,6 +44,10 @@ chown root:root "$ENVF"; chmod 600 "$ENVF"
 "$APP/.venv/bin/python" -I "$APP/vapid.py" "$ENVF"
 grep -q '^MUGALIM_VAPID_SUBJECT=' "$ENVF" || echo 'MUGALIM_VAPID_SUBJECT=https://aiustaz.pro' >> "$ENVF"
 grep -q '^MUGALIM_PUSH_TICK_SEC=' "$ENVF" || echo 'MUGALIM_PUSH_TICK_SEC=20' >> "$ENVF"
+# Админка (владелец 27.11.2026): секрет для HMAC кодов входа — создаётся один раз здесь, в журнал не печатается.
+if ! grep -q '^MUGALIM_ADMIN_SECRET=' "$ENVF"; then
+  echo "MUGALIM_ADMIN_SECRET=$("$APP/.venv/bin/python" -I -c 'import secrets; print(secrets.token_urlsafe(48))')" >> "$ENVF"
+fi
 chmod 600 "$ENVF"
 
 for s in mugalim-api mugalim-jobs; do
@@ -57,6 +61,9 @@ for i in $(seq 1 30); do
   if curl -fsS "http://127.0.0.1:$PORT/api/push/health" >/dev/null 2>&1; then
     echo "OK: API отвечает: $(curl -fsS "http://127.0.0.1:$PORT/api/push/health")"
     curl -fsS "http://127.0.0.1:$PORT/api/push/key" >/dev/null && echo "OK: публичный VAPID-ключ отдаётся"
+    curl -fsS -o /dev/null "http://127.0.0.1:$PORT/api/content/config" && echo "OK: настройки содержимого отдаются"
+    if [ -f "$APP/admin_static/index.html" ]; then echo "OK: админка: $(cat "$APP/admin_static/version.json" 2>/dev/null)"; fi
+    if grep -q '^MUGALIM_ADMIN_OWNER_EMAILS=.\+' "$ENVF"; then echo "OK: владелец админки задан"; else echo "ВНИМАНИЕ: владелец админки не задан (workflow «AI Ustaz admin: set owner»)"; fi
     if systemctl is-active --quiet mugalim-jobs; then echo "OK: mugalim-jobs работает"; exit 0; fi
     echo "ОШИБКА: mugalim-jobs не запущен — journalctl -u mugalim-jobs -n 50"; exit 1
   fi

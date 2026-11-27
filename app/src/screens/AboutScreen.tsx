@@ -70,8 +70,8 @@ const СЛОВАРЬ = создатьСловарь({
     линия2: 'Чтение — Хафс от ‘Асыма (через аш-Шатибийю). Когда появится проверка голосом, допустимые варианты чтения будут засчитываться.',
     линия3: 'Текст Корана — только дословно из проверенной базы Tanzil Uthmani v1.1.',
     линия4: 'Объяснения ошибок — только из базы правил и шаблонов AI Ustaz (сейчас черновик, её проверяет устаз). Не уверен — не ругаем.',
-    приватность: 'Приватность прототипа',
-    приватность1: 'Входа, сервера и отправки данных нет. Внешних запросов приложение не делает.',
+    приватность: 'Приватность',
+    приватность1: 'Входа нет. На aiustaz.pro приложение отправляет только на свой сервер в Казахстане: анонимную статистику (какие экраны открывали и сколько времени — без имени, телефона и места; выключается в «Ещё») и, если вы включили уведомления, подписку без координат. Данные никому не передаём и не продаём.',
     приватность2: 'Запись голоса — только по вашему нажатию; она живёт в памяти страницы, никуда не отправляется и удаляется, когда вы уходите с упражнения.',
     приватность3: 'На этом устройстве хранятся только номера пройденных уроков, результаты, даты занятий и язык.',
     приватность4:
@@ -113,7 +113,7 @@ const СЛОВАРЬ = создатьСловарь({
     линия3: 'Құран мәтіні — тек тексерілген Tanzil Uthmani v1.1 базасынан, сөзбе-сөз.',
     линия4: 'Қателердің түсіндірмесі — тек AI Ustaz ережелері мен үлгілерінің базасынан (әзірге жоба, оны ұстаз тексереді). Сенімді болмасақ — ұрыспаймыз.',
     приватность: 'Прототиптің құпиялылығы',
-    приватность1: 'Кіру, сервер және деректер жіберу жоқ. Қосымша сыртқы сұраныстар жасамайды.',
+    приватность1: 'Кіру жоқ. aiustaz.pro-да қолданба тек Қазақстандағы өз серверіне жібереді: жасырын статистика (қай беттер ашылды және қанша уақыт — атыңызсыз, телефонсыз және орынсыз; «Тағы» бөлімінде өшіріледі) және хабарландыруды қоссаңыз — координатсыз жазылым. Деректерді ешкімге бермейміз және сатпаймыз.',
     приватность2: 'Дауыс тек сіз басқанда жазылады; жазба бет жадында ғана тұрады, ешқайда жіберілмейді және жаттығудан шыққанда өшіріледі.',
     приватность3: 'Бұл құрылғыда тек өтілген сабақтардың нөмірлері, нәтижелер, сабақ күндері және тіл сақталады.',
     приватность4:
@@ -155,7 +155,7 @@ const СЛОВАРЬ = создатьСловарь({
     линия3: 'Qurʼon matni — faqat tekshirilgan Tanzil Uthmani v1.1 bazasidan, aynan.',
     линия4: 'Xatolarni tushuntirish — faqat AI Ustaz qoidalar va andozalar bazasidan (hozir qoralama, uni ustoz tekshiryapti). Ishonch boʻlmasa — tanbeh bermaymiz.',
     приватность: 'Prototip maxfiyligi',
-    приватность1: 'Kirish, server va maʼlumot yuborish yoʻq. Ilova tashqi soʻrovlar yubormaydi.',
+    приватность1: 'Kirish yoʻq. aiustaz.pro saytida ilova faqat Qozogʻistondagi oʻz serveriga yuboradi: anonim statistika (qaysi sahifalar ochilgani va qancha vaqt — ismingiz, telefoningiz va joyingizsiz; «Yana» boʻlimida oʻchiriladi) va bildirishnomalarni yoqsangiz — koordinatalarsiz obuna. Maʼlumotlarni hech kimga bermaymiz va sotmaymiz.',
     приватность2: 'Ovoz yozuvi — faqat siz bosganingizda; u sahifa xotirasida turadi, hech qayerga yuborilmaydi va mashqdan chiqqaningizda oʻchiriladi.',
     приватность3: 'Bu qurilmada faqat oʻtilgan darslar raqamlari, natijalar, mashgʻulot sanalari va til saqlanadi.',
     приватность4:
@@ -197,7 +197,7 @@ const СЛОВАРЬ = создатьСловарь({
     линия3: 'Quran text — only verbatim from the verified Tanzil Uthmani v1.1 database.',
     линия4: 'Explanations of mistakes — only from the AI Ustaz base of rules and templates (a draft for now, an ustaz is reviewing it). Not sure — no scolding.',
     приватность: 'Prototype privacy',
-    приватность1: 'No sign-in, no server and no data sending. The app makes no external requests.',
+    приватность1: 'No sign-in. On aiustaz.pro the app sends only to its own server in Kazakhstan: anonymous statistics (which screens were opened and for how long — no name, phone or location; can be turned off in "More") and, if you turned on notifications, a subscription without coordinates. We never share or sell data.',
     приватность2: 'Voice is recorded only when you tap; the recording lives in page memory, is not sent anywhere and is deleted when you leave the exercise.',
     приватность3: 'This device stores only the numbers of completed lessons, results, study dates and the language.',
     приватность4:

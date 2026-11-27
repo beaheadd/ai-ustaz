@@ -1,0 +1,192 @@
+/* Админка AI Ustaz — стили (телефон прежде всего; светлая и тёмная тема по системе). Цвета приложения: акцент #0F4C45. */
+@font-face {
+  font-family: 'Amiri Quran';
+  src: url('/aiustaz/assets/AmiriQuran_400Regular.ttf') format('truetype');
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --фон: #f6f3ea;
+  --поверхность: #ffffff;
+  --текст: #1c1a16;
+  --второй: #5f5a50;
+  --граница: #e3ddcf;
+  --акцент: #0f4c45;
+  --акцент-мягкий: #dcebe7;
+  --на-акценте: #ffffff;
+  --хорошо: #1f6f3a;
+  --хорошо-фон: #e3f2e7;
+  --плохо: #a1262b;
+  --плохо-фон: #fbe6e5;
+  --черновик: #7a5a00;
+  --черновик-фон: #fbf0cf;
+  --серия: #257de0;          /* одна серия графиков (dataviz, слот 1) */
+  --сетка: #ece7db;
+  --бумага: #fbf6e9;
+  --чернила: #1f1a14;
+  --радиус: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --фон: #12110e;
+    --поверхность: #1c1a16;
+    --текст: #efe9dc;
+    --второй: #a9a294;
+    --граница: #34302a;
+    --акцент: #7cc4b6;
+    --акцент-мягкий: #1f3a35;
+    --на-акценте: #0b1f1c;
+    --хорошо: #7fd39a;
+    --хорошо-фон: #1b3324;
+    --плохо: #f08b8f;
+    --плохо-фон: #3a1d1e;
+    --черновик: #f0cf74;
+    --черновик-фон: #3a3015;
+    --серия: #338ced;
+    --сетка: #2a2721;
+    --бумага: #17140f;
+    --чернила: #d8c9a8;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; background: var(--фон); color: var(--текст); }
+body { font: 16px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-text-size-adjust: 100%; }
+a { color: var(--акцент); }
+h1 { font-size: 1.5rem; margin: 0.4rem 0 0.8rem; }
+h2 { font-size: 1.1rem; margin: 0 0 0.6rem; }
+h3 { font-size: 1rem; margin: 0 0 0.4rem; }
+code { font-size: 0.85em; background: var(--акцент-мягкий); padding: 0 4px; border-radius: 4px; }
+.загрузка, .тихо { color: var(--второй); }
+.мелко { font-size: 0.85rem; }
+.хорошо { color: var(--хорошо); }
+.ошибка { color: var(--плохо); }
+.араб { font-family: 'Amiri Quran', 'Noto Naskh Arabic', serif; }
+:focus-visible { outline: 3px solid var(--акцент); outline-offset: 2px; }
+
+/* Каркас */
+.каркас { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
+.шапка { display: flex; align-items: center; gap: 12px; padding: 8px 16px; min-height: 60px; background: var(--акцент); color: var(--на-акценте); position: sticky; top: 0; z-index: 5; }
+.логотип { color: inherit; font-weight: 700; text-decoration: none; margin-right: auto; }
+.логотип span { font-weight: 400; opacity: 0.8; }
+.кто { display: flex; flex-direction: column; align-items: flex-end; font-size: 0.85rem; max-width: 45vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.кто small { opacity: 0.8; }
+.шапка .кнопка.тихая { color: var(--на-акценте); border-color: currentColor; background: transparent; }
+.меню { min-width: 0; position: sticky; top: 60px; z-index: 4; display: flex; gap: 6px; overflow-x: auto; padding: 10px 16px; background: var(--поверхность); border-bottom: 1px solid var(--граница); scrollbar-width: none; }
+.меню::-webkit-scrollbar { display: none; }
+.пункт { flex: none; padding: 8px 12px; border-radius: 999px; text-decoration: none; color: var(--текст); border: 1px solid var(--граница); white-space: nowrap; min-height: 40px; display: inline-flex; align-items: center; }
+.пункт[aria-current='page'] { background: var(--акцент); color: var(--на-акценте); border-color: var(--акцент); }
+.содержимое { min-width: 0; padding: 16px; max-width: 980px; width: 100%; margin: 0 auto; outline: none; }
+@media (min-width: 900px) {
+  .каркас { grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .шапка { grid-column: 1 / -1; }
+  .меню { position: static; flex-direction: column; overflow: visible; border-bottom: 0; border-right: 1px solid var(--граница); padding: 16px; }
+  .пункт { border-radius: 10px; border-color: transparent; }
+}
+
+/* Вход */
+.экран-входа { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+.вход { width: 100%; max-width: 380px; background: var(--поверхность); border: 1px solid var(--граница); border-radius: 20px; padding: 24px 20px; display: grid; gap: 12px; }
+.вход h1 { margin: 0; }
+.знак { width: 56px; height: 56px; border-radius: 16px; background: var(--акцент); color: var(--на-акценте); display: grid; place-items: center; font-size: 28px; }
+
+/* Формы и кнопки */
+.поле { display: grid; gap: 6px; }
+label { font-weight: 600; font-size: 0.9rem; }
+input, select { font: inherit; color: var(--текст); background: var(--поверхность); border: 1px solid var(--граница); border-radius: 10px; padding: 10px 12px; min-height: 44px; width: 100%; }
+select { width: auto; }
+.подсказка { margin: 0; color: var(--второй); font-size: 0.9rem; }
+.сообщение { min-height: 1.4em; margin: 0.4rem 0; color: var(--второй); }
+.кнопка { font: inherit; min-height: 44px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--граница); background: var(--поверхность); color: var(--текст); cursor: pointer; }
+.кнопка.главная { background: var(--акцент); color: var(--на-акценте); border-color: var(--акцент); font-weight: 600; }
+.кнопка.плохо { color: var(--плохо); }
+.кнопка:disabled { opacity: 0.5; cursor: default; }
+.чип { font: inherit; min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--граница); background: var(--поверхность); color: var(--текст); cursor: pointer; }
+.чип[aria-pressed='true'], .чип[aria-selected='true'] { background: var(--акцент-мягкий); border-color: var(--акцент); color: var(--акцент); font-weight: 600; }
+.переключатель { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.панель { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+.переключ { display: inline-flex; gap: 6px; align-items: center; font-weight: 500; min-height: 44px; }
+.переключ input { width: 20px; min-height: 20px; }
+.поиск { margin-bottom: 12px; }
+
+/* Карточки и плитки */
+.карта { background: var(--поверхность); border: 1px solid var(--граница); border-radius: var(--радиус); padding: 14px 16px; margin: 0 0 12px; }
+.карта.тихая { color: var(--второй); }
+.карта.тихая p { margin: 0.2rem 0; }
+.плитки { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 10px; }
+.плитка { background: var(--поверхность); border: 1px solid var(--граница); border-radius: var(--радиус); padding: 12px 14px; display: grid; gap: 2px; }
+.плитка .подпись { color: var(--второй); font-size: 0.85rem; }
+.плитка .значение { font-size: 1.6rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.плитка .пояснение { color: var(--второй); font-size: 0.8rem; }
+.колонки { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.колонки > .карта { margin: 0; }
+.метки { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.метка { font-size: 0.78rem; padding: 2px 8px; border-radius: 999px; background: var(--сетка); color: var(--второй); white-space: nowrap; }
+.метка.хорошо { background: var(--хорошо-фон); color: var(--хорошо); }
+.метка.плохо { background: var(--плохо-фон); color: var(--плохо); }
+.метка.черновик { background: var(--черновик-фон); color: var(--черновик); }
+.выкл { opacity: 0.7; }
+
+/* Графики */
+.обёртка-графика { position: relative; }
+.график { width: 100%; height: auto; display: block; touch-action: pan-y; }
+.график .сетка { stroke: var(--сетка); stroke-width: 1; }
+.график .ось { fill: var(--второй); font-size: 12px; }
+.график .линия { fill: none; stroke: var(--серия); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.график .точка { fill: var(--серия); stroke: var(--поверхность); stroke-width: 2; }
+.график .курсор { stroke: var(--второй); stroke-dasharray: 3 3; }
+.подсказка-графика { position: absolute; top: 0; width: 180px; background: var(--текст); color: var(--фон); font-size: 0.8rem; padding: 6px 8px; border-radius: 8px; pointer-events: none; }
+.полосы { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.полосы li { display: grid; grid-template-columns: minmax(90px, 38%) 1fr auto; gap: 8px; align-items: center; font-size: 0.9rem; }
+.полосы .подпись { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.полосы .дорожка { height: 10px; background: var(--сетка); border-radius: 4px; overflow: hidden; }
+.полосы .полоса { display: block; height: 100%; background: var(--серия); border-radius: 0 4px 4px 0; }
+.полосы .число { color: var(--второй); font-variant-numeric: tabular-nums; font-size: 0.82rem; text-align: right; }
+@media (max-width: 520px) {
+  .полосы li { grid-template-columns: 1fr auto; }
+  .полосы .дорожка { grid-column: 1 / -1; grid-row: 2; }
+}
+.часы { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; height: 120px; align-items: end; }
+.час { height: 100%; display: grid; grid-template-rows: 1fr auto; align-items: end; }
+.столбик { display: block; background: var(--серия); border-radius: 4px 4px 0 0; min-height: 0; }
+.час .метка { background: none; padding: 0; text-align: center; font-size: 0.7rem; }
+.таблица { border-collapse: collapse; width: 100%; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.таблица th, .таблица td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--граница); white-space: nowrap; }
+.прокрутка { overflow-x: auto; }
+.таблица-дней summary { cursor: pointer; color: var(--акцент); margin-top: 8px; min-height: 32px; }
+.список-номеров { margin: 0; padding-left: 1.2rem; }
+.список-номеров li span { float: right; color: var(--второй); }
+
+/* Коран */
+.суры { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.сура-строка { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; background: var(--поверхность); border: 1px solid var(--граница); border-radius: 12px; color: var(--текст); text-decoration: none; min-height: 56px; }
+.сура-строка .номер { color: var(--второй); font-variant-numeric: tabular-nums; }
+.сура-строка .имя small { display: block; color: var(--второй); font-size: 0.8rem; }
+.сура-строка .араб { font-size: 1.4rem; }
+.назад { text-decoration: none; }
+.аяты { list-style: none; margin: 0; padding: 0; background: var(--бумага); color: var(--чернила); border-radius: var(--радиус); border: 1px solid var(--граница); }
+.аяты li { padding: 12px 16px; border-bottom: 1px solid var(--граница); }
+.аяты li.играет { background: var(--акцент-мягкий); }
+.аят { font-family: 'Amiri Quran', 'Noto Naskh Arabic', serif; font-size: 1.75rem; line-height: 2.3; margin: 0; text-align: right; }
+.номер-аята { font-size: 1rem; color: var(--второй); }
+.аят-низ { display: flex; justify-content: space-between; align-items: center; }
+.играть { font: inherit; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--граница); background: var(--поверхность); color: var(--акцент); cursor: pointer; }
+.легенда ul { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 6px; }
+.образец { font-family: 'Amiri Quran', serif; font-size: 1.4rem; }
+.легенда summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+
+/* Чтецы, хадисы, админы */
+.чтец-шапка, .хадис-шапка { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.чтец-шапка h2 { margin: 0; }
+.свойства { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 10px 0 0; font-size: 0.9rem; }
+.свойства dt { color: var(--второй); }
+.свойства dd { margin: 0; }
+@media (max-width: 520px) { .свойства { grid-template-columns: 1fr; } .свойства dd { margin-bottom: 6px; } }
+.хадисы { list-style: none; margin: 0; padding: 0; }
+.хадис p { margin: 6px 0; }
+.листалка { justify-content: center; }
+.форма { display: grid; gap: 10px; }
+.сеансы { list-style: none; padding: 0; }
+.сеансы .кнопка { float: right; }
+.строка-заголовка { display: flex; align-items: center; justify-content: space-between; }
