@@ -29,7 +29,7 @@ export const КОДЫ_ТАДЖВИДА: readonly КодТаджвида[] = ['g'
 
 /** Названия правил (ru; kk, uz и en — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7). */
 export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, { ru: string; kk: string; uz: string; en: string; урок: string; уроки: readonly number[] }>> = {
-  g: { ru: 'Гунна: нّ и мّ — 2 счёта', kk: 'Ғұнна: нّ және мّ — 2 санақ', uz: 'Gʻunna: nّ va mّ — 2 harakat', en: 'Ghunnah: nّ and mّ — 2 counts', урок: '21', уроки: [21] },
+  g: { ru: 'Гунна: نّ и مّ — 2 счёта', kk: 'Ғұнна: نّ және مّ — 2 санақ', uz: 'Gʻunna: نّ va مّ — 2 harakat', en: 'Ghunnah: نّ and مّ — 2 counts', урок: '21', уроки: [21] },
   n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan', en: 'Idgham with ghunnah: nun/tanween before ي ن م و', урок: '33, 36', уроки: [33, 36] },
   b: { ru: 'Идгам без гунны: нун/танвин перед ل ر', kk: 'Ғұннасыз идғам: нун/тәнуин ل ر алдында', uz: 'Gʻunnasiz idgʻom: nun/tanvin ل ر oldidan', en: 'Idgham without ghunnah: nun/tanween before ل ر', урок: '33', уроки: [33] },
   k: { ru: 'Ихфа: нун/танвин перед 15 буквами, мим перед ب', kk: 'Ихфа: 15 әріп алдында нун/тәнуин, ب алдында мим', uz: 'Ixfo: nun/tanvin 15 harf oldidan, mim ب oldidan', en: 'Ikhfa: nun/tanween before 15 letters, mim before ب', урок: '35, 36', уроки: [35, 36] },
