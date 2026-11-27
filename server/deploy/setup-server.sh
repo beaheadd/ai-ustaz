@@ -95,6 +95,16 @@ if flag_on MUGALIM_ASK_VOICE; then
     systemctl daemon-reload
     systemctl enable mugalim-asr >/dev/null
     systemctl restart mugalim-asr
+    # Служба не поднялась (модель, зависимости) — флаг голоса выключаем: клиент не покажет 🎤, пока не починим.
+    ASR_OK=0
+    for j in $(seq 1 45); do if curl -fsS http://127.0.0.1:8033/health >/dev/null 2>&1; then ASR_OK=1; break; fi; sleep 2; done
+    if [ "$ASR_OK" = 1 ]; then echo "OK: распознавание речи: $(curl -fsS http://127.0.0.1:8033/health)"
+    else
+      echo "ВНИМАНИЕ: mugalim-asr не отвечает — голос выключаю (journalctl -u mugalim-asr):"
+      journalctl -u mugalim-asr -n 15 --no-pager 2>/dev/null || true
+      set_flag MUGALIM_ASK_VOICE off
+      systemctl disable --now mugalim-asr >/dev/null 2>&1 || true
+    fi
   fi
 fi
 if ! flag_on MUGALIM_ASK_VOICE && systemctl list-unit-files mugalim-asr.service >/dev/null 2>&1; then

@@ -3,3 +3,4 @@
 faster-whisper==1.1.1     # MIT; веса Whisper (OpenAI) — MIT; модель скачивается один раз в /opt/mugalim/asr-models
 fastapi==0.165.0          # MIT
 uvicorn==0.54.0           # BSD-3-Clause
+requests==2.34.2          # Apache-2.0 — faster-whisper 1.1.1 импортирует его (utils.download_model), но в зависимостях не объявляет
