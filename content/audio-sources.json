@@ -161,6 +161,33 @@
       }
     },
     {
+      "id": "shatri",
+      "кари": {
+        "ru": "Абу Бакр аш-Шатри",
+        "kk": "Әбу Бәкір әш-Шатри",
+        "uz": "Abu Bakr ash-Shotiriy",
+        "en": "Abu Bakr ash-Shatri",
+        "ar": "أبو بكر الشاطري"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.shaatree",
+        "битрейт": 128
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
       "id": "alafasy-cdn",
       "кари": {
         "ru": "Мишари Рашид аль-Афаси",

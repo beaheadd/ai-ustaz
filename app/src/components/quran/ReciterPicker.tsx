@@ -98,6 +98,7 @@ const СТИЛЬ_ИЗДАНИЯ: Readonly<Record<string, 'муратталь' | 
   'ar.husarymujawwad': 'муджаввад',
   'ar.muhammadayyoub': 'муратталь',
   'ar.aymanswoaid': 'муратталь',
+  'ar.shaatree': 'муратталь',
   'ar.alafasy': 'муратталь',
 };
 

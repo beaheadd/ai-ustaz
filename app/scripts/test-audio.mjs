@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Тест плеера чтения кари без браузера: node scripts/test-audio.mjs  (npm run test:audio — вместе с e2e-audio.mjs)
- *   данные   — content/audio-sources.json: аль-Афаси своего домена «разрешено: false»; шесть чтецов AlQuran Cloud
+ *   данные   — content/audio-sources.json: аль-Афаси своего домена «разрешено: false»; семь чтецов AlQuran Cloud
  *              (владелец 27.11.2026) — потоком с cdn.islamic.network, по умолчанию аль-Хусари, выбор человека, batr.kz —
  *              «не на этом сайте»; адрес по глобальному номеру аята; аудиофайлов Корана в app/public и content нет;
  *   sources  — форма и правило показа: разрешено строго true + дата + условия + база на своём домене; batr.kz —
@@ -57,7 +57,7 @@ await тест('аль-Афаси (свой домен): разрешено fals
   assert.equal(можноИграть(а), false);
   assert.ok(!JSON.stringify(сырые).includes('://'), 'полных внешних адресов в данных нет — только хост CDN');
 });
-await тест('AlQuran Cloud (владелец 27.11.2026): шесть чтецов потоком с cdn.islamic.network, проверенные битрейты', () => {
+await тест('AlQuran Cloud (владелец 27.11.2026): семь чтецов потоком с cdn.islamic.network, проверенные битрейты', () => {
   const cdn = ИСТОЧНИКИ.filter((и) => и.cdn);
   assert.deepEqual(
     cdn.map((и) => [и.id, и.cdn.издание, и.cdn.битрейт]),
@@ -67,6 +67,7 @@ await тест('AlQuran Cloud (владелец 27.11.2026): шесть чтец
       ['abdulbasit', 'ar.abdulsamad', 64],
       ['ayyub', 'ar.muhammadayyoub', 128],
       ['suwayd', 'ar.aymanswoaid', 64],
+      ['shatri', 'ar.shaatree', 128],
       ['alafasy-cdn', 'ar.alafasy', 128],
     ],
   );
@@ -95,7 +96,7 @@ await тест('по умолчанию — аль-Хусари; выбор че
   assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: false }).причина, 'не-поддерживается');
   assert.deepEqual(
     источники.играющиеИсточники(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: true }).map((и) => и.id),
-    ['husary', 'husary-mujawwad', 'abdulbasit', 'ayyub', 'suwayd', 'alafasy-cdn'],
+    ['husary', 'husary-mujawwad', 'abdulbasit', 'ayyub', 'suwayd', 'shatri', 'alafasy-cdn'],
   );
   const безРазрешений = ИСТОЧНИКИ.map((и) => ({ ...и, разрешено: false }));
   for (const хост of ['batr.kz', 'aiustaz.pro', ''])

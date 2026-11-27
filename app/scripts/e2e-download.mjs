@@ -10,7 +10,7 @@
  * Сервер — scripts/serve-test.mjs на 127.0.0.1 с подделкой зеркала /aiustaz-audio/: editions.json — только аль-Хусари
  * (128/ar.husary), файлы — ТЕСТОВЫЕ ТОНЫ (не Коран). CDN AlQuran Cloud — page.route, тоже тоны. Флаги localStorage:
  * «aiustaz:audio-mirror-test» (спрашивать список зеркала на 127.0.0.1) и «aiustaz:sw-test» (service worker).
- *   1. первый заход на «Коран» (без worker'а): лист «Выберите чтеца» — шесть чтецов, у каждого ▶; ▶ Айюба → 1:1 с CDN
+ *   1. первый заход на «Коран» (без worker'а): лист «Выберите чтеца» — семь чтецов, у каждого ▶; ▶ Айюба → 1:1 с CDN
  *      (…/ar.muhammadayyoub/1.mp3), ▶ Хусари → 1:1 со своего зеркала (/aiustaz-audio/128/ar.husary/1.mp3), Айюб
  *      замолкает; повторное ▶ — пауза; выбор Айюба → «Выбрать» → на устройстве ayyub, лист больше не появляется; сура
  *      играет Айюбом; снимки audio-reciter-ru;
@@ -142,7 +142,7 @@ export async function загрузкаСквозной(браузер, { пап�
       const чтецы = await р.стр.evaluate(() =>
         [...document.querySelectorAll('[data-testid="чтец-первый"] [data-testid^="чтец-"]')].map((е) => е.getAttribute('data-testid')).filter((id) => /^чтец-[a-z-]+$/.test(id) && !/первый|выбор|атрибуция/.test(id)),
       );
-      проверить(чтецы.join() === 'чтец-husary,чтец-husary-mujawwad,чтец-abdulbasit,чтец-ayyub,чтец-suwayd,чтец-alafasy-cdn', `лист «Выберите чтеца»: шесть чтецов (${чтецы.join(', ')})`);
+      проверить(чтецы.join() === 'чтец-husary,чтец-husary-mujawwad,чтец-abdulbasit,чтец-ayyub,чтец-suwayd,чтец-shatri,чтец-alafasy-cdn', `лист «Выберите чтеца»: семь чтецов (${чтецы.join(', ')})`);
       for (const id of чтецы) проверить(await р.есть(id + '-слушать'), `у ${id} — кнопка ▶ «Послушать»`);
       проверить((await р.нажат('чтец-husary')) === 'true', 'по умолчанию отмечен аль-Хусари');
       проверить(/муджаввад/.test(await р.э('чтец-husary-mujawwad').innerText()) && /муратталь/.test(await р.э('чтец-ayyub').innerText()), 'стиль чтения: муджаввад / муратталь');
