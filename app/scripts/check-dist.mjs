@@ -42,12 +42,16 @@
  *     — текста Корана нет в JS-чанках: ни один арабский отрезок JS длиной ≥ 25 символов не входит в текст сур 2–114,
  *       кроме отрезков аль-Фатихи (чанк fatiha-demo по замыслу; 1:1 дословно есть и в 27:30). Суры грузятся fetch'ем
  *       по одной (src/quran/data.ts).
- * 10. Service worker уведомлений о времени намаза (владелец 20.11.2026: уведомления о времени намаза): push-sw.js —
- *     единственный файл без хэша кроме index.html/metadata.json/privacy.html (адрес worker'а должен быть постоянным);
- *     в нём только push и notificationclick: нет обработчика fetch, Cache API, importScripts, fetch(), внешних адресов;
- *     значки — существующие pwa/icon-192 и pwa/icon-mono-512 (подставляет after-export), меток __ЗНАЧОК нет; ≤ 8 КБ;
- *     CSP worker-src 'self' (не шире); регистрирует его только app/src/notify/push.ts (scope /aiustaz/) и только на
- *     aiustaz.pro — на batr.kz у сайта свой SW со scope «/».
+ * 10. Service worker (владелец 20.11.2026: уведомления о времени намаза; 27.11.2026: «пусть все суры и другая
+ *     информация сохраняются… пользоваться офлайн»): push-sw.js — единственный файл без хэша кроме
+ *     index.html/metadata.json/privacy.html (адрес worker'а должен быть постоянным); обработчики push,
+ *     notificationclick, install, activate, fetch, message; Cache API и fetch() — только своих путей (внешних адресов,
+ *     importScripts, XMLHttpRequest, indexedDB нет); ≤ 16 КБ; значки — существующие pwa/icon-192 и pwa/icon-mono-512,
+ *     меток __ЗНАЧОК/__ОФЛАЙН нет; адрес списка — существующий offline/files.<хэш>.json, в нём только пути /aiustaz/
+ *     существующих файлов с хэшем в имени, оболочка = все файлы _expo/, assets/, pwa/, группы покрывают quran/,
+ *     dhikr/, makharij/, makharij-index/, hadith/, prayer/ целиком; CSP worker-src 'self' (не шире); регистрируют его
+ *     app/src/offline/offline.ts и app/src/notify/push.ts (scope /aiustaz/) и только на aiustaz.pro — на batr.kz у
+ *     сайта свой SW со scope «/».
  * 11. Места для времени намаза (владелец 20.11.2026: «Мы мировое приложение»; tools/prayer/build_world.py →
  *     app/public/prayer → dist/prayer): файлы из src/prayer/world.generated.ts (kz, uz, мир) есть, все шарды и плитки
  *     индекса есть, других файлов в prayer/ нет; всё prayer/ ≤ 3 000 000 байт; списков мест нет в JS-чанках (строки
@@ -170,7 +174,10 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // Владелец 26.11.2026 (образец — Sajda): шапка главной (язык с глобусом посередине, город и дата справа), простая светлая
 // карточка намаза (ряд + полоса «Фаджр 08:08:03» с секундным отсчётом), тема по умолчанию светлая; карточка урока и
 // «Путь обучения» с главной убраны, но их код нужен экрану «Таджвид». 1879 → 1886 КБ: сборка 1875 → 1881 КБ (+6 КБ) и запас.
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1886);
+// Владелец 27.11.2026: «сохранить аят, где остановился; все суры и другая информация сохраняются… офлайн». push-sw.js
+// (тоже .js) вырос 5 → 13 КБ (кэш своих файлов, докачка групп), src/offline (регистрация, докачка), «Скачать хадисы»,
+// возврат к месту в суре. По check-dist 1884 → 1898 КБ (+14 КБ); 1886 → 1902 с запасом.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1902);
 // Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
 // Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
 // + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
@@ -200,7 +207,8 @@ const ВСТРАИВАНИЕ = /youtube\.com\/embed|youtube-nocookie\.com|ytimg\
 // На aiustaz.pro SW нет, nginx отдаёт её с no-cache; на batr.kz её может закэшировать SW сайта — для Play адрес aiustaz.pro.
 // push-sw.js — УЗКОЕ ИСКЛЮЧЕНИЕ. Владелец 20.11.2026: уведомления о времени намаза. Адрес service worker'а должен быть
 // постоянным (браузер сверяет его при каждой проверке обновления); кэш SW batr.kz тут не мешает: на batr.kz наш worker
-// не регистрируется, а на aiustaz.pro SW сайта нет и nginx отдаёт /aiustaz/ с no-cache. Что внутри — п. 10 ниже.
+// не регистрируется, а на aiustaz.pro SW сайта нет и nginx отдаёт /aiustaz/ с no-cache. Что внутри — п. 10 ниже
+// (с 27.11.2026 он же держит приложение без сети: кэширует только свои файлы с хэшем в имени, index.html — сеть, иначе копия).
 const БЕЗ_ХЭША = new Set(['index.html', 'metadata.json', 'privacy.html', 'push-sw.js']);
 const ХЭШ_В_ИМЕНИ = /[.-]([0-9a-f]{20,})\.[a-z0-9]+$/i;
 
@@ -529,7 +537,7 @@ for (const { абс, отн } of файлы) {
   if (/https?:\/\/[^"'`\s]*\/api\/speech/i.test(fs.readFileSync(абс, 'utf8'))) ошибка(`абсолютный адрес речевого сервиса в ${отн} — только относительный /api/speech/…`);
 }
 
-// 10. Service worker уведомлений о времени намаза (владелец 20.11.2026).
+// 10. Service worker: уведомления (владелец 20.11.2026) и работа без сети (27.11.2026).
 let строкаSW = 'нет push-sw.js';
 {
   const путь = path.join(папка, 'push-sw.js');
@@ -537,15 +545,37 @@ let строкаSW = 'нет push-sw.js';
   else {
     const текст = fs.readFileSync(путь, 'utf8');
     const код = текст.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-    if (fs.statSync(путь).size > 8 * 1024) ошибка('push-sw.js больше 8 КБ — в нём должны быть только push и notificationclick');
-    if (/addEventListener\(\s*['"]fetch['"]|onfetch\b/.test(код)) ошибка('push-sw.js перехватывает запросы (fetch) — нельзя: worker только показывает уведомления');
-    if (/\bcaches\b|importScripts|\bfetch\s*\(|XMLHttpRequest|indexedDB|https?:\/\//.test(код)) ошибка('push-sw.js: кэш, импорт, сетевые запросы или внешние адреса — нельзя');
-    if (/__ЗНАЧОК/.test(текст)) ошибка('push-sw.js: не подставлены значки (__ЗНАЧОК__) — запускать сборку через npm run export:web');
+    if (fs.statSync(путь).size > 16 * 1024) ошибка('push-sw.js больше 16 КБ — в нём только уведомления и кэш своих файлов');
+    if (/importScripts|XMLHttpRequest|indexedDB|https?:\/\//.test(код)) ошибка('push-sw.js: импорт, XHR, IndexedDB или внешние адреса — нельзя');
+    if (/__ЗНАЧОК|__ОФЛАЙН/.test(текст)) ошибка('push-sw.js: не подставлены значки или список офлайн (__ЗНАЧОК__, __ОФЛАЙН__) — запускать сборку через npm run export:web');
     const значки = [...текст.matchAll(/'\/aiustaz\/(pwa\/[^']+\.png)'/g)].map((м) => м[1]);
     if (значки.length !== 2 || !значки.every((з) => файлы.some((ф) => ф.отн === з)) || !значки.some((з) => з.startsWith('pwa/icon-192.')) || !значки.some((з) => з.startsWith('pwa/icon-mono-512.')))
       ошибка(`push-sw.js: значки должны быть существующими pwa/icon-192 и pwa/icon-mono-512 (сейчас: ${значки.join(', ') || 'нет'})`);
-    for (const соб of ['push', 'notificationclick']) if (!new RegExp(`addEventListener\\(\\s*'${соб}'`).test(код)) ошибка(`push-sw.js: нет обработчика ${соб}`);
-    строкаSW = `${кб(fs.statSync(путь).size)} КБ, только push и notificationclick, значки ${значки.map((з) => path.basename(з)).join(', ')}`;
+    for (const соб of ['push', 'notificationclick', 'install', 'activate', 'fetch', 'message']) if (!new RegExp(`addEventListener\\(\\s*'${соб}'`).test(код)) ошибка(`push-sw.js: нет обработчика ${соб}`);
+    // Список файлов без сети (offline/files.<хэш>.json, scripts/after-export.mjs п. 7).
+    const списокSW = текст.match(/'\/aiustaz\/(offline\/files\.[0-9a-f]{20}\.json)'/)?.[1];
+    const списки = файлы.filter((ф) => ф.отн.startsWith('offline/'));
+    let строкаОфлайн = 'нет списка';
+    if (!списокSW || !файлы.some((ф) => ф.отн === списокSW)) ошибка(`push-sw.js: нет существующего offline/files.<хэш>.json (сейчас: ${списокSW ?? 'нет'})`);
+    else if (списки.length !== 1) ошибка(`в offline/ должен быть ровно один список, найдено ${списки.length}`);
+    else {
+      const список = JSON.parse(fs.readFileSync(path.join(папка, списокSW), 'utf8'));
+      const есть = new Set(файлы.map((ф) => '/aiustaz/' + ф.отн));
+      const все = [...(список.оболочка ?? []), ...Object.values(список.группы ?? {}).flatMap((г) => г.файлы ?? [])];
+      for (const а of все) {
+        if (typeof а !== 'string' || !а.startsWith('/aiustaz/')) ошибка(`offline: путь не от /aiustaz/: ${а}`);
+        else if (!есть.has(а)) ошибка(`offline: нет файла ${а}`);
+        else if (!ХЭШ_В_ИМЕНИ.test(а)) ошибка(`offline: файл без хэша в имени (нельзя кэшировать навсегда): ${а}`);
+      }
+      const вСписке = new Set(все);
+      for (const ф of файлы) {
+        if (['_expo/', 'assets/', 'pwa/', 'quran/', 'dhikr/', 'makharij/', 'makharij-index/', 'hadith/', 'prayer/'].some((н) => ф.отн.startsWith(н)) && !вСписке.has('/aiustaz/' + ф.отн))
+          ошибка(`offline: файл сборки не в списке: ${ф.отн}`);
+      }
+      for (const г of ['коран', 'зикры', 'махраджи', 'хадисы', 'намаз']) if (!список.группы?.[г]?.файлы?.length) ошибка(`offline: пустая группа «${г}»`);
+      строкаОфлайн = `${списокSW}: оболочка ${список.оболочка.length}, ` + Object.entries(список.группы).map(([и, г]) => `${и} ${г.файлы.length} (${кб(г.байт)} КБ)`).join(', ');
+    }
+    строкаSW = `${кб(fs.statSync(путь).size)} КБ, уведомления и без сети; значки ${значки.map((з) => path.basename(з)).join(', ')}; ${строкаОфлайн}`;
   }
   const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/)?.[1] ?? '';
   const worker = csp.split(';').map((ч) => ч.trim()).find((ч) => ч.startsWith('worker-src ')) ?? '';

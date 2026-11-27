@@ -1,14 +1,20 @@
 /*
- * AI Ustaz — service worker уведомлений о времени намаза. Область — только /aiustaz/, регистрируется только на aiustaz.pro
- * (app/src/notify/push.ts; на batr.kz у сайта свой service worker со scope «/» — там наш не ставим).
- * Владелец 20.11.2026: «правильные, красивые уведомления время намаза приходило к клиенту». docs/дизайн/07-уведомления.md.
+ * AI Ustaz — service worker: уведомления о времени намаза и работа без сети. Область — только /aiustaz/, регистрируется
+ * только на aiustaz.pro (app/src/offline/offline.ts и app/src/notify/push.ts; на batr.kz у сайта свой service worker со
+ * scope «/» — там наш не ставим).
  *
- * Делает ровно две вещи: показывает уведомление из push (текст собирает сервер AI Ustaz — server/push.py) и по нажатию
- * открывает приложение (#/prayer, #/qibla или #/notifications). НЕ кэширует ничего, НЕ перехватывает запросы (обработчика
- * fetch нет), чужие пути не трогает — это проверяет scripts/check-dist.mjs (узкое исключение из правила «хэш в имени»).
- * Значки — эмблема-фонарь (pwa/icon-192) и монохромный значок для строки состояния (pwa/icon-mono-512): имена с хэшем
- * подставляет scripts/after-export.mjs. Звука от себя нет — системный звук уведомлений (без музыки; запись азана кари —
- * только по договору, будущая опция). Текст Корана в уведомлениях не показываем (правило 9).
+ * 1) Уведомления (владелец 20.11.2026: «правильные, красивые уведомления время намаза приходило к клиенту»;
+ *    docs/дизайн/07-уведомления.md): показывает уведомление из push (текст собирает сервер AI Ustaz — server/push.py) и
+ *    по нажатию открывает приложение (#/prayer, #/qibla или #/notifications). Значки — эмблема-фонарь (pwa/icon-192) и
+ *    монохромный значок (pwa/icon-mono-512): имена с хэшем подставляет scripts/after-export.mjs. Звука от себя нет;
+ *    текст Корана в уведомлениях не показываем (правило 9).
+ * 2) Без сети (владелец 27.11.2026: «пусть все суры и другая информация сохраняются, чтобы не грузить заново каждый
+ *    раз и чтобы можно было пользоваться офлайн»). Список файлов сборки — offline/files.<хэш>.json (адрес подставляет
+ *    after-export): «оболочка» (JS, шрифты, значки) кэшируется при установке worker'а; группы данных (коран, зикры,
+ *    махраджи, хадисы, намаз) — по сообщению «докачать» со страницы (с ходом загрузки) и по мере открытия.
+ *    Кэшируются ТОЛЬКО свои файлы с хэшем в имени (они не меняются) — cache-first; index.html — сеть, при её отсутствии
+ *    сохранённая копия. Остальное (api/, media/, аудио кари, privacy.html) — мимо worker'а, как раньше. Ничего не
+ *    отправляет и не хранит, кроме этих файлов; внешних адресов нет (scripts/check-dist.mjs, п. 10).
  */
 'use strict';
 
@@ -17,9 +23,164 @@ const ЗНАЧОК_МОНО = '__ЗНАЧОК_МОНО__';
 const ОБЛАСТЬ = '/aiustaz/';
 const АДРЕСА = { prayer: '#/prayer', qibla: '#/qibla', notifications: '#/notifications' };
 const КНОПКИ = new Set(['prayer', 'qibla']);
+const ОФЛАЙН = '__ОФЛАЙН__';
+const СТРАНИЦА = ОБЛАСТЬ + 'index.html';
+const КЭШ_ФАЙЛОВ = 'aiustaz-файлы-v1';
+const КЭШ_СТРАНИЦЫ = 'aiustaz-страница-v1';
+const С_ХЭШЕМ = /^\/aiustaz\/(?:_expo|assets|pwa|quran|hadith|dhikr|makharij|makharij-index|prayer|offline)\/[^?#]*[.-][0-9a-f]{16,}\.[a-z0-9]+$/i;
+const ПОТОКОВ = 4;
 
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (событие) => событие.waitUntil(self.clients.claim()));
+// ── Без сети ──
+
+let списокОбещание = null;
+
+/** Список файлов сборки (offline/files.<хэш>.json): из кэша, иначе из сети. */
+function список() {
+  if (!списокОбещание) {
+    списокОбещание = (async () => {
+      const кэш = await caches.open(КЭШ_ФАЙЛОВ);
+      let ответ = await кэш.match(ОФЛАЙН);
+      if (!ответ) {
+        ответ = await fetch(ОФЛАЙН, { cache: 'no-cache', credentials: 'omit' });
+        if (!ответ.ok) throw new Error('нет списка');
+        await кэш.put(ОФЛАЙН, ответ.clone());
+      }
+      return ответ.json();
+    })().catch((ошибка) => {
+      списокОбещание = null;
+      throw ошибка;
+    });
+  }
+  return списокОбещание;
+}
+
+/** Положить в кэш недостающие файлы (по ПОТОКОВ сразу); ход(готово) — после каждого файла. */
+async function положить(кэш, адреса, ход) {
+  let готово = 0;
+  const очередь = [];
+  for (const а of адреса) {
+    if (await кэш.match(а)) готово += 1;
+    else очередь.push(а);
+  }
+  if (ход) ход(готово);
+  let ошибок = 0;
+  async function поток() {
+    while (очередь.length) {
+      const а = очередь.shift();
+      try {
+        const ответ = await fetch(а, { credentials: 'omit' });
+        if (ответ.ok) await кэш.put(а, ответ);
+        else ошибок += 1;
+      } catch (_) {
+        ошибок += 1;
+      }
+      готово += 1;
+      if (ход) ход(готово);
+    }
+  }
+  await Promise.all(Array.from({ length: ПОТОКОВ }, поток));
+  return ошибок;
+}
+
+async function состояние() {
+  const с = await список();
+  const кэш = await caches.open(КЭШ_ФАЙЛОВ);
+  const есть = new Set((await кэш.keys()).map((з) => new URL(з.url).pathname));
+  const группы = {};
+  for (const [имя, г] of Object.entries(с.группы)) {
+    группы[имя] = { есть: г.файлы.filter((ф) => есть.has(ф)).length, всего: г.файлы.length, байт: г.байт };
+  }
+  return { тип: 'состояние', группы, оболочка: с.оболочка.every((ф) => есть.has(ф)) };
+}
+
+async function докачать(группа, порт) {
+  try {
+    const с = await список();
+    const г = с.группы[группа];
+    if (!г) throw new Error('нет группы');
+    const кэш = await caches.open(КЭШ_ФАЙЛОВ);
+    await положить(кэш, г.файлы, (готово) => порт && порт.postMessage({ тип: 'ход', группа, готово, всего: г.файлы.length }));
+    const итог = (await состояние()).группы[группа];
+    if (порт) порт.postMessage({ тип: 'готово', группа, ...итог });
+  } catch (_) {
+    if (порт) порт.postMessage({ тип: 'ошибка', группа });
+  }
+}
+
+self.addEventListener('install', (событие) => {
+  self.skipWaiting();
+  событие.waitUntil(
+    (async () => {
+      try {
+        const с = await список();
+        await положить(await caches.open(КЭШ_ФАЙЛОВ), с.оболочка);
+        const страница = await fetch(СТРАНИЦА, { cache: 'no-cache', credentials: 'omit' });
+        if (страница.ok) await (await caches.open(КЭШ_СТРАНИЦЫ)).put(СТРАНИЦА, страница);
+      } catch (_) {
+        // нет сети при установке — оболочка докачается по мере открытия
+      }
+    })(),
+  );
+});
+
+self.addEventListener('activate', (событие) => {
+  событие.waitUntil(
+    (async () => {
+      // Старые кэши и файлы прежних сборок (имена с другим хэшем) — удалить.
+      for (const имя of await caches.keys()) if (имя.startsWith('aiustaz-') && имя !== КЭШ_ФАЙЛОВ && имя !== КЭШ_СТРАНИЦЫ) await caches.delete(имя);
+      try {
+        const с = await список();
+        const нужны = new Set([ОФЛАЙН, ...с.оболочка, ...Object.values(с.группы).flatMap((г) => г.файлы)]);
+        const кэш = await caches.open(КЭШ_ФАЙЛОВ);
+        for (const з of await кэш.keys()) if (!нужны.has(new URL(з.url).pathname)) await кэш.delete(з);
+      } catch (_) {
+        // нет списка — чистим в следующий раз
+      }
+      await self.clients.claim();
+    })(),
+  );
+});
+
+async function страница(запрос) {
+  const кэш = await caches.open(КЭШ_СТРАНИЦЫ);
+  try {
+    const ответ = await fetch(запрос);
+    if (ответ.ok && ответ.type === 'basic') await кэш.put(СТРАНИЦА, ответ.clone());
+    return ответ;
+  } catch (ошибка) {
+    const сохранённая = await кэш.match(СТРАНИЦА);
+    if (сохранённая) return сохранённая;
+    throw ошибка;
+  }
+}
+
+async function файл(запрос, путь) {
+  const кэш = await caches.open(КЭШ_ФАЙЛОВ);
+  const есть = await кэш.match(путь);
+  if (есть) return есть;
+  const ответ = await fetch(запрос);
+  if (ответ.ok && ответ.type === 'basic') await кэш.put(путь, ответ.clone());
+  return ответ;
+}
+
+self.addEventListener('fetch', (событие) => {
+  const запрос = событие.request;
+  if (запрос.method !== 'GET') return;
+  const адрес = new URL(запрос.url);
+  if (адрес.origin !== self.location.origin || !адрес.pathname.startsWith(ОБЛАСТЬ)) return;
+  if (адрес.pathname === СТРАНИЦА || адрес.pathname === ОБЛАСТЬ) событие.respondWith(страница(запрос));
+  else if (С_ХЭШЕМ.test(адрес.pathname)) событие.respondWith(файл(запрос, адрес.pathname));
+});
+
+self.addEventListener('message', (событие) => {
+  const данные = событие.data || {};
+  const порт = событие.ports && событие.ports[0];
+  if (!порт) return;
+  if (данные.тип === 'состояние') событие.waitUntil(состояние().then((р) => порт.postMessage(р), () => порт.postMessage({ тип: 'ошибка' })));
+  else if (данные.тип === 'докачать' && typeof данные.группа === 'string') событие.waitUntil(докачать(данные.группа, порт));
+});
+
+// ── Уведомления ──
 
 function строка(значение, предел) {
   return typeof значение === 'string' ? значение.slice(0, предел) : '';

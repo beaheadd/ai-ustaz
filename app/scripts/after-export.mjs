@@ -27,6 +27,10 @@
  *    notificationclick, без кэша) подставляет адреса значков: __ЗНАЧОК__ → /aiustaz/pwa/icon-192.<md5>.png,
  *    __ЗНАЧОК_МОНО__ → /aiustaz/pwa/icon-mono-512.<md5>.png. CSP worker-src 'self' — только этот worker своего сайта
  *    (регистрирует его app/src/notify/push.ts и только на aiustaz.pro).
+ * 7) Без сети (владелец 27.11.2026: «пусть все суры и другая информация сохраняются… пользоваться офлайн»): пишет список
+ *    файлов сборки dist/offline/files.<sha256[:20]>.json — { версия, оболочка: [JS, шрифты, значки], группы: { коран,
+ *    зикры, махраджи, хадисы, намаз: { файлы, байт } } } (адреса от /aiustaz/) — и подставляет его адрес в push-sw.js
+ *    (__ОФЛАЙН__). Worker кэширует оболочку при установке, группы — по просьбе страницы (src/offline/offline.ts).
  * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
@@ -149,4 +153,41 @@ export const ФАЙЛ_SW = 'push-sw.js';
   if (новый.includes('__ЗНАЧОК')) throw new Error(`не удалось подставить значки в ${ФАЙЛ_SW}`);
   fs.writeFileSync(путь, новый);
   console.log(`Service worker уведомлений: ${ФАЙЛ_SW} — значки ${значки['icon-192']}, ${значки['icon-mono-512']}`);
+}
+
+// 7. Список файлов для работы без сети (владелец 27.11.2026).
+export const ПАПКА_ОФЛАЙН = 'offline';
+export const ГРУППЫ_ОФЛАЙН = { коран: ['quran/'], зикры: ['dhikr/'], махраджи: ['makharij/', 'makharij-index/'], хадисы: ['hadith/'], намаз: ['prayer/'] };
+export const ОБОЛОЧКА_ОФЛАЙН = ['_expo/', 'assets/', 'pwa/'];
+{
+  const все = [];
+  (function обойти(п) {
+    for (const и of fs.readdirSync(п, { withFileTypes: true })) {
+      const полный = path.join(п, и.name);
+      if (и.isDirectory()) обойти(полный);
+      else все.push({ отн: path.relative(папка, полный).split(path.sep).join('/'), байт: fs.statSync(полный).size });
+    }
+  })(папка);
+  const адрес = (отн) => '/aiustaz/' + отн;
+  const оболочка = все.filter((ф) => ОБОЛОЧКА_ОФЛАЙН.some((н) => ф.отн.startsWith(н))).map((ф) => адрес(ф.отн)).sort();
+  const группы = {};
+  for (const [имя, начала] of Object.entries(ГРУППЫ_ОФЛАЙН)) {
+    const ф = все.filter((ф) => начала.some((н) => ф.отн.startsWith(н))).sort((а, б) => (а.отн < б.отн ? -1 : 1));
+    группы[имя] = { файлы: ф.map((х) => адрес(х.отн)), байт: ф.reduce((с, х) => с + х.байт, 0) };
+  }
+  const тело = { оболочка, группы };
+  const версия = crypto.createHash('sha256').update(JSON.stringify(тело)).digest('hex').slice(0, 20);
+  const текст = JSON.stringify({ версия, ...тело });
+  const имя = `files.${crypto.createHash('sha256').update(текст).digest('hex').slice(0, 20)}.json`;
+  const папкаОфлайн = path.join(папка, ПАПКА_ОФЛАЙН);
+  fs.rmSync(папкаОфлайн, { recursive: true, force: true });
+  fs.mkdirSync(папкаОфлайн, { recursive: true });
+  fs.writeFileSync(path.join(папкаОфлайн, имя), текст);
+  const путьSW = path.join(папка, ФАЙЛ_SW);
+  const sw = fs.readFileSync(путьSW, 'utf8');
+  const новый = sw.replace(/'(__ОФЛАЙН__|\/aiustaz\/offline\/files\.[0-9a-f]{20}\.json)'/, `'/aiustaz/${ПАПКА_ОФЛАЙН}/${имя}'`);
+  if (новый.includes('__ОФЛАЙН__')) throw new Error(`не удалось подставить список офлайн в ${ФАЙЛ_SW}`);
+  fs.writeFileSync(путьSW, новый);
+  const мб = (б) => (б / 1048576).toFixed(1) + ' МБ';
+  console.log(`Без сети: ${ПАПКА_ОФЛАЙН}/${имя} — оболочка ${оболочка.length} файлов, ` + Object.entries(группы).map(([и, г]) => `${и} ${г.файлы.length} (${мб(г.байт)})`).join(', '));
 }

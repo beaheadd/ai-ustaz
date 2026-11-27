@@ -9,7 +9,7 @@
  *                        (server/push.py), в данных нет координат; сохранённые настройки (кривое — по умолчанию).
  *   notify/support.ts  — где можно включить: aiustaz.pro, batr.kz, iPhone не с экрана «Домой», iOS < 16.4, Instagram.
  *   public/push-sw.js  — service worker в песочнице node:vm: push → showNotification (значки, tag, кнопки, тихое),
- *                        мусор не показывает; нажатие → окно /aiustaz/index.html#/prayer|#/qibla; обработчика fetch нет.
+ *                        мусор не показывает; нажатие → окно /aiustaz/index.html#/prayer|#/qibla; fetch — только свои файлы (без сети, 27.11.2026).
  *   Тексты примера на экране = формат сервера (server/push.py ТЕКСТЫ).
  */
 import assert from 'node:assert/strict';
@@ -186,7 +186,11 @@ function песочница() {
       openWindow: async (адрес) => открыто.push(адрес),
     },
   };
-  vm.runInNewContext(кодSW, { self, URL, Date, Number, Array, Object, Set, JSON, console });
+  // Кэш и сеть — заглушки: в песочнице проверяем только, что worker перехватывает (offline — scripts/e2e-offline.mjs).
+  const кэш = { match: async () => undefined, put: async () => {}, keys: async () => [], delete: async () => true };
+  const caches = { open: async () => кэш, keys: async () => [], delete: async () => true };
+  const fetch = async () => ({ ok: false, type: 'basic', clone() { return this; }, json: async () => ({}) });
+  vm.runInNewContext(кодSW, { self, URL, Date, Number, Array, Object, Set, JSON, console, caches, fetch, Promise });
   const ждать = async (событие) => {
     const обещания = [];
     событие.waitUntil = (п) => обещания.push(п);
@@ -196,10 +200,30 @@ function песочница() {
 }
 const данные = (объект) => ({ json: () => (typeof объект === 'string' ? JSON.parse(объект) : объект) });
 
-тест('SW: только install, activate, push, notificationclick — без fetch и кэша', () => {
+тест('SW: уведомления и без сети (27.11.2026) — install, activate, fetch, message, push, notificationclick; без импорта и внешних адресов', () => {
   const п = песочница();
-  assert.deepEqual(Object.keys(п.обработчики).sort(), ['activate', 'install', 'notificationclick', 'push']);
-  assert.ok(!/\bcaches\b|importScripts|\bfetch\s*\(/.test(кодSW.replace(/\/\*[\s\S]*?\*\//g, '')));
+  assert.deepEqual(Object.keys(п.обработчики).sort(), ['activate', 'fetch', 'install', 'message', 'notificationclick', 'push']);
+  assert.ok(!/importScripts|XMLHttpRequest|indexedDB|https?:\/\//.test(кодSW.replace(/\/\*[\s\S]*?\*\//g, '')));
+});
+
+тест('SW fetch: перехватывает только свои GET в /aiustaz/ — index.html и файлы с хэшем; api, media, чужие — мимо', () => {
+  const п = песочница();
+  const перехвачен = (url, метод = 'GET') => {
+    let да = false;
+    п.обработчики.fetch({ request: { url, method: метод, mode: 'cors' }, respondWith: () => (да = true) });
+    return да;
+  };
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/index.html'), true);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/'), true);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/quran/002.8ccaa993c357af391b0d.json'), true);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/_expo/static/js/web/index-0123456789abcdef0123456789abcdef.js'), true);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/hadith/ru/001.0123456789abcdef0123.json'), true);
+  assert.equal(перехвачен('https://aiustaz.pro/api/push/key'), false);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/media/lesson.mp4'), false);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/privacy.html'), false);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/push-sw.js'), false);
+  assert.equal(перехвачен('https://batr.kz/aiustaz/quran/002.8ccaa993c357af391b0d.json'), false);
+  assert.equal(перехвачен('https://aiustaz.pro/aiustaz/quran/002.8ccaa993c357af391b0d.json', 'POST'), false);
 });
 
 const НАГРУЗКА = {
