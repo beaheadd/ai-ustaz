@@ -286,9 +286,9 @@ export async function главнаяСквозной(браузер, база, {
     // Обучения на главной нет — только строка «Продолжить» у начавшего курс.
     п.проверить(!(await п.есть('главная-урок')) && !(await п.есть('главная-карта')) && !(await п.есть('главная-начать')) && !(await п.есть('главная-реплика')), 'карточки урока, реплики и «Пути обучения» на главной нет');
     п.проверить((await п.текстЭ('главная-продолжить')) === 'Продолжить: урок 2', 'начавшему курс — одна строка «Продолжить: урок 2»');
-    п.проверить((await стр.locator('[data-testid^="главная-модуль-"]').count()) === 0 && !(await п.есть('главная-модули')), 'ряда плиток «Кибла | Зикры» нет (кибла — в шапке, у зикров — «Все зикры»)');
-    const порядок = await стр.evaluate(() => ['карточка-намаза', 'главная-продолжить', 'главная-зикры'].map((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().top ?? -1));
-    п.проверить(порядок.every((y, i) => y >= 0 && (i === 0 || y > порядок[i - 1])), 'порядок: время намаза → «Продолжить» → зикры');
+    п.проверить((await стр.locator('[data-testid^="главная-модуль-"]').count()) === 0 && !(await п.есть('главная-модули')), 'прежнего ряда плиток «Кибла | Зикры» нет');
+    const порядок = await стр.evaluate(() => ['карточка-намаза', 'главная-разделы', 'главная-продолжить'].map((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().top ?? -1));
+    п.проверить(порядок.every((y, i) => y >= 0 && (i === 0 || y > порядок[i - 1])), 'порядок: время намаза → разделы → «Продолжить»');
     const весь = await стр.evaluate(() => document.body.innerText);
     п.проверить(!/хиджр|недействит|хасанат|рейтинг\b/i.test(весь), 'нет хиджры, слов о действительности намаза, хасанат и рейтингов');
     await п.безГоризонтальнойПрокрутки('главная');
@@ -415,7 +415,7 @@ export async function главнаяСквозной(браузер, база, {
     const п = помощники(стр, проблемы, 'новый', null);
     await стр.goto(база + '/aiustaz/index.html#/');
     await п.э('намаз-ряд').waitFor({ timeout: 20000 });
-    await п.э('главная-зикры').waitFor({ timeout: 20000 });
+    await п.э('главная-разделы').waitFor({ timeout: 20000 });
     await стр.waitForTimeout(400);
     п.проверить(!(await п.есть('главная-продолжить')) && !(await п.есть('главная-начать')) && !(await п.есть('главная-урок')), 'новому человеку обучения на главной нет совсем (урок — в «Таджвиде»)');
     const фон = await стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="экран-главная"]')).backgroundColor);
@@ -613,38 +613,65 @@ export async function главнаяСквозной(браузер, база, {
     await контекст.close();
   }
 
-  // ── 9. Зикры и компас в шапке (владелец 26–27.11.2026) ──
-  console.log('\n══ Главная: зикры и компас «Кибла» в шапке ══');
+  // ── 9. Сетка разделов и компас в шапке (владелец 27.11.2026, образец HalalGuide) ──
+  console.log('\n══ Главная: сетка разделов 3×2 и компас «Кибла» в шапке ══');
   {
     const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { время: вРК(ДЕНЬ, '12:40') });
-    const п = помощники(стр, проблемы, 'зикры', папкаСнимков);
-    await стр.goto(база + '/aiustaz/index.html#/');
-    await п.э('главная-зикр-subhanallah').waitFor({ timeout: 20000 });
-    const ид = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="главная-зикр-"]')].map((е) => е.getAttribute('data-testid')).filter((и) => !и.endsWith('-счёт')));
-    п.проверить(JSON.stringify(ид) === JSON.stringify(['главная-зикр-subhanallah', 'главная-зикр-alhamdulillah', 'главная-зикр-takbir', 'главная-зикр-tahlil']), `четыре быстрых зикра по умолчанию (${ид.join(', ')})`);
-    п.проверить((await п.текстЭ('главная-зикр-subhanallah')).includes('Субханаллах') && (await п.текстЭ('главная-зикр-subhanallah-счёт')) === '0 / 33', 'название из данных и «0 / 33»');
+    const п = помощники(стр, проблемы, 'разделы', папкаСнимков);
+    const главная = async () => {
+      await стр.goto(база + '/aiustaz/index.html#/');
+      await п.э('главная-разделы').waitFor({ timeout: 20000 });
+    };
+    await главная();
+    const ид = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="главная-раздел-"]')].map((е) => е.getAttribute('data-testid').replace('главная-раздел-', '')));
+    п.проверить(JSON.stringify(ид) === JSON.stringify(['зикры', 'дуа', 'коран', 'хадисы', 'намаз', 'таджвид']), `6 разделов по порядку (${ид.join(', ')})`);
+    п.проверить(!(await п.есть('главная-зикры')) && (await стр.locator('[data-testid^="главная-зикр-"]').count()) === 0, 'блока быстрых зикров на главной нет');
+    const рамки = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="главная-раздел-"]')].map((е) => { const р = е.getBoundingClientRect(); return [Math.round(р.left), Math.round(р.top), Math.round(р.width), Math.round(р.height)]; }));
+    const ряды = [...new Set(рамки.map((р) => р[1]))];
+    п.проверить(ряды.length === 2 && рамки.every((р) => р[2] >= 48 && р[3] >= 48), `сетка 3×2, плитки ≥ 48 px (${JSON.stringify(рамки)})`);
+    п.проверить((await стр.locator('[data-testid^="главная-раздел-"] svg').count()) >= 6, 'у каждой плитки — нарисованный значок');
     const карточкаН = await п.э('карточка-намаза').boundingBox();
-    const зикры = await п.э('главная-зикры').boundingBox();
-    п.проверить(карточкаН && зикры && зикры.y > карточкаН.y + карточкаН.height, 'блок зикров — под временем намаза');
-    await п.э('главная-зикр-subhanallah').click();
-    await п.э('экран-зикр').waitFor({ timeout: 20000 });
-    п.проверить((await п.хэш()) === '#/dhikr/item?n=4', `нажатие → счётчик этого зикра (${await п.хэш()})`);
-    for (let i = 0; i < 3; i++) await п.э('зикр-нажать').click();
-    await стр.goBack();
-    await п.э('главная-зикр-subhanallah-счёт').waitFor({ timeout: 20000 });
-    п.проверить((await п.текстЭ('главная-зикр-subhanallah-счёт')) === '3 / 33', `после трёх нажатий на главной — «3 / 33»`);
-    await п.э('главная-зикры-все').click();
-    await п.э('экран-зикры').waitFor({ timeout: 20000 });
-    п.проверить((await п.хэш()) === '#/dhikr', '«Все зикры» → #/dhikr');
-    await стр.goBack();
-    await п.э('главная-кибла').waitFor({ timeout: 20000 });
+    const сетка = await п.э('главная-разделы').boundingBox();
+    п.проверить(карточкаН && сетка && сетка.y > карточкаН.y + карточкаН.height - 1, 'сетка — под временем намаза');
+    const переходы = [
+      ['зикры', '#/dhikr', 'экран-зикры'],
+      ['дуа', '#/dua', 'экран-дуа'],
+      ['коран', '#/quran', 'экран-коран'],
+      ['хадисы', '#/hadith', 'экран-хадисы'],
+      ['таджвид', '#/course', 'экран-карта'],
+    ];
+    for (const [р, хэш, экран] of переходы) {
+      await главная();
+      await п.э('главная-раздел-' + р).click();
+      await п.э(экран).waitFor({ timeout: 20000 });
+      п.проверить((await п.хэш()) === хэш, `«${р}» → ${хэш} (${await п.хэш()})`);
+      if (р === 'дуа') {
+        await п.э('зикры-список').waitFor({ timeout: 20000 });
+        const строк = await стр.locator('[data-testid="зикры-список"] [data-testid^="зикры-строка-"][data-testid$="-название"]').count();
+        п.проверить(строк === 14 && !(await п.есть('зикры-строка-subhanallah')) && (await п.есть('зикры-строка-sayyid-al-istighfar')), `«Дуа» — только мольбы: ${строк} (нет «Субханаллах», есть «Сайидуль-истигфар»)`);
+      }
+    }
+    await главная();
+    await п.э('главная-раздел-намаз').click();
+    п.проверить(await п.есть('главная-намаз-скоро') && (await п.хэш()) === '#/', '«Учимся намазу» — «скоро»: строка «Раздел готовится…», без перехода');
     await п.э('главная-кибла').click();
     await стр.waitForFunction(() => location.hash === '#/qibla', null, { timeout: 15000 });
     п.проверить(true, 'компас «Кибла» в шапке → #/qibla');
-    await стр.goBack();
-    await п.э('главная-зикры').waitFor({ timeout: 20000 });
-    await п.безГоризонтальнойПрокрутки('зикры на главной');
-    await п.безПроблем('зикры на главной: без ошибок');
+    await главная();
+    await п.безГоризонтальнойПрокрутки('сетка разделов');
+    await п.безПроблем('сетка разделов: без ошибок');
+    await контекст.close();
+  }
+  for (const [ш, язык, масштаб] of [[320, 'kk', 1], [360, 'kk', 1.15], [412, 'ru', 1.15], [360, 'uz', 1], [360, 'en', 1]]) {
+    const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { профиль: { viewport: { width: ш, height: 800 }, isMobile: true, hasTouch: true }, язык, время: вРК(ДЕНЬ, '12:40') });
+    const п = помощники(стр, проблемы, `разделы ${ш} ${язык}`, null);
+    await стр.goto(база + '/aiustaz/index.html#/');
+    await п.э('главная-разделы').waitFor({ timeout: 20000 });
+    if (масштаб !== 1) await стр.evaluate((к) => (document.documentElement.style.fontSize = `${к * 100}%`), масштаб);
+    await стр.evaluate(() => document.fonts.ready);
+    const обрезано = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="главная-раздел-"] [dir], [data-testid^="главная-раздел-"] div')].filter((е) => е.children.length === 0 && е.textContent && (е.scrollWidth > е.clientWidth + 1 || е.scrollHeight > е.clientHeight + 1)).map((е) => е.textContent));
+    п.проверить(обрезано.length === 0, `${ш} px ${язык} ×${масштаб}: подписи плиток не обрезаны (${обрезано.join(', ')})`);
+    await п.безГоризонтальнойПрокрутки(`разделы ${ш} ${язык}`);
     await контекст.close();
   }
 
@@ -704,7 +731,7 @@ async function страницаАлматы(браузер, база, { ш, в, 
   await р.стр.addInitScript(({ к, место }) => localStorage.setItem(к, JSON.stringify({ версия: 1, место })), { к: КЛЮЧ_МЕСТА, место: АЛМАТЫ });
   await р.стр.goto(база + '/aiustaz/index.html#/');
   await р.стр.getByTestId('карточка-намаза').first().waitFor({ timeout: 20000 });
-  await р.стр.getByTestId('главная-зикры').first().waitFor({ timeout: 10000 });
+  await р.стр.getByTestId('главная-разделы').first().waitFor({ timeout: 10000 });
   await р.стр.evaluate(() => document.fonts.ready);
   await р.стр.waitForTimeout(300);
   return р;

@@ -46,6 +46,8 @@ export type Зикр = {
   произношение: Тексты;
   перевод: Тексты;
   примечание?: Тексты;
+  /** Мольба — показывается и в разделе «Дуа» (#/dua; владелец 27.11.2026). */
+  дуа?: boolean;
   источник: {
     коран?: string;
     hadeethenc?: number;
@@ -100,6 +102,7 @@ export function проверитьЗикры(сырые: unknown): НаборЗ�
       if (!п) return null;
       примечание = п;
     }
+    if (з.дуа !== undefined && з.дуа !== true) return null;
     const и = з.источник as Record<string, unknown> | null;
     if (!и || typeof и !== 'object') return null;
     const источник: Зикр['источник'] = {};
@@ -123,6 +126,7 @@ export function проверитьЗикры(сырые: unknown): НаборЗ�
       произношение,
       перевод,
       ...(примечание ? { примечание } : null),
+      ...(з.дуа === true ? { дуа: true } : null),
       источник,
     });
   }

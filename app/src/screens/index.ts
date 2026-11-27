@@ -26,7 +26,7 @@ import { Сура } from './SuraScreen';
 import { Установка } from './InstallScreen';
 import { Уведомления } from './NotificationsScreen';
 import { СпроситьУстаза } from './AskScreen';
-import { Зикры } from './DhikrScreen';
+import { Дуа, Зикры } from './DhikrScreen';
 import { СчётчикЗикра } from './DhikrCounterScreen';
 import { Махраджи } from './MakharijScreen';
 import { БукваМахраджаЭкран } from './MakharijLetterScreen';
@@ -51,6 +51,7 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   хадис: Хадис,
   устаз: СпроситьУстаза,
   зикры: Зикры,
+  дуа: Дуа,
   зикр: СчётчикЗикра,
   махраджи: Махраджи,
   букваМахраджа: БукваМахраджаЭкран,
