@@ -68,7 +68,7 @@ export async function официальноеСквозной(браузер, { �
         window.__csp = [];
         document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
         try {
-          if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс));
+          if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
           if (!localStorage.getItem('aiustaz:prayer-place.v1')) localStorage.setItem('aiustaz:prayer-place.v1', JSON.stringify({ версия: 1, место }));
           localStorage.setItem('aiustaz:prayer-asr.v1', JSON.stringify({ версия: 1, мазхаб: аср }));
         } catch {}

@@ -46,7 +46,7 @@ function проверить(условие, что) {
 async function страница(браузер, база, { ширина = 412, высота = 800, язык = 'ru' } = {}) {
   const к = await браузер.newContext({ viewport: { width: ширина, height: высота }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, locale: 'ru-RU', timezoneId: 'Asia/Almaty' });
   await к.addInitScript((п) => {
-    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(п));
+    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(п)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
   }, ПРОГРЕСС(язык));
   const стр = await к.newPage();
   const проблемы = [];

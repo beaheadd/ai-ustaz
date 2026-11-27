@@ -43,7 +43,7 @@ export async function офлайнСквозной(браузер, база, п�
   await контекст.addInitScript((прогресс) => {
     try {
       localStorage.setItem('aiustaz:sw-test', '1');
-      if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс));
+      if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     } catch {}
   }, ПРОГРЕСС);
   const стр = await контекст.newPage();

@@ -113,6 +113,11 @@ await тест('адрес CDN: глобальный номер аята (1:1 �
   assert.ok(ядро.естьБисмиллаУ(х));
   const о = нормализоватьОчередь({ сура: 2 });
   assert.equal(адресШага(х, о, первыйШаг(о, true)), 'https://cdn.islamic.network/quran/audio/128/ar.husary/1.mp3');
+  // Своё зеркало (владелец 27.11.2026: «из наших серверов отдавать»): тот же номер файла, свой домен.
+  const хЗ = { ...х, зеркало: '/aiustaz-audio' };
+  assert.equal(адресАята(хЗ, 2, 255), '/aiustaz-audio/128/ar.husary/262.mp3');
+  assert.equal(адресШага(хЗ, о, первыйШаг(о, true)), '/aiustaz-audio/128/ar.husary/1.mp3');
+  assert.equal(адресАята({ ...а, зеркало: '/aiustaz-audio' }, 114, 6), '/aiustaz-audio/64/ar.abdulsamad/6236.mp3');
   assert.equal(первыйШаг(о, true).вид, 'бисмилла');
 });
 await тест('CDN-запись: только хост из списка, издание вида ar.xxx, битрейт из списка', () => {

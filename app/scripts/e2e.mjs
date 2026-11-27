@@ -123,6 +123,7 @@ import { зикрыСквозной } from './e2e-dhikr.mjs';
 import { махраджиСквозной } from './e2e-makharij.mjs';
 import { намазСквозной } from './e2e-namaz.mjs';
 import { офлайнСквозной } from './e2e-offline.mjs';
+import { загрузкаСквозной } from './e2e-download.mjs';
 import { установкаСквозной } from './e2e-install.mjs';
 import { уведомленияСквозной } from './e2e-notify.mjs';
 import { официальноеСквозной } from './e2e-official.mjs';
@@ -156,6 +157,7 @@ async function подготовитьКонтекст(браузер, профи
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
     window.__потоки = [];
+    try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     const md = navigator.mediaDevices;
     if (md && md.getUserMedia) {
       const исходный = md.getUserMedia.bind(md);
@@ -360,6 +362,7 @@ async function всеУроки(браузер, база) {
   const контекст = await браузер.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, locale: 'ru-RU' });
   await контекст.addInitScript(() => {
     window.__потоки = [];
+    try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     if (!localStorage.getItem('aiustaz:progress.v1')) {
       localStorage.setItem('aiustaz:progress.v1', JSON.stringify({ версия: 1, язык: 'ru', предупреждениеПоказано: true, пояснениеМикрофонаПоказано: true, уроки: {}, дниЗанятий: [] }));
     }
@@ -889,6 +892,7 @@ async function конкретнаяПодсказка(браузерОбычны
       window.__csp = [];
       document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
       window.__потоки = [];
+      try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
       if (!localStorage.getItem(к))
         localStorage.setItem(к, JSON.stringify({ версия: 1, язык: я, предупреждениеПоказано: true, пояснениеМикрофонаПоказано: true, согласиеПроверкиГолосом: true, уроки: {}, дниЗанятий: [] }));
     }, [КЛЮЧ, язык]);
@@ -1156,6 +1160,7 @@ async function контекстМедиа(браузер) {
     window.__csp = [];
     document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
     window.__потоки = [];
+    try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     if (!localStorage.getItem('aiustaz:progress.v1')) {
       localStorage.setItem('aiustaz:progress.v1', JSON.stringify({ версия: 1, язык: 'ru', предупреждениеПоказано: true, пояснениеМикрофонаПоказано: true, уроки: {}, дниЗанятий: [] }));
     }
@@ -1483,6 +1488,17 @@ try {
       итоги.push(['без сети (worker, Коран/зикры/махраджи фоном, хадисы по кнопке, офлайн-открытие)', 'OK']);
     } catch (е) {
       итоги.push(['без сети (worker, Коран/зикры/махраджи фоном, хадисы по кнопке, офлайн-открытие)', 'ОШИБКА']);
+      console.error('\n' + (е?.stack ?? е));
+      process.exitCode = 1;
+    }
+  }
+  if (process.env.E2E_DOWNLOAD !== '0') {
+    try {
+      console.log('\n══ Скачивание чтения и выбор чтеца (своё зеркало, без сети, Фатиха) ══');
+      всегоПроверок += await загрузкаСквозной(браузер);
+      итоги.push(['скачивание чтения (аят, сура, без сети, «Скачанное»), выбор чтеца с Фатихой', 'OK']);
+    } catch (е) {
+      итоги.push(['скачивание чтения (аят, сура, без сети, «Скачанное»), выбор чтеца с Фатихой', 'ОШИБКА']);
       console.error('\n' + (е?.stack ?? е));
       process.exitCode = 1;
     }

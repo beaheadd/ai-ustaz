@@ -93,7 +93,7 @@ export function данныеКорана(папка) {
 // ───────────────────────── Фикстуры: тестовый источник чтения (тоны, НЕ Коран) ─────────────────────────
 
 /** WAV PCM 16 бит, моно: синус частоты гц длительностью сек, тихо, с плавными краями. */
-function тон(сек, гц, дискр = 8000) {
+export function тон(сек, гц, дискр = 8000) {
   const n = Math.round(сек * дискр);
   const б = Buffer.alloc(44 + n * 2);
   б.write('RIFF', 0);
@@ -187,7 +187,7 @@ async function новаяСтраница(браузер, база, { ширин
     ({ прогресс }) => {
       window.__csp = [];
       document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
-      if (прогресс && !localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс));
+      if (прогресс && !localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     },
     { прогресс },
   );
@@ -819,7 +819,7 @@ export async function коранСквозной(браузер, база, { п�
     п.проверить((await п.текстЭ('чтец')) === 'Чтец: Махмуд Халил аль-Хусари', 'меню вида: «Чтец: Махмуд Халил аль-Хусари»');
     await п.э('чтец').click();
     await п.э('чтец-выбор').waitFor({ timeout: 3000 });
-    const чтецы = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="чтец-"]')].map((е) => е.getAttribute('data-testid')).filter((id) => !/выбор|атрибуция/.test(id)));
+    const чтецы = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="чтец-"]')].map((е) => е.getAttribute('data-testid')).filter((id) => !/выбор|атрибуция|слушать/.test(id)));
     п.проверить(чтецы.join() === 'чтец-husary,чтец-husary-mujawwad,чтец-abdulbasit,чтец-ayyub,чтец-suwayd,чтец-alafasy-cdn', `шесть чтецов: ${чтецы.join(', ')}`);
     п.проверить((await нажат('чтец-husary')) === 'true' && (await нажат('чтец-ayyub')) === 'false', 'отмечен аль-Хусари (aria-pressed)');
     п.проверить(/AlQuran Cloud/.test(await п.текстЭ('чтец-атрибуция')) && /права на запись — у чтеца/.test(await п.текстЭ('чтец-атрибуция')), 'атрибуция: «Аудио — AlQuran Cloud …; права на запись — у чтеца»');

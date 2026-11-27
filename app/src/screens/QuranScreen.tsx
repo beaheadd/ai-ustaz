@@ -37,6 +37,7 @@
 import { memo, useEffect, useMemo, useRef, useState, type ComponentRef } from 'react';
 import { Platform, Pressable, TextInput, View } from 'react-native';
 import { АрабскийТекст, Кнопка, Плашка, СтрокаСписка, Текст, Значок, Экран } from '../components';
+import { ПервыйВыборЧтеца } from '../components/quran/ReciterPicker';
 import { СтрокаСоЗначком } from '../components/exercises/common';
 import { useНавигация } from '../engine/navigation';
 import { вХэш, type ПропсыЭкрана } from '../engine/routes';
@@ -483,6 +484,8 @@ export function Коран(_: ПропсыЭкрана<'коран'>) {
       <СтрокаСписка заголовок={т('как')} подпись={т('какПояснение')} значок="нукта" приНажатии={() => перейти('какОбъясняем')} testID="коран-как" />
       <Кнопка вид="вторичная" значок="таджвид" надпись={т('кУрокам')} приНажатии={() => перейтиВкладку('таджвид')} testID="коран-к-урокам" />
       <Плашка вид="черновик" надпись={т('черновик')} testID="коран-черновик" />
+      {/* Выбор чтеца при первом заходе (владелец 27.11.2026: «пусть слушают аль-Фатиху и выбирают чтеца»); один раз. */}
+      <ПервыйВыборЧтеца />
     </Экран>
   );
 }

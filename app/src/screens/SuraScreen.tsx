@@ -51,6 +51,7 @@ import { ТекстАята } from '../components/quran/AyahText';
 import { КартушСуры, ПАЛИТРЫ_МУСХАФА, ПотокМусхафа, useЦветаСуры } from '../components/quran/MushafView';
 import { СтрокаБезЗвука } from '../components/quran/PlayerBar';
 import { ПереключательВидаЧтения } from '../components/quran/ReadingViewPicker';
+import { СкачатьСуру } from '../components/quran/AudioDownload';
 import { ВыборЧтеца } from '../components/quran/ReciterPicker';
 import { ПанельЧтенияАята } from '../components/quran/RecitePanel';
 import { ЛегендаТаджвида } from '../components/quran/TajweedLegend';
@@ -386,6 +387,8 @@ function МенюВида({ закрыть, сура, естьТранслит }
           </View>
           {/* Чтец Корана (владелец 27.11.2026: аудио AlQuran Cloud); нечего слушать — компонент ничего не рисует. */}
           <ВыборЧтеца вид="шапка" />
+          {/* Скачать суру для прослушивания без интернета (владелец 27.11.2026); нельзя здесь — ничего не рисует. */}
+          {сура ? <СкачатьСуру сура={сура.сура} /> : null}
           {сЦветами && сура ? <ЛегендаЦветов сура={сура} ночь={ночь} /> : null}
           {естьТранслит ? (
             <View style={{ alignSelf: 'flex-start' }}>

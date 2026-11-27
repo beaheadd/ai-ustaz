@@ -19,6 +19,7 @@
     "test:quran": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-quran.mjs",
     "test:hadith": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-hadith.mjs",
     "test:audio": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-audio.mjs && node --disable-warning=ExperimentalWarning scripts/e2e-audio.mjs",
+    "test:download": "node scripts/e2e-download.mjs",
     "test:install": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-install.mjs",
     "test:notify": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-notify.mjs",
     "test:ask": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-ask.mjs",

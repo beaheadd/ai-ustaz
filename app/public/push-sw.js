@@ -15,6 +15,10 @@
  *    Кэшируются ТОЛЬКО свои файлы с хэшем в имени (они не меняются) — cache-first; index.html — сеть, при её отсутствии
  *    сохранённая копия. Остальное (api/, media/, аудио кари, privacy.html) — мимо worker'а, как раньше. Ничего не
  *    отправляет и не хранит, кроме этих файлов; внешних адресов нет (scripts/check-dist.mjs, п. 10).
+ * 3) Скачанное чтение кари (владелец 27.11.2026: «кнопка „Скачать“ по каждому аяту… без интернета слушать»): страница
+ *    (src/audio/download.ts) кладёт файлы аятов своего зеркала /aiustaz-audio/… в кэш «aiustaz-аудио-v1»; worker отдаёт
+ *    их оттуда (с Range — перемотка и Safari), не скачанные — из сети как раньше. Сам аудио не кэширует и этот кэш при
+ *    обновлении не чистит (удаляет только человек: «Ещё» → «Скачанное чтение»).
  */
 'use strict';
 
@@ -29,6 +33,8 @@ const КЭШ_ФАЙЛОВ = 'aiustaz-файлы-v1';
 const КЭШ_СТРАНИЦЫ = 'aiustaz-страница-v1';
 const С_ХЭШЕМ = /^\/aiustaz\/(?:_expo|assets|pwa|quran|hadith|dhikr|makharij|makharij-index|prayer|offline)\/[^?#]*[.-][0-9a-f]{16,}\.[a-z0-9]+$/i;
 const ПОТОКОВ = 4;
+const КЭШ_АУДИО = 'aiustaz-аудио-v1';
+const АУДИО = /^\/aiustaz-audio\/\d+\/[a-z]{2}\.[a-z0-9-]+\/\d+\.mp3$/;
 
 // ── Без сети ──
 
@@ -127,7 +133,7 @@ self.addEventListener('activate', (событие) => {
   событие.waitUntil(
     (async () => {
       // Старые кэши и файлы прежних сборок (имена с другим хэшем) — удалить.
-      for (const имя of await caches.keys()) if (имя.startsWith('aiustaz-') && имя !== КЭШ_ФАЙЛОВ && имя !== КЭШ_СТРАНИЦЫ) await caches.delete(имя);
+      for (const имя of await caches.keys()) if (имя.startsWith('aiustaz-') && имя !== КЭШ_ФАЙЛОВ && имя !== КЭШ_СТРАНИЦЫ && имя !== КЭШ_АУДИО) await caches.delete(имя);
       try {
         const с = await список();
         const нужны = new Set([ОФЛАЙН, ...с.оболочка, ...Object.values(с.группы).flatMap((г) => г.файлы)]);
@@ -163,10 +169,36 @@ async function файл(запрос, путь) {
   return ответ;
 }
 
+/** Скачанный аят из кэша (Range → 206 с куском), иначе — сеть, как без worker'а. */
+async function аудио(запрос, путь) {
+  const есть = await (await caches.open(КЭШ_АУДИО)).match(путь);
+  if (!есть) return fetch(запрос);
+  const диапазон = /^bytes=(\d*)-(\d*)$/.exec(запрос.headers.get('range') || '');
+  if (!диапазон) return есть;
+  const тело = await есть.blob();
+  const размер = тело.size;
+  const начало = диапазон[1] === '' ? Math.max(0, размер - Number(диапазон[2] || 0)) : Number(диапазон[1]);
+  const конец = диапазон[1] !== '' && диапазон[2] !== '' ? Math.min(Number(диапазон[2]), размер - 1) : размер - 1;
+  if (начало >= размер || начало > конец) return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + размер } });
+  return new Response(тело.slice(начало, конец + 1), {
+    status: 206,
+    headers: {
+      'Content-Type': есть.headers.get('content-type') || 'audio/mpeg',
+      'Content-Range': 'bytes ' + начало + '-' + конец + '/' + размер,
+      'Content-Length': String(конец - начало + 1),
+      'Accept-Ranges': 'bytes',
+    },
+  });
+}
+
 self.addEventListener('fetch', (событие) => {
   const запрос = событие.request;
   if (запрос.method !== 'GET') return;
   const адрес = new URL(запрос.url);
+  if (адрес.origin === self.location.origin && АУДИО.test(адрес.pathname)) {
+    событие.respondWith(аудио(запрос, адрес.pathname));
+    return;
+  }
   if (адрес.origin !== self.location.origin || !адрес.pathname.startsWith(ОБЛАСТЬ)) return;
   if (адрес.pathname === СТРАНИЦА || адрес.pathname === ОБЛАСТЬ) событие.respondWith(страница(запрос));
   else if (С_ХЭШЕМ.test(адрес.pathname)) событие.respondWith(файл(запрос, адрес.pathname));

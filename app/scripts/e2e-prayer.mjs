@@ -89,7 +89,7 @@ async function новаяСтраница(браузер, база, { язык =
         return исходный(...а);
       };
     }
-    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс));
+    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
   }, ПРОГРЕСС(язык));
   const стр = await контекст.newPage();
   if (время) await стр.clock.setFixedTime(new Date(время));

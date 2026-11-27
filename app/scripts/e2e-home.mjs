@@ -87,7 +87,7 @@ async function новаяСтраница(браузер, база, { профи
     ({ прогресс, ios }) => {
       window.__csp = [];
       document.addEventListener('securitypolicyviolation', (е) => window.__csp.push(е.blockedURI + ' ' + е.violatedDirective));
-      if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс));
+      if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(прогресс)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
       if (ios && window.DeviceOrientationEvent) {
         window.__запросовРазрешения = 0;
         window.DeviceOrientationEvent.requestPermission = async () => {

@@ -46,7 +46,11 @@ export const ЗАГЛУШКА_BATR = `<!doctype html>
 </script></head>
 <body><h1>batr.kz — тестовая заглушка</h1><nav><a href="/aiustaz">AI Ustaz</a></nav></body></html>`;
 
-export function запуститьСервер({ порт = Number(process.env.PORT ?? 5390), папка = process.env.DIST ?? path.join(корень, 'dist'), хост = '127.0.0.1' } = {}) {
+/**
+ * аудио(путь) → { тип, тело: Buffer } | null — необязательная подделка своего зеркала аудио /aiustaz-audio/… (как nginx
+ * aiustaz.pro: файл целиком или кусок по Range — 206). Только тесты (e2e-download.mjs: тоны, НЕ Коран).
+ */
+export function запуститьСервер({ порт = Number(process.env.PORT ?? 5390), папка = process.env.DIST ?? path.join(корень, 'dist'), хост = '127.0.0.1', аудио = null } = {}) {
   const база = path.resolve(папка);
   const сервер = http.createServer((запрос, ответ) => {
     let путь;
@@ -54,6 +58,24 @@ export function запуститьСервер({ порт = Number(process.env.P
       путь = decodeURIComponent(new URL(запрос.url ?? '/', 'http://локально').pathname);
     } catch {
       ответ.writeHead(400).end();
+      return;
+    }
+    if (аудио && путь.startsWith('/aiustaz-audio/')) {
+      const ф = аудио(путь);
+      if (!ф) {
+        ответ.writeHead(404, { 'Content-Type': 'text/plain' }).end('нет');
+        return;
+      }
+      const р = /^bytes=(\d+)-(\d*)$/.exec(запрос.headers.range ?? '');
+      if (р && Number(р[1]) < ф.тело.length) {
+        const н = Number(р[1]);
+        const к = р[2] === '' ? ф.тело.length - 1 : Math.min(Number(р[2]), ф.тело.length - 1);
+        ответ.writeHead(206, { 'Content-Type': ф.тип, 'Content-Range': `bytes ${н}-${к}/${ф.тело.length}`, 'Content-Length': к - н + 1, 'Accept-Ranges': 'bytes' });
+        ответ.end(ф.тело.subarray(н, к + 1));
+        return;
+      }
+      ответ.writeHead(200, { 'Content-Type': ф.тип, 'Content-Length': ф.тело.length, 'Accept-Ranges': 'bytes', 'Cache-Control': путь.endsWith('.json') ? 'no-cache' : 'public, max-age=31536000, immutable' });
+      ответ.end(ф.тело);
       return;
     }
     if (путь.startsWith('/aiustaz/')) {
