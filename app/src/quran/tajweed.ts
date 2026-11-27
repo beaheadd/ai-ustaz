@@ -27,8 +27,27 @@ export type Кусок = { текст: string; код: КодТаджвида | 
 /** Порядок легенды: гунна и нун/мим → калькаля → мадды → непроизносимое. Совпадает с tajweed_rules.КОДЫ. */
 export const КОДЫ_ТАДЖВИДА: readonly КодТаджвида[] = ['g', 'n', 'b', 'k', 'q', 'c', 't', 'm', 'f', 'l', 's'];
 
+/**
+ * Арабские буквы внутри русской/казахской строки — в изоляторе направления (U+2068 … U+2069): иначе «— 2 счёта»
+ * после «مّ» браузер утягивает в арабский отрезок и цифра встаёт перед буквами (замечание кари, 27.11.2026:
+ * «цифра 2 должна быть после этих двух букв»). Изолятор невидим и не меняет сами буквы.
+ */
+const АРАБСКИЙ_ОТРЕЗОК = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+(?:\s+[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+)*/g;
+export function изолироватьАрабский(строка: string): string {
+  return строка.replace(АРАБСКИЙ_ОТРЕЗОК, (а) => '\u2068' + а + '\u2069');
+}
+type ПравилоТаджвида = { ru: string; kk: string; uz: string; en: string; урок: string; уроки: readonly number[] };
+function изолироватьПравила(п: Record<КодТаджвида, ПравилоТаджвида>): Readonly<Record<КодТаджвида, ПравилоТаджвида>> {
+  const выход = {} as Record<КодТаджвида, ПравилоТаджвида>;
+  for (const к of Object.keys(п) as КодТаджвида[]) {
+    const з = п[к];
+    выход[к] = { ...з, ru: изолироватьАрабский(з.ru), kk: изолироватьАрабский(з.kk), uz: изолироватьАрабский(з.uz), en: изолироватьАрабский(з.en) };
+  }
+  return выход;
+}
+
 /** Названия правил (ru; kk, uz и en — черновики для редактора-носителя) и уроки курса (docs/программа-курса.md §6–7). */
-export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, { ru: string; kk: string; uz: string; en: string; урок: string; уроки: readonly number[] }>> = {
+export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджвида, ПравилоТаджвида>> = изолироватьПравила({
   g: { ru: 'Гунна: نّ и مّ — 2 счёта', kk: 'Ғұнна: نّ және مّ — 2 санақ', uz: 'Gʻunna: نّ va مّ — 2 harakat', en: 'Ghunnah: نّ and مّ — 2 counts', урок: '21', уроки: [21] },
   n: { ru: 'Идгам с гунной: нун/танвин перед ي ن م و', kk: 'Ғұннамен идғам: нун/тәнуин ي ن م و алдында', uz: 'Gʻunnali idgʻom: nun/tanvin ي ن م و oldidan', en: 'Idgham with ghunnah: nun/tanween before ي ن م و', урок: '33, 36', уроки: [33, 36] },
   b: { ru: 'Идгам без гунны: нун/танвин перед ل ر', kk: 'Ғұннасыз идғам: нун/тәнуин ل ر алдында', uz: 'Gʻunnasiz idgʻom: nun/tanvin ل ر oldidan', en: 'Idgham without ghunnah: nun/tanween before ل ر', урок: '33', уроки: [33] },
@@ -40,7 +59,7 @@ export const ПРАВИЛА_ТАДЖВИДА: Readonly<Record<КодТаджви
   f: { ru: 'Мадд мунфасиль — 4–5 (хамза в следующем слове)', kk: 'Мунфасыл мәд — 4–5 (хамза келесі сөзде)', uz: 'Munfasil madd — 4–5 (hamza keyingi soʻzda)', en: 'Madd munfasil — 4–5 (hamza in the next word)', урок: '38', уроки: [38] },
   l: { ru: 'Мадд лязим — 6 счётов', kk: 'Ләзім мәд — 6 санақ', uz: 'Lozim madd — 6 harakat', en: 'Madd lazim — 6 counts', урок: '31, 40', уроки: [31, 40] },
   s: { ru: 'Не читается: хамзат-васль, лям шамсийя, буква со знаком ۟', kk: 'Оқылмайды: хамзат-уасл, шамси ләм, ۟ белгілі әріп', uz: 'Oʻqilmaydi: hamzai vasl, shamsiya lom, ۟ belgili harf', en: 'Not pronounced: hamzat al-wasl, lam shamsiyyah, a letter with the sign ۟', урок: '25, 26', уроки: [25, 26] },
-};
+});
 
 /** Фон «бумаги» мусхафа и ночной страницы (для контраста; те же значения — в components/quran/MushafView). */
 export const ФОН_СТРАНИЦЫ = '#FBF6E9';
