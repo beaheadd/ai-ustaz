@@ -66,6 +66,14 @@ const ЛОКАЛЬНЫЕ_ФАЙЛЫ = [
     файлЛицензии: 'licenses/data/GeoNames-CC-BY-4.0.txt',
     модуль: /src\/prayer\/world\.generated\.ts$/,
   },
+  {
+    // Пословные тайминги чтения (владелец 27.11.2026) — статические файлы quran-words/; в бандле — их манифест.
+    пакет: 'quran-align, Collin Fair (пословные тайминги чтения — app/public/quran-words)',
+    версия: 'release-2016-11-24',
+    лицензия: 'CC-BY-4.0',
+    файлЛицензии: 'licenses/data/quran-align-CC-BY-4.0.txt',
+    модуль: /src\/quran\/wordsManifest\.generated\.ts$/,
+  },
 ];
 
 // 0. Прямые зависимости (быстро, без экспорта).

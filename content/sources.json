@@ -185,6 +185,19 @@
       "что": "Подсказки артикуляции (§8), типичные подмены (§5.1, §6), тексты примеров объяснений (§13)",
       "название": "docs/каталог-ошибок.md (черновик)",
       "лицензия": "внутренний документ"
+    },
+    {
+      "id": "quran-align",
+      "что": "Пословные тайминги чтения — подсветка слова, которое сейчас читает кари (владелец 27.11.2026: «выделение именно слов, которые читают»). Только числа: номер слова и его начало и конец в записи аята; текста Корана в данных нет. app/public/quran-words (tools/quran_words/build_words.py); принятые записи — content/quran-words/report.json.",
+      "название": "quran-align — word-precise segmentation of Qur'anic recitation (Collin Fair)",
+      "лицензия": "CC BY 4.0",
+      "ссылка": "github.com/cpfair/quran-align",
+      "лицензияСсылка": "creativecommons.org/licenses/by/4.0/",
+      "атрибуция": "Word timings: quran-align by Collin Fair, CC BY 4.0 (github.com/cpfair/quran-align)",
+      "файл": "quran-align-data-2016-11-24.zip",
+      "загружено": "2026-11-27",
+      "параметрыЗагрузки": "github.com/cpfair/quran-align/releases (release-2016-11-24); отбор и сверка длительностей с нашими записями — batr-world deploy/aiustaz-word-timings.py, ветка данных aiustaz-data/word-timings",
+      "примечание": "В git — данные принятых записей как есть (content/quran-words/raw/*.json.gz, sha256 — content/quran-words/report.json и manifest.json). Изменения — licenses/data/quran-align-CC-BY-4.0.txt. Код quran-align (MIT) не используем."
     }
   ]
 }

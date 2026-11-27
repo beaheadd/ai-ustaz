@@ -23,6 +23,7 @@
     "test:install": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-install.mjs",
     "test:notify": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-notify.mjs",
     "test:ask": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-ask.mjs",
+    "test:words": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-word-timings.mjs",
     "test:i18n": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-i18n.mjs",
     "licenses": "node scripts/gen-licenses.mjs",
     "typecheck": "tsc --noEmit"

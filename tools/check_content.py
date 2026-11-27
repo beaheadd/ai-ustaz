@@ -60,8 +60,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'hadith'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'dhikr'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'namaz'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'makharij'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran_words'))
 import build_dhikr  # noqa: E402
 import build_namaz  # noqa: E402
+import build_words as тайминги_слов  # noqa: E402
 import build_index as индекс_махраджей  # noqa: E402
 import check_audio  # noqa: E402
 import check_hadith  # noqa: E402
@@ -397,6 +399,11 @@ def main():
         ошибки_м, счёт_м = индекс_махраджей.проверить()
         отчёт.ошибки.extend(ошибки_м)
         for к, в in счёт_м.items():
+            отчёт.счёт(к, в)
+        # Пословные тайминги чтения quran-align (владелец 27.11.2026): входы = manifest.json, производные = свежей сборке.
+        ошибки_т, счёт_т = тайминги_слов.проверить()
+        отчёт.ошибки.extend(ошибки_т)
+        for к, в in счёт_т.items():
             отчёт.счёт(к, в)
 
     print('Проверка контента AI Ustaz')
