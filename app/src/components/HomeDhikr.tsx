@@ -18,7 +18,7 @@
  */
 import { Pressable, View } from 'react-native';
 import { useНавигация } from '../engine/navigation';
-import { ВКЛАДКИ } from '../engine/routes';
+import { ВКЛАДКИ, КОРЕНЬ_ВКЛАДКИ } from '../engine/routes';
 import { создатьСловарь, useСловарь } from '../i18n';
 import { useТема } from '../theme';
 import { ИллюстрацияРаздела, type ИмяИллюстрации } from './SectionArt';
@@ -82,8 +82,8 @@ export function СеткаРазделов() {
     if (id === 'зикры') перейти('зикры');
     else if (id === 'дуа') перейти('дуа');
     else if (id === 'намаз') перейти('учимсяНамазу');
-    // Хадисы — вкладка меню; когда в центре меню AI Ustaz (флаг), их вкладки нет — открываем экран.
-    else if (id === 'хадисы' && !ВКЛАДКИ.includes('хадисы')) перейти('хадисы');
+    // Раздел не в нижнем меню (таджвид с 27.11.2026: в центре меню AI Ustaz) — открываем его экран с главной.
+    else if (!ВКЛАДКИ.includes(id)) перейти(КОРЕНЬ_ВКЛАДКИ[id]);
     else перейтиВкладку(id);
   };
 

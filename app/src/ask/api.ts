@@ -43,7 +43,11 @@ export type ИсточникОтвета = {
 
 export type ОтветУстаза = {
   вид: ВидОтвета;
-  режим: 'поиск' | 'ии';
+  режим: 'поиск' | 'ии' | 'фото';
+  /** 'аят' — «как читается аят 2:255»: приложение показывает аят из своей копии Tanzil, правила таджвида и чтеца. */
+  намерение: 'аят' | null;
+  /** Только у ответа на фото: распознанный текст без арабского (что сервер понял на фото). */
+  распознано: string | null;
   /** null — текст не прошёл проверку (показываем шаблон экрана). */
   текст: string | null;
   источники: ИсточникОтвета[];
@@ -88,12 +92,13 @@ export function спроситьВключено(): boolean {
   return спроситьРазрешеноДля(window.location.hostname, флагСборки());
 }
 
-export function ссылкаАята(строка: string | null | undefined): { сура: number; аят: number } | null {
-  const м = /^(\d{1,3}):(\d{1,3})$/.exec(String(строка ?? '').trim());
+export function ссылкаАята(строка: string | null | undefined): { сура: number; аят: number; до: number } | null {
+  const м = /^(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?$/.exec(String(строка ?? '').trim());
   if (!м) return null;
   const сура = Number(м[1]);
   const аят = Number(м[2]);
-  return сура >= 1 && сура <= 114 && аят >= 1 && аят <= 286 ? { сура, аят } : null;
+  const до = м[3] ? Number(м[3]) : аят;
+  return сура >= 1 && сура <= 114 && аят >= 1 && аят <= 286 && до >= аят && до - аят <= 20 ? { сура, аят, до } : null;
 }
 
 const строка = (з: unknown, макс: number): string | null => (typeof з === 'string' && з.trim() ? з.trim().slice(0, макс) : null);
@@ -128,7 +133,7 @@ export function разобратьОтвет(данные: unknown): Ответ�
   const д = данные as Record<string, unknown> | null;
   if (!д || typeof д !== 'object') return null;
   if (!ВИДЫ.includes(д.вид as ВидОтвета)) return null;
-  if (д.режим !== 'поиск' && д.режим !== 'ии') return null;
+  if (д.режим !== 'поиск' && д.режим !== 'ии' && д.режим !== 'фото') return null;
   if (typeof д.текст !== 'string' || !Array.isArray(д.источники)) return null;
   const сырой = д.текст.trim().slice(0, 2000);
   const текст = сырой && !АРАБСКОЕ.test(сырой) ? сырой : null;
@@ -136,7 +141,18 @@ export function разобратьОтвет(данные: unknown): Ответ�
     .slice(0, МАКС_ИСТОЧНИКОВ)
     .map(разобратьИсточник)
     .filter((и): и is ИсточникОтвета => и !== null);
-  return { вид: д.вид as ВидОтвета, режим: д.режим, текст, источники, черновик: д.черновик === true || источники.some((и) => и.черновик) };
+  const намерение = д.намерение === 'аят' && источники.some((и) => и.вид === 'коран') ? 'аят' : null;
+  const распознаноСырое = typeof д.распознано === 'string' ? д.распознано.trim().slice(0, МАКС_ВОПРОС) : '';
+  const распознано = распознаноСырое && !АРАБСКОЕ.test(распознаноСырое) ? распознаноСырое : null;
+  return {
+    вид: д.вид as ВидОтвета,
+    режим: д.режим,
+    намерение,
+    распознано,
+    текст,
+    источники,
+    черновик: д.черновик === true || источники.some((и) => и.черновик),
+  };
 }
 
 type Fetch = (адрес: string, параметры: { method: string; headers: Record<string, string>; body: string; signal?: AbortSignal }) => Promise<{ status: number; json(): Promise<unknown> }>;
@@ -166,5 +182,91 @@ export async function спросить(вопрос: string, язык: Язык�
     return { ок: false, причина: 'нет-связи' };
   } finally {
     if (таймер) clearTimeout(таймер);
+  }
+}
+
+// ───────────── возможности, «Пожаловаться», голос, фото (владелец 27.11.2026: чат «как у Айалема») ─────────────
+
+export type ВозможностиЧата = { голос: boolean; фото: boolean };
+type FetchЛюбой = (адрес: string, параметры?: { method?: string; headers?: Record<string, string>; body?: unknown; signal?: AbortSignal }) => Promise<{ status: number; json(): Promise<unknown> }>;
+
+function получатель(f?: FetchЛюбой): FetchЛюбой | null {
+  return f ?? ((globalThis.fetch as unknown as FetchЛюбой | undefined) || null);
+}
+
+/** GET /api/ask/health → { голос, фото }: 🎤 и 📷 показываем, только если сервер их объявил. Ошибка — всё выключено. */
+export async function возможностиЧата(о: { fetch?: FetchЛюбой } = {}): Promise<ВозможностиЧата> {
+  const f = получатель(о.fetch);
+  if (!f) return { голос: false, фото: false };
+  try {
+    const р = await f('/api/ask/health', { method: 'GET' });
+    if (р.status !== 200) return { голос: false, фото: false };
+    const д = (await р.json()) as Record<string, unknown>;
+    return { голос: д?.голос === true, фото: д?.фото === true };
+  } catch {
+    return { голос: false, фото: false };
+  }
+}
+
+export type ПричинаЖалобы = 'неверно' | 'непонятно' | 'другое';
+
+/** POST /api/ask/report: только id ответа, причина, комментарий и id записей базы — без текста вопроса. */
+export async function пожаловаться(
+  ответ: string,
+  причина: ПричинаЖалобы,
+  комментарий: string,
+  источники: readonly string[],
+  о: { fetch?: FetchЛюбой } = {},
+): Promise<boolean> {
+  const f = получатель(о.fetch);
+  if (!f) return false;
+  const тело: Record<string, unknown> = { ответ, причина, источники: источники.filter((и) => /^[a-z0-9][a-z0-9._-]{1,79}$/.test(и)).slice(0, 8) };
+  const к = комментарий.trim().slice(0, 500);
+  if (к) тело.комментарий = к;
+  try {
+    const р = await f('/api/ask/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(тело) });
+    return р.status === 200;
+  } catch {
+    return false;
+  }
+}
+
+export type ИтогГолоса = { ок: true; текст: string } | { ок: false; причина: 'пусто' | 'лимит' | 'выключено' | 'большой' | 'нет-связи' | 'сбой' };
+
+/** POST /api/ask/voice?lang=… (тело — запись): распознаёт НАШ сервер в РК; текст — в поле ввода, человек правит. */
+export async function голосом(запись: Blob, язык: ЯзыкВопроса, о: { fetch?: FetchЛюбой } = {}): Promise<ИтогГолоса> {
+  const f = получатель(о.fetch);
+  if (!f) return { ок: false, причина: 'нет-связи' };
+  const тип = (запись.type || 'audio/webm').split(';')[0].replace(/^video\//, 'audio/');
+  try {
+    const р = await f('/api/ask/voice?lang=' + язык, { method: 'POST', headers: { 'Content-Type': тип }, body: запись });
+    if (р.status === 200) {
+      const д = (await р.json()) as Record<string, unknown>;
+      const т = typeof д?.текст === 'string' ? д.текст.trim().slice(0, МАКС_ВОПРОС) : '';
+      return т ? { ок: true, текст: т } : { ок: false, причина: 'пусто' };
+    }
+    if (р.status === 422) return { ок: false, причина: 'пусто' };
+    if (р.status === 429) return { ок: false, причина: 'лимит' };
+    if (р.status === 404) return { ок: false, причина: 'выключено' };
+    if (р.status === 413) return { ок: false, причина: 'большой' };
+    return { ок: false, причина: 'сбой' };
+  } catch {
+    return { ок: false, причина: 'нет-связи' };
+  }
+}
+
+/** POST /api/ask/photo?lang=… (тело — сжатое на телефоне JPEG ≤ 2 МБ): OCR на нашем сервере; ответ — как у вопроса. */
+export async function фотографией(картинка: Blob, язык: ЯзыкВопроса, о: { fetch?: FetchЛюбой } = {}): Promise<ИтогВопроса> {
+  const f = получатель(о.fetch);
+  if (!f) return { ок: false, причина: 'нет-связи' };
+  try {
+    const р = await f('/api/ask/photo?lang=' + язык, { method: 'POST', headers: { 'Content-Type': картинка.type || 'image/jpeg' }, body: картинка });
+    if (р.status === 429) return { ок: false, причина: 'лимит' };
+    if (р.status === 503) return { ок: false, причина: 'нет-базы' };
+    if (р.status !== 200) return { ок: false, причина: 'сбой' };
+    const ответ = разобратьОтвет(await р.json());
+    return ответ ? { ок: true, ответ } : { ок: false, причина: 'сбой' };
+  } catch {
+    return { ок: false, причина: 'нет-связи' };
   }
 }

@@ -317,9 +317,12 @@ for (const [имя, ф] of Object.entries({
 
 тест('лицензии сервера: экран «Лицензии» = server/requirements.txt, тексты в licenses/server', () => {
   const пакеты = JSON.parse(fs.readFileSync(path.join(корень, 'src', 'legal', 'server-licenses.json'), 'utf8'));
-  const треб = fs.readFileSync(path.join(корень, '..', 'server', 'requirements.txt'), 'utf8');
+  // requirements.txt — API; requirements-asr.txt — служба распознавания речи чата (владелец 27.11.2026); не-pip
+  // зависимости сервера (веса Whisper, Tesseract) — тоже на экране, но без версии pip.
+  const треб = ['requirements.txt', 'requirements-asr.txt'].map((ф) => fs.readFileSync(path.join(корень, '..', 'server', ф), 'utf8')).join('\n');
   const версии = Object.fromEntries([...треб.matchAll(/^([a-z0-9-]+)(?:\[[a-z]+\])?==([0-9.]+)/gim)].map((м) => [м[1].toLowerCase(), м[2]]));
-  assert.deepEqual(Object.fromEntries(пакеты.map((п) => [п.пакет, п.версия])), версии);
+  const неPip = new Set(['whisper-weights', 'tesseract']);
+  assert.deepEqual(Object.fromEntries(пакеты.filter((п) => !неPip.has(п.пакет)).map((п) => [п.пакет, п.версия])), версии);
   assert.equal(пакеты.find((п) => п.пакет === 'pywebpush').лицензия, 'MPL-2.0');
   const тексты = fs.readdirSync(path.join(корень, '..', 'licenses', 'server'));
   for (const п of пакеты.filter((п) => п.пакет !== 'http-ece')) assert.ok(тексты.some((т) => т.startsWith(п.пакет + '-')), 'нет текста лицензии ' + п.пакет);

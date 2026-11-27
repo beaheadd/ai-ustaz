@@ -1,0 +1,227 @@
+"""Чат AI Ustaz (владелец 27.11.2026): ссылки на аяты, фото → аят, «Пожаловаться», голос и фото за флагами, база сайта."""
+from __future__ import annotations
+
+import json
+import pathlib
+
+import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+import ask
+import ask_media
+import kb
+import quran_ref
+from conftest import СЕЙЧАС
+from test_ask import ПодставнаяБаза, клиент, спросить
+
+КОРЕНЬ = pathlib.Path(__file__).resolve().parents[2]
+
+
+# ───────────── «как читается аят» на четырёх языках ─────────────
+@pytest.mark.parametrize('вопрос, ссылка', [
+    ('Как читается аят 2:255?', '2:255'),
+    ('аят аль-Курси', '2:255'),
+    ('Аятуль Курси қалай оқылады', '2:255'),
+    ('Ayatul kursi', '2:255'),
+    ('сура Ихлас', '112:1-4'),
+    ('как читать Фатиху', '1:1-7'),
+    ('сура аль-Фатиха аят 5', '1:5'),
+    ('сура 112 аят 3', '112:3'),
+    ('Ихлас сүресі', '112:1-4'),
+    ('Ixlos surasi', '112:1-4'),
+    ('Yasin surasi 5-oyat', '36:5'),
+    ('Surah Al-Baqarah ayah 255', '2:255'),
+    ('How to read surah An-Nas', '114:1-6'),
+    ('36-я сура', '36:1'),
+])
+def test_ссылка_из_вопроса(вопрос, ссылка):
+    assert quran_ref.ссылка_из_вопроса(вопрос) == ссылка
+
+
+@pytest.mark.parametrize('вопрос', ['что такое ихлас', 'кто такой Нух', 'Что такое ихфа?', 'хадис о намерении', 'аят 999:1'])
+def test_не_ссылка(вопрос):
+    assert quran_ref.ссылка_из_вопроса(вопрос) is None
+
+
+def test_ответ_аят_без_текста_корана():
+    к, б = клиент()
+    д = спросить(к, 'Как читается аят 2:255?').json()
+    assert д['вид'] == 'ответ' and д['намерение'] == 'аят' and д['черновик'] is False
+    [и] = д['источники']
+    assert и['вид'] == 'коран' and и['ссылка'] == '2:255' and и['текст'] == '' and и['арабский'] is None
+    assert not kb.есть_арабское(json.dumps(д, ensure_ascii=False))  # арабского Корана сервер не отдаёт (правило 1)
+    assert б.не_нашли == 0
+    for язык in ('kk', 'uz', 'en'):
+        assert '2:255' in спросить(к, 'аят 2:255', lang=язык).json()['текст']
+
+
+def test_тафсир_и_фетва_не_становятся_аятом():
+    к, _ = клиент()
+    д = спросить(к, 'тафсир аята 2:255').json()  # тафсир — только запись базы как есть, не «как читается»
+    assert д['намерение'] is None and all(и['вид'] == 'тафсир' for и in д['источники'])
+    assert спросить(к, 'тафсир аята 3:7').json()['вид'] == 'вне-темы'
+    assert спросить(к, 'Как читается аят 2:255?').json()['намерение'] == 'аят'
+
+
+# ───────────── фото: распознанный арабский → аят ─────────────
+@pytest.mark.parametrize('текст, ссылка', [
+    ('قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ', '112:1-2'),
+    ('ذلك الكتاب لا ريب فيه هدى للمتقين', '2:2'),
+    ('بسم الله الرحمن الرحيم', '1:1'),
+    ('قل اعوذ برب الناس ملك الناس', '114:1-2'),
+])
+def test_сопоставить(текст, ссылка):
+    assert quran_ref.сопоставить(текст)['ссылка'] == ссылка
+
+
+@pytest.mark.parametrize('текст', ['مرحبا بكم في التطبيق الجديد', 'الله', ''])
+def test_сопоставить_не_уверен(текст):
+    assert quran_ref.сопоставить(текст) is None
+
+
+def test_разделить_распознанное():
+    ар, прочее = ask_media.разделить_распознанное('قل هو الله أحد\nЧто такое ихфа?\n  \nIkhfa')
+    assert ар == 'قل هو الله أحد' and прочее == 'Что такое ихфа? Ikhfa'
+
+
+# ───────────── «Пожаловаться» ─────────────
+class БазаСЖалобами(ПодставнаяБаза):
+    def __init__(self):
+        super().__init__()
+        self.жалобы = []
+
+    def ask_жалоба(self, ответ, причина, комментарий, источники):
+        self.жалобы.append((ответ, причина, комментарий, источники))
+
+
+def медиа(голос=False, фото=False, речь=None, ocr=None, база=None):
+    app = FastAPI()
+    б = база or БазаСЖалобами()
+    ask_media.register(app, хранилище=б, ключ_лимита=lambda з: 'ip:test', часы=lambda: СЕЙЧАС / 1000,
+                       распознать_речь=речь or (lambda *_: 'что такое ихфа'), распознать_фото=ocr or (lambda _: ''),
+                       голос=голос, фото=фото)
+    return TestClient(app), б
+
+
+def test_жалоба():
+    к, б = медиа()
+    р = к.post('/api/ask/report', json={'ответ': 'a1b2c3d4e5', 'причина': 'неверно', 'комментарий': 'Пишите мне на x@y.kz',
+                                        'источники': ['site.tajweed.k']})
+    assert р.status_code == 200 and р.json() == {'ок': True}
+    [(ид, причина, комментарий, ист)] = б.жалобы
+    assert ид == 'a1b2c3d4e5' and причина == 'неверно' and 'x@y.kz' not in комментарий and ист == ['site.tajweed.k']
+
+
+@pytest.mark.parametrize('тело', [
+    {'ответ': 'a1b2c3d4e5', 'причина': 'плохо'},
+    {'ответ': 'A!', 'причина': 'неверно'},
+    {'ответ': 'a1b2c3d4e5', 'причина': 'другое', 'вопрос': 'текст вопроса не принимаем'},
+    {'ответ': 'a1b2c3d4e5', 'причина': 'другое', 'комментарий': 'x' * 501},
+])
+def test_жалоба_400(тело):
+    к, б = медиа()
+    assert к.post('/api/ask/report', json=тело).status_code == 400 and not б.жалобы
+
+
+def test_жалоба_лимит():
+    к, _ = медиа()
+    коды = [к.post('/api/ask/report', json={'ответ': f'a1b2c3d4e{i}', 'причина': 'другое'}).status_code for i in range(7)]
+    assert коды[:5] == [200] * 5 and коды[5] == 429
+
+
+# ───────────── голос ─────────────
+def test_голос_выключен():
+    к, _ = медиа(голос=False)
+    assert к.post('/api/ask/voice?lang=ru', content=b'x' * 100, headers={'Content-Type': 'audio/webm'}).status_code == 404
+
+
+def test_голос():
+    вызовы = []
+
+    def речь(аудио, тип, язык):
+        вызовы.append((len(аудио), тип, язык))
+        return '  что такое   ихфа '
+
+    к, _ = медиа(голос=True, речь=речь)
+    р = к.post('/api/ask/voice?lang=kk', content=b'x' * 100, headers={'Content-Type': 'audio/webm;codecs=opus'})
+    assert р.status_code == 200 and р.json() == {'текст': 'что такое ихфа'} and вызовы == [(100, 'audio/webm', 'kk')]
+    assert к.post('/api/ask/voice?lang=kk', content=b'x', headers={'Content-Type': 'text/plain'}).status_code == 415
+    assert к.post('/api/ask/voice?lang=de', content=b'x', headers={'Content-Type': 'audio/webm'}).status_code == 400
+    assert к.post('/api/ask/voice?lang=ru', content=b'x' * (ask_media.МАКС_ГОЛОС + 1),
+                  headers={'Content-Type': 'audio/webm'}).status_code == 413
+
+
+def test_голос_пусто_и_сбой():
+    к, _ = медиа(голос=True, речь=lambda *_: '')
+    assert к.post('/api/ask/voice?lang=ru', content=b'x', headers={'Content-Type': 'audio/ogg'}).status_code == 422
+
+    def сломано(*_):
+        raise ConnectionError
+
+    к, _ = медиа(голос=True, речь=сломано)
+    assert к.post('/api/ask/voice?lang=ru', content=b'x', headers={'Content-Type': 'audio/ogg'}).json() == {'ошибка': 'asr'}
+
+
+# ───────────── фото ─────────────
+def test_фото_аят():
+    к, б = медиа(фото=True, ocr=lambda _: 'قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ\n')
+    д = к.post('/api/ask/photo?lang=ru', content=b'\xff\xd8jpeg', headers={'Content-Type': 'image/jpeg'}).json()
+    assert д['намерение'] == 'аят' and д['источники'][0]['ссылка'] == '112:1-2' and д['распознано'] is None
+    assert not kb.есть_арабское(json.dumps(д, ensure_ascii=False))  # распознанный арабский наружу не уходит
+    assert б.ask_журнал[-1][1] == 'фото'
+
+
+def test_фото_текст_и_нет():
+    к, _ = медиа(фото=True, ocr=lambda _: 'Хадис о намерениях')
+    д = к.post('/api/ask/photo?lang=ru', content=b'png', headers={'Content-Type': 'image/png'}).json()
+    assert д['вид'] == 'ответ' and д['распознано'] == 'Хадис о намерениях'
+    к, _ = медиа(фото=True, ocr=lambda _: 'مرحبا بكم')
+    д = к.post('/api/ask/photo?lang=en', content=b'png', headers={'Content-Type': 'image/png'}).json()
+    assert д['вид'] == 'нет-в-базе' and д['распознано'] is None and 'photo' in д['текст']
+    assert к.post('/api/ask/photo?lang=ru', content=b'x', headers={'Content-Type': 'image/gif'}).status_code == 415
+    к, _ = медиа(фото=False)
+    assert к.post('/api/ask/photo?lang=ru', content=b'x', headers={'Content-Type': 'image/png'}).status_code == 404
+
+
+# ───────────── база знаний из сайта ─────────────
+def test_база_сайта_проходит_проверку_и_без_арабского():
+    текст = (КОРЕНЬ / 'content' / 'kb' / 'site.jsonl').read_text(encoding='utf-8')
+    записи = kb.разобрать_jsonl(текст)
+    по_видам = {}
+    for з in записи:
+        по_видам[з.вид] = по_видам.get(з.вид, 0) + 1
+        for т in з.тексты.values():
+            assert not kb.есть_арабское(т['заголовок'] + т['текст'])
+        if з.вид == 'хадис':
+            assert з.степень and з.кто_оценил and з.ссылка and з.арабский is None
+        assert з.вид != 'коран'  # Корана в базе нет совсем: аят — ссылкой, из копии приложения
+    assert по_видам['хадис'] >= 800 and по_видам['статья'] >= 100
+    ids = {з.id for з in записи}
+    assert {'site.tajweed.k', 'site.tajweed.n', 'site.lesson.05', 'site.makharij.jawf', 'site.namaz.taharat'} <= ids
+
+
+def test_файл_аятов_для_сервера():
+    д = json.loads((pathlib.Path(quran_ref.ПУТЬ)).read_text(encoding='utf-8'))
+    assert len(д['скелет']) == 6236 and len(д['суры']) == 114
+    assert all(not any(ch in 'ًَِّْ' for ch in в) for в in д['скелет'].values())  # без огласовок
+
+
+# ───────────── настоящая база: загрузка базы сайта и жалоба ─────────────
+def test_бд_база_сайта_и_жалоба(pg_адрес):
+    from db import Хранилище
+    import kb_load
+
+    х = Хранилище(pg_адрес)
+    х.применить_миграции()
+    assert kb_load.загрузить(КОРЕНЬ / 'content' / 'kb' / 'site.jsonl', х, вывод=lambda *_: None) == 0
+    assert kb_load.загрузить(КОРЕНЬ / 'content' / 'kb' / 'site.jsonl', х, вывод=lambda *_: None) == 0  # повтор — без изменений
+    найдено = х.kb_найти(ask.термы('Что такое ихфа?', 'ru'), 'ru', True, 5)
+    assert найдено and найдено[0]['id'] == 'site.tajweed.k'
+    найдено = ask.отобрать(х.kb_найти(ask.термы('Хадис о намерениях', 'ru'), 'ru', True, 5))
+    assert any(з['вид'] == 'хадис' for з in найдено)
+    найдено = ask.отобрать(х.kb_найти(ask.термы('Дуа при выходе из дома', 'ru'), 'ru', True, 5))
+    assert any(з['id'].startswith('site.dhikr.') for з in найдено)
+    х.ask_жалоба('a1b2c3d4e5', 'непонятно', None, ['site.tajweed.k'])
+    [ж] = х.ask_жалобы()
+    assert ж['причина'] == 'непонятно' and ж['источники'] == ['site.tajweed.k']

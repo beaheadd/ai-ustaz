@@ -1,0 +1,32 @@
+# AI Ustaz — распознавание речи для чата (faster-whisper на CPU), только 127.0.0.1:8033; снаружи не виден (его зовёт
+# mugalim-api по localhost). Владелец 27.11.2026: «могут голосом спросить»; CLAUDE.md: речь — только на своих серверах.
+# Ставится и включается setup-server.sh только при MUGALIM_ASK_VOICE=1 в /etc/mugalim.env. Сервер общий с BATR —
+# CPU, память и приоритет ограничены; аудио — только в памяти.
+[Unit]
+Description=AI Ustaz ASR (faster-whisper, chat voice questions)
+After=network.target
+
+[Service]
+Type=simple
+User=mugalim
+Group=mugalim
+WorkingDirectory=/opt/mugalim/server
+EnvironmentFile=/etc/mugalim.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=HF_HUB_OFFLINE=1
+ExecStart=/opt/mugalim/asr-venv/bin/uvicorn --app-dir /opt/mugalim/server --factory asr_service:создать_приложение --host 127.0.0.1 --port 8033 --workers 1 --no-access-log --no-server-header
+Restart=on-failure
+RestartSec=10
+CPUQuota=200%
+MemoryMax=2G
+Nice=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/mugalim
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

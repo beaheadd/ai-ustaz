@@ -1,0 +1,5 @@
+# Служба распознавания речи чата (mugalim-asr, отдельное окружение /opt/mugalim/asr-venv) — ставится только при
+# MUGALIM_ASK_VOICE=1. Лицензии — licenses/README.md («Сервер»). Владелец 27.11.2026: «могут голосом спросить».
+faster-whisper==1.1.1     # MIT; веса Whisper (OpenAI) — MIT; модель скачивается один раз в /opt/mugalim/asr-models
+fastapi==0.165.0          # MIT
+uvicorn==0.54.0           # BSD-3-Clause

@@ -6,7 +6,11 @@
  */
 import assert from 'node:assert/strict';
 
-const { спроситьРазрешеноДля, разобратьОтвет, спросить, ссылкаАята, МАКС_ВОПРОС } = await import('../src/ask/api.ts');
+const { спроситьРазрешеноДля, разобратьОтвет, спросить, ссылкаАята, МАКС_ВОПРОС, пожаловаться, голосом, фотографией, возможностиЧата } = await import('../src/ask/api.ts');
+const { текстДляОзвучки, выбратьГолос } = await import('../src/ask/speak.ts');
+const { отпустили, сдвигОтменяет, добавитьСказанное, ошибкаМикрофона, ммсс } = await import('../src/ask/voice.ts');
+const { проверитьИсторию: проверитьИсториюЯдро } = await import('../src/ask/historyCore.ts');
+const проверитьИсторию = (с) => проверитьИсториюЯдро(с, разобратьОтвет);
 
 let проверок = 0;
 const проверить = (что, ф) => {
@@ -57,7 +61,9 @@ console.log('Разбор ответа');
   assert.equal(разобратьОтвет(ответ({ источники: [к] })).источники.length, 1);
   assert.equal(разобратьОтвет(ответ({ источники: [{ ...к, ссылка: '115:1' }] })).источники.length, 0);
   assert.equal(разобратьОтвет(ответ({ источники: [{ ...к, арабский: 'وَأَقِيمُوا' }] })).источники.length, 0);
-  assert.deepEqual(ссылкаАята(' 2:255 '), { сура: 2, аят: 255 });
+  assert.deepEqual(ссылкаАята(' 2:255 '), { сура: 2, аят: 255, до: 255 });
+  assert.deepEqual(ссылкаАята('112:1-4'), { сура: 112, аят: 1, до: 4 });
+  assert.equal(ссылкаАята('2:5-3'), null);
   assert.equal(ссылкаАята('0:1'), null);
   assert.equal(ссылкаАята('2:255a'), null);
 });
@@ -111,6 +117,74 @@ console.log('  ✓ слишком короткий или длинный воп�
   assert.deepEqual(await спросить('аб', 'ru', ф), { ок: false, причина: 'вопрос' });
   assert.deepEqual(await спросить('а'.repeat(МАКС_ВОПРОС + 1), 'ru', ф), { ок: false, причина: 'вопрос' });
   assert.equal(звали, false);
+  проверок += 1;
+}
+
+console.log('Чат «как у Айалема» (владелец 27.11.2026)');
+проверить('намерение «аят» — только при источнике Корана; распознанное с арабским отбрасывается', () => {
+  const к = источник({ id: 'quran.2.255', вид: 'коран', ссылка: '2:255', текст: '' });
+  assert.equal(разобратьОтвет(ответ({ намерение: 'аят', источники: [к] })).намерение, 'аят');
+  assert.equal(разобратьОтвет(ответ({ намерение: 'аят', источники: [] })).намерение, null);
+  assert.equal(разобратьОтвет(ответ({ режим: 'фото', распознано: 'Что такое ихфа?' })).распознано, 'Что такое ихфа?');
+  assert.equal(разобратьОтвет(ответ({ режим: 'фото', распознано: 'قل هو الله' })).распознано, null);
+});
+console.log('  ✓ жалоба: только id ответа, причина, комментарий, id записей; голос и фото — сырое тело на наш сервер');
+{
+  let тело = null;
+  const ок = await пожаловаться('a1b2c3d4e5', 'неверно', '  поправьте  ', ['site.tajweed.k', 'ПЛОХО'], {
+    fetch: async (а, п) => ((тело = { а, ...JSON.parse(п.body) }), { status: 200, json: async () => ({ ок: true }) }),
+  });
+  assert.equal(ок, true);
+  assert.deepEqual(тело, { а: '/api/ask/report', ответ: 'a1b2c3d4e5', причина: 'неверно', комментарий: 'поправьте', источники: ['site.tajweed.k'] });
+  let адрес = null;
+  let тип = null;
+  const г = await голосом(new Blob([new Uint8Array(10)], { type: 'audio/webm;codecs=opus' }), 'kk', {
+    fetch: async (а, п) => ((адрес = а), (тип = п.headers['Content-Type']), { status: 200, json: async () => ({ текст: ' что такое ихфа ' }) }),
+  });
+  assert.deepEqual(г, { ок: true, текст: 'что такое ихфа' });
+  assert.equal(адрес, '/api/ask/voice?lang=kk');
+  assert.equal(тип, 'audio/webm');
+  assert.deepEqual(await голосом(new Blob(['x']), 'ru', { fetch: async () => ({ status: 422, json: async () => ({}) }) }), { ок: false, причина: 'пусто' });
+  assert.deepEqual(await голосом(new Blob(['x']), 'ru', { fetch: async () => ({ status: 404, json: async () => ({}) }) }), { ок: false, причина: 'выключено' });
+  const ф = await фотографией(new Blob(['x'], { type: 'image/jpeg' }), 'ru', {
+    fetch: async (а) => ((адрес = а), { status: 200, json: async () => ответ({ режим: 'фото', распознано: null }) }),
+  });
+  assert.equal(ф.ок, true);
+  assert.equal(адрес, '/api/ask/photo?lang=ru');
+  assert.deepEqual(await возможностиЧата({ fetch: async () => ({ status: 200, json: async () => ({ ок: true, голос: true, фото: false }) }) }), { голос: true, фото: false });
+  assert.deepEqual(await возможностиЧата({ fetch: async () => { throw new Error('сеть'); } }), { голос: false, фото: false });
+  проверок += 1;
+}
+console.log('  ✓ 🔊: арабское письмо и транслитерация в «ёлочках» не озвучиваются; голос — только своего языка');
+{
+  assert.equal(текстДляОзвучки('Скажите «Субханаллах» 33 раза: سبحان الله'), 'Скажите, 33 раза:');
+  assert.equal(текстДляОзвучки('Буква «каф» — обычное «к»'), 'Буква «каф» — обычное «к»');
+  assert.equal(текстДляОзвучки('Читается «Ля иляха илляЛлах»'), 'Читается,');
+  const голоса = [{ lang: 'en-US' }, { lang: 'ru-RU', localService: true }, { lang: 'kk-KZ' }];
+  assert.equal(выбратьГолос(голоса, 'ru').lang, 'ru-RU');
+  assert.equal(выбратьГолос(голоса, 'kk').lang, 'kk-KZ');
+  assert.equal(выбратьГолос(голоса, 'uz'), null);
+  assert.equal(выбратьГолос(голоса, 'en').lang, 'en-US');
+  проверок += 1;
+}
+console.log('  ✓ 🎤 жест: тап / удержание / отмена сдвигом; распознанное — в поле через пробел');
+{
+  assert.equal(отпустили(100, true, false), 'тап');
+  assert.equal(отпустили(1500, true, false), 'отправить');
+  assert.equal(отпустили(400, true, false), 'коротко');
+  assert.equal(отпустили(1500, false, false), 'разрешить');
+  assert.equal(сдвигОтменяет(-90, 0), true);
+  assert.equal(сдвигОтменяет(-20, 10), false);
+  assert.equal(добавитьСказанное('Что такое', ' ихфа '), 'Что такое ихфа');
+  assert.equal(ошибкаМикрофона({ name: 'NotAllowedError' }), 'запрещён');
+  assert.equal(ммсс(65), '1:05');
+  проверок += 1;
+}
+console.log('  ✓ история на телефоне: битые записи отбрасываются, не больше 40');
+{
+  const з = проверитьИсторию([{ кто: 'вы', текст: 'вопрос', ид: 'abcdef12' }, { кто: 'устаз', ответ: { вид: 'x' } }, 5, { кто: 'устаз', ответ: ответ(), ид: 'abcdef13' }]);
+  assert.deepEqual(з.map((х) => х.кто), ['вы', 'устаз']);
+  assert.equal(проверитьИсторию(Array.from({ length: 60 }, (_, i) => ({ кто: 'вы', текст: 'в' + i, ид: 'abcdefgh' + i }))).length, 40);
   проверок += 1;
 }
 

@@ -24,6 +24,7 @@ export const G = элемент('g');
 export const Path = элемент('path');
 export const Circle = элемент('circle');
 export const Rect = элемент('rect');
+export const Ellipse = элемент('ellipse');
 export const Defs = элемент('defs');
 export const RadialGradient = элемент('radialGradient');
 export const Stop = элемент('stop');

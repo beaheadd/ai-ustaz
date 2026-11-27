@@ -217,6 +217,7 @@ class Хранилище:
             намаз += с.execute('DELETE FROM prayer_wanted WHERE asked_at < %s', (_вр(сейчас - 7 * ДЕНЬ_МС),)).rowcount
             намаз += с.execute('DELETE FROM prayer_official WHERE year < %s', (год - 1,)).rowcount
             вопросы = с.execute('DELETE FROM ask_log WHERE at < %s', (_вр(сейчас - 90 * ДЕНЬ_МС),)).rowcount
+            вопросы += с.execute('DELETE FROM ask_reports WHERE at < %s', (_вр(сейчас - 180 * ДЕНЬ_МС),)).rowcount
         return {'пункты': пункты, 'лимиты': лимиты, 'журнал': журнал, 'подписки': подписки, 'намаз': намаз, 'вопросы': вопросы}
 
     # ───────────── официальное время намаза ─────────────
@@ -420,6 +421,18 @@ class Хранилище:
         with self._соединение() as с:
             с.execute('INSERT INTO ask_log (kind, mode, reason, sources) VALUES (%s, %s, %s, %s)',
                       (вид[:20], режим[:10], (причина or None) and причина[:40], max(0, min(источников, 99))))
+
+    def ask_жалоба(self, ответ: str, причина: str, комментарий: str | None, источники: list[str]) -> None:
+        """«Пожаловаться» на ответ чата (миграция 020): без текста вопроса и без IP."""
+        with self._соединение() as с:
+            с.execute('INSERT INTO ask_reports (answer_id, reason, note, sources) VALUES (%s, %s, %s, %s)',
+                      (ответ, причина, комментарий, list(источники)[:8]))
+
+    def ask_жалобы(self, предел: int = 100) -> list[dict]:
+        with self._соединение() as с:
+            строки = с.execute('SELECT at, answer_id, reason, note, sources FROM ask_reports ORDER BY id DESC LIMIT %s',
+                               (предел,)).fetchall()
+        return [{'когда': р[0], 'ответ': р[1], 'причина': р[2], 'комментарий': р[3], 'источники': list(р[4])} for р in строки]
 
     def ask_не_нашли(self, сейчас: int) -> None:
         день = datetime.fromtimestamp(сейчас / 1000, tz=timezone.utc) + timedelta(hours=5)  # сутки — по Алматы

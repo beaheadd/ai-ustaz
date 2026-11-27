@@ -64,6 +64,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran_words'))
 import build_dhikr  # noqa: E402
 import build_namaz  # noqa: E402
 import build_words as тайминги_слов  # noqa: E402
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'kb'))
+import build_from_site as база_сайта  # noqa: E402
+import build_server_quran as аяты_сервера  # noqa: E402
 import build_index as индекс_махраджей  # noqa: E402
 import check_audio  # noqa: E402
 import check_hadith  # noqa: E402
@@ -405,6 +408,14 @@ def main():
         отчёт.ошибки.extend(ошибки_т)
         for к, в in счёт_т.items():
             отчёт.счёт(к, в)
+        # База знаний чата AI Ustaz из материалов сайта (владелец 27.11.2026: «только с информацией, которая у нас внутри
+        # сайта»): content/kb/site.jsonl = свежей сборке tools/kb/build_from_site.py, без арабского письма, sha256.
+        ошибки_б, всего_б = база_сайта.проверить()
+        отчёт.ошибки.extend(ошибки_б)
+        отчёт.счёт('база знаний сайта (записей)', всего_б)
+        # Ссылки на аяты и «скелет» для фото в чате — техническая производная копии Tanzil (server/quran_ref.json).
+        if аяты_сервера.ВЫХОД.read_text(encoding='utf-8') != аяты_сервера.собрать():
+            отчёт.ошибки.append('server/quran_ref.json не совпадает со сборкой — python3 -I -B tools/kb/build_server_quran.py')
 
     print('Проверка контента AI Ustaz')
     print(f'  Tanzil: {путь}')

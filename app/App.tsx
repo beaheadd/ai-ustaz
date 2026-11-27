@@ -21,7 +21,7 @@
  * без проверки голоса ИИ, без голоса кари, без сервера и аналитики.
  */
 import { useFonts } from 'expo-font';
-import { useEffect, useRef, useState, type ComponentType } from 'react';
+import { Suspense, useEffect, useRef, useState, type ComponentType } from 'react';
 import { ActivityIndicator, Platform, View } from 'react-native';
 import { плеер } from './src/audio/player';
 import { НижнееМеню } from './src/components/BottomNav';
@@ -44,7 +44,12 @@ const ТЕРПЕНИЕ_ШРИФТА_МС = 4000;
 function ТекущийЭкран() {
   const { текущий } = useНавигация();
   const Компонент = ЭКРАНЫ[текущий.экран] as ComponentType<ПропсыЭкрана<typeof текущий.экран>>;
-  return <Компонент key={текущий.ключ} параметры={текущий.параметры} />;
+  // Suspense — для экранов отдельным чанком (чат AI Ustaz): пока чанк грузится — пустой фон экрана.
+  return (
+    <Suspense fallback={null}>
+      <Компонент key={текущий.ключ} параметры={текущий.параметры} />
+    </Suspense>
+  );
 }
 
 /**

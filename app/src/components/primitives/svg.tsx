@@ -12,4 +12,4 @@
  *   Pattern: id, patternUnits, x, width, height; ClipPath: id.
  * Экраны эти примитивы не используют напрямую — только компоненты дизайн-системы (Значок, Орнамент, …).
  */
-export { default as Svg, Circle, ClipPath, Defs, G, Path, Pattern, RadialGradient, Rect, Stop } from 'react-native-svg';
+export { default as Svg, Circle, ClipPath, Defs, Ellipse, G, Path, Pattern, RadialGradient, Rect, Stop } from 'react-native-svg';

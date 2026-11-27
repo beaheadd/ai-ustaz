@@ -3,7 +3,7 @@
  * Каждый экран — отдельный файл; компонент получает { параметры } своего маршрута.
  * Новый экран: маршрут в routes.ts → файл здесь → строка в ЭКРАНЫ (typecheck проверит полноту).
  */
-import type { ComponentType } from 'react';
+import { lazy, type ComponentType } from 'react';
 import type { ИмяЭкрана, ПропсыЭкрана } from '../engine/routes';
 import { ОПроекте } from './AboutScreen';
 import { КартаКурса } from './CourseMapScreen';
@@ -25,12 +25,14 @@ import { ПроверкаАята } from './AyahCheckScreen';
 import { Сура } from './SuraScreen';
 import { Установка } from './InstallScreen';
 import { Уведомления } from './NotificationsScreen';
-import { СпроситьУстаза } from './AskScreen';
 import { Дуа, Зикры } from './DhikrScreen';
 import { СчётчикЗикра } from './DhikrCounterScreen';
 import { Махраджи } from './MakharijScreen';
 import { БукваМахраджаЭкран } from './MakharijLetterScreen';
 import { РазделНамаза, УчимсяНамазу } from './NamazLearnScreen';
+
+// Чат AI Ustaz (владелец 27.11.2026) — отдельным чанком: грузится при первом открытии центра меню (App.tsx — Suspense).
+const СпроситьУстаза = lazy(() => import('./AskScreen').then((м) => ({ default: м.СпроситьУстаза })));
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,

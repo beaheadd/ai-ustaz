@@ -45,6 +45,7 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 
 import kb
+import quran_ref
 from envnum import строка_из_окружения, целое_из_окружения, число_из_окружения
 
 журнал = logging.getLogger('mugalim.ask')
@@ -306,6 +307,8 @@ def слишком_пусто(обезличенный: str) -> bool:
 # ───────────── шаблоны ответов (ru; kk, uz и en — черновик для редактора-носителя) ─────────────
 ШАБЛОНЫ = {
     'ru': {
+        'аят': 'Аят {ссылка} — из нашей проверенной копии Корана (Tanzil). Ниже — правила таджвида в нём и запись чтеца. '
+               'Толкования (тафсира) AI Ustaz не даёт.',
         'ответ': 'Вот что есть в нашей базе по вашему вопросу. Откройте источник, чтобы прочитать его целиком.',
         'черновик': 'Материалы с пометкой «черновик» ещё проверяет устаз.',
         'нет-в-базе': 'В нашей базе пока нет ответа на этот вопрос. Мы отметили, что такой ответ нужен (сам текст вопроса '
@@ -321,6 +324,8 @@ def слишком_пусто(обезличенный: str) -> bool:
                       'Обратитесь к изданному тафсиру или к имаму вашей мечети.',
     },
     'kk': {
+        'аят': '{ссылка} аяты — Құранның біз тексерген көшірмесінен (Tanzil). Төменде — ондағы тәжуид ережелері және қари '
+               'оқуы. AI Ustaz тәпсір бермейді.',
         'ответ': 'Сұрағыңыз бойынша біздің базада мыналар бар. Толық оқу үшін дереккөзді ашыңыз.',
         'черновик': '«Жоба» белгісі бар материалдарды ұстаз әлі тексеріп жатыр.',
         'нет-в-базе': 'Біздің базада бұл сұраққа әзірге жауап жоқ. Мұндай жауап керек екенін белгілеп қойдық (сұрақтың '
@@ -337,6 +342,8 @@ def слишком_пусто(обезличенный: str) -> bool:
                       'әзірге жоқ. Басылып шыққан тәпсірге немесе мешітіңіздің имамына жүгініңіз.',
     },
     'uz': {
+        'аят': "{ссылка} oyati — Qur'onning biz tekshirgan nusxasidan (Tanzil). Quyida — undagi tajvid qoidalari va qori "
+               "tilovati. AI Ustaz tafsir bermaydi.",
         'ответ': "Savolingiz bo'yicha bazamizda quyidagilar bor. To'liq o'qish uchun manbani oching.",
         'черновик': "«Qoralama» belgisi bor materiallarni ustoz hali tekshirmoqda.",
         'нет-в-базе': "Bazamizda bu savolga hozircha javob yo'q. Bunday javob kerakligini belgilab qo'ydik (savol matnini "
@@ -354,6 +361,8 @@ def слишком_пусто(обезличенный: str) -> bool:
                       "bazamizda hozircha yo'q. Nashr qilingan tafsirga yoki masjidingiz imomiga murojaat qiling.",
     },
     'en': {
+        'аят': 'Ayah {ссылка} — from our verified copy of the Quran (Tanzil). Below are its tajweed rules and a reciter\'s '
+               'recording. AI Ustaz gives no tafsir.',
         'ответ': 'Here is what our base has on your question. Open the source to read it in full.',
         'черновик': 'Materials marked “draft” are still being reviewed by an ustaz.',
         'нет-в-базе': 'Our base has no answer to this question yet. We have noted that such an answer is needed (we do not '
@@ -534,7 +543,23 @@ def _итог(вид: str, режим: str, текст: str, записи: list[
     черновик = any(и['черновик'] for и in источники)
     if черновик and режим == 'поиск' and вид in ('ответ', 'к-имаму', 'нет-в-базе'):
         текст = текст + ' ' + шаблон(язык, 'черновик')
-    return {'вид': вид, 'режим': режим, 'текст': текст, 'источники': источники, 'черновик': черновик, '_причина': причина}
+    return {'вид': вид, 'режим': режим, 'текст': текст, 'источники': источники, 'черновик': черновик, 'намерение': None,
+            '_причина': причина}
+
+
+ИСТОЧНИК_КОРАНА = 'Tanzil Uthmani v1.1 — проверенная копия AI Ustaz (аят показывает приложение)'
+
+
+def источник_аята(ссылка: str) -> dict:
+    """Источник «аят» без текста: арабский аят приложение показывает само из своей копии Tanzil (правило 1)."""
+    return {'id': 'quran.' + ссылка.replace(':', '.'), 'вид': 'коран', 'заголовок': ссылка, 'ссылка': ссылка, 'текст': '',
+            'источник': ИСТОЧНИК_КОРАНА, 'черновик': False, 'версия': '1.1'}
+
+
+def ответ_аят(ссылка: str, язык: str, причина: str = 'ayah') -> dict:
+    итог = _итог('ответ', 'поиск', шаблон(язык, 'аят').format(ссылка=ссылка), [источник_аята(ссылка)], язык, причина)
+    итог['намерение'] = 'аят'
+    return итог
 
 
 def ответить(вопрос: str, язык: str, *, хранилище, ии: Callable | None, черновые: bool, сейчас: int,
@@ -548,6 +573,14 @@ def ответить(вопрос: str, язык: str, *, хранилище, и
         if записи:
             return _итог('ответ', 'поиск', шаблон(язык, 'тафсир-есть'), записи, язык, 'tafsir')
         return _итог('вне-темы', 'поиск', шаблон(язык, 'тафсир-нет'), [], язык, 'tafsir')
+    # «как читается аят 2:255», «сура Ихлас», «аят аль-Курси» (владелец 27.11.2026): ссылка, а аят — из копии приложения
+    if кл.вид == 'поиск':
+        try:
+            ссылка = quran_ref.ссылка_из_вопроса(вопрос)
+        except (OSError, ValueError):  # нет server/quran_ref.json — обычный поиск
+            ссылка = None
+        if ссылка:
+            return ответ_аят(ссылка, язык)
     найдено = отобрать(хранилище.kb_найти(термы(вопрос, язык), язык, черновые, ПРЕДЕЛ_ИСТОЧНИКОВ), порог)
     if кл.вид == 'к-имаму':
         текст = шаблон(язык, 'к-имаму') + (' ' + шаблон(язык, 'к-имаму-материалы') if найдено else '')
@@ -612,7 +645,10 @@ def register(
         except Exception as е:  # noqa: BLE001 — база недоступна: только тип ошибки
             журнал.warning('ask health: база недоступна (%s)', type(е).__name__)
             return _ошибка(503, 'kb')
-        return JSONResponse({'ок': True, 'записей': записей, 'режим': режим}, headers={'Cache-Control': 'no-store'})
+        import ask_media  # возможности чата: 🎤 и 📷 клиент показывает только по ним (владелец 27.11.2026)
+
+        return JSONResponse({'ок': True, 'записей': записей, 'режим': режим, **ask_media.возможности()},
+                            headers={'Cache-Control': 'no-store'})
 
     @app.post('/api/ask/v1')
     async def спросить(запрос: Request):

@@ -106,7 +106,7 @@ API (только чтение из БД, 60 запросов в минуту с
 Хранится (`prayer_official`, `prayer_wanted`, `prayer_log` — год, `prayer_meta`): таблицы ведомств по пунктам,
 очередь, журнал, последний принятый список регионов УМУз. Ни IP, ни координат пользователей.
 
-## «Спросить AI Ustaz» (`ask.py`, `kb.py`, `kb_load.py`, миграция 004) — НЕ выкачено
+## «Спросить AI Ustaz» — чат в центре меню (`ask.py`, `ask_media.py`, `quran_ref.py`, `kb.py`, `kb_load.py`, миграции 004 и 020)
 
 Владелец 20.11.2026: «люди могут задавать свои вопросы и получать ответы … Только с нашей базы данных, в интернете не
 будет искать … Сделай эту функцию, но не выкатывай.» Дизайн, границы и вопросы владельцу —
@@ -117,6 +117,22 @@ API (только чтение из БД, 60 запросов в минуту с
 | `POST /api/ask/v1` `{q: 3…500 символов, lang: 'ru'\|'kk'\|'uz'\|'en'}` | `200 {вид: 'ответ'\|'нет-в-базе'\|'к-имаму'\|'вне-темы', режим: 'поиск'\|'ии', текст, источники: [{id, вид, заголовок, ссылка, текст, арабский, источник, степень, кто_оценил, черновик, версия}], черновик}` |
 | ошибки | `400 question\|lang`, `413 size` (тело > 8 КБ), `429 rate` (10/мин и 100/сутки по Алматы с хэша IP), `403 origin`, `503 kb` (база пуста или недоступна) |
 | `GET /api/ask/health` | `{ок: true, записей, режим}` |
+
+**Владелец 27.11.2026: выкатываем (режим «поиск», без внешнего ИИ).** `setup-server.sh` ставит `MUGALIM_ASK=1` и грузит
+`kb/*.jsonl` (в копии batr-world — `aiustaz/server/kb/`: `spravka.jsonl`, `site.jsonl`). Дополнительно:
+
+| Запрос | Ответ |
+|---|---|
+| «как читается аят 2:255», «сура Ихлас», «аят аль-Курси» (ru/kk/uz/en; `quran_ref.ссылка_из_вопроса`) | `200 {вид: 'ответ', намерение: 'аят', источники: [{вид: 'коран', ссылка: '2:255', текст: ''}]}` — текста Корана нет: аят показывает приложение из своей копии Tanzil |
+| `POST /api/ask/report` `{ответ, причина: неверно\|непонятно\|другое, комментарий?, источники?}` | `200 {ок}` — в `ask_reports` (180 дней): id ответа, причина, обезличенный комментарий, id записей; текста вопроса нет. 5/мин, 30/сутки |
+| `POST /api/ask/voice?lang=` тело — аудио ≤ 1,5 МБ | `200 {текст}` — распознаёт служба `mugalim-asr` (127.0.0.1:8033, faster-whisper на CPU, `asr_service.py`); 404 `off` без `MUGALIM_ASK_VOICE=1`; 422 `empty`; 503 `asr` |
+| `POST /api/ask/photo?lang=` тело — JPEG/PNG/WebP ≤ 2 МБ | ответ чата + `распознано` (без арабского); OCR — `tesseract` (ara+rus+kaz+eng, stdin→stdout, nice, 25 с); арабский → `quran_ref.сопоставить` (F1 по триграммам, порог 0,55 и отрыв 0,08) → «аят»; 404 `off` без `MUGALIM_ASK_PHOTO=1` |
+| `GET /api/ask/health` | `+ {голос, фото}` — клиент показывает 🎤 и 📷 только по ним |
+
+Аудио и фото живут только в памяти запроса и удаляются сразу; в журнал — длительность и итог. Голос и фото включаются
+входами workflow `aiustaz-server.yml` (`ask_voice`, `ask_photo` = on|off): `setup-server.sh` ставит флаги, Tesseract
+(пакеты дистрибутива) и окружение `/opt/mugalim/asr-venv` + модель (`MUGALIM_ASR_MODEL`, по умолчанию small) — голос
+только при ≥ 2 ядрах и ≥ 2 ГБ свободной памяти (иначе флаг выключается сам).
 
 Путь вопроса: классификатор (словари ru/kk/uz/en в `ask.py`, черновик) → `вне-темы` (политика, течения, экстремизм, споры
 мазхабов, не-исламское) / тафсир (только запись базы вида «тафсир» с той же «сура:аят», ИИ-тафсира нет) / `к-имаму`
@@ -153,7 +169,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest
 .venv/bin/python -m pytest -q tests                      # логика без БД (тесты БД пропускаются)
 # с настоящим PostgreSQL — своя временная база mugalim_test_<…> создаётся и удаляется в каждом тесте:
 MUGALIM_TEST_PG='postgresql://postgres@127.0.0.1:5432/postgres' .venv/bin/python -m pytest -q tests
-python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py ask.py kb.py kb_load.py
+python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py
 # API вручную (своя база mugalim_dev):
 MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_VAPID_PRIVATE=… \
   .venv/bin/python -m uvicorn --app-dir . --factory app:создать_приложение --port 8030

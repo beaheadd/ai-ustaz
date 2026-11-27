@@ -306,7 +306,7 @@ def test_бд_эндпоинт_целиком(база):
     app = FastAPI()
     ask.register(app, хранилище=база, ключ_лимита=lambda з: 'ip:t', часы=lambda: СЕЙЧАС / 1000)
     к = TestClient(app)
-    assert к.get('/api/ask/health').json() == {'ок': True, 'записей': 12, 'режим': 'поиск'}
+    assert к.get('/api/ask/health').json() == {'ок': True, 'записей': 12, 'режим': 'поиск', 'голос': False, 'фото': False}
     д = к.post('/api/ask/v1', json={'q': 'Сколько закята с 1000000 тенге?', 'lang': 'ru'}).json()
     assert д['вид'] == 'ответ' and д['источники'][0]['id'] == 'zakat-nisab' and д['черновик'] is True
     д = к.post('/api/ask/v1', json={'q': 'Мен зекетті төлеуім керек пе?', 'lang': 'kk'}).json()
