@@ -179,7 +179,7 @@ async function безРазрешенийCdn(контекст) {
 
 let проверок = 0;
 
-async function новаяСтраница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', схема = 'light', снимки = false, источник = false, безРазрешений = false, прогресс = ПРОГРЕСС(язык) } = {}) {
+async function новаяСтраница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', схема = 'light', снимки = false, источник = false, безРазрешений = false, прогресс = ПРОГРЕСС(язык), тон = 0.6, время = false } = {}) {
   const контекст = await браузер.newContext({ ...ТЕЛЕФОН(ширина, высота, снимки), colorScheme: схема, locale: 'ru-RU', timezoneId: 'Asia/Almaty' });
   // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
   if (схема === 'dark') await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
@@ -191,8 +191,22 @@ async function новаяСтраница(браузер, база, { ширин
     },
     { прогресс },
   );
-  const счёт = источник ? await тестовыйИсточник(контекст) : null;
-  const cdn = await звукCdn(контекст);
+  const счёт = источник ? await тестовыйИсточник(контекст, тон) : null;
+  const cdn = await звукCdn(контекст, тон);
+  // Подменённое время аудио (пословная подсветка): window.__время (с) — currentTime любого <audio>, пока задано.
+  if (время)
+    await контекст.addInitScript(() => {
+      const о = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'currentTime');
+      Object.defineProperty(HTMLMediaElement.prototype, 'currentTime', {
+        configurable: true,
+        get() {
+          return typeof window.__время === 'number' ? window.__время : о.get.call(this);
+        },
+        set(в) {
+          о.set.call(this, в);
+        },
+      });
+    });
   const снятоРазрешений = безРазрешений ? await безРазрешенийCdn(контекст) : null;
   const стр = await контекст.newPage();
   await стр.clock.setFixedTime(new Date(ВРЕМЯ));
@@ -1150,6 +1164,7 @@ export async function коранСквозной(браузер, база, { п�
   await страницыПлеерАльбом(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
   await страницыКнопкиЛистание(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
   await выборИЧтение(браузер, база, адрес);
+  await подсветкаСлов(браузер, база, адрес, папка);
 
   console.log(`\nКоран: ${проверок} проверок пройдено.`);
   return проверок;
@@ -1668,6 +1683,149 @@ async function режимСтраниц(браузер, база, папка, д
  * кнопки: play и запись… невозможно остановить чтение»; «сделай удобным перелистывание… анимацию, как лист
  * открывается»). Снимки: страницы-кнопки, страницы-переворот (середина переворота).
  */
+/**
+ * Пословная подсветка (владелец 28.11.2026: «жёлтый, который вместе двигается с чтецом, выделение именно слов»):
+ * время аудио подменено (window.__время); у аль-Хусари на 2:2 жёлтым — слово по таймингам quran-align
+ * (dist/quran-words/ar.husary), в обоих режимах; у Айюба (тайминга нет) — без жёлтого; «уменьшить движение» не мешает;
+ * выключатель «Подсветка слов» в меню вида. Снимки: слово-аят, слово-страница, слово-тёмная.
+ */
+async function подсветкаСлов(браузер, база, адрес, папка) {
+  console.log('\n══ Пословная подсветка: жёлтым — слово, которое читает кари ══');
+  const снимки = process.env.QURAN_SHOTS || null;
+  const дс = path.join(папка, 'quran-words', 'ar.husary');
+  const индекс = JSON.parse(fs.readFileSync(path.join(дс, fs.readdirSync(дс).find((ф) => /^index\.[0-9a-f]{20}\.json$/.test(ф))), 'utf8'));
+  const файл = JSON.parse(fs.readFileSync(path.join(папка, индекс.суры['2'].файл), 'utf8'));
+  const плоский = файл.аяты[1];
+  const слова = [];
+  for (let i = 0, к = 0; i + 1 < плоский.length; i += 2) {
+    const н = i === 0 ? плоский[0] : к + плоский[i];
+    к = н + плоский[i + 1];
+    слова.push([н * 10, к * 10]);
+  }
+  const середина = (i) => (слова[i][0] + слова[i][1]) / 2000;
+  const ждатьСлово = (корень, i) =>
+    стр.waitForFunction(
+      ({ корень, i }) => {
+        const к = document.querySelector(корень);
+        const г = к ? [...к.querySelectorAll('[data-group]')] : [];
+        const сейчас = document.querySelectorAll('[data-word-now]');
+        return сейчас.length === 1 && г.indexOf(сейчас[0]) === i;
+      },
+      { корень, i },
+      { timeout: 8000 },
+    );
+  const контрастСлова = () =>
+    стр.evaluate(() => {
+      const э = document.querySelector('[data-word-now]');
+      const цвет = (с) => с.match(/[\d.]+/g).map(Number);
+      const слои = [];
+      for (let у = э; у; у = у.parentElement) {
+        const ф = цвет(getComputedStyle(у).backgroundColor);
+        if ((ф[3] ?? 1) > 0) слои.push(ф);
+        if ((ф[3] ?? 1) >= 1) break;
+      }
+      let итог = [255, 255, 255];
+      for (const [r, g, b, a = 1] of слои.reverse()) итог = [r * a + итог[0] * (1 - a), g * a + итог[1] * (1 - a), b * a + итог[2] * (1 - a)];
+      return { текст: getComputedStyle(э).color, фон: `rgb(${итог.map(Math.round).join(', ')})` };
+    });
+  let стр;
+  // Аят за аятом, светлая тема.
+  {
+    const к = await новаяСтраница(браузер, база, { тон: 30, время: true, снимки: !!снимки });
+    стр = к.стр;
+    const п = помощники(стр, к.проблемы, 'подсветка слов', снимки);
+    await стр.goto(адрес('#/quran/sura?n=2&a=2'));
+    await п.э('коран-аят-2-2-текст').waitFor({ timeout: 15000 });
+    await стр.evaluate(() => (window.__время = 0));
+    await п.э('коран-аят-2-2-номер').click();
+    await п.э('действия-слушать').click();
+    await стр.waitForFunction(() => document.querySelector('[aria-current="true"]')?.getAttribute('data-testid') === 'коран-аят-2-2', null, { timeout: 8000 });
+    п.проверить((await стр.evaluate(() => document.querySelectorAll('[data-word-now]').length)) === 0, 'время 0 — до первого слова жёлтого нет');
+    await стр.evaluate((т) => (window.__время = т), середина(2));
+    await ждатьСлово('[data-testid="коран-аят-2-2-текст"]', 2);
+    п.проверить(true, `аль-Хусари, 2:2, ${середина(2).toFixed(2)} с — жёлтым 3-е слово (по таймингам quran-align), аят подсвечен`);
+    const к1 = await контрастСлова();
+    п.проверить(контрастЦветов(к1.текст, к1.фон) >= 4.5, `светлая тема: текст на жёлтом — контраст ${контрастЦветов(к1.текст, к1.фон).toFixed(1)}:1`);
+    await п.снимок('слово-аят');
+    await стр.evaluate((т) => (window.__время = т), середина(слова.length - 1));
+    await ждатьСлово('[data-testid="коран-аят-2-2-текст"]', слова.length - 1);
+    п.проверить(true, `маркер идёт за чтецом: последнее (${слова.length}-е) слово`);
+    // Пауза — слово остаётся.
+    await п.э('сура-слушать').click();
+    await стр.waitForFunction(() => navigator.mediaSession?.playbackState === 'paused', null, { timeout: 3000 });
+    await стр.waitForTimeout(600);
+    п.проверить((await стр.evaluate(() => document.querySelectorAll('[data-word-now]').length)) === 1, 'пауза — слово остаётся жёлтым');
+    // «Страницами»: тот же аят, слово — отдельный узел на странице.
+    await п.э('сура-вид').click();
+    await п.э('режим-страницы').click();
+    await стр.keyboard.press('Escape');
+    await стр.waitForSelector('[data-testid="мусхаф-страница"] [data-ayah="2:2"]', { timeout: 15000 });
+    await ждатьСлово('[data-testid="мусхаф-страница"] [data-ayah="2:2"]', слова.length - 1);
+    п.проверить(true, '«Страницами» на паузе: то же слово жёлтым на странице');
+    await п.э('сура-слушать').click();
+    await стр.waitForFunction(() => navigator.mediaSession?.playbackState === 'playing', null, { timeout: 3000 });
+    await стр.evaluate((т) => (window.__время = т), середина(1));
+    await ждатьСлово('[data-testid="мусхаф-страница"] [data-ayah="2:2"]', 1);
+    п.проверить(true, '«Страницами», играет: жёлтым 2-е слово 2:2');
+    await п.снимок('слово-страница');
+    // «Уменьшить движение» — подсветка та же (анимации у неё нет).
+    await стр.emulateMedia({ reducedMotion: 'reduce' });
+    await стр.evaluate((т) => (window.__время = т), середина(3));
+    await ждатьСлово('[data-testid="мусхаф-страница"] [data-ayah="2:2"]', 3);
+    п.проверить(true, '«уменьшить движение»: маркер переходит к 4-му слову');
+    await стр.emulateMedia({ reducedMotion: 'no-preference' });
+    // Выключатель в меню вида.
+    await п.э('сура-вид').click();
+    await п.э('вид-слова').click();
+    await стр.waitForFunction(() => document.querySelectorAll('[data-word-now]').length === 0, null, { timeout: 3000 });
+    п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-words.v1'))).вкл === false, '«Подсветка слов» выкл. — жёлтого нет, выбор сохранён (aiustaz:quran-words.v1)');
+    await п.э('вид-слова').click();
+    await стр.keyboard.press('Escape');
+    await ждатьСлово('[data-testid="мусхаф-страница"] [data-ayah="2:2"]', 3);
+    п.проверить(true, 'включили снова — слово жёлтым');
+    await п.безПроблем('подсветка слов: без ошибок');
+    await к.контекст.close();
+  }
+  // Чтец без таймингов (Айюб) — только аят, без жёлтого.
+  {
+    const к = await новаяСтраница(браузер, база, { тон: 30, время: true });
+    стр = к.стр;
+    const п = помощники(стр, к.проблемы, 'подсветка слов: Айюб', null);
+    await к.контекст.addInitScript(() => localStorage.setItem('aiustaz:quran-reciter.v1', 'ayyub'));
+    await стр.goto(адрес('#/quran/sura?n=2&a=2'));
+    await стр.reload();
+    await п.э('коран-аят-2-2-текст').waitFor({ timeout: 15000 });
+    await п.э('коран-аят-2-2-номер').click();
+    await п.э('действия-слушать').click();
+    await стр.waitForFunction(() => document.querySelector('[aria-current="true"]')?.getAttribute('data-testid') === 'коран-аят-2-2', null, { timeout: 8000 });
+    await стр.evaluate((т) => (window.__время = т), середина(2));
+    await стр.waitForTimeout(1200);
+    п.проверить(
+      (await стр.evaluate(() => document.querySelectorAll('[data-word-now]').length)) === 0 && (await к.cdn).some((u) => u.includes('ar.muhammadayyoub')),
+      'Мухаммад Айюб (таймингов нет): аят подсвечен, жёлтого нет',
+    );
+    await п.безПроблем('подсветка слов, Айюб: без ошибок');
+    await к.контекст.close();
+  }
+  // Тёмная тема.
+  {
+    const к = await новаяСтраница(браузер, база, { тон: 30, время: true, схема: 'dark', снимки: !!снимки });
+    стр = к.стр;
+    const п = помощники(стр, к.проблемы, 'подсветка слов: тёмная', снимки);
+    await стр.goto(адрес('#/quran/sura?n=2&a=2'));
+    await п.э('коран-аят-2-2-текст').waitFor({ timeout: 15000 });
+    await п.э('коран-аят-2-2-номер').click();
+    await п.э('действия-слушать').click();
+    await стр.evaluate((т) => (window.__время = т), середина(2));
+    await ждатьСлово('[data-testid="коран-аят-2-2-текст"]', 2);
+    const к2 = await контрастСлова();
+    п.проверить(контрастЦветов(к2.текст, к2.фон) >= 4.5, `тёмная тема: текст на жёлтом — контраст ${контрастЦветов(к2.текст, к2.фон).toFixed(1)}:1`);
+    await п.снимок('слово-тёмная');
+    await п.безПроблем('подсветка слов, тёмная: без ошибок');
+    await к.контекст.close();
+  }
+}
+
 /** Контраст WCAG двух цветов CSS rgb()/rgba() (альфа фона не учитываем — фон чипа непрозрачный). */
 function контрастЦветов(а, б) {
   const я = (ц) => {

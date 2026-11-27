@@ -160,7 +160,8 @@ export const ФАЙЛ_SW = 'push-sw.js';
 
 // 7. Список файлов для работы без сети (владелец 27.11.2026).
 export const ПАПКА_ОФЛАЙН = 'offline';
-export const ГРУППЫ_ОФЛАЙН = { коран: ['quran/'], зикры: ['dhikr/'], махраджи: ['makharij/', 'makharij-index/'], хадисы: ['hadith/'], намаз: ['prayer/'], учимсяНамазу: ['namaz/'] };
+// quran-words/ (пословные тайминги, 28.11.2026) — с Кораном: подсветка слова работает и без сети.
+export const ГРУППЫ_ОФЛАЙН = { коран: ['quran/', 'quran-words/'], зикры: ['dhikr/'], махраджи: ['makharij/', 'makharij-index/'], хадисы: ['hadith/'], намаз: ['prayer/'], учимсяНамазу: ['namaz/'] };
 export const ОБОЛОЧКА_ОФЛАЙН = ['_expo/', 'assets/', 'pwa/'];
 {
   const все = [];

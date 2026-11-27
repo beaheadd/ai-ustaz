@@ -37,7 +37,7 @@ export type { АятКорана, ЗаписьСуры, ИндексСур, Пр
 export const ТАЙМАУТ_МС = 20000;
 
 /** baseUrl сборки ('/aiustaz' из app.json experiments.baseUrl): Expo подставляет process.env.EXPO_BASE_URL при сборке. */
-function базаСборки(): string {
+export function базаСборки(): string {
   try {
     const б = process.env.EXPO_BASE_URL;
     if (typeof б === 'string') return б;
