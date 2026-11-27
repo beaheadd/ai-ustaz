@@ -1008,6 +1008,7 @@ export async function коранСквозной(браузер, база, { п�
   }
 
   await видыЧтения(браузер, база, данные, адрес, process.env.QURAN_VIEWS_SHOTS ?? (папкаСнимков ? path.join(папкаСнимков, 'quran-views') : null));
+  await режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков);
 
   console.log(`\nКоран: ${проверок} проверок пройдено.`);
   return проверок;
@@ -1350,4 +1351,156 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     await браузер.close();
     await сервер.закрыть();
   }
+}
+
+/**
+ * Режим «Страницами» (владелец 27.11.2026: «переключение как книга, страницы листать, как в Коране»): переключатель в
+ * меню вида (aiustaz:quran-view.v1 → режим «страницы»); страница = аяты по Tanzil Quran Metadata (индекс мусхафа
+ * dist/quran/tajweed/index…json), текст = Tanzil побайтно; листание как в арабской книге — следующая: кнопка слева,
+ * клавиша ←, свайп вправо; предыдущая — наоборот; страница помещается без прокрутки на 412×800; аль-Вакиа — картуш и
+ * бисмилла посреди страницы 534 (по метаданным), заголовок — открытая сура; лист действий аята; «Продолжить чтение»
+ * открывает ту же страницу; возврат к «Аят за аятом».
+ */
+async function режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков) {
+  console.log('\n══ Режим «Страницами»: страница мусхафа целиком, листание как в книге ══');
+  const dt = path.join(папка, 'quran', 'tajweed');
+  const м = JSON.parse(fs.readFileSync(path.join(dt, fs.readdirSync(dt).find((ф) => /^index\.[0-9a-f]{20}\.json$/.test(ф))), 'utf8'));
+  const нач = м.страницы;
+  const аятов = (с) => данные.индекс.суры[с - 1].аятов;
+  const страницаАята = (с, а) => {
+    let н = 0;
+    for (let i = 0; i < нач.length; i++) if (нач[i][0] < с || (нач[i][0] === с && нач[i][1] <= а)) н = i + 1;
+    return н;
+  };
+  const аятыСтраницы = (н) => {
+    const [с0, а0] = нач[н - 1];
+    const [с1, а1] = нач[н] ?? [115, 1];
+    const р = [];
+    for (let с = с0; с <= Math.min(114, с1); с++) {
+      const от = с === с0 ? а0 : 1;
+      const до = с === с1 ? а1 - 1 : аятов(с);
+      for (let а = от; а <= до; а++) р.push(`${с}:${а}`);
+    }
+    return р;
+  };
+  const ЦИФРЫ = '٠١٢٣٤٥٦٧٨٩';
+  const { контекст, стр, проблемы } = await новаяСтраница(браузер, база);
+  const п = помощники(стр, проблемы, 'страницами', папкаСнимков);
+  const номер = () => стр.evaluate(() => Number(document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') ?? 0));
+  const ждатьСтраницу = (н) => стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н, { timeout: 15000 });
+  const сверить = async (н, где) => {
+    const ждём = аятыСтраницы(н);
+    await стр.waitForFunction((к) => document.querySelector(`[data-ayah="${к}"]`), ждём[ждём.length - 1], { timeout: 15000 });
+    const а = await стр.evaluate(() =>
+      [...document.querySelectorAll('[data-testid="мусхаф-страница"] [data-ayah]')].map((е) => {
+        const к = е.cloneNode(true);
+        к.querySelectorAll('[data-end]').forEach((х) => х.remove());
+        return { ключ: е.getAttribute('data-ayah'), текст: к.textContent, конец: е.querySelector('[data-end]')?.textContent ?? null };
+      }),
+    );
+    п.проверить(а.map((х) => х.ключ).join(',') === ждём.join(','), `${где}: страница ${н} — аяты ${ждём[0]}…${ждём[ждём.length - 1]} (${ждём.length}) по метаданным Tanzil`);
+    const плохие = а.filter((х) => {
+      const [с, н2] = х.ключ.split(':').map(Number);
+      return х.текст !== данные.сура(с).аяты[н2 - 1].текст || х.конец !== '۝' + String(н2).replace(/\d/g, (ц) => ЦИФРЫ[ц]);
+    });
+    п.проверить(плохие.length === 0, `${где}: текст каждого аята побайтно = Tanzil, конец — ۝ с номером` + (плохие.length ? ': ' + плохие.map((х) => х.ключ).join(' ') : ''));
+  };
+  const свайп = (dx) =>
+    стр.evaluate((dx) => {
+      const э = document.querySelector('[data-testid="мусхаф-страница"]');
+      const r = э.getBoundingClientRect();
+      const x = r.left + r.width / 2 - dx / 2;
+      const y = r.top + r.height / 2;
+      const т = (xx) => new Touch({ identifier: 1, target: э, pageX: xx, pageY: y, clientX: xx, clientY: y });
+      э.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [т(x)], changedTouches: [т(x)] }));
+      э.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [т(x + dx)] }));
+    }, dx);
+
+  await стр.goto(адрес('#/quran/sura?n=1'));
+  await п.э('коран-аят-1-7-текст').waitFor({ timeout: 15000 });
+  п.проверить(!(await п.есть('мусхаф-страница')), 'по умолчанию — «Аят за аятом» (страниц нет)');
+  await п.э('сура-вид').click();
+  await п.э('режим-страницы').click();
+  await стр.keyboard.press('Escape');
+  await ждатьСтраницу(1);
+  п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).режим === 'страницы', 'выбор сохранён: aiustaz:quran-view.v1 = { режим: «страницы» }');
+  await сверить(1, 'аль-Фатиха');
+  п.проверить((await п.текстЭ('мусхаф-страница-номер')).includes('1'), 'внизу — номер страницы');
+  п.проверить((await п.текстЭ('мусхаф-страница-шапка')).includes('Джуз 1'), 'сверху — сура и «Джуз 1»');
+  await п.безГоризонтальнойПрокрутки('страница 1');
+
+  await п.э('мусхаф-страница-след').click();
+  await ждатьСтраницу(2);
+  await сверить(2, 'кнопка «Следующая страница» (слева, как в арабской книге)');
+  await стр.waitForFunction(() => location.hash === '#/quran/sura?n=2&a=1', null, { timeout: 5000 });
+  п.проверить((await п.текстЭ('сура-заголовок')).includes('аль-Бакара'), 'заголовок и адрес — аль-Бакара 2:1');
+  await стр.evaluate(() => document.activeElement?.blur?.());
+  await стр.keyboard.press('ArrowLeft');
+  await ждатьСтраницу(3);
+  п.проверить((await номер()) === 3, 'клавиша ← — следующая страница (3)');
+  await стр.keyboard.press('ArrowRight');
+  await ждатьСтраницу(2);
+  п.проверить((await номер()) === 2, 'клавиша → — предыдущая страница (2)');
+  await свайп(160);
+  await ждатьСтраницу(3);
+  п.проверить((await номер()) === 3, 'свайп вправо — следующая страница (3)');
+  await свайп(-160);
+  await ждатьСтраницу(2);
+  п.проверить((await номер()) === 2, 'свайп влево — предыдущая страница (2)');
+  await п.э('мусхаф-страница-пред').click();
+  await ждатьСтраницу(1);
+  п.проверить(await стр.evaluate(() => document.querySelector('[data-testid="мусхаф-страница-пред"]')?.getAttribute('aria-disabled') === 'true'), 'на странице 1 «Предыдущая» недоступна');
+
+  // Аят аль-Курси: страница 42, помещается целиком на 412×800.
+  await стр.goto(адрес('#/quran/sura?n=2&a=255'));
+  const н255 = страницаАята(2, 255);
+  await ждатьСтраницу(н255);
+  await сверить(н255, 'аят аль-Курси');
+  const место = await стр.evaluate(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    return [э.clientHeight, э.scrollHeight];
+  });
+  п.проверить(место[1] <= место[0] + 1, `страница ${н255} помещается без прокрутки на 412×800 (${место[1]} ≤ ${место[0]})`);
+  await п.снимок('страница-курси');
+  await стр.locator('[data-ayah="2:255"]').first().click();
+  await п.э('сура-действия').waitFor({ timeout: 5000 });
+  п.проверить((await п.текстЭ('сура-действия')).includes('2:255'), 'нажатие на аят на странице — лист действий «Аят 2:255»');
+  await стр.keyboard.press('Escape');
+  await п.э('сура-действия').waitFor({ state: 'detached', timeout: 5000 });
+
+  // Аль-Вакиа начинается посреди страницы: конец ар-Рахмана, картуш и бисмилла 56.
+  await стр.goto(адрес('#/quran/sura?n=56&a=1'));
+  const н56 = страницаАята(56, 1);
+  await ждатьСтраницу(н56);
+  await сверить(н56, 'аль-Вакиа');
+  п.проверить((await п.есть('мусхаф-сура-56')) && (await п.есть('мусхаф-бисмилла-56')), `страница ${н56}: картуш и бисмилла аль-Вакиа посреди страницы`);
+  const влезла = await стр
+    .waitForFunction(() => {
+      const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+      return э && э.scrollHeight <= э.clientHeight + 1;
+    }, null, { timeout: 2500 })
+    .then(() => true, () => false);
+  п.проверить(влезла, `страница ${н56} (27 аятов и картуш) за 2,5 с подгоняет кегль и помещается без прокрутки на 412×800`);
+  п.проверить((await п.текстЭ('сура-заголовок')).includes('аль-Вакиа'), 'заголовок — открытая сура (аль-Вакиа), хотя страница начинается ар-Рахманом');
+  await п.безГоризонтальнойПрокрутки(`страница ${н56}`);
+  await п.снимок('страница-вакиа');
+
+  // «Продолжить чтение» — та же страница.
+  await п.э('мусхаф-страница-след').click();
+  await ждатьСтраницу(н56 + 1);
+  await стр.waitForTimeout(1200);
+  await стр.goto(адрес('#/quran'));
+  await п.э('коран-продолжить').waitFor({ timeout: 15000 });
+  await п.э('коран-продолжить').click();
+  await ждатьСтраницу(н56 + 1);
+  п.проверить((await номер()) === н56 + 1, `«Продолжить чтение» открывает страницу ${н56 + 1}`);
+
+  // Назад к «Аят за аятом».
+  await п.э('сура-вид').click();
+  await п.э('режим-аяты').click();
+  await стр.keyboard.press('Escape');
+  await стр.waitForFunction(() => !document.querySelector('[data-testid="мусхаф-страница"]'), null, { timeout: 10000 });
+  п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).режим === 'аяты', 'переключение назад — «Аят за аятом»');
+  await п.безПроблем('режим «Страницами»: без ошибок, чужих запросов и нарушений CSP');
+  await контекст.close();
 }
