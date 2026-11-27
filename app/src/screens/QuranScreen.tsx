@@ -255,6 +255,30 @@ export function Коран(_: ПропсыЭкрана<'коран'>) {
 
   return (
     <Экран заголовок={t('экран.коран')} testID="экран-коран">
+      {/* «Суры | Джузы» — сразу под шапкой, компактно (владелец 28.11.2026: «меньше сделай блок и на самом верху
+          поставь ниже шапки»). */}
+      {безПоиска && джузы.length === 30 ? (
+        <View
+          testID="коран-вид"
+          {...(ВЕБ ? ({ role: 'tablist', 'aria-label': т('вид') } as object) : null)}
+          style={{ flexDirection: 'row', padding: 3, borderRadius: радиус.m, backgroundColor: цвет.поверхностьВторая, gap: 3 }}
+        >
+          {(['суры', 'джузы'] as const).map((в) => (
+            <Pressable
+              key={в}
+              accessibilityRole="tab"
+              {...(ВЕБ ? ({ 'aria-selected': видСписка === в } as object) : { accessibilityState: { selected: видСписка === в } })}
+              onPress={() => установитьВидСписка(в)}
+              testID={'коран-вид-' + в}
+              style={{ flex: 1, minHeight: 38, borderRadius: радиус.s, alignItems: 'center', justifyContent: 'center', backgroundColor: видСписка === в ? цвет.поверхность : 'transparent' }}
+            >
+              <Текст вид="метка" цвет={видСписка === в ? цвет.акцент : цвет.текстВторой}>
+                {т(в)}
+              </Текст>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
       {/* Где остановился (запоминается само при чтении; владелец 27.11.2026) — первым, затем закладка. */}
       {чтение && суры && записьЧтения && чтение.аят <= записьЧтения.аятов ? (
         <СтрокаСписка
@@ -340,28 +364,6 @@ export function Коран(_: ПропсыЭкрана<'коран'>) {
             {запрос.trim() && найдено && !переход ? т('найдено', { н: найдено.length }) : ''}
           </Текст>
 
-          {безПоиска && джузы.length === 30 ? (
-            <View
-              testID="коран-вид"
-              {...(ВЕБ ? ({ role: 'tablist', 'aria-label': т('вид') } as object) : null)}
-              style={{ flexDirection: 'row', padding: 4, borderRadius: радиус.m, backgroundColor: цвет.поверхностьВторая, gap: 4 }}
-            >
-              {(['суры', 'джузы'] as const).map((в) => (
-                <Pressable
-                  key={в}
-                  accessibilityRole="tab"
-                  {...(ВЕБ ? ({ 'aria-selected': видСписка === в } as object) : { accessibilityState: { selected: видСписка === в } })}
-                  onPress={() => установитьВидСписка(в)}
-                  testID={'коран-вид-' + в}
-                  style={{ flex: 1, minHeight: 44, borderRadius: радиус.s, alignItems: 'center', justifyContent: 'center', backgroundColor: видСписка === в ? цвет.поверхность : 'transparent' }}
-                >
-                  <Текст вид="метка" цвет={видСписка === в ? цвет.акцент : цвет.текстВторой}>
-                    {т(в)}
-                  </Текст>
-                </Pressable>
-              ))}
-            </View>
-          ) : null}
 
           {безПоиска && видСписка === 'джузы' && суры && джузы.length === 30 ? (
             <View
