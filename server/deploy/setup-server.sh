@@ -86,7 +86,7 @@ if flag_on MUGALIM_ASK_VOICE; then
     [ -x "$ASR/bin/python" ] || python3 -m venv "$ASR"
     "$ASR/bin/pip" install -q --upgrade pip
     "$ASR/bin/pip" install -q -r "$APP/requirements-asr.txt"
-    MODEL=$(grep '^MUGALIM_ASR_MODEL=' "$ENVF" | cut -d= -f2-); MODEL=${MODEL:-small}
+    MODEL=$(grep '^MUGALIM_ASR_MODEL=' "$ENVF" | cut -d= -f2- || true); MODEL=${MODEL:-small}
     mkdir -p /opt/mugalim/asr-models
     "$ASR/bin/python" -c "from faster_whisper import WhisperModel as W; W('$MODEL', device='cpu', compute_type='int8', download_root='/opt/mugalim/asr-models')" \
       && echo "OK: модель распознавания $MODEL на месте"
