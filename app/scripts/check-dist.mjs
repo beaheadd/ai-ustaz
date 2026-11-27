@@ -49,7 +49,7 @@
  *     importScripts, XMLHttpRequest, indexedDB нет); ≤ 16 КБ; значки — существующие pwa/icon-192 и pwa/icon-mono-512,
  *     меток __ЗНАЧОК/__ОФЛАЙН нет; адрес списка — существующий offline/files.<хэш>.json, в нём только пути /aiustaz/
  *     существующих файлов с хэшем в имени, оболочка = все файлы _expo/, assets/, pwa/, группы покрывают quran/,
- *     dhikr/, makharij/, makharij-index/, hadith/, prayer/ целиком; CSP worker-src 'self' (не шире); регистрируют его
+ *     dhikr/, makharij/, makharij-index/, hadith/, prayer/, namaz/ целиком; CSP worker-src 'self' (не шире); регистрируют его
  *     app/src/offline/offline.ts и app/src/notify/push.ts (scope /aiustaz/) и только на aiustaz.pro — на batr.kz у
  *     сайта свой SW со scope «/».
  * 11. Места для времени намаза (владелец 20.11.2026: «Мы мировое приложение»; tools/prayer/build_world.py →
@@ -71,6 +71,7 @@
  *     манифесту по порядку; каждая схема из индекса есть в makharij/; других файлов в makharij-index/ нет; текстов
  *     махраджей нет в JS-чанках (ни одно описание ≥ 30 знаков) — индекс грузится fetch'ем (src/makharij/data.ts).
  * Запуск: npm run check:dist  [папка-сборки=dist]
+ * 15. Учимся намазу (владелец 27.11.2026) — см. п. 15 ниже: файл namaz/ по манифесту, sha256, текста в JS нет.
  */
 import { execFileSync } from 'node:child_process';
 import crypto from 'node:crypto';
@@ -180,7 +181,10 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // Владелец 27.11.2026: «значки нужно отрисовать… Дуа — неприличный жест… Зикры — тасбих как фото… намаз — другой
 // значок» — 6 цветных SVG-иллюстраций плиток главной (components/SectionArt.tsx) вместо линейных значков; они в чанке
 // главной. 1902 → 1908 КБ: сборка 1903 КБ (+≈4 КБ) и запас на округление.
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1908);
+// Владелец 27.11.2026: «Учимся намазу нужно собрать по ханафи» — экраны раздела (оглавление, раздел с пунктами,
+// таблицей ракаатов и шагами ‹ ›) со словарями ru/kk/uz/en, src/namaz (строгая проверка формы), маршруты #/namaz и
+// #/namaz/section, строка в «Ещё». Текста раздела в JS нет (п. 15). По check-dist 1903 → 1918 КБ (+15 КБ); 1908 → 1922.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1922);
 // Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
 // Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
 // + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
@@ -199,7 +203,8 @@ const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 
 // Состав: hadith/ — 7 663 371 байт (813 хадисов: индекс 158 КБ, заголовки ru/en/uz, порции по 50 — ar 1,8 МБ,
 // ru 3,1 МБ, en 1,7 МБ, uz 0,4 МБ; тексты, разъяснения и польза дословно) + JS выше. Грузятся по запросу: индекс,
 // заголовки языка и две порции на открытый хадис.
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 15327);
+// Владелец 27.11.2026: «Учимся намазу» — namaz/ (60 КБ) и +15 КБ JS: 15327 → 15345 КБ (сборка 15331 КБ с запасом).
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 15345);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
@@ -572,10 +577,10 @@ let строкаSW = 'нет push-sw.js';
       }
       const вСписке = new Set(все);
       for (const ф of файлы) {
-        if (['_expo/', 'assets/', 'pwa/', 'quran/', 'dhikr/', 'makharij/', 'makharij-index/', 'hadith/', 'prayer/'].some((н) => ф.отн.startsWith(н)) && !вСписке.has('/aiustaz/' + ф.отн))
+        if (['_expo/', 'assets/', 'pwa/', 'quran/', 'dhikr/', 'makharij/', 'makharij-index/', 'hadith/', 'prayer/', 'namaz/'].some((н) => ф.отн.startsWith(н)) && !вСписке.has('/aiustaz/' + ф.отн))
           ошибка(`offline: файл сборки не в списке: ${ф.отн}`);
       }
-      for (const г of ['коран', 'зикры', 'махраджи', 'хадисы', 'намаз']) if (!список.группы?.[г]?.файлы?.length) ошибка(`offline: пустая группа «${г}»`);
+      for (const г of ['коран', 'зикры', 'махраджи', 'хадисы', 'намаз', 'учимсяНамазу']) if (!список.группы?.[г]?.файлы?.length) ошибка(`offline: пустая группа «${г}»`);
       строкаОфлайн = `${списокSW}: оболочка ${список.оболочка.length}, ` + Object.entries(список.группы).map(([и, г]) => `${и} ${г.файлы.length} (${кб(г.байт)} КБ)`).join(', ');
     }
     строкаSW = `${кб(fs.statSync(путь).size)} КБ, уведомления и без сети; значки ${значки.map((з) => path.basename(з)).join(', ')}; ${строкаОфлайн}`;
@@ -694,6 +699,44 @@ let строкаЗикров = 'нет dhikr/';
   }
 }
 
+// 15. Учимся намазу (владелец 27.11.2026: «Учимся намазу нужно собрать по ханафи»; tools/namaz/build_namaz.py →
+// app/public/namaz → dist/namaz): файл из src/namaz/manifest.generated.ts есть, sha256 = манифесту, хэш в имени =
+// началу sha256, число разделов = манифесту; других файлов в namaz/ нет; текста раздела нет в JS-чанках (ни один
+// арабский абзац хадиса ≥ 12 знаков, ни один пункт или шаг ≥ 30 знаков) — раздел грузится fetch'ем (src/namaz/data.ts).
+let строкаНамаза = 'нет namaz/';
+{
+  const путьМанифеста = path.join(корень, 'src', 'namaz', 'manifest.generated.ts');
+  const манифест = fs.existsSync(путьМанифеста) ? fs.readFileSync(путьМанифеста, 'utf8') : '';
+  const файлМ = манифест.match(/файл: '([^']+)'/)?.[1];
+  const shaМ = манифест.match(/sha256: '([0-9a-f]{64})'/)?.[1];
+  const разделовМ = Number(манифест.match(/разделов: (\d+)/)?.[1] ?? NaN);
+  if (!файлМ || !shaМ || !Number.isInteger(разделовМ)) ошибка('нет src/namaz/manifest.generated.ts (python3 -I -B tools/namaz/build_namaz.py)');
+  else if (!fs.existsSync(path.join(папка, файлМ))) ошибка(`нет файла намаза ${файлМ} в сборке (app/public/namaz → dist/namaz)`);
+  else {
+    const б = fs.readFileSync(path.join(папка, файлМ));
+    const хэш = crypto.createHash('sha256').update(б).digest('hex');
+    if (хэш !== shaМ) ошибка(`намаз: sha256 ${файлМ} ≠ манифесту`);
+    if (!path.basename(файлМ).includes('.' + хэш.slice(0, 20) + '.')) ошибка(`намаз: хэш в имени ${файлМ} ≠ началу sha256`);
+    const набор = JSON.parse(б.toString('utf8'));
+    const разделы = Array.isArray(набор.разделы) ? набор.разделы : [];
+    if (разделы.length !== разделовМ) ошибка(`намаз: разделов в файле ${разделы.length}, в манифесте ${разделовМ}`);
+    for (const { отн } of файлы) if (отн.startsWith('namaz/') && отн !== файлМ) ошибка(`лишний файл в namaz/: ${отн}`);
+    const куски = [];
+    for (const т of Object.values(набор.тексты ?? {})) if (т.вид !== 'коран') for (const а of т.ar ?? []) if (typeof а === 'string' && а.length >= 12) куски.push(а.slice(0, 12));
+    for (const р of разделы) {
+      for (const г of р.группы ?? []) for (const п of г.пункты ?? []) for (const т of Object.values(п)) if (typeof т === 'string' && т.length >= 30) куски.push(т.slice(0, 30));
+      for (const ш of р.шаги ?? []) for (const т of Object.values(ш.текст ?? {})) if (typeof т === 'string' && т.length >= 30) куски.push(т.slice(0, 30));
+    }
+    for (const { абс, отн } of файлы) {
+      if (!отн.endsWith('.js')) continue;
+      const код = fs.readFileSync(абс, 'utf8');
+      const найдено = куски.find((к) => код.includes(к));
+      if (найдено) ошибка(`текст раздела «Учимся намазу» в JS-чанке ${отн}: «${найдено}…» — только статический файл namaz/`);
+    }
+    строкаНамаза = `${разделы.length} разделов, ${Object.keys(набор.тексты ?? {}).length} текстов, ${кб(б.length)} КБ, sha256 сверен, текста в JS нет`;
+  }
+}
+
 // 14. Махраджи (владелец 19.11 и 26.11.2026): см. шапку, п. 14.
 let строкаМахраджей = 'нет makharij-index/';
 {
@@ -740,6 +783,7 @@ console.log(`Service worker уведомлений (push-sw.js): ${строкаS
 console.log(`Места для времени намаза (prayer/): ${строкаМест}`);
 console.log(`Хадисы аль-Бухари (hadith/): ${строкаХадисов}`);
 console.log(`Зикры (dhikr/): ${строкаЗикров}`);
+console.log(`Учимся намазу (namaz/): ${строкаНамаза}`);
 console.log(`Махраджи (makharij-index/): ${строкаМахраджей}`);
 console.log(`Проверка голосом: ${меткаПроверки === 'on' ? 'ВКЛЮЧЕНА в сборке' + (СВОЙ_ДОМЕН ? ' (MUGALIM_TARGET=own-domain)' : '') : 'выключена (сборка для batr.kz)'}`);
 console.log(`Предпросмотр видео и аудио партнёров: ${меткаПредпросмотра === 'on' ? 'ВКЛЮЧЁН (только для владельца' + (ПРЕДПРОСМОТР_РАЗРЕШЁН ? ', MUGALIM_TARGET=preview)' : ')') : 'выключен'}`);

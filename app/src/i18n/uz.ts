@@ -47,6 +47,8 @@ export const uz: Record<КлючСтроки, string> = {
   'экран.зикры': 'Zikrlar',
   'экран.дуа': 'Duolar',
   'экран.зикр': 'Zikr',
+  'экран.учимсяНамазу': 'Namozni oʻrganish',
+  'экран.разделНамаза': 'Namoz',
   'экран.махраджи': 'Harflarni qanday aytish',
   'экран.букваМахраджа': 'Harf maxraji',
   'экран.ещё': 'Yana',

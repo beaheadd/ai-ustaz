@@ -48,6 +48,8 @@ export const en: Record<КлючСтроки, string> = {
   'экран.зикры': 'Dhikr',
   'экран.дуа': 'Duas',
   'экран.зикр': 'Dhikr',
+  'экран.учимсяНамазу': 'Learn salah',
+  'экран.разделНамаза': 'Salah',
   'экран.махраджи': 'How to pronounce letters',
   'экран.букваМахраджа': 'Letter makhraj',
   'экран.ещё': 'More',

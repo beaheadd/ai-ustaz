@@ -58,8 +58,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'audio'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'hadith'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'dhikr'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'namaz'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'makharij'))
 import build_dhikr  # noqa: E402
+import build_namaz  # noqa: E402
 import build_index as индекс_махраджей  # noqa: E402
 import check_audio  # noqa: E402
 import check_hadith  # noqa: E402
@@ -384,6 +386,12 @@ def main():
         отчёт.ошибки.extend(ошибки_з)
         предупреждения_хадисов.extend(предупреждения_з)
         for к, в in счёт_з.items():
+            отчёт.счёт(к, в)
+        # Учимся намазу (владелец 27.11.2026): целостность и Tanzil всегда; дословность фрагментов HadeethEnc — если сырьё есть.
+        ошибки_н, счёт_н, предупреждения_н = build_namaz.проверить()
+        отчёт.ошибки.extend(ошибки_н)
+        предупреждения_хадисов.extend(предупреждения_н)
+        for к, в in счёт_н.items():
             отчёт.счёт(к, в)
         # Индекс махраджей для экранов «Как произносить буквы» (владелец 26.11.2026): = свежей сборке.
         ошибки_м, счёт_м = индекс_махраджей.проверить()

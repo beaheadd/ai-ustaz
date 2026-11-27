@@ -157,7 +157,7 @@ export const ФАЙЛ_SW = 'push-sw.js';
 
 // 7. Список файлов для работы без сети (владелец 27.11.2026).
 export const ПАПКА_ОФЛАЙН = 'offline';
-export const ГРУППЫ_ОФЛАЙН = { коран: ['quran/'], зикры: ['dhikr/'], махраджи: ['makharij/', 'makharij-index/'], хадисы: ['hadith/'], намаз: ['prayer/'] };
+export const ГРУППЫ_ОФЛАЙН = { коран: ['quran/'], зикры: ['dhikr/'], махраджи: ['makharij/', 'makharij-index/'], хадисы: ['hadith/'], намаз: ['prayer/'], учимсяНамазу: ['namaz/'] };
 export const ОБОЛОЧКА_ОФЛАЙН = ['_expo/', 'assets/', 'pwa/'];
 {
   const все = [];

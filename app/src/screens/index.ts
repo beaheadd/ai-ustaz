@@ -30,6 +30,7 @@ import { Дуа, Зикры } from './DhikrScreen';
 import { СчётчикЗикра } from './DhikrCounterScreen';
 import { Махраджи } from './MakharijScreen';
 import { БукваМахраджаЭкран } from './MakharijLetterScreen';
+import { РазделНамаза, УчимсяНамазу } from './NamazLearnScreen';
 
 export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<ПропсыЭкрана<K>> } = {
   главная: Главная,
@@ -55,6 +56,8 @@ export const ЭКРАНЫ: { [K in ИмяЭкрана]: ComponentType<Пропс
   зикр: СчётчикЗикра,
   махраджи: Махраджи,
   букваМахраджа: БукваМахраджаЭкран,
+  учимсяНамазу: УчимсяНамазу,
+  разделНамаза: РазделНамаза,
   ещё: Ещё,
   установка: Установка,
   уведомления: Уведомления,
