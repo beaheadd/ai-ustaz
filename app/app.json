@@ -3,7 +3,7 @@
     "name": "AI Ustaz",
     "slug": "aiustaz",
     "version": "0.1.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "userInterfaceStyle": "automatic",
     "web": {
       "output": "single",

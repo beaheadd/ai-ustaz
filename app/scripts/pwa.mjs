@@ -61,7 +61,9 @@ export function построитьМанифест(значки, база = '/ai
     start_url: `${база}?source=pwa`,
     scope: база,
     display: 'standalone',
-    orientation: 'portrait',
+    // Владелец 28.11.2026: «при поворачивании экрана, чтобы Коран подгонялся под лист» — установленное приложение
+    // поворачивается (было 'portrait': экран не поворачивался). В app.json — "default" (то же для Expo).
+    orientation: 'any',
     background_color: ЦВЕТ_ФОНА,
     theme_color: ЦВЕТ_БРЕНДА,
     categories: ['education', 'books'],

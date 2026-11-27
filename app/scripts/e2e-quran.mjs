@@ -1148,6 +1148,8 @@ export async function коранСквозной(браузер, база, { п�
   await видыЧтения(браузер, база, данные, адрес, process.env.QURAN_VIEWS_SHOTS ?? (папкаСнимков ? path.join(папкаСнимков, 'quran-views') : null));
   await режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков);
   await страницыПлеерАльбом(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
+  await страницыКнопкиЛистание(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
+  await выборИЧтение(браузер, база, адрес);
 
   console.log(`\nКоран: ${проверок} проверок пройдено.`);
   return проверок;
@@ -1661,6 +1663,244 @@ async function режимСтраниц(браузер, база, папка, д
  * следующей страницы — страница листается сама; человек сам листал — не дёргаем. 800×412: кегль не подгоняется (не
  * меньше книжного), страница прокручивается по вертикали, горизонтальной прокрутки нет, место при повороте сохраняется.
  */
+/**
+ * «Страницами»: кнопки ▶/⏸ и 🎤, листание за пальцем и переворот листа (владелец 28.11.2026: «здесь должны быть две
+ * кнопки: play и запись… невозможно остановить чтение»; «сделай удобным перелистывание… анимацию, как лист
+ * открывается»). Снимки: страницы-кнопки, страницы-переворот (середина переворота).
+ */
+/** Контраст WCAG двух цветов CSS rgb()/rgba() (альфа фона не учитываем — фон чипа непрозрачный). */
+function контрастЦветов(а, б) {
+  const я = (ц) => {
+    const [r, g, b] = ц.match(/[\d.]+/g).slice(0, 3).map(Number).map((к) => {
+      const x = к / 255;
+      return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const [в, н] = [я(а), я(б)].sort((x, y) => y - x);
+  return (в + 0.05) / (н + 0.05);
+}
+
+/**
+ * Выбор и чтение (владелец 28.11.2026: «выбрал один аят, начинаю с него прослушать… должно выделяться только тот аят,
+ * который сейчас читается»): чтение ушло с выбранного аята — выбор снят (подсветка, «Сохранить место», «Аят N ×»).
+ * Тёмная тема: текст чипов выбора — контраст ≥ 4,5:1 во всех видах.
+ */
+async function выборИЧтение(браузер, база, адрес) {
+  console.log('\n══ Выбор аята и чтение: подсвечен только читаемый; чипы выбора в тёмной теме ══');
+  const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { источник: true, схема: 'dark' });
+  const п = помощники(стр, проблемы, 'выбор и чтение', null);
+  const фонАята = (а) => стр.evaluate((а) => getComputedStyle(document.querySelector(`[data-testid="коран-аят-1-${а}"]`)).backgroundColor, а);
+  await стр.goto(адрес('#/quran/sura?n=1'));
+  await п.э('коран-аят-1-1-текст').waitFor({ timeout: 15000 });
+  await п.э('коран-аят-1-1-номер').click();
+  await п.э('действия-закрыть').click();
+  await п.э('сура-выбран').waitFor({ timeout: 3000 });
+  п.проверить((await фонАята(1)) !== 'rgba(0, 0, 0, 0)', 'выбран 1:1 — подсвечен, чипы «Сохранить место» и «Аят 1 ×»');
+  // Контраст чипов в тёмной теме — во всех видах чтения.
+  const контрастЧипов = () =>
+    стр.evaluate(() =>
+      ['сура-закладка', 'сура-выбран'].map((id) => {
+        const к = document.querySelector(`[data-testid="${id}"]`);
+        const т = [...к.querySelectorAll('div')].find((э) => э.textContent && э.children.length === 0) ?? к;
+        return { id, текст: getComputedStyle(т).color, фон: getComputedStyle(к).backgroundColor };
+      }),
+    );
+  for (const вид of ['обычный', 'мусхаф', 'таджвид', 'ночной']) {
+    await п.э('сура-вид').click();
+    await п.э('вид-' + вид).click();
+    await стр.keyboard.press('Escape');
+    await стр.waitForTimeout(300);
+    if (!(await п.есть('сура-выбран'))) {
+      // Смена вида пересоздаёт тело суры — выбрать снова.
+      const кл = вид === 'обычный' ? 'коран-аят-1-1-номер' : null;
+      if (кл) await п.э(кл).click();
+      else await стр.locator('[data-ayah="1:1"]').first().click();
+      await п.э('действия-закрыть').click();
+      await п.э('сура-выбран').waitFor({ timeout: 3000 });
+    }
+    const ч = await контрастЧипов();
+    const плохие = ч.filter((х) => контрастЦветов(х.текст, х.фон) < 4.5);
+    п.проверить(плохие.length === 0, `тёмная тема, вид «${вид}»: текст чипов ≥ 4,5:1 (${ч.map((х) => х.id + ' ' + контрастЦветов(х.текст, х.фон).toFixed(1)).join(', ')})`);
+  }
+  await п.э('сура-вид').click();
+  await п.э('вид-обычный').click();
+  await стр.keyboard.press('Escape');
+  await стр.waitForTimeout(300);
+  if (!(await п.есть('сура-выбран'))) {
+    await п.э('коран-аят-1-1-номер').click();
+    await п.э('действия-закрыть').click();
+  }
+  // Нижний отступ: «Следующая сура» — не под кнопками и строкой выбора.
+  await стр.evaluate(() => {
+    const с = document.querySelector('[data-testid="сура-прокрутка"]');
+    с.scrollTop = с.scrollHeight;
+  });
+  await п.э('сура-следующая').waitFor({ timeout: 5000 });
+  await стр.waitForTimeout(500);
+  const низ = await стр.evaluate(() => {
+    const сл = document.querySelector('[data-testid="сура-следующая"]').getBoundingClientRect();
+    const верх = Math.min(...['сура-слушать', 'сура-записать', 'сура-выбран', 'сура-закладка'].map((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().top ?? 1e9));
+    return { сл: Math.round(сл.bottom), кнопки: Math.round(верх) };
+  });
+  п.проверить(низ.сл <= низ.кнопки, `конец суры: «Следующая сура» (низ ${низ.сл}) выше кнопок и строки выбора (верх ${низ.кнопки})`);
+  await стр.evaluate(() => (document.querySelector('[data-testid="сура-прокрутка"]').scrollTop = 0));
+  // ▶ с выбранного 1:1 → чтение на 1:2: подсвечен только 1:2, выбора нет.
+  await п.э('сура-слушать').click();
+  await стр.waitForFunction(() => document.querySelector('[aria-current="true"]')?.getAttribute('data-testid') === 'коран-аят-1-2', null, { timeout: 8000 });
+  await стр.waitForTimeout(200);
+  п.проверить(
+    (await фонАята(1)) === 'rgba(0, 0, 0, 0)' && !(await п.есть('сура-выбран')) && !(await п.есть('сура-закладка')),
+    '«Слушать с аята 1» → читается 1:2: подсвечен только 1:2, выбор 1:1 и строка «Сохранить место / Аят 1 ×» исчезли',
+  );
+  // Выбор во время чтения остаётся (подсветка чтения — отдельно).
+  await п.э('коран-аят-1-6-номер').click();
+  await п.э('действия-закрыть').click();
+  await п.э('сура-выбран').waitFor({ timeout: 3000 });
+  п.проверить((await фонАята(6)) !== 'rgba(0, 0, 0, 0)', 'выбран 1:6 во время чтения — выбор виден, чтение подсвечено отдельно');
+  await п.безПроблем('выбор и чтение: без ошибок');
+  await контекст.close();
+}
+
+async function страницыКнопкиЛистание(браузер, база, адрес, страницаАята, папкаСнимков) {
+  console.log('\n══ «Страницами»: кнопки «Слушать» и «Прочитать», переворот листа за пальцем ══');
+  const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { источник: true, снимки: !!папкаСнимков });
+  const п = помощники(стр, проблемы, 'страницы: кнопки и листание', папкаСнимков);
+  const номер = () => стр.evaluate(() => Number(document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') ?? 0));
+  const ждатьСтраницу = (н) => стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н, { timeout: 15000 });
+  const ждатьЧтение = (к) => стр.waitForFunction((к) => document.querySelector('[data-testid="мусхаф-страница"] [aria-current="true"]')?.getAttribute('data-ayah') === к, к, { timeout: 8000 });
+  const подпись = (id) => стр.evaluate((id) => document.querySelector(`[data-testid="${id}"]`)?.getAttribute('aria-label') ?? null, id);
+  const листов = () => стр.evaluate(() => document.querySelectorAll('[data-testid="мусхаф-лист"]').length);
+  const рамка = (id) => стр.evaluate((id) => {
+    const r = document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect();
+    return r ? { л: r.left, п: r.right, в: r.top, н: r.bottom } : null;
+  }, id);
+  const пересекаются = (а, б) => а && б && а.л < б.п - 1 && б.л < а.п - 1 && а.в < б.н - 1 && б.в < а.н - 1;
+  // Касание пальцем по тексту страницы: x — точки пути, пауза между ними (мс).
+  const тач = (тип, x) =>
+    стр.evaluate(({ тип, x }) => {
+      const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+      const y = э.getBoundingClientRect().top + 200;
+      const т = new Touch({ identifier: 1, target: э, pageX: x, pageY: y, clientX: x, clientY: y });
+      э.dispatchEvent(new TouchEvent(тип, { bubbles: true, cancelable: true, touches: тип === 'touchend' ? [] : [т], changedTouches: [т] }));
+    }, { тип, x });
+  const тянуть = async (путь, пауза, отпустить = true, задержка = 150) => {
+    await тач('touchstart', путь[0]);
+    for (const x of путь.slice(1)) {
+      await тач('touchmove', x);
+      await стр.waitForTimeout(пауза);
+    }
+    if (отпустить) {
+      await стр.waitForTimeout(задержка);
+      await тач('touchend', путь[путь.length - 1]);
+    }
+  };
+  const путь = (от, до, шагов) => Array.from({ length: шагов + 1 }, (_, i) => Math.round(от + ((до - от) * i) / шагов));
+
+  await стр.goto(адрес('#/quran/sura?n=2&a=6'));
+  await п.э('коран-аят-2-6-текст').waitFor({ timeout: 15000 });
+  await п.э('сура-вид').click();
+  await п.э('режим-страницы').click();
+  await стр.keyboard.press('Escape');
+  const н3 = страницаАята(2, 6);
+  await ждатьСтраницу(н3);
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"] [data-ayah]'), null, { timeout: 15000 });
+  п.проверить((await п.есть('сура-слушать')) && (await п.есть('сура-записать')), 'в режиме «Страницами» — кнопки «Слушать» (▶) и «Прочитать и проверить» (🎤), как в «Аят за аятом»');
+  const кн = [await рамка('сура-слушать'), await рамка('сура-записать')];
+  const мешают = ['мусхаф-страница-след', 'мусхаф-страница-пред', 'мусхаф-страница-номер', 'мусхаф-страница-текст'];
+  const наложения = [];
+  for (const id of мешают) for (const к of кн) if (пересекаются(к, await рамка(id))) наложения.push(id);
+  п.проверить(наложения.length === 0, 'кнопки — в нижней полосе: не закрывают стрелки, номер страницы и текст' + (наложения.length ? ': ' + наложения.join(', ') : ''));
+  await п.снимок('страницы-кнопки');
+
+  // ▶ — с первого аята открытой страницы; ⏸ — останавливает.
+  п.проверить((await подпись('сура-слушать')) === 'Слушать с аята 6', `«Слушать» — с первого аята страницы ${н3}: «Слушать с аята 6»`);
+  await п.э('сура-слушать').click();
+  await ждатьЧтение('2:6');
+  п.проверить((await подпись('сура-слушать')) === 'Пауза', '▶ → читается 2:6 (подсвечен), кнопка стала ⏸ «Пауза»');
+  await п.э('сура-слушать').click();
+  await стр.waitForFunction(() => navigator.mediaSession?.playbackState === 'paused', null, { timeout: 3000 });
+  п.проверить((await подпись('сура-слушать')) === 'Продолжить чтение кари', '⏸ останавливает чтение: playbackState paused, кнопка «Продолжить чтение кари»');
+  // Выбрали аят — «Слушать с аята 8», чип выбора.
+  await стр.locator('[data-ayah="2:8"]').first().click();
+  await п.э('сура-действия').waitFor({ timeout: 5000 });
+  await п.э('действия-закрыть').click();
+  await п.э('сура-выбран').waitFor({ timeout: 3000 });
+  п.проверить((await подпись('сура-слушать')) === 'Слушать с аята 8', 'выбран 2:8 — чип «Аят 8 ×» и «Слушать с аята 8»');
+  await п.э('сура-слушать').click();
+  await ждатьЧтение('2:8');
+  await п.э('сура-слушать').click();
+  await стр.waitForFunction(() => navigator.mediaSession?.playbackState === 'paused', null, { timeout: 3000 });
+  п.проверить(true, '«Слушать с аята 8» → читается 2:8; пауза');
+  await п.э('сура-выбран').click();
+  await п.э('сура-записать').click();
+  await п.э('сура-лист-записи').waitFor({ timeout: 5000 });
+  п.проверить(true, '🎤 «Прочитать и проверить» — лист записи');
+  await п.э('лист-закрыть').click();
+  await п.э('сура-лист-записи').waitFor({ state: 'detached', timeout: 5000 });
+
+  // Лист за пальцем: на середине пути — два листа, верхний повёрнут (rotateY); отпустили после середины — перевернулся.
+  const ш = await стр.evaluate(() => document.querySelector('[data-testid="мусхаф-страница-текст"]').getBoundingClientRect().width);
+  await тянуть(путь(30, 30 + ш * 0.5, 10), 30, false);
+  await стр.waitForTimeout(300);
+  const середина = await стр.evaluate(() => [...document.querySelectorAll('[data-testid="мусхаф-лист"]')].map((э) => ({ н: Number(э.getAttribute('data-sheet')), т: э.style.transform })));
+  п.проверить(
+    середина.length === 2 && середина.some((л) => л.н === н3 + 1) && /rotateY\((?:[4-7]\d|8[0-9])(?:\.\d+)?deg\)/.test(середина.find((л) => л.н === н3)?.т ?? ''),
+    `свайп вправо, палец на середине: лист ${н3} повёрнут вокруг корешка (${середина.find((л) => л.н === н3)?.т ?? '—'}), под ним уже страница ${н3 + 1}`,
+  );
+  await п.снимок('страницы-переворот');
+  await тач('touchmove', Math.round(30 + ш * 0.6));
+  await стр.waitForTimeout(150);
+  await тач('touchend', Math.round(30 + ш * 0.6));
+  await ждатьСтраницу(н3 + 1);
+  await стр.waitForFunction(() => document.querySelectorAll('[data-testid="мусхаф-лист"]').length === 1, null, { timeout: 3000 });
+  п.проверить(true, `отпустили после середины — лист довернулся: страница ${н3 + 1}, лист один`);
+  // Назад на четверть ширины и отпустили — лист вернулся.
+  await тянуть(путь(ш - 30, ш - 30 - ш * 0.25, 6), 40);
+  await стр.waitForTimeout(700);
+  п.проверить((await номер()) === н3 + 1 && (await листов()) === 1, `свайп влево на четверть ширины — лист вернулся, страница та же (${н3 + 1})`);
+  // Быстрый короткий жест — довершается.
+  await тянуть(путь(40, 40 + ш * 0.3, 3), 8, true, 0);
+  await ждатьСтраницу(н3 + 2);
+  п.проверить(true, `быстрый короткий свайп вправо (30 % ширины) — страница ${н3 + 2}`);
+  // Тап по краю листа.
+  await п.э('мусхаф-край-пред').click();
+  await ждатьСтраницу(н3 + 1);
+  await п.э('мусхаф-край-след').click();
+  await ждатьСтраницу(н3 + 2);
+  п.проверить(true, 'тап по правому краю — предыдущая, по левому — следующая');
+  // Вертикальный жест — не листает.
+  await стр.evaluate(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    const r = э.getBoundingClientRect();
+    const т = (y) => new Touch({ identifier: 1, target: э, pageX: r.left + 100, pageY: y, clientX: r.left + 100, clientY: y });
+    э.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [т(r.top + 300)], changedTouches: [т(r.top + 300)] }));
+    for (let i = 1; i <= 6; i++) э.dispatchEvent(new TouchEvent('touchmove', { bubbles: true, touches: [т(r.top + 300 - i * 30 )], changedTouches: [т(r.top + 300 - i * 30)] }));
+    э.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [т(r.top + 120)] }));
+  });
+  await стр.waitForTimeout(600);
+  п.проверить((await номер()) === н3 + 2 && (await листов()) === 1, 'вертикальный жест (прокрутка) не листает');
+
+  // «Уменьшить движение» — без анимации: второй лист не появляется.
+  await стр.emulateMedia({ reducedMotion: 'reduce' });
+  await стр.waitForTimeout(300);
+  await стр.evaluate(() => {
+    window.__листов = 0;
+    const счёт = () => (window.__листов = Math.max(window.__листов, document.querySelectorAll('[data-testid="мусхаф-лист"]').length));
+    window.__набл = new MutationObserver(счёт);
+    window.__набл.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['style'] });
+  });
+  await п.э('мусхаф-страница-след').click();
+  await ждатьСтраницу(н3 + 3);
+  await стр.waitForTimeout(300);
+  const макс = await стр.evaluate(() => (window.__набл.disconnect(), window.__листов));
+  п.проверить(макс <= 1, `«уменьшить движение»: страница ${н3 + 3} сразу, без переворота (листов одновременно: ${макс})`);
+  await стр.emulateMedia({ reducedMotion: 'no-preference' });
+  await п.безГоризонтальнойПрокрутки('страницы с кнопками');
+  await п.безПроблем('«Страницами»: кнопки и листание — без ошибок, чужих запросов и нарушений CSP');
+  await контекст.close();
+}
+
 async function страницыПлеерАльбом(браузер, база, адрес, страницаАята, папкаСнимков) {
   console.log('\n══ «Страницами»: читаемый аят, листание за кари, альбомная ориентация ══');
   const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { источник: true, снимки: !!папкаСнимков });
