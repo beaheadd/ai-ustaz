@@ -418,6 +418,15 @@ export async function главнаяСквозной(браузер, база, {
     await п.э('главная-разделы').waitFor({ timeout: 20000 });
     await стр.waitForTimeout(400);
     п.проверить(!(await п.есть('главная-продолжить')) && !(await п.есть('главная-начать')) && !(await п.есть('главная-урок')), 'новому человеку обучения на главной нет совсем (урок — в «Таджвиде»)');
+    // Плитки разделов — свои цветные SVG-иллюстрации (владелец 27.11.2026), без растров; у каждой — несколько цветов.
+    const рисунки = await стр.evaluate(() =>
+      ['зикры', 'дуа', 'коран', 'хадисы', 'намаз', 'таджвид'].map((id) => {
+        const э = document.querySelector(`[data-testid="главная-рисунок-${id}"]`);
+        const цвета = new Set([...(э?.querySelectorAll('[fill],[stroke]') ?? [])].flatMap((ф) => [ф.getAttribute('fill'), ф.getAttribute('stroke')]).filter((ц) => ц && ц !== 'none'));
+        return { id, svg: !!э?.querySelector('svg'), img: !!э?.querySelector('img'), цветов: цвета.size };
+      }),
+    );
+    п.проверить(рисунки.every((р) => р.svg && !р.img && р.цветов >= 3), `6 плиток — цветные SVG без растров (${рисунки.map((р) => р.id + ':' + р.цветов).join(', ')})`);
     const фон = await стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="экран-главная"]')).backgroundColor);
     п.проверить(яркость(фон) > 0.8, `в системе тёмная тема, выбора нет → фон светлый (${фон})`);
     await п.безПроблем('новый человек: без ошибок');
