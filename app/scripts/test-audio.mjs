@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
  * Тест плеера чтения кари без браузера: node scripts/test-audio.mjs  (npm run test:audio — вместе с e2e-audio.mjs)
- *   данные   — content/audio-sources.json: аль-Афаси «разрешено: false», база пустая → играть нечем, причина
- *              «нет разрешения» на любом хосте; аудиофайлов Корана в app/public и content нет;
+ *   данные   — content/audio-sources.json: аль-Афаси своего домена «разрешено: false»; шесть чтецов AlQuran Cloud
+ *              (владелец 27.11.2026) — потоком с cdn.islamic.network, по умолчанию аль-Хусари, выбор человека, batr.kz —
+ *              «не на этом сайте»; адрес по глобальному номеру аята; аудиофайлов Корана в app/public и content нет;
  *   sources  — форма и правило показа: разрешено строго true + дата + условия + база на своём домене; batr.kz —
  *              «не на этом сайте»; без HTMLAudioElement — «не поддерживается»; кривые записи отбрасываются;
  *   очередь  — АЯТОВ_В_СУРЕ = индексу сур (6236), нормализация, бисмилла (не у сур 1 и 9, только с аята 1),
@@ -45,21 +46,88 @@ console.log('Данные (content/audio-sources.json)');
 const сырые = JSON.parse(fs.readFileSync(path.join(репо, 'content', 'audio-sources.json'), 'utf8'));
 const ИСТОЧНИКИ = проверитьИсточникиЧтения(сырые);
 
-await тест('аль-Афаси: одна запись, разрешено false, база пустая, шаблон {sura3}{aya3}.mp3, kk-имя есть', () => {
-  assert.equal(ИСТОЧНИКИ.length, 1);
+await тест('аль-Афаси (свой домен): разрешено false, база пустая, шаблон {sura3}{aya3}.mp3 — первым в данных', () => {
   const [а] = ИСТОЧНИКИ;
   assert.equal(а.id, 'alafasy');
   assert.equal(а.разрешено, false);
   assert.equal(а.база, '');
+  assert.equal(а.cdn, null);
   assert.equal(а.шаблон, '{sura3}{aya3}.mp3');
   assert.equal(а.кари.ru, 'Мишари Рашид аль-Афаси');
-  assert.ok(а.кари.kk.length > 0);
   assert.equal(можноИграть(а), false);
-  assert.ok(!JSON.stringify(сырые).includes('://'), 'внешних адресов в данных нет');
+  assert.ok(!JSON.stringify(сырые).includes('://'), 'полных внешних адресов в данных нет — только хост CDN');
 });
-await тест('без разрешения играть нечем на любом хосте: причина «нет-разрешения»', () => {
-  for (const хост of ['batr.kz', 'aiustaz.kz', '127.0.0.1', 'localhost', ''])
-    assert.deepEqual(выбратьИсточник(ИСТОЧНИКИ, { хост, естьЗвук: true }), { источник: null, причина: 'нет-разрешения' });
+await тест('AlQuran Cloud (владелец 27.11.2026): шесть чтецов потоком с cdn.islamic.network, проверенные битрейты', () => {
+  const cdn = ИСТОЧНИКИ.filter((и) => и.cdn);
+  assert.deepEqual(
+    cdn.map((и) => [и.id, и.cdn.издание, и.cdn.битрейт]),
+    [
+      ['husary', 'ar.husary', 128],
+      ['husary-mujawwad', 'ar.husarymujawwad', 128],
+      ['abdulbasit', 'ar.abdulsamad', 64],
+      ['ayyub', 'ar.muhammadayyoub', 128],
+      ['suwayd', 'ar.aymanswoaid', 64],
+      ['alafasy-cdn', 'ar.alafasy', 128],
+    ],
+  );
+  for (const и of cdn) {
+    assert.equal(и.cdn.хост, 'cdn.islamic.network', и.id);
+    assert.ok(можноИграть(и), и.id);
+    assert.equal(и.датаРазрешения, '2026-11-27', и.id);
+    assert.match(и.условия, /personal and educational use/, и.id);
+    for (const я of ['ru', 'kk', 'uz', 'en']) {
+      assert.ok(и.кари[я].length > 0, и.id + ' ' + я);
+      assert.match(и.атрибуция[я], /AlQuran Cloud/, и.id + ' ' + я);
+    }
+    assert.ok(и.кари.ar && !/[A-Za-z]/.test(и.кари.ar), и.id + ' ar');
+  }
+  assert.deepEqual([...источники.РАЗРЕШЁННЫЕ_CDN], ['cdn.islamic.network']);
+});
+await тест('по умолчанию — аль-Хусари; выбор человека — если играет; batr.kz — «не-на-этом-сайте»; без <audio> — «не-поддерживается»', () => {
+  for (const хост of ['aiustaz.pro', '127.0.0.1', 'localhost', '']) assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост, естьЗвук: true }).источник.id, 'husary', хост);
+  assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: true }, 'ayyub').источник.id, 'ayyub');
+  assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: true }, 'alafasy').источник.id, 'husary', 'без разрешения не выбирается');
+  assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: true }, 'нет-такого').источник.id, 'husary');
+  for (const хост of ['batr.kz', 'www.batr.kz']) {
+    assert.deepEqual(выбратьИсточник(ИСТОЧНИКИ, { хост, естьЗвук: true }, 'ayyub'), { источник: null, причина: 'не-на-этом-сайте' });
+    assert.deepEqual(источники.играющиеИсточники(ИСТОЧНИКИ, { хост, естьЗвук: true }), []);
+  }
+  assert.equal(выбратьИсточник(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: false }).причина, 'не-поддерживается');
+  assert.deepEqual(
+    источники.играющиеИсточники(ИСТОЧНИКИ, { хост: 'aiustaz.pro', естьЗвук: true }).map((и) => и.id),
+    ['husary', 'husary-mujawwad', 'abdulbasit', 'ayyub', 'suwayd', 'alafasy-cdn'],
+  );
+  const безРазрешений = ИСТОЧНИКИ.map((и) => ({ ...и, разрешено: false }));
+  for (const хост of ['batr.kz', 'aiustaz.pro', ''])
+    assert.deepEqual(выбратьИсточник(безРазрешений, { хост, естьЗвук: true }), { источник: null, причина: 'нет-разрешения' });
+});
+await тест('адрес CDN: глобальный номер аята (1:1 → 1, 2:255 → 262, 114:6 → 6236), бисмилла = 1:1', () => {
+  const х = ИСТОЧНИКИ.find((и) => и.id === 'husary');
+  assert.equal(ядро.глобальныйНомер(1, 1), 1);
+  assert.equal(ядро.глобальныйНомер(2, 1), 8);
+  assert.equal(ядро.глобальныйНомер(2, 255), 262);
+  assert.equal(ядро.глобальныйНомер(114, 6), 6236);
+  assert.equal(адресАята(х, 2, 255), 'https://cdn.islamic.network/quran/audio/128/ar.husary/262.mp3');
+  const а = ИСТОЧНИКИ.find((и) => и.id === 'abdulbasit');
+  assert.equal(адресАята(а, 112, 1), 'https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/' + ядро.глобальныйНомер(112, 1) + '.mp3');
+  assert.ok(ядро.естьБисмиллаУ(х));
+  const о = нормализоватьОчередь({ сура: 2 });
+  assert.equal(адресШага(х, о, первыйШаг(о, true)), 'https://cdn.islamic.network/quran/audio/128/ar.husary/1.mp3');
+  assert.equal(первыйШаг(о, true).вид, 'бисмилла');
+});
+await тест('CDN-запись: только хост из списка, издание вида ar.xxx, битрейт из списка', () => {
+  const основа = { ...сырые.источники.find((и) => и.id === 'husary') };
+  for (const cdn of [
+    { хост: 'evil.example', издание: 'ar.husary', битрейт: 128 },
+    { хост: 'cdn.islamic.network.evil', издание: 'ar.husary', битрейт: 128 },
+    { хост: 'cdn.islamic.network', издание: '../x', битрейт: 128 },
+    { хост: 'cdn.islamic.network', издание: 'ar.husary', битрейт: 100 },
+    { хост: 'cdn.islamic.network', издание: 'ar.husary', битрейт: '128' },
+    'cdn.islamic.network',
+  ])
+    assert.deepEqual(проверитьИсточникиЧтения({ источники: [{ ...основа, cdn }] }), [], JSON.stringify(cdn));
+  const [и] = проверитьИсточникиЧтения({ источники: [{ ...основа, база: '/aiustaz-audio/x', шаблон: '{sura3}{aya3}.mp3' }] });
+  assert.equal(и.база, '', 'у CDN база всегда пустая');
 });
 await тест('аудиофайлов Корана в app/public, app/src и content нет', () => {
   const аудио = /\.(mp3|m4a|ogg|oga|opus|wav|flac|aac|weba|webm)$/i;
@@ -627,6 +695,9 @@ await тест('без window: нет <audio>, нет Media Session; предз�
     assert.match(url, /^blob:/);
     assert.deepEqual(запрос.о, { credentials: 'omit', referrerPolicy: 'no-referrer' });
     з.освободить(url);
+    запрос = undefined;
+    assert.equal(await веб.предзагрузитьФайл('https://cdn.islamic.network/quran/audio/128/ar.husary/262.mp3'), null, 'CDN не предзагружаем');
+    assert.equal(запрос, undefined, 'fetch на чужой адрес не вызывается (CSP connect-src self)');
   } finally {
     globalThis.fetch = настоящийFetch;
   }

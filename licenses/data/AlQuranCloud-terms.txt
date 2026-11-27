@@ -1,0 +1,15 @@
+# Источник: AlQuran Cloud — alquran.cloud/terms-and-conditions (Last updated 13 November 2026), прочитано 27.11.2026.
+# Где в приложении: звук чтения Корана (плеер суры и кнопка «Слушать» у аята) — потоком с cdn.islamic.network,
+# без копий у нас (content/audio-sources.json, app/src/audio/sources.ts). Владелец 27.11.2026: «Найди аудио Корана
+# и поставь на сайт… Мы используем для некоммерческого использования».
+# Ниже — разделы условий, которые касаются записей, дословно.
+
+Translations and recitations
+Translations and recitations remain the copyright of their translators and reciters.
+If you republish a translation, credit the translator by name.
+You may stream, embed and download the recitations for personal and educational use.
+If you put them in a commercial product, the reciters may ask you to remove them.
+
+Rate limits
+If you need more, for research, a full mirror or a large app, get in touch.
+Please cache audio on your side. The same files are requested millions of times a day.

@@ -192,7 +192,11 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // Владелец 27.11.2026: «страницу Корана … переключение как книга, страницы листать» — режим «Страницами»
 // (screens/quran/MushafPages.tsx: страница мусхафа, листание кнопками, клавишами и свайпом, подгонка кегля), выбор
 // режима в меню вида. Индекс страниц — прежний файл quran/tajweed/index…json, не JS. Сборка 1946 → 1950 КБ: 1946 → 1952.
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1952);
+// Владелец 27.11.2026: «Найди аудио Корана и поставь на сайт» — шесть чтецов AlQuran Cloud (cdn.islamic.network, поток):
+// записи в audio-sources.json (имена на 5 языках, условия, атрибуция ≈ 7,6 КБ), выбор чтеца (components/quran/
+// ReciterPicker.tsx), адрес по глобальному номеру аята, запись «alquran-cloud-audio» в sources.json (чанк лицензий).
+// Измерено сборкой копии HEAD 5dbe33f: JS 1 997 988 → 2 011 732 байт (+13 744 = 13,4 КБ). 1952 → 1966 КБ.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 1966);
 // Владелец 19.11.2026: полный Коран, плеер, запись. Всего 3000 → 4688 КБ — ровно на измеренный прирост от полного
 // Корана: dist/quran 1 726 219 байт (114 сур + индекс; текст 1,33 МБ + блок условий Tanzil в каждом файле ≈ 160 КБ)
 // + JS 2017 байт (запись источника «tanzil-phonetic» в sources.json); сборка HEAD d7a3d70 — 1 465 455 байт, с Кораном —
@@ -215,7 +219,9 @@ const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 
 // Джузы и лист действий аята (27.11.2026): +17 КБ JS и +3 КБ индекса Корана → 15345 → 15365 КБ.
 // Повседневные дуа (27.11.2026): 24 новые записи на 4 языках и поле «время» — файл зикров 90 → 148 КБ. 15365 → 15425 КБ.
 // Режим «Страницами» (27.11.2026): +4 КБ JS — 15425 → 15430 КБ.
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 15430);
+// Аудио AlQuran Cloud (27.11.2026): только JS выше (+13 772 байт всей сборки; самих аудиофайлов в сборке нет — поток с CDN).
+// 15430 → 15444 КБ.
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 15444);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
@@ -239,6 +245,7 @@ const РАЗРЕШЁННЫЕ_URL = [
   ['https://classic-assets.eascdn.net/~assets/', 'expo-asset: ветка только для Expo Go (ExponentKernel); на вебе не выполняется'],
   ['https://aiustaz.pro/', 'свой домен AI Ustaz: ссылка «ставить с aiustaz.pro» на экране установки (#/install) — переход по нажатию, не загрузка'],
   ['https://www.youtube.com/watch?v=', 'content/media.json: ссылка на урок учителя — текст для кнопки «Смотреть на YouTube» (внешнее приложение); не загрузка, не встраивание'],
+  ['https://cdn.islamic.network', 'аудио Корана AlQuran Cloud: только CSP media-src (стриминг, не connect/script; адрес аята собирается в src/audio/core.ts); владелец 27.11.2026, условия AlQuran Cloud — учебное использование'],
   ['https://hadeethenc.com/', 'hadith/: поле link HadeethEnc — ссылка «Источник: HadeethEnc.com» на страницу хадиса (условие HadeethEnc: ясная ссылка на источник); переход по нажатию, не загрузка'],
 ];
 /** Точные строки (не префиксы): схемы без адреса и фиктивные базы для new URL(). */
@@ -452,7 +459,9 @@ for (const { абс, отн } of файлы) {
   const директива = (имя) => csp.split(';').map((ч) => ч.trim()).find((ч) => ч.startsWith(имя + ' ')) ?? '';
   if (/youtube|google/i.test(csp)) ошибка('CSP открыта для youtube/google — видео партнёров только ссылкой или своим файлом');
   if (директива('frame-src') !== "frame-src 'none'") ошибка(`CSP: нужен frame-src 'none', сейчас «${директива('frame-src')}»`);
-  if (!/^media-src 'self'( blob:)?$/.test(директива('media-src'))) ошибка(`CSP: media-src только 'self' (+ blob:), сейчас «${директива('media-src')}»`);
+  // Чтение Корана — только CDN AlQuran Cloud (владелец 27.11.2026; условия: стриминг для учебного использования).
+  if (!/^media-src 'self'( blob:)?( https:\/\/cdn\.islamic\.network)?$/.test(директива('media-src'))) ошибка(`CSP: media-src только 'self' (+ blob:, + https://cdn.islamic.network), сейчас «${директива('media-src')}»`);
+  if (/cdn\.islamic\.network/.test(директива('connect-src') + директива('script-src') + директива('img-src'))) ошибка('CSP: cdn.islamic.network — только в media-src (аудио), не в connect/script/img');
 }
 const ПРЕДПРОСМОТР_РАЗРЕШЁН = process.env.MUGALIM_TARGET === 'preview';
 const меткаПредпросмотра = html.match(/<meta name="aiustaz-media-preview" content="(on|off)"/)?.[1];

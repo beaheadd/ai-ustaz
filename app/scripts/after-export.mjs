@@ -31,7 +31,8 @@
  *    файлов сборки dist/offline/files.<sha256[:20]>.json — { версия, оболочка: [JS, шрифты, значки], группы: { коран,
  *    зикры, махраджи, хадисы, намаз: { файлы, байт } } } (адреса от /aiustaz/) — и подставляет его адрес в push-sw.js
  *    (__ОФЛАЙН__). Worker кэширует оболочку при установке, группы — по просьбе страницы (src/offline/offline.ts).
- * media-src 'self' blob: — видео и аудио партнёров только со своего сервера (относительные пути media/…)
+ * media-src 'self' blob: https://cdn.islamic.network — видео и аудио партнёров только со своего сервера (относительные
+ * пути media/…); чтение Корана — аудио AlQuran Cloud (владелец 27.11.2026, условия: учебное использование, стриминг)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
  *
  * Контракт: node scripts/after-export.mjs [папка-сборки=dist]; повторный запуск ничего не меняет.
@@ -52,7 +53,9 @@ export const ПОЛИТИКА = [
   "style-src 'self' 'unsafe-inline'", // react-native-web вставляет стили через <style>
   "img-src 'self' data: blob:", // значок — встроенный SVG (data:)
   "font-src 'self' data:",
-  "media-src 'self' blob:", // своя запись (object URL); видео и аудио партнёров — только свои файлы media/…
+  // Своя запись (object URL); видео и аудио партнёров — только свои файлы media/…; чтение Корана — ТОЛЬКО CDN AlQuran
+  // Cloud (владелец 27.11.2026; их условия: стриминг для учебного использования; src/audio/sources.ts РАЗРЕШЁННЫЕ_CDN).
+  "media-src 'self' blob: https://cdn.islamic.network",
   "connect-src 'self'",
   "worker-src 'self'", // только /aiustaz/push-sw.js (уведомления о времени намаза, 20.11.2026; регистрируется лишь на aiustaz.pro)
   "frame-src 'none'",

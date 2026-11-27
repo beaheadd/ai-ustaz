@@ -51,6 +51,7 @@ import { ТекстАята } from '../components/quran/AyahText';
 import { КартушСуры, ПАЛИТРЫ_МУСХАФА, ПотокМусхафа, useЦветаСуры } from '../components/quran/MushafView';
 import { СтрокаБезЗвука } from '../components/quran/PlayerBar';
 import { ПереключательВидаЧтения } from '../components/quran/ReadingViewPicker';
+import { ВыборЧтеца } from '../components/quran/ReciterPicker';
 import { ПанельЧтенияАята } from '../components/quran/RecitePanel';
 import { ЛегендаТаджвида } from '../components/quran/TajweedLegend';
 import { useНавигация } from '../engine/navigation';
@@ -358,7 +359,7 @@ function useПоявление(видна: boolean, сдвиг: number, проз
   };
 }
 
-/** Меню вида — лист под шапкой: виды, размер, легенда таджвида, черновики, источник. Esc и фон закрывают. */
+/** Меню вида — лист под шапкой: виды, размер, чтец, легенда таджвида, черновики, источник. Esc и фон закрывают. */
 function МенюВида({ закрыть, сура, естьТранслит }: { закрыть: () => void; сура: СураКорана | null; естьТранслит: boolean }) {
   const т = useСловарь(СЛОВАРЬ);
   const { цвет, отступ, радиус } = useТема();
@@ -383,6 +384,8 @@ function МенюВида({ закрыть, сура, естьТранслит }
           <View style={{ alignItems: 'center' }}>
             <РазмерАрабского вид="кнопки" testID="вид-размер" />
           </View>
+          {/* Чтец Корана (владелец 27.11.2026: аудио AlQuran Cloud); нечего слушать — компонент ничего не рисует. */}
+          <ВыборЧтеца вид="шапка" />
           {сЦветами && сура ? <ЛегендаЦветов сура={сура} ночь={ночь} /> : null}
           {естьТранслит ? (
             <View style={{ alignSelf: 'flex-start' }}>

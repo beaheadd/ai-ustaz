@@ -8,7 +8,9 @@
  *
  * Контракт: зависимостиВеба() → часть ЗависимостиПлеера (создатьЭлемент, сессия, метаданные, хранилище,
  *   предзагрузить, освободить, вСети); есть ли веб-звук — естьЗвукВеба().
- * Правила: запросы — только на свой адрес (CSP connect-src и media-src 'self'), без cookie и referrer;
+ * Правила: fetch — только на свой адрес (CSP connect-src 'self'), без cookie и referrer; <audio> — свой адрес или CDN
+ * AlQuran Cloud (CSP media-src … https://cdn.islamic.network, владелец 27.11.2026; referrer страницы — no-referrer;
+ * crossOrigin не ставим — CORS не нужен), чужой адрес не предзагружаем — его кэширует сам браузер по заголовкам CDN;
  * в хранилище — только номер суры и аята и повтор (никаких записей голоса); всё в try/catch.
  */
 import type { ЗависимостиПлеера, ИсточникЗвука, СессияМедиа, ХранилищеПлеера, ЭлементЗвука } from './core';
@@ -57,6 +59,8 @@ const хранилище: ХранилищеПлеера = {
 export async function предзагрузитьФайл(адрес: string): Promise<string | null> {
   const о = г();
   if (typeof о.fetch !== 'function' || typeof о.URL?.createObjectURL !== 'function') return null;
+  // Чужой адрес (CDN AlQuran Cloud): fetch закрыт CSP connect-src 'self' — без предзагрузки, играет прямой адрес.
+  if (/^https?:/i.test(адрес)) return null;
   try {
     const ответ = await о.fetch(адрес, { credentials: 'omit', referrerPolicy: 'no-referrer' });
     if (!ответ.ok) return null;

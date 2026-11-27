@@ -1,6 +1,6 @@
 {
   "версия": "2026.11",
-  "примечание": "Чтение кари для плеера (app/src/audio). Только живые записи по договору, без синтеза (правило 3). Пока «разрешено: false» — не играет. Файлов Корана в репозитории и сборке нет: база — путь на своём домене (/aiustaz-audio/…). Подробно — docs/дизайн/05, §2.3; проверка — tools/audio/check_audio.py.",
+  "примечание": "Чтение кари для плеера (app/src/audio). Только живые записи кари, без синтеза (правило 3). Два вида: свой домен (база /aiustaz-audio/…, шаблон {sura3}{aya3}) и CDN AlQuran Cloud (cdn: хост, издание, битрейт; файл — глобальный номер аята 1…6236), потоком, без зеркала (владелец 27.11.2026; условия и письмо — content/sources.json, docs/письма-2026-11.md §5). Битрейт — тот, что есть у CDN для издания (проверено 27.11.2026). Первый играющий — чтец по умолчанию. Подробно — docs/дизайн/05 §2.3; проверка — tools/audio/check_audio.py.",
   "источники": [
     {
       "id": "alafasy",
@@ -24,6 +24,168 @@
         "en": "Recitation: Mishary Rashid Alafasy"
       },
       "примечание": "Права выясняет владелец. После договора: разрешено true, дата_разрешения, условия, база /aiustaz-audio/alafasy (файлы 001001.mp3 … 114006.mp3). kk, uz и en — черновик; арабское имя — сверить у владельца."
+    },
+    {
+      "id": "husary",
+      "кари": {
+        "ru": "Махмуд Халил аль-Хусари",
+        "kk": "Махмұд Халил әл-Хусари",
+        "uz": "Mahmud Xalil al-Husariy",
+        "en": "Mahmoud Khalil Al-Husary",
+        "ar": "محمود خليل الحصري"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.husary",
+        "битрейт": 128
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
+      "id": "husary-mujawwad",
+      "кари": {
+        "ru": "Махмуд Халил аль-Хусари (муджаввад)",
+        "kk": "Махмұд Халил әл-Хусари (мүжәууад)",
+        "uz": "Mahmud Xalil al-Husariy (mujavvad)",
+        "en": "Mahmoud Khalil Al-Husary (mujawwad)",
+        "ar": "محمود خليل الحصري (مجود)"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.husarymujawwad",
+        "битрейт": 128
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
+      "id": "abdulbasit",
+      "кари": {
+        "ru": "Абдуль-Басит Абдус-Самад",
+        "kk": "Әбдул-Басит Әбдус-Самад",
+        "uz": "Abdulbosit Abdussamad",
+        "en": "Abdul Basit Abdus-Samad",
+        "ar": "عبد الباسط عبد الصمد"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.abdulsamad",
+        "битрейт": 64
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
+      "id": "ayyub",
+      "кари": {
+        "ru": "Мухаммад Айюб",
+        "kk": "Мұхаммед Айюб",
+        "uz": "Muhammad Ayyub",
+        "en": "Muhammad Ayyub",
+        "ar": "محمد أيوب"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.muhammadayyoub",
+        "битрейт": 128
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
+      "id": "suwayd",
+      "кари": {
+        "ru": "Айман Сувейд",
+        "kk": "Айман Сууайд",
+        "uz": "Ayman Suvayd",
+        "en": "Ayman Suwayd",
+        "ar": "أيمن سويد"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.aymanswoaid",
+        "битрейт": 64
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
+    },
+    {
+      "id": "alafasy-cdn",
+      "кари": {
+        "ru": "Мишари Рашид аль-Афаси",
+        "kk": "Мишари Рашид әл-Афаси",
+        "uz": "Mishari Roshid al-Afasiy",
+        "en": "Mishary Rashid Alafasy",
+        "ar": "مشاري راشد العفاسي"
+      },
+      "cdn": {
+        "хост": "cdn.islamic.network",
+        "издание": "ar.alafasy",
+        "битрейт": 128
+      },
+      "база": "",
+      "шаблон": "",
+      "бисмилла": null,
+      "разрешено": true,
+      "дата_разрешения": "2026-11-27",
+      "условия": "AlQuran Cloud, условия 13.11.2026: «You may stream, embed and download the recitations for personal and educational use». Полный текст — content/sources.json (alquran-cloud-audio).",
+      "атрибуция": {
+        "ru": "Аудио — AlQuran Cloud; права на запись — у чтеца",
+        "kk": "Аудио — AlQuran Cloud; жазбаға құқық — қариде",
+        "uz": "Audio — AlQuran Cloud; yozuv huquqi — qorida",
+        "en": "Audio — AlQuran Cloud; the recording is the reciter’s copyright"
+      }
     }
   ]
 }

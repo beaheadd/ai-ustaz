@@ -141,6 +141,17 @@
       ]
     },
     {
+      "id": "alquran-cloud-audio",
+      "что": "Звук чтения Корана в плеере и у каждого аята: живые записи шести кари (аль-Хусари — муаллим и муджаввад, Абдуль-Басит Абдус-Самад, Мухаммад Айюб, Айман Рушди Сувейд, Мишари аль-Афаси) — потоком с cdn.islamic.network, без копий у нас (content/audio-sources.json). Владелец 27.11.2026: «Найди аудио Корана и поставь на сайт… Мы используем для некоммерческого использования».",
+      "название": "AlQuran Cloud — Audio CDN (Islamic Network)",
+      "лицензия": "Условия AlQuran Cloud: записи — собственность чтецов; стриминг, встраивание и скачивание — для личного и учебного использования; в коммерческом продукте чтецы вправе попросить убрать записи",
+      "ссылка": "alquran.cloud/terms-and-conditions",
+      "атрибуция": "Чтение: имя кари (показывается в плеере). Аудио — AlQuran Cloud (cdn.islamic.network); права на запись — у чтеца.",
+      "условия": "Translations and recitations\nTranslations and recitations remain the copyright of their translators and reciters.\nIf you republish a translation, credit the translator by name.\nYou may stream, embed and download the recitations for personal and educational use.\nIf you put them in a commercial product, the reciters may ask you to remove them.\n\nRate limits\nIf you need more, for research, a full mirror or a large app, get in touch.\nPlease cache audio on your side. The same files are requested millions of times a day.\n\n— alquran.cloud/terms-and-conditions (Last updated 13 November 2026), прочитано 27.11.2026",
+      "прочитано": "2026-11-27",
+      "примечание": "AI Ustaz бесплатный, без рекламы и платных функций — учебное использование. Файлы не зеркалим и в сборку не кладём: браузер берёт аят по адресу cdn.islamic.network/quran/audio/<битрейт>/<издание>/<номер аята>.mp3 (CSP — только media-src, не connect-src) и сам кэширует по заголовкам CDN. Если вырастем до «большого приложения» — написать AlQuran Cloud (их условие «get in touch»). Письма кари и их наследникам о разрешении — docs/письма-2026-11.md; записи не используются для обучения моделей и для синтеза (правило 3)."
+    },
+    {
       "id": "quran-muaalem-notice",
       "что": "ИИ-предупреждение (lesson0.json): ar, ru и en — официальные тексты; kk и uz — наш перевод, черновик",
       "название": "quran-muaalem NOTICE",
