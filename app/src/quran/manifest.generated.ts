@@ -5,8 +5,8 @@
  */
 export const МАНИФЕСТ_КОРАНА = {
   формат: 1,
-  индекс: 'quran/index.558dab21f2416e3fbcce.json',
-  sha256Индекса: '558dab21f2416e3fbcce6501dcf4718092bf0871d4466da716190d88460d32bd',
+  индекс: 'quran/index.97a9876faee548540c65.json',
+  sha256Индекса: '97a9876faee548540c65a04efefd0bea5e64a9ebb8b37f29ffaa7bb453b3e5b5',
   сур: 114,
   аятов: 6236,
   источник: 'tanzil-uthmani-1.1',
