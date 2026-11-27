@@ -17,7 +17,7 @@
  *   главная-модуль-<кибла|зикры>.
  */
 import { Pressable, View } from 'react-native';
-import { цельЗикра, useЗикры, useСчётЗикров, type Зикр } from '../dhikr/data';
+import { сегодняЗикра, цельЗикра, useЗикры, useСчётЗикров, type Зикр } from '../dhikr/data';
 import { useНавигация } from '../engine/navigation';
 import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useТема } from '../theme';
@@ -112,7 +112,7 @@ export function БлокЗикров() {
           {зикры.map((з) => {
             const запись = счёт.счёт[з.id];
             const цель = цельЗикра(запись, з.раз);
-            const текущий = запись?.текущий ?? 0;
+            const текущий = сегодняЗикра(запись);
             const название = з.название[язык];
             return (
               <Pressable
