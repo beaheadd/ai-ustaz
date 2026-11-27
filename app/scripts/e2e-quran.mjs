@@ -1147,6 +1147,7 @@ export async function коранСквозной(браузер, база, { п�
 
   await видыЧтения(браузер, база, данные, адрес, process.env.QURAN_VIEWS_SHOTS ?? (папкаСнимков ? path.join(папкаСнимков, 'quran-views') : null));
   await режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков);
+  await страницыПлеерАльбом(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
 
   console.log(`\nКоран: ${проверок} проверок пройдено.`);
   return проверок;
@@ -1499,6 +1500,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
  * бисмилла посреди страницы 534 (по метаданным), заголовок — открытая сура; лист действий аята; «Продолжить чтение»
  * открывает ту же страницу; возврат к «Аят за аятом».
  */
+/** Номер страницы аята по индексу мусхафа из сборки (границы страниц Tanzil). */
+function страницаАятаМусхафа(папка) {
+  const dt = path.join(папка, 'quran', 'tajweed');
+  const нач = JSON.parse(fs.readFileSync(path.join(dt, fs.readdirSync(dt).find((ф) => /^index\.[0-9a-f]{20}\.json$/.test(ф))), 'utf8')).страницы;
+  return (с, а) => {
+    let н = 0;
+    for (let i = 0; i < нач.length; i++) if (нач[i][0] < с || (нач[i][0] === с && нач[i][1] <= а)) н = i + 1;
+    return н;
+  };
+}
+
 async function режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков) {
   console.log('\n══ Режим «Страницами»: страница мусхафа целиком, листание как в книге ══');
   const dt = path.join(папка, 'quran', 'tajweed');
@@ -1528,7 +1540,8 @@ async function режимСтраниц(браузер, база, папка, д
   const ждатьСтраницу = (н) => стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н, { timeout: 15000 });
   const сверить = async (н, где) => {
     const ждём = аятыСтраницы(н);
-    await стр.waitForFunction((к) => document.querySelector(`[data-ayah="${к}"]`), ждём[ждём.length - 1], { timeout: 15000 });
+    // Первый и последний аят: участки разных сур (55 и 56 на одной странице) приходят отдельными файлами.
+    await стр.waitForFunction((кк) => кк.every((к) => document.querySelector(`[data-ayah="${к}"]`)), [ждём[0], ждём[ждём.length - 1]], { timeout: 15000 });
     const а = await стр.evaluate(() =>
       [...document.querySelectorAll('[data-testid="мусхаф-страница"] [data-ayah]')].map((е) => {
         const к = е.cloneNode(true);
@@ -1640,5 +1653,115 @@ async function режимСтраниц(браузер, база, папка, д
   await стр.waitForFunction(() => !document.querySelector('[data-testid="мусхаф-страница"]'), null, { timeout: 10000 });
   п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).режим === 'аяты', 'переключение назад — «Аят за аятом»');
   await п.безПроблем('режим «Страницами»: без ошибок, чужих запросов и нарушений CSP');
+  await контекст.close();
+}
+
+/**
+ * «Страницами» с плеером и в альбомной ориентации (владелец 28.11.2026): читаемый аят подсвечен; кари ушёл на аят
+ * следующей страницы — страница листается сама; человек сам листал — не дёргаем. 800×412: кегль не подгоняется (не
+ * меньше книжного), страница прокручивается по вертикали, горизонтальной прокрутки нет, место при повороте сохраняется.
+ */
+async function страницыПлеерАльбом(браузер, база, адрес, страницаАята, папкаСнимков) {
+  console.log('\n══ «Страницами»: читаемый аят, листание за кари, альбомная ориентация ══');
+  const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { источник: true, снимки: !!папкаСнимков });
+  const п = помощники(стр, проблемы, 'страницы и плеер', папкаСнимков);
+  const номер = () => стр.evaluate(() => Number(document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') ?? 0));
+  const ждатьСтраницу = (н) => стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н, { timeout: 15000 });
+  const читается = () => стр.evaluate(() => document.querySelector('[data-testid="мусхаф-страница"] [aria-current="true"]')?.getAttribute('data-ayah') ?? null);
+  const ждатьЧтение = (к) => стр.waitForFunction((к) => document.querySelector('[data-testid="мусхаф-страница"] [aria-current="true"]')?.getAttribute('data-ayah') === к, к, { timeout: 8000 });
+  const кегль = () => стр.evaluate(() => parseFloat(getComputedStyle(document.querySelector('[data-testid="мусхаф-страница"] [data-ayah]').parentElement).fontSize));
+  const область = () =>
+    стр.evaluate(() => {
+      const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+      return { в: э.clientHeight, всё: э.scrollHeight, ш: э.clientWidth, всёШ: э.scrollWidth, верх: э.scrollTop, вид: э.getAttribute('data-orientation') };
+    });
+
+  await стр.goto(адрес('#/quran/sura?n=2&a=2'));
+  await п.э('коран-аят-2-2-текст').waitFor({ timeout: 15000 });
+  await п.э('сура-вид').click();
+  await п.э('режим-страницы').click();
+  await стр.keyboard.press('Escape');
+  const н2 = страницаАята(2, 2);
+  await ждатьСтраницу(н2);
+  п.проверить((await читается()) === null, 'до «Слушать» подсветки чтения нет');
+  await стр.locator('[data-ayah="2:2"]').first().click();
+  await п.э('действия-слушать').click();
+  await ждатьЧтение('2:3');
+  п.проверить((await номер()) === н2, `читается 2:3 — подсвечен на странице ${н2} (aria-current, как в «Аят за аятом»)`);
+  await п.снимок('страницы-играет');
+  const н6 = страницаАята(2, 6);
+  await ждатьСтраницу(н6);
+  await ждатьЧтение('2:6');
+  п.проверить(н6 === н2 + 1, `кари перешёл на 2:6 — страница сама перелистнулась на ${н6}, аят подсвечен`);
+  // Человек сам листнул назад — за кари не дёргаем (4 с, как в «Аят за аятом»).
+  await п.э('мусхаф-страница-пред').click();
+  await ждатьСтраницу(н2);
+  await стр.waitForTimeout(1500);
+  п.проверить((await номер()) === н2, 'человек листнул назад во время чтения — страницу не возвращает (1,5 с, кари читает дальше)');
+  // Через 4 с следование возобновляется: страница — та, где читает кари (3 или уже 4), аят на ней подсвечен. Часы
+  // страницы в тесте стоят (clock.setFixedTime) — переводим их на 5 с вперёд.
+  await стр.clock.setFixedTime(new Date(new Date(ВРЕМЯ).getTime() + 5000));
+  await стр.waitForFunction(
+    (н) => {
+      const э = document.querySelector('[data-testid="мусхаф-страница"]');
+      return э && э.getAttribute('data-page') !== String(н) && !!э.querySelector('[aria-current="true"]');
+    },
+    н2,
+    { timeout: 12000 },
+  );
+  п.проверить((await номер()) >= н6, `через 4 с после ручного листания следование возобновилось — страница ${await номер()}, где читает кари (${await читается()})`);
+
+  // Книжная 412×800: кегль подогнан под страницу аль-Курси. Перезагрузка — плеер стоит (иначе страница следует за кари).
+  await стр.goto(адрес('#/quran/sura?n=2&a=255'));
+  await стр.reload();
+  const н255 = страницаАята(2, 255);
+  await ждатьСтраницу(н255);
+  await стр.waitForFunction(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    return э && э.querySelector('[data-ayah]') && э.scrollHeight <= э.clientHeight + 1;
+  }, null, { timeout: 5000 });
+  const книжный = await кегль();
+  п.проверить((await область()).вид === 'portrait', `книжная 412×800: страница целиком, кегль ${книжный} px`);
+
+  // Альбомная 800×412: без подгонки, крупно, прокрутка по вертикали.
+  await стр.setViewportSize({ width: 800, height: 412 });
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"]')?.getAttribute('data-orientation') === 'landscape', null, { timeout: 5000 });
+  await стр.waitForTimeout(400);
+  const альбомный = await кегль();
+  п.проверить(альбомный >= Math.max(книжный, 24), `800×412: кегль ${альбомный} px ≥ книжного ${книжный} px и ≥ 24 — страница не ужимается`);
+  const о = await область();
+  п.проверить(о.всё > о.в + 50, `800×412: страница длиннее экрана и прокручивается по вертикали (${о.всё} > ${о.в})`);
+  п.проверить(о.всёШ <= о.ш + 1, `800×412: в тексте нет горизонтальной прокрутки (${о.всёШ} ≤ ${о.ш})`);
+  await п.безГоризонтальнойПрокрутки('страница 800×412');
+  await п.снимок('страница-альбом');
+  // Прокрутили к 2:256 — повернули в книжную и обратно: 2:256 на том же месте экрана.
+  const где256 = () =>
+    стр.evaluate(() => {
+      const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+      return Math.round(э.querySelector('[data-ayah="2:256"]').getClientRects()[0].top - э.getBoundingClientRect().top);
+    });
+  await стр.evaluate(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    э.scrollTop += э.querySelector('[data-ayah="2:256"]').getClientRects()[0].top - э.getBoundingClientRect().top;
+  });
+  await стр.waitForTimeout(400);
+  const до = await где256();
+  п.проверить((await область()).верх > 0 && до < (await область()).в, `прокрутка внутри страницы работает: 2:256 на экране (${до} px от верха)`);
+  await стр.setViewportSize({ width: 412, height: 800 });
+  await стр.waitForFunction(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    return э.getAttribute('data-orientation') === 'portrait' && э.scrollHeight <= э.clientHeight + 1;
+  }, null, { timeout: 5000 });
+  п.проверить((await номер()) === н255, 'поворот в книжную — та же страница, снова целиком');
+  await стр.setViewportSize({ width: 800, height: 412 });
+  await стр.waitForTimeout(800);
+  const после = await где256();
+  п.проверить((await номер()) === н255 && Math.abs(после - до) <= 4, `поворот обратно — место сохранено: 2:256 там же (${до} → ${после} px)`);
+  // Листание в альбомной — как прежде; новая страница — с начала.
+  await п.э('мусхаф-страница-след').click();
+  await ждатьСтраницу(н255 + 1);
+  await стр.waitForTimeout(300);
+  п.проверить((await область()).верх === 0, `800×412: «Следующая страница» — ${н255 + 1}, с начала страницы`);
+  await п.безПроблем('«Страницами» с плеером и в альбомной: без ошибок, чужих запросов и нарушений CSP');
   await контекст.close();
 }
