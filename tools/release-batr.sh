@@ -26,6 +26,10 @@ echo "==> Сквозной тест"
 (cd "$MUG/app" && node scripts/e2e-update.mjs | tail -3)
 (cd "$MUG/app" && node scripts/e2e-stats.mjs | grep -E 'отладка|НЕ ВЫПОЛНЕНО|OK: статистика')
 
+# Страж (28.11.2026): метка коммита в собранном index.html должна совпасть с тем, что пишем в version.json — иначе
+# полоса «Вышло обновление» выходит после каждого «Обновить» (так было, когда выложили сборку прежнего коммита).
+МЕТКА="$(grep -o 'aiustaz-commit" content="[0-9a-f]*' "$MUG/app/dist/index.html" | sed 's/.*content="//')"
+[ "$МЕТКА" = "$COMMIT" ] || { echo "ОШИБКА: сборка от $МЕТКА, а выпускаем $COMMIT — пересоберите"; exit 1; }
 echo "==> batr-world: ветка $BRANCH от свежего main"
 [ -z "$(git -C "$BATR" status --porcelain --untracked-files=no)" ] || { echo "ОШИБКА: в batr-world незакоммиченные правки (чужая работа?) — не трогаю"; exit 1; }
 git -C "$BATR" fetch -q --depth=50 origin main
