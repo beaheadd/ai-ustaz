@@ -290,50 +290,16 @@ export async function спроситьСквозной(браузер, порт,
     await с.к.close();
   }
 
-  console.log('\n══ AI Ustaz: голос и фото (только наш сервер) ══');
+  console.log('\n══ AI Ustaz: только текст — без 🎤 📷 🖼 (владелец 28.11.2026) ══');
   {
     const с = await страница(браузер, свой, { возможности: { голос: true, фото: true } });
-    // http://aiustaz.pro:порт в тесте — не https: браузер прячет getUserMedia. Подставляем защищённый контекст и микрофон
-    // (тон 440 Гц через AudioContext — настоящий MediaStream для MediaRecorder).
-    await с.к.addInitScript(() => {
-      Object.defineProperty(window, 'isSecureContext', { configurable: true, value: true });
-      const md = navigator.mediaDevices || {};
-      md.getUserMedia = async () => {
-        const ак = new AudioContext();
-        const осц = ак.createOscillator();
-        const выход = ак.createMediaStreamDestination();
-        осц.connect(выход);
-        осц.start();
-        return выход.stream;
-      };
-      if (!navigator.mediaDevices) Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: md });
-    });
     await с.стр.goto(свой + '/aiustaz/index.html#/ask');
-    await с.э('устаз-микрофон').waitFor({ timeout: 15000 });
-    проверить((await с.есть('устаз-камера')) && (await с.есть('устаз-галерея')), 'health объявил голос и фото — 📷 🖼 🎤 на месте');
+    await с.э('устаз-поле').waitFor({ timeout: 15000 });
+    await с.стр.waitForTimeout(800);
+    проверить(!(await с.есть('устаз-микрофон')) && !(await с.есть('устаз-камера')) && !(await с.есть('устаз-галерея')), 'health объявил голос и фото — всё равно нет 🎤 📷 🖼, только текст');
     await с.снимок('chat-input-ru');
     await с.снимок('chat2-input');
-    const р = await с.э('устаз-микрофон').boundingBox();
-    await с.стр.mouse.move(р.x + р.width / 2, р.y + р.height / 2);
-    await с.стр.mouse.down();
-    await с.э('устаз-запись').waitFor({ timeout: 5000 });
-    await с.стр.waitForTimeout(1300);
-    await с.снимок('chat-voice-recording');
-    await с.стр.mouse.up();
-    await с.стр.waitForFunction(() => document.querySelector('[data-testid="устаз-поле"]')?.value === 'что такое ихфа', null, { timeout: 8000 });
-    const г = с.медиа[0] ?? {};
-    проверить(/\/api\/ask\/voice\?lang=ru$/.test(г.адрес) && /^audio\//.test(г.тип || '') && г.байт > 0, `🎤 удержание → запись → POST /api/ask/voice (${г.тип}, ${г.байт} байт) — только наш сервер`);
-    проверить(/Проверьте текст и отправьте/.test(await с.текст('устаз-услышано')), 'распознанное — в поле, «Проверьте текст и отправьте»');
-    await с.снимок('chat-voice-text');
-    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==', 'base64');
-    await с.стр.setInputFiles('[data-testid="устаз-файл-галерея"]', { name: 'ayah.png', mimeType: 'image/png', buffer: png });
-    await с.э('устаз-аят').waitFor({ timeout: 10000 });
-    const ф = с.медиа[1] ?? {};
-    проверить(/\/api\/ask\/photo\?lang=ru$/.test(ф.адрес) && ф.тип === 'image/jpeg', '🖼 фото → сжатие на телефоне → POST /api/ask/photo (image/jpeg)');
-    await с.стр.waitForFunction(() => document.querySelectorAll('[data-testid="устаз-аят"] [data-testid="таджвид-аята-текст"]').length >= 4, null, { timeout: 15000 });
-    проверить(true, 'фото аята → «Это сура 112, аяты 1–4»: аяты из нашей копии с таджвидом');
-    await с.снимок('chat-photo-ayah');
-    с.безПроблем('голос и фото: без ошибок и чужих запросов');
+    с.безПроблем('только текст: без ошибок и чужих запросов');
     await с.к.close();
   }
 
