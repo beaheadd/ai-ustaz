@@ -38,6 +38,7 @@ import { memo, useEffect, useMemo, useRef, useState, type ComponentRef } from 'r
 import { Platform, Pressable, TextInput, View } from 'react-native';
 import { АрабскийТекст, Кнопка, Плашка, СтрокаСписка, Текст, Значок, Экран } from '../components';
 import { ПервыйВыборЧтеца } from '../components/quran/ReciterPicker';
+import { КнопкаСкачатьСуру } from '../components/quran/AudioDownload';
 import { СтрокаСоЗначком } from '../components/exercises/common';
 import { useНавигация } from '../engine/navigation';
 import { вХэш, type ПропсыЭкрана } from '../engine/routes';
@@ -225,15 +226,6 @@ export function Коран(_: ПропсыЭкрана<'коран'>) {
   /** «стр. 562 · 30 аятов · мекканская» — деление мусхафа из Tanzil Quran Metadata. */
   const мета = (з: ЗаписьСуры) =>
     [з.страница ? т('страница', { н: з.страница }) : null, словоАятов(з.аятов, язык), з.тип ? т(з.тип) : null].filter(Boolean).join(' · ');
-  function кДжузу(н: number) {
-    if (!ВЕБ || typeof document === 'undefined') return;
-    const начало = джузы[н - 1];
-    const э =
-      document.querySelector<HTMLElement>(`[data-testid="коран-джуз-заголовок-${н}"]`) ??
-      (начало ? document.querySelector<HTMLElement>(`[data-testid="коран-сура-${начало[0]}"]`) : null);
-    э?.scrollIntoView({ block: 'start' });
-    window.scrollBy?.(0, -72);
-  }
   const поле = useRef<ComponentRef<typeof TextInput>>(null);
 
   // «Назад» из суры: список прокручен к ней, фокус — на её строке (а не на заголовке и не в начале списка).
@@ -423,30 +415,7 @@ export function Коран(_: ПропсыЭкрана<'коран'>) {
 
           {найдено && найдено.length > 0 && !переход && !(безПоиска && видСписка === 'джузы' && джузы.length === 30) ? (
             <View style={{ flexDirection: 'row', gap: 6, alignItems: 'flex-start' }}>
-              {безПоиска && джузы.length === 30 ? (
-                // Столбик быстрого перехода 1…30 (как в образце владельца): прилипает к верху при прокрутке.
-                <View
-                  testID="коран-джузы-столбик"
-                  {...(ВЕБ ? ({ role: 'navigation', 'aria-label': т('джузы') } as object) : null)}
-                  style={{ width: 26, ...(ВЕБ ? ({ position: 'sticky', top: 72 } as object) : null) }}
-                >
-                  {джузы.map((_, i) => (
-                    <Pressable
-                      key={i}
-                      accessibilityRole="button"
-                      accessibilityLabel={т('кДжузу', { н: i + 1 })}
-                      onPress={() => кДжузу(i + 1)}
-                      testID={'коран-к-джузу-' + (i + 1)}
-                      hitSlop={{ left: 8, right: 4 }}
-                      style={{ height: 17, alignItems: 'center', justifyContent: 'center' }}
-                    >
-                      <Текст табличные стиль={{ fontSize: 11, lineHeight: 14, fontWeight: '700', color: цвет.акцент }}>
-                        {String(i + 1)}
-                      </Текст>
-                    </Pressable>
-                  ))}
-                </View>
-              ) : null}
+              {/* Столбик джузов 1…30 убран (владелец 28.11.2026: «с левой стороны цифры джузов убери»); джузы — вкладка «Джузы». */}
               <View
                 testID="коран-список"
                 {...(ВЕБ ? { role: 'list' as const } : {})}
@@ -524,7 +493,7 @@ const СтрокаСуры = memo(function СтрокаСуры({
   const подпись = название ? `${название}, ${аятов}` : `${названиеСуры(запись, н, язык)}, ${аятов}`;
   const ссылка = вХэш({ экран: 'сура', параметры: { номер: н } });
   return (
-    <View {...(ВЕБ ? { role: 'listitem' as const } : {})} style={{ borderBottomWidth: последняя ? 0 : 1, borderBottomColor: цвет.граница }}>
+    <View {...(ВЕБ ? { role: 'listitem' as const } : {})} style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: последняя ? 0 : 1, borderBottomColor: цвет.граница }}>
       <Pressable
         accessibilityRole="link"
         accessibilityLabel={подпись}
@@ -548,6 +517,8 @@ const СтрокаСуры = memo(function СтрокаСуры({
         }}
         testID={'коран-сура-' + н}
         style={({ pressed, hovered }: { pressed: boolean; hovered?: boolean }) => ({
+          flex: 1,
+          minWidth: 0,
           flexDirection: 'row',
           alignItems: 'center',
           gap: отступ.m,
@@ -586,6 +557,9 @@ const СтрокаСуры = memo(function СтрокаСуры({
           {запись.имя}
         </АрабскийТекст>
       </Pressable>
+      <View style={{ paddingEnd: 4 }}>
+        <КнопкаСкачатьСуру сура={н} подпись={подпись} />
+      </View>
     </View>
   );
 });
