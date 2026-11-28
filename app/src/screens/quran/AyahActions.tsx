@@ -122,7 +122,7 @@ const СЛОВАРЬ = создатьСловарь({
     нетРазметки: 'Tajweed marks did not load. Check your connection.',
     загрузка: 'Loading tajweed…',
   },
-});
+}, 'screens/quran/AyahActions');
 
 function КнопкаДействия({ значок, надпись, приНажатии, testID, раскрыта }: { значок: string; надпись: string; приНажатии: () => void; testID: string; раскрыта?: boolean }) {
   const { цвет, отступ, радиус } = useТема();
@@ -295,7 +295,7 @@ export function ЛистДействийАята({ сура, аят, закры�
         style={{ position: 'absolute', left: 0, right: 0, bottom: 0, top: '8%', justifyContent: 'flex-end', alignItems: 'center' }}
       >
         <View style={{ width: '100%', maxWidth: ШИРИНА_КОЛОНКИ, maxHeight: '100%', backgroundColor: цвет.фон, borderTopLeftRadius: радиус.l, borderTopRightRadius: радиус.l, borderWidth: 1, borderBottomWidth: 0, borderColor: цвет.граница }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: отступ.l, paddingRight: отступ.s, paddingTop: отступ.xs, borderBottomWidth: 1, borderBottomColor: цвет.граница }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingStart: отступ.l, paddingEnd: отступ.s, paddingTop: отступ.xs, borderBottomWidth: 1, borderBottomColor: цвет.граница }}>
             <Текст вид="подзаголовок" табличные стиль={{ flex: 1 }} testID="действия-заголовок">
               {т('заголовок', { сура: сура.сура, аят })}
             </Текст>

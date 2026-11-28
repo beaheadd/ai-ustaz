@@ -11,6 +11,10 @@
   python3 -I -B tools/hadith/build_hadith.py --download --update   то же, но принять новые выгрузки: записать версии,
                                                                      даты и sha256 в sources.json и напечатать новые
                                                                      ЭТАЛОНЫ для hadith_common.py (вставить руками)
+  python3 -I -B tools/hadith/build_hadith.py --download --update --lang=tr,id,ur
+                                                                     только эти языки: скачать и ДОБАВИТЬ их выгрузки в
+                                                                     sources.json (прежние языки не трогаются; владелец
+                                                                     28.11.2026 — языки ar, tr, id, ur интерфейса)
   python3 -I -B tools/hadith/build_hadith.py                       собрать app/public/hadith, манифест и
                                                                      content/hadith/на-проверку-устаза.json
   python3 -I -B tools/hadith/build_hadith.py --check               ничего не пишет: tools/hadith/check_hadith.py с
@@ -37,7 +41,19 @@ def скачать(адрес):
         return ответ.geturl(), ответ.read()
 
 
-def загрузка(принять):
+def языки_из_аргументов():
+    for а in sys.argv:
+        if а.startswith('--lang='):
+            языки = tuple(я for я in а.split('=', 1)[1].split(',') if я)
+            неизвестные = [я for я in языки if я not in х.ЯЗЫКИ]
+            if неизвестные:
+                raise SystemExit(f'--lang: нет таких языков в hadith_common.ЯЗЫКИ: {неизвестные}')
+            return языки
+    return х.ЯЗЫКИ
+
+
+def загрузка(принять, языки=None):
+    языки = языки or х.ЯЗЫКИ
     источники = х.прочитать_источники()
     запись = х.запись_источника(источники)
     if not запись:
@@ -47,7 +63,7 @@ def загрузка(принять):
     х.ПАПКА_СЫРЫХ.mkdir(parents=True, exist_ok=True)
     новые, расхождения = [], []
     версии = {}
-    for язык in х.ЯЗЫКИ:
+    for язык in языки:
         for вид in ('csv', 'sqlite'):
             итоговый, байты = скачать(АДРЕС_ВЫГРУЗКИ.format(язык=язык, вид=вид))
             имя = итоговый.rsplit('/', 1)[-1]
@@ -74,7 +90,8 @@ def загрузка(принять):
         print('Принять новые версии: --download --update (затем проверка устазом изменений, правило 11).')
         return 1
     if принять:
-        запись['выгрузки'] = новые
+        # Только скачанные языки заменяются; остальные выгрузки (другие языки) остаются как были.
+        запись['выгрузки'] = [в for в in запись.get('выгрузки', []) if в['язык'] not in языки] + новые
         запись['прочитано'] = х.ЗАГРУЖЕНО
         х.ПУТЬ_ИСТОЧНИКОВ.write_text(json.dumps(источники, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print('sources.json обновлён. Новые ЭТАЛОНЫ для tools/hadith/hadith_common.py:')
@@ -123,7 +140,7 @@ def печать_итогов(итоги, сборка):
 
 def main():
     if '--download' in sys.argv:
-        return загрузка('--update' in sys.argv)
+        return загрузка('--update' in sys.argv, языки_из_аргументов())
     if '--check' in sys.argv:
         import check_hadith
         ошибки, счёт, предупреждения = check_hadith.проверить(требовать_сырьё=True)

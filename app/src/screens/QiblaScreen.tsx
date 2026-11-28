@@ -88,7 +88,7 @@ const СЛОВАРЬ = создатьСловарь({
     наКиблеПодпись: 'Если солнце видно — встаньте к нему лицом.',
     надКаабой: '{дата} в {время} солнце будет прямо над Каабой',
     надКаабойПодпись: 'В эту минуту тени от столбов и стен лягут ровно от киблы: кибла — в сторону солнца.',
-    времяРК: 'Время — по Казахстану (UTC+5).',
+    времяРК: 'Время — по выбранному месту (UTC+5).',
     времяМеста: 'Время — по месту ({смещение}).',
     точностьЗаголовок: 'Насколько это точно',
     честно:
@@ -132,7 +132,7 @@ const СЛОВАРЬ = создатьСловарь({
     наКиблеПодпись: 'Күн көрініп тұрса — оған қарап тұрыңыз.',
     надКаабой: '{дата}, сағат {время} — күн Қағбаның дәл үстінде болады',
     надКаабойПодпись: 'Сол минутта бағана мен қабырғалардың көлеңкесі құбылаға қарама-қарсы түседі: құбыла — күн жақта.',
-    времяРК: 'Уақыт — Қазақстан бойынша (UTC+5).',
+    времяРК: 'Уақыт — таңдалған орын бойынша (UTC+5).',
     времяМеста: 'Уақыт — жергілікті ({смещение}).',
     точностьЗаголовок: 'Бұл қаншалықты дәл',
     честно:
@@ -176,7 +176,7 @@ const СЛОВАРЬ = создатьСловарь({
     наКиблеПодпись: 'Quyosh koʻrinsa — unga yuzlanib turing.',
     надКаабой: '{дата} kuni soat {время} da quyosh Kaʼbaning tepasida boʻladi',
     надКаабойПодпись: 'Shu daqiqada ustunlar va devorlar soyasi aynan qibladan teskari tushadi: qibla — quyosh tomonda.',
-    времяРК: 'Vaqt — Qozogʻiston vaqti bilan (UTC+5).',
+    времяРК: 'Vaqt — tanlangan joy vaqti bilan (UTC+5).',
     времяМеста: 'Vaqt — joyga koʻra ({смещение}).',
     точностьЗаголовок: 'Bu qanchalik aniq',
     честно:
@@ -220,7 +220,7 @@ const СЛОВАРЬ = создатьСловарь({
     наКиблеПодпись: 'If the sun is visible — face it.',
     надКаабой: 'On {дата} at {время} the sun will be directly above the Kaaba',
     надКаабойПодпись: 'At that minute shadows of poles and walls fall exactly away from the qibla: the qibla is towards the sun.',
-    времяРК: 'Times are in Kazakhstan time (UTC+5).',
+    времяРК: 'Times are for the selected place (UTC+5).',
     времяМеста: 'Local time of the place ({смещение}).',
     точностьЗаголовок: 'How accurate this is',
     честно:
@@ -229,7 +229,7 @@ const СЛОВАРЬ = создатьСловарь({
     склонениеТочка: 'Magnetic declination is taken into account ({город}): {с}°. The direction is the shortest path to the Kaaba (great-circle arc) from your point (≈ 1 km).',
     приватно: 'Everything is calculated on the phone, without the internet and without maps. Sensor data and the location are not sent anywhere.',
   },
-});
+}, 'screens/QiblaScreen');
 
 /** 4288 → '4 288' (неразрывный пробел). */
 const тысячи = (ч: number) => String(Math.round(ч)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');

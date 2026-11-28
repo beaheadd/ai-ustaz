@@ -236,7 +236,7 @@ const СЛОВАРЬ = создатьСловарь({
     городПодсказка: 'City: {город}, {дата}. Change',
     городПоУмолчанию: 'City: {город}, default, {дата}. Change',
   },
-});
+}, 'screens/HomeScreen');
 
 export type СледующийШаг = { вид: 'урок0' } | { вид: 'урок'; номер: number; начат: boolean } | { вид: 'карта' };
 
@@ -277,7 +277,7 @@ function меткаУрока(курс: КартаКурсаДанные | null,
 }
 
 /** Короткое имя языка в шапке (кнопка выбора языка со значком глобуса). */
-const ЯЗЫК_КОРОТКО: Record<Язык, string> = { ru: 'Рус', kk: 'Қаз', uz: 'Oʻz', en: 'Eng' };
+const ЯЗЫК_КОРОТКО: Record<Язык, string> = { ru: 'Рус', kk: 'Қаз', uz: 'Oʻz', en: 'Eng', ar: 'عربي', tr: 'Tür', id: 'Indo', ur: 'اردو' };
 
 /** Начат ли курс: есть пройденный или начатый урок, кроме урока 0 (чистая функция). */
 export function курсНачат(п: Прогресс): boolean {
@@ -454,7 +454,7 @@ function ГородВШапке() {
     >
       {авто && выбрано ? <Значок имя="геолокация" размер={14} цвет={цвет.акцент} /> : null}
       <View style={{ flexShrink: 1, alignItems: 'flex-end' }} aria-hidden>
-        <Текст вид="метка" numberOfLines={2} testID="главная-город-имя" стиль={{ fontWeight: '600', textAlign: 'right', fontSize: 15, lineHeight: 18 }}>
+        <Текст вид="метка" numberOfLines={2} testID="главная-город-имя" стиль={{ fontWeight: '600', textAlign: 'end' as 'right', fontSize: 15, lineHeight: 18 }}>
           {имя}
         </Текст>
         <Текст вид="мелкий" цвет={цвет.текстВторой} numberOfLines={1} стиль={{ fontSize: 11, lineHeight: 14 }} testID="главная-дата">

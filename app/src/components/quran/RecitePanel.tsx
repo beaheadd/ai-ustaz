@@ -39,7 +39,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { доступныйИсточник, плеер, установитьЯзыкПлеера, useПлеер } from '../../audio/player';
 import { useПрогресс } from '../../engine/progress';
-import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
+import { создатьСловарь, useПеревод, useСловарь, РЯД_АРАБСКИЙ } from '../../i18n';
 import { разборАята } from '../../quran/text';
 import { видыПоПрогрессу, проверкаЧасти, частиАята, type ЧастьЗаписи } from '../../quran-check';
 import type { ИтогПроверки, УровеньЗамечания } from '../../speech/answer';
@@ -147,7 +147,7 @@ const СЛОВАРЬ = создатьСловарь({
       'The recording stays on your device. It goes to the server in Kazakhstan only when you tap “Check”, and is deleted right away.',
     слово: 'Word {н}: check yourself',
   },
-});
+}, 'components/quran/RecitePanel');
 
 export type УправлениеКари = { играет: boolean; играть: () => void; стоп: () => void };
 
@@ -434,7 +434,7 @@ export function АятСЧастью({
   const т = useСловарь(СЛОВАРЬ);
   const { цвет, отступ, радиус } = useТема();
   return (
-    <View style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
+    <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
       <View
         accessibilityLabel={String(аят)}
         style={{

@@ -97,11 +97,15 @@ const ХАТАМ = 'M92 92H108V108H92ZM100 88.7L111.3 100L100 111.3L88.7 100Z';
 // Неподвижная отметка «верх телефона».
 const ОТМЕТКА = 'M100 13L95 4H105Z';
 
-const СТОРОНЫ: Record<'ru' | 'kk' | 'uz' | 'en', readonly [string, string, string, string]> = {
+const СТОРОНЫ: Record<import('../i18n/languages').Язык, readonly [string, string, string, string]> = {
   ru: ['С', 'В', 'Ю', 'З'],
   kk: ['С', 'Ш', 'О', 'Б'], // солтүстік, шығыс, оңтүстік, батыс — черновик для редактора-носителя
   uz: ['Sh', 'Shq', 'J', 'Gʻ'], // shimol, sharq, janub, gʻarb — черновик для редактора-носителя
   en: ['N', 'E', 'S', 'W'],
+  ar: ['ش', 'ق', 'ج', 'غ'], // شمال، شرق، جنوب، غرب — черновик
+  tr: ['K', 'D', 'G', 'B'], // kuzey, doğu, güney, batı — черновик
+  id: ['U', 'T', 'S', 'B'], // utara, timur, selatan, barat — черновик
+  ur: ['ش', 'مش', 'ج', 'مغ'], // شمال، مشرق، جنوب، مغرب — черновик
 };
 
 export type СвойстваЦиферблата = {
@@ -109,7 +113,7 @@ export type СвойстваЦиферблата = {
   курс: number | null;
   совпало?: boolean;
   размер?: number;
-  язык: 'ru' | 'kk' | 'uz' | 'en';
+  язык: import('../i18n/languages').Язык;
   подпись: string;
   testID?: string;
 };

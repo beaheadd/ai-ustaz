@@ -34,7 +34,7 @@
  */
 import { свернуть } from './world.ts';
 
-type Язык = 'ru' | 'kk' | 'uz' | 'en';
+type Язык = import('../i18n/languages').Язык;
 
 export type Место = {
   id: string;
@@ -117,13 +117,14 @@ export function латиницаАнглийская(с: string): string {
 /** Название места на языке интерфейса (uz и en — латиница, см. контракт). */
 export function названиеМеста(м: Pick<Место, 'kk' | 'ru' | 'uz' | 'en'>, язык: Язык): string {
   if (язык === 'uz') return м.uz || м.en || латиницаИзКириллицы(м.ru);
-  if (язык === 'en') return м.en || латиницаАнглийская(м.ru);
+  // en и новые языки (ar, tr, id, ur): своих названий мест нет — английская латиница (черновик, владелец 28.11.2026).
+  if (язык === 'en' || язык === 'ar' || язык === 'tr' || язык === 'id' || язык === 'ur') return м.en || латиницаАнглийская(м.ru);
   return м[язык];
 }
 
 export function названиеОбласти(о: { kk: string; ru: string; uz?: string }, язык: Язык): string {
   if (язык === 'uz') return о.uz || латиницаИзКириллицы(о.ru);
-  if (язык === 'en') return областьEn(о);
+  if (язык === 'en' || язык === 'ar' || язык === 'tr' || язык === 'id' || язык === 'ur') return областьEn(о);
   return о[язык];
 }
 

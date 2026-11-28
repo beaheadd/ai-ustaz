@@ -37,7 +37,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { конец: '{а}-аяттың соңы' },
   uz: { конец: '{а}-oyat oxiri' },
   en: { конец: 'end of ayah {а}' },
-});
+}, 'components/quran/MushafView');
 
 const ВЕБ = Platform.OS === 'web';
 const ЦИФРЫ = '٠١٢٣٤٥٦٧٨٩';

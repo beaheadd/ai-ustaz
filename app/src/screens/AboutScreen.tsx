@@ -64,9 +64,10 @@ const СЛОВАРЬ = создатьСловарь({
     помощник: 'Помощник, а не устаз',
     помощник1: 'AI Ustaz помогает между занятиями и не заменяет живого устаза: Коран передаётся устно, от учителя к ученику.',
     помощник2: 'Не выдаёт иджазу, статус хафиза или «засчитанный хатм».',
-    помощник3: 'Не выносит фетв. Личные вопросы фикха — к имаму мечети или в ДУМК.',
+    помощник3: 'Не выносит фетв. Личные вопросы фикха — к имаму мечети или в духовное управление мусульман вашей страны.',
     линия: 'Линия',
-    линия1: 'Ханафитский мазхаб и матуридитская акыда — линия ДУМК.',
+    линия1: 'Ханафитский мазхаб и матуридитская акыда.',
+    разработано: 'Разработано в Казахстане.',
     линия2: 'Чтение — Хафс от ‘Асыма (через аш-Шатибийю). Когда появится проверка голосом, допустимые варианты чтения будут засчитываться.',
     линия3: 'Текст Корана — только дословно из проверенной базы Tanzil Uthmani v1.1.',
     линия4: 'Объяснения ошибок — только из базы правил и шаблонов AI Ustaz (сейчас черновик, её проверяет устаз). Не уверен — не ругаем.',
@@ -106,9 +107,10 @@ const СЛОВАРЬ = создатьСловарь({
     помощник: 'Көмекші, ұстаз емес',
     помощник1: 'AI Ustaz сабақ арасында көмектеседі, тірі ұстаздың орнын баспайды: Құран ұстаздан шәкіртке ауызша беріледі.',
     помощник2: 'Ижаза, хафиз мәртебесін немесе «есептелген хатым» бермейді.',
-    помощник3: 'Пәтуа бермейді. Жеке фиқһ сұрақтары — мешіт имамына немесе ҚМДБ-ға.',
+    помощник3: 'Пәтуа бермейді. Жеке фиқһ сұрақтары — мешіт имамына немесе еліңіздің мұсылмандар діни басқармасына.',
     линия: 'Бағыт',
-    линия1: 'Ханафи мазхабы және матуриди ақидасы — ҚМДБ бағыты.',
+    линия1: 'Ханафи мазхабы және матуриди ақидасы.',
+    разработано: 'Қазақстанда әзірленген.',
     линия2: 'Оқу — Хафс ‘Асым риуаяты (аш-Шатиби жолымен). Дауыс тексеруі пайда болғанда, рұқсат етілген оқу нұсқалары есептеледі.',
     линия3: 'Құран мәтіні — тек тексерілген Tanzil Uthmani v1.1 базасынан, сөзбе-сөз.',
     линия4: 'Қателердің түсіндірмесі — тек AI Ustaz ережелері мен үлгілерінің базасынан (әзірге жоба, оны ұстаз тексереді). Сенімді болмасақ — ұрыспаймыз.',
@@ -148,9 +150,10 @@ const СЛОВАРЬ = создатьСловарь({
     помощник: 'Ustoz emas, yordamchi',
     помощник1: 'AI Ustaz mashgʻulotlar orasida yordam beradi va tirik ustozning oʻrnini bosmaydi: Qurʼon ogʻzaki, ustozdan shogirdga oʻtadi.',
     помощник2: 'Ijoza, hofizlik maqomi yoki «hisobga olingan xatm» bermaydi.',
-    помощник3: 'Fatvo chiqarmaydi. Shaxsiy fiqh savollari — masjid imomiga yoki QMDBga.',
+    помощник3: 'Fatvo chiqarmaydi. Shaxsiy fiqh savollari — masjid imomiga yoki mamlakatingiz musulmonlari diniy idorasiga.',
     линия: 'Yoʻnalish',
-    линия1: 'Hanafiy mazhabi va moturidiy aqidasi — QMDB yoʻnalishi.',
+    линия1: 'Hanafiy mazhabi va moturidiy aqidasi.',
+    разработано: 'Qozogʻistonda ishlab chiqilgan.',
     линия2: 'Qiroat — Osimdan Hafs rivoyati (ash-Shotibiya orqali). Ovoz bilan tekshirish paydo boʻlganda, joiz qiroat variantlari hisobga olinadi.',
     линия3: 'Qurʼon matni — faqat tekshirilgan Tanzil Uthmani v1.1 bazasidan, aynan.',
     линия4: 'Xatolarni tushuntirish — faqat AI Ustaz qoidalar va andozalar bazasidan (hozir qoralama, uni ustoz tekshiryapti). Ishonch boʻlmasa — tanbeh bermaymiz.',
@@ -190,9 +193,10 @@ const СЛОВАРЬ = создатьСловарь({
     помощник: 'A helper, not an ustaz',
     помощник1: 'AI Ustaz helps between classes and does not replace a living ustaz: the Quran is passed on orally, from teacher to student.',
     помощник2: 'It does not grant ijazah, hafiz status or a “completed khatm”.',
-    помощник3: "It does not issue fatwas. Personal fiqh questions — to your mosque's imam or the SAMK.",
+    помощник3: "It does not issue fatwas. Personal fiqh questions — to your mosque's imam or the Muslim religious authority of your country.",
     линия: 'Approach',
-    линия1: "The Hanafi madhhab and Maturidi aqidah — the approach of the SAMK (Spiritual Administration of Muslims of Kazakhstan).",
+    линия1: 'The Hanafi madhhab and Maturidi aqidah.',
+    разработано: 'Developed in Kazakhstan.',
     линия2: "Recitation — Hafs from 'Asim (via ash-Shatibiyyah). When the voice check arrives, acceptable recitation variants will be counted as correct.",
     линия3: 'Quran text — only verbatim from the verified Tanzil Uthmani v1.1 database.',
     линия4: 'Explanations of mistakes — only from the AI Ustaz base of rules and templates (a draft for now, an ustaz is reviewing it). Not sure — no scolding.',
@@ -213,7 +217,7 @@ const СЛОВАРЬ = создатьСловарь({
     как: 'How AI Ustaz explains a mistake',
     лицензии: 'Licenses and sources',
   },
-});
+}, 'screens/AboutScreen');
 
 /** Раздел «О проекте»: карточка с заголовком и значком в изумрудной плитке. */
 function Раздел({ значок, заголовок, вид, testID, children }: { значок?: ИмяЗначка; заголовок: string; вид?: ВидКарточки; testID?: string; children?: ReactNode }) {
@@ -317,6 +321,8 @@ export function ОПроекте(_: ПропсыЭкрана<'оПроекте'>
 
       <Раздел заголовок={т('связь')}>
         <Текст>{т('связьТекст')}</Текст>
+        {/* Владелец 28.11.2026: «разработка из Казахстана — в разделе о приложении» (только здесь). */}
+        <Текст testID="о-проекте-разработано">{т('разработано')}</Текст>
       </Раздел>
 
       <Раздел заголовок={т('данные')}>

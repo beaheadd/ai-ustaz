@@ -95,7 +95,7 @@ const СЛОВАРЬ = создатьСловарь({
     открытьСайт: 'Open aiustaz.pro',
     скрыть: 'Close the install suggestion',
   },
-});
+}, 'components/InstallHint');
 
 export function БаннерУстановки() {
   const т = useСловарь(СЛОВАРЬ);
@@ -207,7 +207,7 @@ export function БаннерУстановки() {
             width: 40,
             height: 40,
             marginTop: -8,
-            marginRight: -8,
+            marginEnd: -8,
             borderRadius: 20,
             alignItems: 'center',
             justifyContent: 'center',

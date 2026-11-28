@@ -81,7 +81,7 @@ const СЛОВАРЬ = создатьСловарь({
     код: 'Code in the mistake catalogue: {код}',
     кари: 'The qari voice for the exercise will appear once the reference recording is made.',
   },
-});
+}, 'components/info/ExplanationCard');
 
 export function ЧипУровня({ пример }: { пример: ПримерОбъяснения }) {
   const { язык } = useПеревод();

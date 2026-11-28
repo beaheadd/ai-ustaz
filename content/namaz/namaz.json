@@ -314,7 +314,7 @@
       ]
     }
   ],
-  "итог": {"kk": "Өз намазыңыз туралы сұрақтар — мешіт имамына немесе ҚМДБ-ға.", "ru": "Вопросы о своём намазе — к имаму мечети или в ДУМК.", "uz": "Oʻz namozingiz haqidagi savollar — masjid imomiga yoki diniy idoraga.", "en": "Questions about your own prayer — ask the imam of your mosque or the Spiritual Administration of Muslims."},
+  "итог": {"kk": "Өз намазыңыз туралы сұрақтар — мешіт имамына немесе еліңіздің мұсылмандар діни басқармасына.", "ru": "Вопросы о своём намазе — к имаму мечети или в духовное управление мусульман вашей страны.", "uz": "Oʻz namozingiz haqidagi savollar — masjid imomiga yoki mamlakatingiz musulmonlari diniy idorasiga.", "en": "Questions about your own prayer — ask the imam of your mosque or the Muslim religious authority of your country."},
   "ждут_устаза": [
     {"что": "Таауз (а‘узу билляхи минаш-шайтанир-раджим) — арабский текст", "почему": "в HadeethEnc нет этой формулы дословно (есть только вариант 10905 с добавками); текст даёт устаз"},
     {"что": "Дуа Кунут (витр)", "почему": "нет в HadeethEnc; ханафитский текст кунута — от устаза ДУМК"},

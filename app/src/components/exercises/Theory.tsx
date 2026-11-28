@@ -9,7 +9,7 @@ import { View } from 'react-native';
 import type { ЗаданиеТеория } from '../../content/types';
 import { локально } from '../../engine/lessonEngine';
 import { СмешанныйТекст } from '../info/MixedText';
-import { useПеревод } from '../../i18n';
+import { useПеревод, РЯД_АРАБСКИЙ } from '../../i18n';
 import { useТема } from '../../theme';
 import { АрабскийТекст } from '../ArabicText';
 import { Карточка } from '../Card';
@@ -26,7 +26,7 @@ export function Теория({ задание, приГотово }: Свойс�
       <СмешанныйТекст>{локально(задание.текст, язык)}</СмешанныйТекст>
       {примеры.length > 0 ? (
         <Карточка вид="арка" стиль={{ paddingBottom: отступ.l }}>
-          <View style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl }}>
+          <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl }}>
             {примеры.map((пример, i) => (
               <АрабскийТекст key={i} размер="огромный" стиль={стильКрупного('огромный')}>
                 {пример}

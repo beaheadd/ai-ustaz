@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import type { ЗаданиеПрочитай } from '../../content/types';
 import { локально } from '../../engine/lessonEngine';
-import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
+import { создатьСловарь, useПеревод, useСловарь, РЯД_АРАБСКИЙ } from '../../i18n';
 import { транскрипцияЯзыка } from '../../i18n/translit';
 import { useТема } from '../../theme';
 import { АрабскийТекст } from '../ArabicText';
@@ -30,7 +30,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { прочитал: 'Оқыдым — әрі қарай', звучит: 'Былай оқылады' },
   uz: { прочитал: 'Oʻqidim — keyingisi', звучит: 'Shunday eshitiladi' },
   en: { прочитал: 'I read it — next', звучит: 'Sounds like' },
-});
+}, 'components/exercises/ReadSyllable');
 
 export function ПрочитайСлог({ задание, приГотово, заменитьДалее }: СвойстваУпражнения<ЗаданиеПрочитай>) {
   const { язык } = useПеревод();
@@ -54,7 +54,7 @@ export function ПрочитайСлог({ задание, приГотово, �
       </Текст>
       <Карточка вид="арка" стиль={{ paddingBottom: отступ.l }}>
         {/* Справа налево, с переносом: первый слог — справа, как в книге. */}
-        <View
+        <View {...РЯД_АРАБСКИЙ}
           style={{
             flexDirection: 'row-reverse',
             flexWrap: 'wrap',

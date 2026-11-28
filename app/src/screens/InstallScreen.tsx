@@ -265,7 +265,7 @@ const СЛОВАРЬ = создатьСловарь({
       'Microphone: on the first recording the phone will ask for permission for aiustaz.pro. Recording starts only when you tap.',
     шаг: 'Step {номер}',
   },
-});
+}, 'screens/InstallScreen');
 
 type Шаг = { значок: ИмяЗначка; текст: string };
 

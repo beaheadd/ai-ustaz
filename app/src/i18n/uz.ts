@@ -20,6 +20,7 @@ export const uz: Record<КлючСтроки, string> = {
   'общее.загрузка': 'Yuklanmoqda…',
   'общее.вРазработке': 'Bu ekran ishlab chiqilmoqda.',
   'общее.нетСвязи': 'Aloqa yoʻq — yuklanmadi. Internetni tekshiring va «Qayta urinish» tugmasini bosing.',
+  'перевод.готовится': 'Tilingizga tarjima tayyorlanmoqda — hozircha matn inglizcha.',
   'общее.повторить': 'Qayta urinish',
 
   'язык.заголовок': 'Til',
@@ -27,6 +28,10 @@ export const uz: Record<КлючСтроки, string> = {
   'язык.kk': 'Қазақша',
   'язык.uz': 'Oʻzbekcha',
   'язык.en': 'English',
+  'язык.ar': 'العربية',
+  'язык.tr': 'Türkçe',
+  'язык.id': 'Bahasa Indonesia',
+  'язык.ur': 'اردو',
 
   'плашка.урок': 'Prototip. Dars qoralamasi — ustoz tekshiruvidan oʻtmoqda',
   'плашка.общая': 'Prototip: ovozni SI hali tekshirmaydi',
@@ -103,7 +108,7 @@ export const uz: Record<КлючСтроки, string> = {
 
   'урок.неНайден': 'Dars topilmadi.',
 
-  'оПроекте.казахский': 'Qozoqcha, oʻzbekcha va inglizcha matnlar — til sohibi muharriri uchun qoralama.',
+  'оПроекте.казахский': 'Qozoq, oʻzbek, ingliz, arab, turk, indonez va urdu tillaridagi matnlar — til sohibi muharriri uchun qoralama.',
   'оПроекте.версияКонтента': 'Darslar versiyasi: {версия} ({статус})',
   'оПроекте.удалитьДанные': 'Shu qurilmadagi natijalarimni oʻchirish',
   'оПроекте.данныеУдалены': 'Shu qurilmadagi natijalar oʻchirildi.',

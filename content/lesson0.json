@@ -22,7 +22,12 @@
     "kk": "Бұл Құран мұғалімі — қателесуі мүмкін жасанды интеллект моделі. Ол тек көмек үшін арналған, оған сүйенуге болмайды. Ол шебер әрі рұқсаты бар ұстаздың орнын баспайды, өйткені Құран тек ауызба-ауыз (мушафаха) жолымен қабылданады.",
     "uz": "Bu Qurʼon ustozi — xato qilishi mumkin boʻlgan sunʼiy intellekt modeli. U faqat yordam uchun moʻljallangan va unga tayanib boʻlmaydi. U tajribali, vakolatli ustozning oʻrnini bosmaydi, chunki Qurʼon faqat ogʻzaki (mushofaha) yoʻli bilan oʻtadi.",
     "en": "This Quranic Teacher is an artificial-intelligence model that may make mistakes. It is intended for assistance only and must not be relied upon. It is not a replacement for a proficient, authorized teacher, because the Quran is only received through oral transmission (mushafahah).",
-    "источник": "quran-muaalem, файл NOTICE (QML-1.0); ar, ru и en — официальные тексты (en прочитан 20.11.2026); kk и uz — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)",
+    "переводы": {
+      "tr": "Bu Kur'an öğretmeni, hata yapabilen bir yapay zekâ modelidir. Yalnızca yardım amaçlıdır ve ona güvenilmemelidir. Yetkin ve icazetli bir öğretmenin yerini tutmaz; çünkü Kur'an yalnızca ağızdan ağıza (müşâfehe) alınır.",
+      "id": "Guru Al-Qur'an ini adalah model kecerdasan buatan yang bisa keliru. Ia hanya dimaksudkan sebagai bantuan dan tidak boleh dijadikan sandaran. Ia bukan pengganti guru yang mahir dan berwenang (berijazah), karena Al-Qur'an hanya diterima melalui lisan secara langsung (musyafahah).",
+      "ur": "یہ قرآنی معلّم مصنوعی ذہانت کا ایک ماڈل ہے جو غلطی کر سکتا ہے۔ یہ صرف مدد کے لیے ہے اور اس پر بھروسا نہیں کیا جانا چاہیے۔ یہ کسی ماہر اور مجاز استاد کا متبادل نہیں، کیونکہ قرآن صرف زبانی روایت (مشافہہ) ہی سے حاصل کیا جاتا ہے۔"
+    },
+    "источник": "quran-muaalem, файл NOTICE (QML-1.0); ar, ru и en — официальные тексты (en прочитан 20.11.2026); kk, uz, tr, id и ur — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)",
     "ссылка": "github.com/obadx/quran-muaalem — файл NOTICE",
     "прочитано": "2026-11-18"
   },

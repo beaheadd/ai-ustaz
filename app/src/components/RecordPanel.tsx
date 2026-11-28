@@ -58,7 +58,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { нажмите: '«Жазу» түймесін басып, дауыстап оқыңыз — өзіңізді есту үшін.', идёт: 'Жазу жүріп жатыр' },
   uz: { нажмите: '«Yozib olish» tugmasini bosing va ovoz chiqarib oʻqing — oʻzingizni eshitish uchun.', идёт: 'Yozilmoqda' },
   en: { нажмите: 'Tap “Record” and read aloud — to hear yourself.', идёт: 'Recording' },
-});
+}, 'components/RecordPanel');
 
 /** Веб: перевести фокус на кнопку панели, если он был на исчезнувшей кнопке (на body) или внутри панели. */
 function фокусНа(панель: string, кнопка: string) {

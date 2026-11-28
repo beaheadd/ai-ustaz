@@ -36,7 +36,7 @@ const СЛОВАРЬ = создатьСловарь({
     обновить: 'Refresh the page',
     нет: 'The text did not pass verification against the verified database — not shown.',
   },
-});
+}, 'screens/quran/QuranState');
 
 export function ТекстКоранаНедоступен({ состояние }: { состояние: { нетСвязи: boolean; причина: ПричинаОтказа; повторить: () => void } }) {
   const { t } = useПеревод();

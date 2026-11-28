@@ -42,7 +42,7 @@ import { Кнопка } from '../Button';
 import { Значок } from '../Icon';
 import { Текст } from '../Text';
 
-const СЛОВАРЬ = создатьСловарь<КлючПлеера>(ТЕКСТЫ_ПЛЕЕРА);
+const СЛОВАРЬ = создатьСловарь<КлючПлеера>(ТЕКСТЫ_ПЛЕЕРА, 'components/quran/PlayerBar');
 const ВЕБ = Platform.OS === 'web';
 
 /** Следующий вариант повтора аята по кругу: ×1 → ×3 → ×5 → ×1. */
@@ -306,7 +306,7 @@ export function СтрокаБезЗвука() {
 const стили = StyleSheet.create({
   панель: { borderTopWidth: 1, paddingTop: 4, paddingBottom: 4 },
   шапка: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 52 },
-  название: { flex: 1, minWidth: 0, minHeight: 48, justifyContent: 'center', paddingRight: 4 },
+  название: { flex: 1, minWidth: 0, minHeight: 48, justifyContent: 'center', paddingEnd: 4 },
   ряд: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: 2 },
   сПодписью: { alignItems: 'center', gap: 2 },
   подпись: { fontSize: 12, lineHeight: 14 },

@@ -28,7 +28,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import hadith_common as х  # noqa: E402
 
-ССЫЛКА = re.compile(r'^https://hadeethenc\.com/(ar|ru|en|uz)/browse/hadith/(\d+)$')
+ССЫЛКА = re.compile(r'^https://hadeethenc\.com/(ar|ru|en|uz|tr|id|ur)/browse/hadith/(\d+)$')
 ОБЯЗАТЕЛЬНЫЕ_RU = ('title', 'hadeeth', 'explanation', 'grade', 'attribution')
 
 
@@ -103,13 +103,13 @@ def проверить(требовать_сырьё=False):
 
     # Заголовки
     заголовки = {}
-    for я in х.ПЕРЕВОДЫ:
+    for я in х.ЯЗЫКИ_ЗАГОЛОВКОВ:
         д = файл_по_записи((индекс.get('заголовки') or {}).get(я), f'заголовки {я}')
         if not д:
             continue
         if д.get('язык') != я:
             ош(f'заголовки {я}', 'не тот язык')
-        ожидаемые = [з['id'] for з in хадисы if я in з.get('языки', [])]
+        ожидаемые = [з['id'] for з in хадисы if я == 'ar' or я in з.get('языки', [])]
         if [с[0] for с in д.get('заголовки', [])] != ожидаемые:
             ош(f'заголовки {я}', 'список id ≠ индексу')
         заголовки[я] = {с[0]: с for с in д.get('заголовки', [])}

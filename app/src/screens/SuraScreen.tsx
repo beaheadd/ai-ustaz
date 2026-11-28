@@ -62,7 +62,7 @@ import { ЛегендаТаджвида } from '../components/quran/TajweedLegen
 import { useНавигация } from '../engine/navigation';
 import { сообщитьОбОшибке } from '../feedback/core';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { основной, создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useИндексСур, useСура, type ЗаписьСуры, type СураКорана } from '../quran/data';
 import { useВидЧтения, type ВидЧтения } from '../quran/readingView';
 import { ШИРИНА_КОЛОНКИ, useТема, useУменьшитьДвижение } from '../theme';
@@ -194,7 +194,7 @@ const СЛОВАРЬ = создатьСловарь({
     закладкаУбрана: 'Bookmark removed',
     закладкаЗдесь: 'Bookmark',
   },
-});
+}, 'screens/SuraScreen');
 
 const ВЕБ = Platform.OS === 'web';
 /** Высота шапки без системной строки. */
@@ -345,7 +345,7 @@ export function Сура({ параметры }: ПропсыЭкрана<'су�
         <МенюВида
           закрыть={() => установитьМеню(false)}
           сура={сура.состояние === 'есть' ? сура.данные : null}
-          естьТранслит={!!суры?.[н - 1]?.транслит[язык]}
+          естьТранслит={!!суры?.[н - 1]?.транслит[основной(язык)]}
         />
       ) : null}
     </View>
@@ -926,7 +926,7 @@ const СтрокаАята = memo(function СтрокаАята({ сура, ая
             </Текст>
           </View>
           {закладка ? (
-            <View testID={id + '-закладка'} style={{ position: 'absolute', top: -2, right: -2 }} {...((ВЕБ ? { role: 'img', 'aria-label': т('закладкаЗдесь') } : {}) as object)}>
+            <View testID={id + '-закладка'} style={{ position: 'absolute', top: -2, end: -2 }} {...((ВЕБ ? { role: 'img', 'aria-label': т('закладкаЗдесь') } : {}) as object)}>
               <Значок имя="закладкаЕсть" размер={16} цвет={цвет.золотоДекор} />
             </View>
           ) : null}

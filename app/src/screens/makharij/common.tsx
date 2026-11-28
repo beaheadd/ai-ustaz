@@ -72,7 +72,7 @@ export const СЛОВАРЬ_МАХРАДЖЕЙ = создатьСловарь({
     обновить: 'Refresh the page',
     нетСверки: 'The makharij file did not pass verification — not shown.',
   },
-});
+}, 'screens/makharij/common');
 
 /** Атрибуты HTML для react-native-web (Text их поддерживает, в типах RN их нет). */
 const АРАБСКИЙ_ВЕБ = (ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object;

@@ -67,7 +67,7 @@ export function расстояниеДоКаабыКм(широта: number, д�
   return 2 * 6371.0088 * Math.asin(Math.min(1, Math.sqrt(a)));
 }
 
-export type ЯзыкКиблы = 'ru' | 'kk' | 'uz' | 'en';
+export type ЯзыкКиблы = import('../i18n/languages').Язык;
 
 const РУМБЫ: Record<ЯзыкКиблы, readonly string[]> = {
   ru: [
@@ -88,6 +88,23 @@ const РУМБЫ: Record<ЯзыкКиблы, readonly string[]> = {
   en: [
     'north', 'north-northeast', 'northeast', 'east-northeast', 'east', 'east-southeast', 'southeast', 'south-southeast',
     'south', 'south-southwest', 'southwest', 'west-southwest', 'west', 'west-northwest', 'northwest', 'north-northwest',
+  ],
+  // ar, tr, id, ur — черновики для редактора-носителя (владелец 28.11.2026)
+  ar: [
+    'الشمال', 'شمال الشمال الشرقي', 'الشمال الشرقي', 'شرق الشمال الشرقي', 'الشرق', 'شرق الجنوب الشرقي', 'الجنوب الشرقي', 'جنوب الجنوب الشرقي',
+    'الجنوب', 'جنوب الجنوب الغربي', 'الجنوب الغربي', 'غرب الجنوب الغربي', 'الغرب', 'غرب الشمال الغربي', 'الشمال الغربي', 'شمال الشمال الغربي',
+  ],
+  tr: [
+    'kuzey', 'kuzey-kuzeydoğu', 'kuzeydoğu', 'doğu-kuzeydoğu', 'doğu', 'doğu-güneydoğu', 'güneydoğu', 'güney-güneydoğu',
+    'güney', 'güney-güneybatı', 'güneybatı', 'batı-güneybatı', 'batı', 'batı-kuzeybatı', 'kuzeybatı', 'kuzey-kuzeybatı',
+  ],
+  id: [
+    'utara', 'utara-timur laut', 'timur laut', 'timur-timur laut', 'timur', 'timur-tenggara', 'tenggara', 'selatan-tenggara',
+    'selatan', 'selatan-barat daya', 'barat daya', 'barat-barat daya', 'barat', 'barat-barat laut', 'barat laut', 'utara-barat laut',
+  ],
+  ur: [
+    'شمال', 'شمال شمال مشرق', 'شمال مشرق', 'مشرق شمال مشرق', 'مشرق', 'مشرق جنوب مشرق', 'جنوب مشرق', 'جنوب جنوب مشرق',
+    'جنوب', 'جنوب جنوب مغرب', 'جنوب مغرب', 'مغرب جنوب مغرب', 'مغرب', 'مغرب شمال مغرب', 'شمال مغرب', 'شمال شمال مغرب',
   ],
 };
 

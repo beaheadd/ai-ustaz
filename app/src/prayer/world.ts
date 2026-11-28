@@ -23,7 +23,7 @@
  */
 import type { Место } from './places';
 
-type Язык = 'ru' | 'kk' | 'uz' | 'en';
+type Язык = import('../i18n/languages').Язык;
 
 export type ИндексМира = {
   страны: [string, string][];
@@ -239,8 +239,8 @@ export function склонениеВТочке(индекс: Pick<ИндексМ
 }
 
 const СВОИ_СТРАНЫ: Record<string, Record<Язык, string>> = {
-  KZ: { ru: 'Казахстан', kk: 'Қазақстан', uz: 'Qozogʻiston', en: 'Kazakhstan' },
-  UZ: { ru: 'Узбекистан', kk: 'Өзбекстан', uz: 'Oʻzbekiston', en: 'Uzbekistan' },
+  KZ: { ru: 'Казахстан', kk: 'Қазақстан', uz: 'Qozogʻiston', en: 'Kazakhstan', ar: 'كازاخستان', tr: 'Kazakistan', id: 'Kazakhstan', ur: 'قازقستان' },
+  UZ: { ru: 'Узбекистан', kk: 'Өзбекстан', uz: 'Oʻzbekiston', en: 'Uzbekistan', ar: 'أوزبكستان', tr: 'Özbekistan', id: 'Uzbekistan', ur: 'ازبکستان' },
 };
 const имена = new Map<Язык, Intl.DisplayNames | null>();
 
@@ -250,7 +250,7 @@ export function названиеСтраны(код: string, язык: Язык,
     let и: Intl.DisplayNames | null = null;
     try {
       // uz и en — латиница: запасной язык английский (латиница), не русский.
-      const теги = язык === 'uz' ? ['uz-Latn', 'en'] : язык === 'en' ? ['en'] : [язык, 'ru'];
+      const теги = язык === 'uz' ? ['uz-Latn', 'en'] : язык === 'en' ? ['en'] : язык === 'ru' || язык === 'kk' ? [язык, 'ru'] : [язык, 'en'];
       и = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames(теги, { type: 'region' }) : null;
     } catch {
       и = null;

@@ -30,7 +30,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { знак: 'Әріпке белгіні таңдаңыз', проверить: 'Тексеру', собрано: 'Құралған буын' },
   uz: { знак: 'Harf uchun belgini tanlang', проверить: 'Tekshirish', собрано: 'Yigʻilgan boʻgʻin' },
   en: { знак: 'Choose a mark for the letter', проверить: 'Check', собрано: 'Assembled syllable' },
-});
+}, 'components/exercises/BuildSyllable');
 
 export function СобериСлог({ задание, приГотово }: СвойстваУпражнения<ЗаданиеВыбор>) {
   const { язык } = useПеревод();

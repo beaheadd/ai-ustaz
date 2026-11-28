@@ -21,6 +21,7 @@ export const en: Record<КлючСтроки, string> = {
   'общее.загрузка': 'Loading…',
   'общее.вРазработке': 'This screen is in development.',
   'общее.нетСвязи': 'No connection — it did not load. Check your internet and tap “Retry”.',
+  'перевод.готовится': 'A translation into your language is being prepared — for now the text is in English.',
   'общее.повторить': 'Retry',
 
   'язык.заголовок': 'Language',
@@ -28,6 +29,10 @@ export const en: Record<КлючСтроки, string> = {
   'язык.kk': 'Қазақша',
   'язык.uz': 'Oʻzbekcha',
   'язык.en': 'English',
+  'язык.ar': 'العربية',
+  'язык.tr': 'Türkçe',
+  'язык.id': 'Bahasa Indonesia',
+  'язык.ur': 'اردو',
 
   'плашка.урок': 'Prototype. Draft lesson — under review by an ustaz',
   'плашка.общая': 'Prototype: no AI voice check yet',
@@ -104,7 +109,7 @@ export const en: Record<КлючСтроки, string> = {
 
   'урок.неНайден': 'Lesson not found.',
 
-  'оПроекте.казахский': 'The Kazakh, Uzbek and English texts are a draft for a native-speaker editor.',
+  'оПроекте.казахский': 'The Kazakh, Uzbek, English, Arabic, Turkish, Indonesian and Urdu texts are a draft for a native-speaker editor.',
   'оПроекте.версияКонтента': 'Lesson version: {версия} ({статус})',
   'оПроекте.удалитьДанные': 'Delete my progress on this device',
   'оПроекте.данныеУдалены': 'Progress on this device has been deleted.',

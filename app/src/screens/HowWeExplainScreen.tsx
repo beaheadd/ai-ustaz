@@ -109,7 +109,7 @@ const СЛОВАРЬ = создатьСловарь({
     'статус.проверен-устазом': 'reviewed by an ustaz',
     'статус.подписан-советом': 'signed off by the council',
   },
-});
+}, 'screens/HowWeExplainScreen');
 
 export function КакОбъясняем(_: ПропсыЭкрана<'какОбъясняем'>) {
   const { t } = useПеревод();

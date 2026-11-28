@@ -237,7 +237,7 @@ const СЛОВАРЬ = создатьСловарь({
     официальноПриватность: 'Only the place from the app list and the year go to our server — your coordinates are not sent.',
     официальноЗапас: "Offline, on batr.kz and with the Shafi'i Asr, the app calculates the times itself by the same method.",
   },
-});
+}, 'screens/PrayerTimesScreen');
 
 const ДНЕЙ = 8;
 
@@ -248,14 +248,19 @@ const ИМЕНА_ПОПРАВОК: Record<Язык, Record<string, string>> = {
   kk: { fajr: 'таң', sunrise: 'күн шығуы', dhuhr: 'бесін', asr: 'екінті', maghrib: 'ақшам', isha: 'құптан' },
   uz: { fajr: 'bomdod', sunrise: 'quyosh chiqishi', dhuhr: 'peshin', asr: 'asr', maghrib: 'shom', isha: 'xufton' },
   en: { fajr: 'Fajr', sunrise: 'sunrise', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' },
+  ar: { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' },
+  tr: { fajr: 'imsak', sunrise: 'güneş', dhuhr: 'öğle', asr: 'ikindi', maghrib: 'akşam', isha: 'yatsı' },
+  id: { fajr: 'Subuh', sunrise: 'terbit', dhuhr: 'Zuhur', asr: 'Asar', maghrib: 'Magrib', isha: 'Isya' },
+  ur: { fajr: 'فجر', sunrise: 'طلوع آفتاب', dhuhr: 'ظہر', asr: 'عصر', maghrib: 'مغرب', isha: 'عشاء' },
 };
+const МИН: Record<Язык, string> = { ru: 'мин', kk: 'мин', uz: 'daq.', en: 'min', ar: 'د', tr: 'dk', id: 'mnt', ur: 'منٹ' };
 
 /** Текст «как считаем» для страны не РК — из таблицы метода (prayer/methods.ts), без ручных абзацев на страну. */
 function описаниеМетода(метод: Метод, мазхаб: Мазхаб, страна: string, язык: Язык, т: ТСловаря, широта: number): string {
   const п = поправкиМетода(метод, широта);
   const список = Object.entries(п)
     .filter(([, мин]) => мин !== 0)
-    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} ${язык === 'uz' ? 'daq.' : язык === 'en' ? 'min' : 'мин'}`)
+    .map(([к, мин]) => `${ИМЕНА_ПОПРАВОК[язык][к]} ${мин > 0 ? '+' : '−'}${Math.abs(мин)} ${МИН[язык]}`)
     .join(', ');
   const иша = typeof метод.иша === 'number' ? т('ишаУгол', { угол: String(метод.иша).replace('.', ',') }) : т('ишаМинуты', { минут: метод.иша.минут });
   return т('общий1', {
@@ -425,12 +430,12 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
     const основа = Math.max(мин, Math.ceil((слова[к] ?? 0) + 2));
     return { flexGrow: 1, flexShrink: 1, flexBasis: основа, minWidth: мин, alignItems: 'center' as const, justifyContent: 'center' as const, paddingVertical: отступ.s };
   };
-  const деньСтолбец = { width: узко ? 26 : 30, paddingLeft: отступ.xs, justifyContent: 'center' as const, paddingVertical: отступ.s };
+  const деньСтолбец = { width: узко ? 26 : 30, paddingStart: отступ.xs, justifyContent: 'center' as const, paddingVertical: отступ.s };
 
   return (
     <View
       role="table"
-      aria-label={{ ru: 'Время намаза на неделю', kk: 'Аптаға арналған намаз уақыты', uz: 'Bir haftalik namoz vaqti', en: 'Prayer times for the week' }[язык]}
+      aria-label={{ ru: 'Время намаза на неделю', kk: 'Аптаға арналған намаз уақыты', uz: 'Bir haftalik namoz vaqti', en: 'Prayer times for the week', ar: 'مواقيت الصلاة للأسبوع', tr: 'Haftalık namaz vakitleri', id: 'Jadwal salat sepekan', ur: 'ہفتے کے نماز کے اوقات' }[язык]}
       testID="намаз-неделя"
       style={{ borderRadius: радиус.l, borderWidth: 1, borderColor: цвет.граница, backgroundColor: цвет.поверхность, overflow: 'hidden' }}
     >
@@ -452,7 +457,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
         ))}
       </View>
       <View role="row" style={{ flexDirection: 'row', backgroundColor: цвет.поверхностьВторая }}>
-        <View role="columnheader" aria-label={{ ru: 'День', kk: 'Күн', uz: 'Kun', en: 'Day' }[язык]} style={деньСтолбец} />
+        <View role="columnheader" aria-label={{ ru: 'День', kk: 'Күн', uz: 'Kun', en: 'Day', ar: 'اليوم', tr: 'Gün', id: 'Hari', ur: 'دن' }[язык]} style={деньСтолбец} />
         {КЛЮЧИ_ВРЕМЁН.map((к) => (
           <View key={к} role="columnheader" style={[столбец(к), { gap: 2, paddingHorizontal: 1 }]}>
             {узко ? null : <Значок имя={ЗНАЧКИ_НАМАЗА[к]} размер={16} цвет={к === 'sunrise' ? цвет.текстВторой : цвет.акцент} />}

@@ -164,7 +164,7 @@ export function проверитьИндекс(сырые: unknown): Индек�
       id: б.id,
       номер: i + 1,
       знак: б.знак,
-      название: { ru: имена.ru, kk: имена.kk, uz: имена.uz, en: имена.en },
+      название: { ru: имена.ru, kk: имена.kk, uz: имена.uz, en: имена.en, ...(ИМЕНА_БУКВ_НОВЫЕ[б.id] ?? { ar: б.знак, tr: имена.en, id: имена.en, ur: б.знак }) },
     };
     if (б.состав !== undefined) {
       if (!Array.isArray(б.состав) || !б.состав.every(строка)) return null;
@@ -219,12 +219,50 @@ export function адресСхемы(файл: string): string {
   return `${базаСборки()}/makharij/${файл}`;
 }
 
-/** Текст махраджа на языке интерфейса: kk — казахский, ru/uz/en — русский (uz и en в данных пока нет). */
+/**
+ * Названия букв для ar, tr, id, ur (владелец 28.11.2026; черновик для редактора-носителя): ar — арабские названия букв,
+ * tr — названия турецкого «elifba», id — как в индонезийских букварях (Iqro'), ur — урдуские названия арабских букв.
+ * Описания махраджей на этих языках нет — показывается русский текст с пометкой (поРусски).
+ */
+const ИМЕНА_БУКВ_НОВЫЕ: Record<string, { ar: string; tr: string; id: string; ur: string }> = {
+  alif: { ar: 'ألف', tr: 'Elif', id: 'Alif', ur: 'الف' },
+  hamza: { ar: 'همزة', tr: 'Hemze', id: 'Hamzah', ur: 'ہمزہ' },
+  ha: { ar: 'هاء', tr: 'He', id: 'Ha', ur: 'ہا' },
+  ain: { ar: 'عين', tr: 'Ayn', id: "'Ain", ur: 'عین' },
+  hha: { ar: 'حاء', tr: 'Ha', id: 'Ḥa', ur: 'حا' },
+  ghain: { ar: 'غين', tr: 'Gayn', id: 'Ghain', ur: 'غین' },
+  kha: { ar: 'خاء', tr: 'Hı', id: 'Kha', ur: 'خا' },
+  qaf: { ar: 'قاف', tr: 'Kaf', id: 'Qaf', ur: 'قاف' },
+  kaf: { ar: 'كاف', tr: 'Kef', id: 'Kaf', ur: 'کاف' },
+  jim: { ar: 'جيم', tr: 'Cim', id: 'Jim', ur: 'جیم' },
+  shin: { ar: 'شين', tr: 'Şın', id: 'Syin', ur: 'شین' },
+  ya: { ar: 'ياء', tr: 'Ye', id: 'Ya', ur: 'یا' },
+  dad: { ar: 'ضاد', tr: 'Dad', id: 'Ḍad', ur: 'ضاد' },
+  lam: { ar: 'لام', tr: 'Lam', id: 'Lam', ur: 'لام' },
+  nun: { ar: 'نون', tr: 'Nun', id: 'Nun', ur: 'نون' },
+  ra: { ar: 'راء', tr: 'Ra', id: 'Ra', ur: 'را' },
+  tta: { ar: 'طاء', tr: 'Tı', id: 'Ṭa', ur: 'طا' },
+  dal: { ar: 'دال', tr: 'Dal', id: 'Dal', ur: 'دال' },
+  ta: { ar: 'تاء', tr: 'Te', id: 'Ta', ur: 'تا' },
+  sad: { ar: 'صاد', tr: 'Sad', id: 'Ṣad', ur: 'صاد' },
+  sin: { ar: 'سين', tr: 'Sin', id: 'Sin', ur: 'سین' },
+  zay: { ar: 'زاي', tr: 'Ze', id: 'Zai', ur: 'زا' },
+  zza: { ar: 'ظاء', tr: 'Zı', id: 'Ẓa', ur: 'ظا' },
+  dhal: { ar: 'ذال', tr: 'Zel', id: 'Dzal', ur: 'ذال' },
+  tha: { ar: 'ثاء', tr: 'Se', id: 'Tsa', ur: 'ثا' },
+  fa: { ar: 'فاء', tr: 'Fe', id: 'Fa', ur: 'فا' },
+  ba: { ar: 'باء', tr: 'Be', id: 'Ba', ur: 'با' },
+  mim: { ar: 'ميم', tr: 'Mim', id: 'Mim', ur: 'میم' },
+  waw: { ar: 'واو', tr: 'Vav', id: 'Wau', ur: 'واؤ' },
+  'lam-alif': { ar: 'لام ألف', tr: 'Lamelif', id: 'Lam alif', ur: 'لام الف' },
+};
+
+/** Текст махраджа на языке интерфейса: kk — казахский, остальные — русский (uz, en, ar, tr, id, ur в данных пока нет). */
 export function текстМахраджа(т: ТекстыМахраджа, язык: Язык): string {
   return язык === 'kk' ? т.kk : т.ru;
 }
 
 /** Показан ли русский текст вместо языка интерфейса (uz, en) — экран пишет об этом пометку. */
 export function поРусски(язык: Язык): boolean {
-  return язык === 'uz' || язык === 'en';
+  return язык !== 'ru' && язык !== 'kk';
 }

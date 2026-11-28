@@ -64,7 +64,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { след: 'Келесі бет', пред: 'Алдыңғы бет', страница: '604 беттің {н}-беті', джуз: '{н}-пара', загрузка: 'Жүктелуде…' },
   uz: { след: 'Keyingi sahifa', пред: 'Oldingi sahifa', страница: '604 sahifadan {н}-sahifa', джуз: '{н}-pora', загрузка: 'Yuklanmoqda…' },
   en: { след: 'Next page', пред: 'Previous page', страница: 'Page {н} of 604', джуз: 'Juz {н}', загрузка: 'Loading…' },
-});
+}, 'screens/quran/MushafPages');
 
 const ВЕБ = Platform.OS === 'web';
 const СТРАНИЦ = 604;

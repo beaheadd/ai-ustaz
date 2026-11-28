@@ -22,7 +22,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { видХоста } from '../install/platform';
 import { АДРЕС_SW, ОБЛАСТЬ_SW } from '../notify/push';
 
-export type ГруппаОфлайн = 'коран' | 'зикры' | 'махраджи' | 'хадисы' | 'намаз' | 'учимсяНамазу';
+/** хадисы-tr/-id/-ur — переводы хадисов на эти языки (владелец 28.11.2026), отдельно от основы «хадисы». */
+export type ГруппаОфлайн = 'коран' | 'зикры' | 'махраджи' | 'хадисы' | 'хадисы-tr' | 'хадисы-id' | 'хадисы-ur' | 'намаз' | 'учимсяНамазу';
 export type ИтогГруппы = { есть: number; всего: number; байт: number };
 export type СостояниеОфлайн = { группы: Partial<Record<ГруппаОфлайн, ИтогГруппы>>; оболочка: boolean };
 

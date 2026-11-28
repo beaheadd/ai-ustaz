@@ -98,7 +98,7 @@ const СЛОВАРЬ = создатьСловарь({
     слова: 'Word highlighting',
     словаПодпись: 'The word the reciter is reading, in yellow (reciters with word timing)',
   },
-});
+}, 'components/quran/ReadingViewPicker');
 
 export function ПереключательВидаЧтения() {
   const т = useСловарь(СЛОВАРЬ);

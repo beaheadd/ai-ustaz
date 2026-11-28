@@ -18,6 +18,7 @@ export { ПанельЗаписи, type СвойстваПанелиЗаписи
 export { НижнееМеню, ВЫСОТА_МЕНЮ } from './BottomNav';
 export { Экран, useПрокрутка, прокрутитьЭкранВверх, type СвойстваЭкрана } from './Screen';
 export { Вкладки, type Вкладка, type СвойстваВкладок } from './Tabs';
+export { ПереводГотовится } from './TranslationPending';
 export { Текст, стильТекста, type ВидТекста, type СвойстваТекста } from './Text';
 export { ПереключательТемы } from './ThemeSwitch';
 export { СтрокаПереключателя, type СвойстваСтрокиПереключателя } from './Switch';

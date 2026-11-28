@@ -17,13 +17,14 @@
  */
 
 export type Мазхаб = 'hanafi' | 'shafi';
+type Язык = import('../i18n/languages').Язык;
 type Ключ = 'fajr' | 'sunrise' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
 export type ПравилоШирот = 'twilightAngle' | 'seventh' | 'middle' | 'recommended';
 
 export type Метод = {
   id: string;
   /** Ведомство — для подписи «Расчёт по методу {ведомство}». kk, uz и en — черновики для редактора-носителя. */
-  ведомство: { ru: string; kk: string; uz: string; en: string };
+  ведомство: Record<Язык, string>;
   фаджр: number;
   /** Угол иши, ° или минуты после магриба (Умм аль-Кура, Катар). */
   иша: number | { минут: number };
@@ -55,7 +56,7 @@ export const МЕТОДЫ = {
   // Казахстан: ДУМК (muftyat.kz) — исходник praytimes.js и сверка с api.muftyat.kz за 2026 г. (исследование 13).
   dumk: {
     id: 'dumk',
-    ведомство: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB', en: 'SAMK' },
+    ведомство: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB', en: 'SAMK', ar: 'الإدارة الدينية لمسلمي كازاخستان', tr: 'Kazakistan Müslümanları Dini İdaresi', id: 'Dewan Agama Muslim Kazakhstan', ur: 'قازقستان کے مسلمانوں کی دینی انتظامیہ' },
     фаджр: 15,
     иша: 15,
     поправки: 'думк',
@@ -72,7 +73,7 @@ export const МЕТОДЫ = {
   // точке региона УМУз; здесь — запасной расчёт по нашей точке (владелец 20.11.2026).
   umuz: {
     id: 'umuz',
-    ведомство: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасы', uz: 'Oʻzbekiston musulmonlari idorasi', en: 'Muslim Board of Uzbekistan' },
+    ведомство: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасы', uz: 'Oʻzbekiston musulmonlari idorasi', en: 'Muslim Board of Uzbekistan', ar: 'إدارة مسلمي أوزبكستان', tr: 'Özbekistan Müslümanları İdaresi', id: 'Dewan Muslim Uzbekistan', ur: 'ازبکستان کے مسلمانوں کی انتظامیہ' },
     фаджр: 15.5,
     иша: 15.5,
     поправки: { maghrib: 4 },
@@ -84,7 +85,7 @@ export const МЕТОДЫ = {
   // (ДУМК и УМУз сходятся: 15°/15°, ханафитский аср), без поправок-ихтията.
   ca15: {
     id: 'ca15',
-    ведомство: { ru: 'стандарту Центральной Азии (15°/15°)', kk: 'Орталық Азия стандарты (15°/15°)', uz: 'Markaziy Osiyo standarti (15°/15°)', en: 'Central Asian standard (15°/15°)' },
+    ведомство: { ru: 'стандарту Центральной Азии (15°/15°)', kk: 'Орталық Азия стандарты (15°/15°)', uz: 'Markaziy Osiyo standarti (15°/15°)', en: 'Central Asian standard (15°/15°)', ar: 'آسيا الوسطى (15°/15°)', tr: 'Orta Asya (15°/15°)', id: 'Asia Tengah (15°/15°)', ur: 'وسطی ایشیا (15°/15°)' },
     фаджр: 15,
     иша: 15,
     поправки: {},
@@ -96,7 +97,7 @@ export const МЕТОДЫ = {
   // (ДУМ РТ) публикует свои таблицы — отдельный профиль, когда сверим.
   dumrf: {
     id: 'dumrf',
-    ведомство: { ru: 'ДУМ РФ', kk: 'РФ МДБ', uz: 'RF MDB', en: 'DUM RF (Russia)' },
+    ведомство: { ru: 'ДУМ РФ', kk: 'РФ МДБ', uz: 'RF MDB', en: 'DUM RF (Russia)', ar: 'الإدارة الدينية لمسلمي روسيا', tr: 'Rusya Müslümanları Dini İdaresi', id: 'Dewan Agama Muslim Rusia', ur: 'روس کے مسلمانوں کی دینی انتظامیہ' },
     фаджр: 16,
     иша: 15,
     поправки: {},
@@ -107,7 +108,7 @@ export const МЕТОДЫ = {
   // Турция: Диянет — adhan CalculationMethod.Turkey (18°/17°, поправки −7/+5/+4/+7). Стамбул 01.11.2026 — ≤ 1 мин.
   diyanet: {
     id: 'diyanet',
-    ведомство: { ru: 'Диянет (Турция)', kk: 'Диянет (Түркия)', uz: 'Diyanet (Turkiya)', en: 'Diyanet (Turkey)' },
+    ведомство: { ru: 'Диянет (Турция)', kk: 'Диянет (Түркия)', uz: 'Diyanet (Turkiya)', en: 'Diyanet (Turkey)', ar: 'رئاسة الشؤون الدينية (تركيا)', tr: 'Diyanet İşleri Başkanlığı', id: 'Diyanet (Turki)', ur: 'دیانت (ترکی)' },
     фаджр: 18,
     иша: 17,
     поправки: { sunrise: -7, dhuhr: 5, asr: 4, maghrib: 7 },
@@ -120,7 +121,7 @@ export const МЕТОДЫ = {
   // (В Рамадан ведомство ставит 120 мин — пока не учитываем: нужен календарь хиджры.)
   ummalqura: {
     id: 'ummalqura',
-    ведомство: { ru: 'Умм аль-Кура', kk: 'Умм әл-Құра', uz: 'Ummul-Quro', en: 'Umm al-Qura' },
+    ведомство: { ru: 'Умм аль-Кура', kk: 'Умм әл-Құра', uz: 'Ummul-Quro', en: 'Umm al-Qura', ar: 'تقويم أم القرى', tr: 'Ümmülkurâ', id: 'Umm al-Qura', ur: 'ام القریٰ' },
     фаджр: 18.5,
     иша: { минут: 90 },
     поправки: {},
@@ -132,7 +133,7 @@ export const МЕТОДЫ = {
   // Египет: Главное управление по геодезии — 19,5°/17,5° (adhan Egyptian). Каир 01.11.2026: зухр +2, остальное ≤ 0.
   egypt: {
     id: 'egypt',
-    ведомство: { ru: 'Египетского управления геодезии', kk: 'Мысыр геодезия басқармасы', uz: 'Misr geodeziya boshqarmasi', en: 'Egyptian General Authority of Survey' },
+    ведомство: { ru: 'Египетского управления геодезии', kk: 'Мысыр геодезия басқармасы', uz: 'Misr geodeziya boshqarmasi', en: 'Egyptian General Authority of Survey', ar: 'الهيئة المصرية العامة للمساحة', tr: 'Mısır Genel Ölçme Kurumu', id: 'Otoritas Survei Umum Mesir', ur: 'مصری جنرل اتھارٹی برائے سروے' },
     фаджр: 19.5,
     иша: 17.5,
     поправки: { dhuhr: 1 },
@@ -144,7 +145,7 @@ export const МЕТОДЫ = {
   // Пакистан, Индия, Бангладеш, Афганистан: Университет исламских наук, Карачи — 18°/18° (adhan Karachi).
   karachi: {
     id: 'karachi',
-    ведомство: { ru: 'Университета исламских наук (Карачи)', kk: 'Карачи ислам ғылымдары университеті', uz: 'Islom fanlari universiteti (Karachi)', en: 'University of Islamic Sciences (Karachi)' },
+    ведомство: { ru: 'Университета исламских наук (Карачи)', kk: 'Карачи ислам ғылымдары университеті', uz: 'Islom fanlari universiteti (Karachi)', en: 'University of Islamic Sciences (Karachi)', ar: 'جامعة العلوم الإسلامية (كراتشي)', tr: 'Karaçi İslami İlimler Üniversitesi', id: 'Universitas Ilmu-Ilmu Islam (Karachi)', ur: 'جامعۃ العلوم الاسلامیہ (کراچی)' },
     фаджр: 18,
     иша: 18,
     поправки: { dhuhr: 1 },
@@ -155,7 +156,7 @@ export const МЕТОДЫ = {
   // ОАЭ: 18,2°/18,2°, поправки −3/+3/+3/+3 (adhan Dubai).
   dubai: {
     id: 'dubai',
-    ведомство: { ru: 'ОАЭ (Дубай)', kk: 'БАӘ (Дубай)', uz: 'BAA (Dubay)', en: 'UAE (Dubai)' },
+    ведомство: { ru: 'ОАЭ (Дубай)', kk: 'БАӘ (Дубай)', uz: 'BAA (Dubay)', en: 'UAE (Dubai)', ar: 'الإمارات (دبي)', tr: 'BAE (Dubai)', id: 'UEA (Dubai)', ur: 'متحدہ عرب امارات (دبئی)' },
     фаджр: 18.2,
     иша: 18.2,
     поправки: { sunrise: -3, dhuhr: 3, asr: 3, maghrib: 3 },
@@ -166,7 +167,7 @@ export const МЕТОДЫ = {
   // Кувейт: 18°/17,5° (adhan Kuwait).
   kuwait: {
     id: 'kuwait',
-    ведомство: { ru: 'Кувейта', kk: 'Кувейт', uz: 'Quvayt', en: 'Kuwait' },
+    ведомство: { ru: 'Кувейта', kk: 'Кувейт', uz: 'Quvayt', en: 'Kuwait', ar: 'الكويت', tr: 'Kuveyt', id: 'Kuwait', ur: 'کویت' },
     фаджр: 18,
     иша: 17.5,
     поправки: {},
@@ -177,7 +178,7 @@ export const МЕТОДЫ = {
   // Катар: 18°, иша через 90 мин (adhan Qatar).
   qatar: {
     id: 'qatar',
-    ведомство: { ru: 'Катара', kk: 'Катар', uz: 'Qatar', en: 'Qatar' },
+    ведомство: { ru: 'Катара', kk: 'Катар', uz: 'Qatar', en: 'Qatar', ar: 'قطر', tr: 'Katar', id: 'Qatar', ur: 'قطر' },
     фаджр: 18,
     иша: { минут: 90 },
     поправки: {},
@@ -188,7 +189,7 @@ export const МЕТОДЫ = {
   // Бахрейн, Оман: «регион Залива» — 19,5°, иша через 90 мин (справочник aladhan.com, метод 8; не сверено).
   gulf: {
     id: 'gulf',
-    ведомство: { ru: 'стандарту стран Залива', kk: 'Парсы шығанағы елдері стандарты', uz: 'Fors koʻrfazi davlatlari standarti', en: 'Gulf states standard' },
+    ведомство: { ru: 'стандарту стран Залива', kk: 'Парсы шығанағы елдері стандарты', uz: 'Fors koʻrfazi davlatlari standarti', en: 'Gulf states standard', ar: 'دول الخليج', tr: 'Körfez ülkeleri', id: 'negara-negara Teluk', ur: 'خلیجی ممالک' },
     фаджр: 19.5,
     иша: { минут: 90 },
     поправки: {},
@@ -200,7 +201,7 @@ export const МЕТОДЫ = {
   // +3 фаджр, +3 зухр, +2 аср/магриб/иша — ≤ 1 мин (прежние 20° дают фаджр на 11 мин раньше таблицы).
   jakim: {
     id: 'jakim',
-    ведомство: { ru: 'JAKIM (Малайзия)', kk: 'JAKIM (Малайзия)', uz: 'JAKIM (Malayziya)', en: 'JAKIM (Malaysia)' },
+    ведомство: { ru: 'JAKIM (Малайзия)', kk: 'JAKIM (Малайзия)', uz: 'JAKIM (Malayziya)', en: 'JAKIM (Malaysia)', ar: 'JAKIM (ماليزيا)', tr: 'JAKIM (Malezya)', id: 'JAKIM (Malaysia)', ur: 'JAKIM (ملائیشیا)' },
     фаджр: 18,
     иша: 18,
     поправки: { fajr: 3, dhuhr: 3, asr: 2, maghrib: 2, isha: 2 },
@@ -212,7 +213,7 @@ export const МЕТОДЫ = {
   // Сингапур, Бруней, Индонезия: MUIS — 20°/18°, зухр +1 (adhan Singapore; для Индонезии — оценка: KEMENAG тоже 20°/18°).
   muis: {
     id: 'muis',
-    ведомство: { ru: 'MUIS (Сингапур)', kk: 'MUIS (Сингапур)', uz: 'MUIS (Singapur)', en: 'MUIS (Singapore)' },
+    ведомство: { ru: 'MUIS (Сингапур)', kk: 'MUIS (Сингапур)', uz: 'MUIS (Singapur)', en: 'MUIS (Singapore)', ar: 'MUIS (سنغافورة)', tr: 'MUIS (Singapur)', id: 'MUIS (Singapura)', ur: 'MUIS (سنگاپور)' },
     фаджр: 20,
     иша: 18,
     поправки: { dhuhr: 1 },
@@ -223,7 +224,7 @@ export const МЕТОДЫ = {
   // США, Канада: ISNA — 15°/15° (adhan NorthAmerica).
   isna: {
     id: 'isna',
-    ведомство: { ru: 'ISNA (Северная Америка)', kk: 'ISNA (Солтүстік Америка)', uz: 'ISNA (Shimoliy Amerika)', en: 'ISNA (North America)' },
+    ведомство: { ru: 'ISNA (Северная Америка)', kk: 'ISNA (Солтүстік Америка)', uz: 'ISNA (Shimoliy Amerika)', en: 'ISNA (North America)', ar: 'ISNA (أمريكا الشمالية)', tr: 'ISNA (Kuzey Amerika)', id: 'ISNA (Amerika Utara)', ur: 'ISNA (شمالی امریکہ)' },
     фаджр: 15,
     иша: 15,
     поправки: { dhuhr: 1 },
@@ -234,7 +235,7 @@ export const МЕТОДЫ = {
   // Иран: Институт геофизики Тегеранского университета — 17,7°/14°, магриб — 4,5° (adhan Tehran).
   tehran: {
     id: 'tehran',
-    ведомство: { ru: 'Института геофизики (Тегеран)', kk: 'Геофизика институты (Тегеран)', uz: 'Geofizika instituti (Tehron)', en: 'Institute of Geophysics (Tehran)' },
+    ведомство: { ru: 'Института геофизики (Тегеран)', kk: 'Геофизика институты (Тегеран)', uz: 'Geofizika instituti (Tehron)', en: 'Institute of Geophysics (Tehran)', ar: 'معهد الجيوفيزياء (طهران)', tr: 'Jeofizik Enstitüsü (Tahran)', id: 'Institut Geofisika (Teheran)', ur: 'انسٹی ٹیوٹ آف جیوفزکس (تہران)' },
     фаджр: 17.7,
     иша: 14,
     магрибУгол: 4.5,
@@ -246,7 +247,7 @@ export const МЕТОДЫ = {
   // Остальной мир, в т. ч. Европа: Всемирная исламская лига — 18°/17°.
   mwl: {
     id: 'mwl',
-    ведомство: { ru: 'Всемирной исламской лиги (MWL)', kk: 'Дүниежүзілік ислам лигасы (MWL)', uz: 'Butunjahon islom ligasi (MWL)', en: 'Muslim World League (MWL)' },
+    ведомство: { ru: 'Всемирной исламской лиги (MWL)', kk: 'Дүниежүзілік ислам лигасы (MWL)', uz: 'Butunjahon islom ligasi (MWL)', en: 'Muslim World League (MWL)', ar: 'رابطة العالم الإسلامي (MWL)', tr: 'Dünya İslam Birliği (MWL)', id: 'Liga Muslim Dunia (MWL)', ur: 'رابطہ عالم اسلامی (MWL)' },
     фаджр: 18,
     иша: 17,
     поправки: { dhuhr: 1 },
@@ -302,32 +303,63 @@ export function поправкиМетода(метод: Метод, широт�
  * (уточняется)», «Расчёт по стандарту Центральной Азии (15°/15°)». Аср — отдельной меткой подписьАсра (её карточка
  * показывает всегда, владелец 28.11.2026: выбор асра — на первом экране и на главной). kk — черновик для редактора.
  */
-export function подписьМетода(метод: Метод, язык: 'ru' | 'kk' | 'uz' | 'en'): string {
+export function подписьМетода(метод: Метод, язык: Язык, { кратко = false }: { кратко?: boolean } = {}): string {
+  // Владелец 28.11.2026: в интерфейсе нейтрально, без акцента на Казахстан и ДУМК — на главной, в первом входе и в
+  // карточке ведомство страны не называем («по официальному ведомству вашей страны»); полное имя — «Как считаем».
+  const официальное = кратко && (метод.id === 'dumk' || метод.id === 'umuz');
   const в = метод.ведомство[язык];
-  const стандарт = в.startsWith('стандарт') || в.includes('стандарты') || в.includes('standarti') || в.includes('standard');
+  const стандарт = метод.ведомство.ru.startsWith('стандарт');
+  const мин = { ru: 'мин', kk: 'мин', uz: 'daq.', en: 'min', ar: 'د', tr: 'dk', id: 'mnt', ur: 'منٹ' }[язык];
   const хвост =
     метод.статус === 'сверено' && метод.точность
-      ? ` (±${метод.точность} ${язык === 'uz' ? 'daq.' : язык === 'en' ? 'min' : 'мин'})`
+      ? ` (±${метод.точность} ${мин})`
       : метод.статус === 'оценка'
-        ? { ru: ' (уточняется)', kk: ' (нақтыланады)', uz: ' (aniqlanmoqda)', en: ' (being refined)' }[язык]
+        ? { ru: ' (уточняется)', kk: ' (нақтыланады)', uz: ' (aniqlanmoqda)', en: ' (being refined)', ar: ' (قيد التدقيق)', tr: ' (netleştiriliyor)', id: ' (sedang disempurnakan)', ur: ' (زیرِ تصحیح)' }[язык]
         : '';
-  const основа =
-    язык === 'kk'
-      ? `${в} ${стандарт ? 'бойынша' : 'әдісімен'} есептелді${хвост}`
-      : язык === 'uz'
-        ? `${в} ${стандарт ? 'boʻyicha' : 'usuli boʻyicha'} hisoblangan${хвост}`
-        : язык === 'en'
-          ? `Calculated by the ${в}${стандарт ? '' : ' method'}${хвост}`
-          : `Расчёт по ${стандарт ? '' : 'методу '}${в}${хвост}`;
-  return основа;
+  if (официальное)
+    return (
+      {
+        ru: 'Расчёт по официальному ведомству вашей страны',
+        kk: 'Еліңіздің ресми діни басқармасы бойынша есептелді',
+        uz: 'Mamlakatingiz rasmiy idorasi boʻyicha hisoblangan',
+        en: "Calculated per your country's official authority",
+        ar: 'حُسب وفق الجهة الرسمية في بلدك',
+        tr: 'Ülkenizin resmî kurumuna göre hesaplandı',
+        id: 'Dihitung menurut lembaga resmi negara Anda',
+        ur: 'آپ کے ملک کے سرکاری ادارے کے مطابق حساب',
+      }[язык] + хвост
+    );
+  switch (язык) {
+    case 'kk':
+      return `${в} ${стандарт ? 'бойынша' : 'әдісімен'} есептелді${хвост}`;
+    case 'uz':
+      return `${в} ${стандарт ? 'boʻyicha' : 'usuli boʻyicha'} hisoblangan${хвост}`;
+    case 'en':
+      return `Calculated by the ${в}${стандарт ? '' : ' method'}${хвост}`;
+    // ar, tr, id, ur — черновики (владелец 28.11.2026).
+    case 'ar':
+      return `حُسب وفق ${стандарт ? 'معيار' : 'طريقة'} ${в}${хвост}`;
+    case 'tr':
+      return `${в} ${стандарт ? 'standardına' : 'yöntemine'} göre hesaplandı${хвост}`;
+    case 'id':
+      return `Dihitung menurut ${стандарт ? 'standar' : 'metode'} ${в}${хвост}`;
+    case 'ur':
+      return `${в} کے ${стандарт ? 'معیار' : 'طریقے'} کے مطابق حساب${хвост}`;
+    default:
+      return `Расчёт по ${стандарт ? '' : 'методу '}${в}${хвост}`;
+  }
 }
 
 /** Метка асра под временем: «аср: ханафитский» / «аср: шафиитский» (kk, uz, en — черновики). */
-export function подписьАсра(мазхаб: Мазхаб, язык: 'ru' | 'kk' | 'uz' | 'en'): string {
+export function подписьАсра(мазхаб: Мазхаб, язык: Язык): string {
   return {
     ru: мазхаб === 'hanafi' ? 'аср: ханафитский' : 'аср: шафиитский',
     kk: мазхаб === 'hanafi' ? 'екінті: ханафи' : 'екінті: шафиғи',
     uz: мазхаб === 'hanafi' ? 'asr: hanafiy' : 'asr: shofeʼiy',
     en: мазхаб === 'hanafi' ? 'Asr: Hanafi' : "Asr: Shafi'i",
+    ar: мазхаб === 'hanafi' ? 'العصر: حنفي' : 'العصر: شافعي',
+    tr: мазхаб === 'hanafi' ? 'İkindi: Hanefi' : 'İkindi: Şafii',
+    id: мазхаб === 'hanafi' ? 'Asar: Hanafi' : "Asar: Syafi'i",
+    ur: мазхаб === 'hanafi' ? 'عصر: حنفی' : 'عصر: شافعی',
   }[язык];
 }

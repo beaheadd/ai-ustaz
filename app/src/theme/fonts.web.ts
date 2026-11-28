@@ -13,6 +13,11 @@ import { FontDisplay, type FontFamilyDefinition } from 'expo-font';
 export const ШРИФТ_АРАБСКИЙ = 'AmiriQuran';
 export const СЕМЕЙСТВО_ИНТЕРФЕЙСА = 'AiUstazInter';
 export const ШРИФТ_ИНТЕРФЕЙСА = `${СЕМЕЙСТВО_ИНТЕРФЕЙСА}, System`;
+/** Урду (владелец 28.11.2026): системный насталик, затем насх — своих шрифтов не добавляем (бюджет; Noto Nastaliq Urdu
+ * есть в Android 9+ и iOS 11+, Urdu Typesetting — в Windows). Inter первым — латиница и цифры как во всём приложении. */
+export const ШРИФТ_УРДУ = `${СЕМЕЙСТВО_ИНТЕРФЕЙСА}, "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Urdu Typesetting", "Noto Naskh Arabic", "Geeza Pro", Tahoma, System`;
+/** Насталик выше насха: межстрочный ×1,4 к шкале, чтобы надстрочные и подстрочные знаки не обрезались. */
+export const МЕЖСТРОЧНЫЙ_УРДУ = 1.4;
 
 export const ШРИФТЫ_ИНТЕРФЕЙСА: FontFamilyDefinition[] = [
   {

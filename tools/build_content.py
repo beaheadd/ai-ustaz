@@ -48,6 +48,13 @@ import content_uz  # noqa: E402
 НЕТ_EN = []
 
 
+
+# ИИ-предупреждение QML на tr, id, ur (владелец 28.11.2026) — наш перевод официального английского NOTICE, ЧЕРНОВИК для
+# переводчика-носителя; все 4 элемента (ИИ, может ошибаться, только помощь, не заменяет учителя — мушафаха) сохранены.
+ПРЕДУПРЕЖДЕНИЕ_TR = "Bu Kur'an öğretmeni, hata yapabilen bir yapay zekâ modelidir. Yalnızca yardım amaçlıdır ve ona güvenilmemelidir. Yetkin ve icazetli bir öğretmenin yerini tutmaz; çünkü Kur'an yalnızca ağızdan ağıza (müşâfehe) alınır."
+ПРЕДУПРЕЖДЕНИЕ_ID = "Guru Al-Qur'an ini adalah model kecerdasan buatan yang bisa keliru. Ia hanya dimaksudkan sebagai bantuan dan tidak boleh dijadikan sandaran. Ia bukan pengganti guru yang mahir dan berwenang (berijazah), karena Al-Qur'an hanya diterima melalui lisan secara langsung (musyafahah)."
+ПРЕДУПРЕЖДЕНИЕ_UR = 'یہ قرآنی معلّم مصنوعی ذہانت کا ایک ماڈل ہے جو غلطی کر سکتا ہے۔ یہ صرف مدد کے لیے ہے اور اس پر بھروسا نہیں کیا جانا چاہیے۔ یہ کسی ماہر اور مجاز استاد کا متبادل نہیں، کیونکہ قرآن صرف زبانی روایت (مشافہہ) ہی سے حاصل کیا جاتا ہے۔'
+
 def т(ru, kk, uz=None, en=None):
     """Локализованный текст {ru, kk, uz, en}. uz/en не переданы — из таблиц content_uz/content_en.ПЕРЕВОД по русской
     строке."""
@@ -912,8 +919,12 @@ def собрать_урок0():
         'предупреждениеИИ': {
             'id': 'qml-notice', 'версия': '2026-11-18', 'ar': ar, 'ru': ru, 'kk': kk,
             'uz': перевод_uz(ru), 'en': en,
+            # Владелец 28.11.2026: языки ar, tr, id, ur. ar — официальный текст выше (для ar показывается только он);
+            # tr, id, ur — наш перевод с английского официального текста, черновик (docs/программа-курса.md §5.1).
+            # Отдельным объектом: ключ языка «id» (индонезийский) совпал бы с полем «id» записи.
+            'переводы': {'tr': ПРЕДУПРЕЖДЕНИЕ_TR, 'id': ПРЕДУПРЕЖДЕНИЕ_ID, 'ur': ПРЕДУПРЕЖДЕНИЕ_UR},
             'источник': 'quran-muaalem, файл NOTICE (QML-1.0); ar, ru и en — официальные тексты (en прочитан 20.11.2026); '
-                        'kk и uz — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)',
+                        'kk, uz, tr, id и ur — наш перевод, черновик (docs/программа-курса.md §5.1; uz — tools/content_uz.py)',
             'ссылка': 'github.com/obadx/quran-muaalem — файл NOTICE',
             'прочитано': '2026-11-18'},
         'маршрут': {

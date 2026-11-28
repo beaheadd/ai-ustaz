@@ -21,7 +21,7 @@ import { Linking, Platform, Pressable, Text, TextInput, View, type TextProps } f
 import { Кнопка, Значок, Текст } from '../../components';
 import { useНавигация } from '../../engine/navigation';
 import { вХэш } from '../../engine/routes';
-import { useЗаголовки, языкЗаголовков, type Заголовки, type ЗаписьХадиса, type ПричинаОтказа } from '../../hadith/data';
+import { useЗаголовки, запаснойЯзыкЗаголовков, языкЗаголовков, type Заголовки, type ЗаписьХадиса, type ПричинаОтказа } from '../../hadith/data';
 import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
 import { ШРИФТ_ИНТЕРФЕЙСА, useТема } from '../../theme';
 
@@ -80,15 +80,16 @@ export const СЛОВАРЬ_ХАДИСОВ = создатьСловарь({
     черновик: 'Draft — under review by an ustaz',
     запасной: 'No English translation yet — Russian translation',
   },
-});
+}, 'screens/hadith/common');
 
-/** Заголовки для списка и поиска: файл языка интерфейса (kk → ru) и, если язык не ru, русский — запасной. */
+/** Заголовки для списка и поиска: файл языка интерфейса (kk → ru, ar → ar) и запасной (tr/id/ur — en, иначе ru). */
 export function useЗаголовкиЯзыка(язык: string) {
   const я = языкЗаголовков(язык);
+  const з = запаснойЯзыкЗаголовков(язык);
   const свой = useЗаголовки(я);
-  const ru = useЗаголовки('ru');
-  const нужныОба = я !== 'ru';
-  const состояния = нужныОба ? [свой, ru] : [свой];
+  // Хуки — всегда оба (порядок вызовов); запасной не нужен (ar, ru) — тот же файл, что и свой.
+  const запасной = useЗаголовки(з ?? я);
+  const состояния = з ? [свой, запасной] : [свой];
   const нет = состояния.find((с) => с.состояние === 'нет');
   const загрузка = состояния.some((с) => с.состояние === 'загрузка');
   const заголовки: (Заголовки | null)[] = состояния.map((с) => (с.состояние === 'есть' ? с.данные : null));

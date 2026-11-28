@@ -18,6 +18,9 @@ import type { FontFamilyDefinition } from 'expo-font';
 export const ШРИФТ_АРАБСКИЙ = 'AmiriQuran';
 export const СЕМЕЙСТВО_ИНТЕРФЕЙСА = 'AiUstazInter';
 export const ШРИФТ_ИНТЕРФЕЙСА = СЕМЕЙСТВО_ИНТЕРФЕЙСА;
+/** Урду нативно — системный шрифт (насталик/насх подбирает система). См. fonts.web.ts. */
+export const ШРИФТ_УРДУ = 'System';
+export const МЕЖСТРОЧНЫЙ_УРДУ = 1.4;
 
 export const ШРИФТЫ_ИНТЕРФЕЙСА: FontFamilyDefinition[] = [
   {

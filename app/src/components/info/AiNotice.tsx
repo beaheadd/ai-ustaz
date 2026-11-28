@@ -13,7 +13,8 @@
  */
 import { View } from 'react-native';
 import type { ПредупреждениеИИ } from '../../content/types';
-import { создатьСловарь, текстЯзыка, useПеревод, useСловарь } from '../../i18n';
+import { создатьСловарь, текстЯзыка, useПеревод, useСловарь, type Язык } from '../../i18n';
+import { ПереводГотовится } from '../TranslationPending';
 import { useТема } from '../../theme';
 import { АрабскийТекст } from '../ArabicText';
 import { Карточка } from '../Card';
@@ -28,6 +29,7 @@ const СЛОВАРЬ = создатьСловарь({
     казахский: '',
     узбекский: '',
     английский: '',
+    черновикПеревода: 'Текст на вашем языке — наш перевод, черновик: его проверит переводчик-носитель.',
     источник: 'Официальный текст из файла NOTICE модели quran-muaalem (лицензия QML-1.0). Прочитано: {дата}.',
     нет: 'Текст предупреждения не прошёл проверку — не показываем.',
   },
@@ -36,6 +38,7 @@ const СЛОВАРЬ = создатьСловарь({
     казахский: 'Қазақша мәтін — біздің аудармамыз, жоба: оны ана тілінде сөйлейтін аудармашы тексереді.',
     узбекский: '',
     английский: '',
+    черновикПеревода: 'Сіздің тіліңіздегі мәтін — біздің аудармамыз, жоба: оны тіл иесі аудармашы тексереді.',
     источник: 'Арабша мәтін — quran-muaalem моделінің NOTICE файлынан алынған ресми мәтін (QML-1.0 лицензиясы). Оқылған күні: {дата}.',
     нет: 'Ескерту мәтіні тексеруден өтпеді — көрсетпейміз.',
   },
@@ -44,6 +47,7 @@ const СЛОВАРЬ = создатьСловарь({
     казахский: '',
     узбекский: 'Oʻzbekcha matn — bizning tarjimamiz, qoralama: uni til sohibi tarjimon tekshiradi.',
     английский: '',
+    черновикПеревода: 'Tilingizdagi matn — bizning tarjimamiz, qoralama: uni ona tili tarjimon tekshiradi.',
     источник: 'Arabcha matn — quran-muaalem modelining NOTICE faylidan olingan rasmiy matn (QML-1.0 litsenziyasi). Oʻqilgan sana: {дата}.',
     нет: 'Ogohlantirish matni tekshiruvdan oʻtmadi — koʻrsatmaymiz.',
   },
@@ -52,10 +56,19 @@ const СЛОВАРЬ = создатьСловарь({
     казахский: '',
     узбекский: '',
     английский: 'The English text is our translation, a draft: a native-speaker translator will review it.',
+    черновикПеревода: 'The text in your language is our translation, a draft: a native-speaker translator will review it.',
     источник: 'The Arabic text is the official text from the NOTICE file of the quran-muaalem model (QML-1.0 license). Read on: {дата}.',
     нет: 'The notice text did not pass verification — not shown.',
   },
-});
+}, 'components/info/AiNotice');
+
+/** Текст предупреждения на языке интерфейса: tr/id/ur — из «переводы» (ключ «id» записи — идентификатор, не язык),
+ * нет — английский официальный; ru/kk/uz/en — как раньше. */
+export function текстПредупреждения(п: ПредупреждениеИИ, язык: Язык): string {
+  if (язык === 'tr' || язык === 'id' || язык === 'ur') return п.переводы?.[язык] || п.en || п.ru;
+  if (язык === 'ar') return п.ar;
+  return текстЯзыка({ ru: п.ru, kk: п.kk, uz: п.uz, en: п.en }, язык);
+}
 
 export function КарточкаПредупрежденияИИ({
   предупреждение,
@@ -82,8 +95,15 @@ export function КарточкаПредупрежденияИИ({
         <АрабскийТекст размер="малый" выравнивание="right" стиль={{ fontSize: 24, lineHeight: 46 }} testID="предупреждение-ar">
           {предупреждение.ar}
         </АрабскийТекст>
-        <View style={{ height: 1, backgroundColor: акцент ? цвет.акцентМягкий : цвет.граница }} />
-        <Текст testID="предупреждение-текст">{текстЯзыка(предупреждение, язык)}</Текст>
+        {/* ar (владелец 28.11.2026): только арабский текст NOTICE — он и есть язык интерфейса. */}
+        {язык === 'ar' ? null : (
+          <>
+            <View style={{ height: 1, backgroundColor: акцент ? цвет.акцентМягкий : цвет.граница }} />
+            <Текст testID="предупреждение-текст">{текстПредупреждения(предупреждение, язык)}</Текст>
+          </>
+        )}
+        {(язык === 'tr' || язык === 'id' || язык === 'ur') && предупреждение.переводы?.[язык] ? <Текст вид="мелкий">{т('черновикПеревода')}</Текст> : null}
+        <ПереводГотовится показать={(язык === 'tr' || язык === 'id' || язык === 'ur') && !предупреждение.переводы?.[язык]} />
         {язык === 'kk' ? <Текст вид="мелкий">{т('казахский')}</Текст> : null}
         {язык === 'uz' && предупреждение.uz ? <Текст вид="мелкий">{т('узбекский')}</Текст> : null}
         {язык === 'en' && предупреждение.en ? <Текст вид="мелкий">{т('английский')}</Текст> : null}

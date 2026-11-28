@@ -27,7 +27,7 @@ import { РазмерАрабского } from '../components/quran/ArabicSize';
 import { ПанельЧтенияАята } from '../components/quran/RecitePanel';
 import { useНавигация } from '../engine/navigation';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { основной, создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useИндексСур, useСура } from '../quran/data';
 import { проверкаГолосомВключена } from '../speech/flag';
 import { useТема } from '../theme';
@@ -87,7 +87,7 @@ const СЛОВАРЬ = создатьСловарь({
     нет: 'The text did not pass verification against the verified database — not shown.',
     черновик: 'Splitting into parts and hints are a draft; an ustaz is reviewing them',
   },
-});
+}, 'screens/AyahCheckScreen');
 
 export function ПроверкаАята({ параметры }: ПропсыЭкрана<'проверкаАята'>) {
   const { t, язык } = useПеревод();
@@ -99,7 +99,7 @@ export function ПроверкаАята({ параметры }: ПропсыЭ�
   const индекс = useИндексСур();
   const запись = индекс.состояние === 'есть' ? (индекс.данные.суры[н - 1] ?? null) : null;
   const название = названиеСуры(запись, н, язык);
-  const естьТранслит = !!запись?.транслит[язык];
+  const естьТранслит = !!запись?.транслит[основной(язык)];
   const [проверкаВключена] = useState(проверкаГолосомВключена);
 
   /** «Вся сура»: если под нами эта сура — назад к ней, иначе — открыть её у этого аята. */

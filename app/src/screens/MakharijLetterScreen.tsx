@@ -87,7 +87,7 @@ const СЛОВАРЬ = создатьСловарь({
     нет: 'There is no such letter.',
     кСписку: 'To the list of makharij',
   },
-});
+}, 'screens/MakharijLetterScreen');
 
 /** Кнопка-значок 48×48 (‹ ›): подпись — для диктора (как в счётчике зикра). */
 function КнопкаЗначок({ значок, подпись, приНажатии, отключена, testID }: { значок: 'назад' | 'вперёд'; подпись: string; приНажатии: () => void; отключена: boolean; testID: string }) {

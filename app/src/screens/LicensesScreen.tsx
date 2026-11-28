@@ -125,7 +125,7 @@ const СЛОВАРЬ = создатьСловарь({
     сервер: 'AI Ustaz server',
     серверПояснение: 'Packages of the prayer time notification server (in Kazakhstan). They are not part of the app and are used unchanged. Full license texts are in the licenses/server folder of the repository.',
   },
-});
+}, 'screens/LicensesScreen');
 
 /** Домен в начале строки ссылки источника: 'tanzil.net', 'github.com/aliftype/amiri — …'. */
 const ДОМЕН = /^(?:https?:\/\/)?([a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:\/[^\s]*)?)/i;

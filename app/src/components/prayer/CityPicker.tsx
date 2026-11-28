@@ -182,7 +182,7 @@ const СЛОВАРЬ = создатьСловарь({
     город: 'city',
     км: '{км} km from {город}',
   },
-});
+}, 'components/prayer/CityPicker');
 
 type Гео =
   | { вид: 'покой' }

@@ -48,7 +48,7 @@ const СЛОВАРЬ = создатьСловарь({
     польза: 'Польза хадиса',
     слова: 'Значения слов (на арабском)',
     ссылки: 'Ссылки на источники (на арабском)',
-    фикх: 'Разъяснение — от HadeethEnc.com, без изменений. Личные вопросы фикха — к имаму или в ДУМК.',
+    фикх: 'Разъяснение — от HadeethEnc.com, без изменений. Личные вопросы фикха — к имаму или в духовное управление мусульман вашей страны.',
     источник: 'Источник: HadeethEnc.com',
     какЕсть: 'Текст, перевод, степень и разъяснение — дословно из HadeethEnc.com. ИИ хадисы не пишет и не переводит.',
     разделы: 'Разделы',
@@ -69,7 +69,7 @@ const СЛОВАРЬ = создатьСловарь({
     польза: 'Хадистің пайдасы',
     слова: 'Сөздердің мағынасы (арабша)',
     ссылки: 'Дереккөздерге сілтемелер (арабша)',
-    фикх: 'Түсіндірме — HadeethEnc.com-нан, өзгеріссіз. Жеке фиқһ сұрақтары — имамға немесе ҚМДБ-ға.',
+    фикх: 'Түсіндірме — HadeethEnc.com-нан, өзгеріссіз. Жеке фиқһ сұрақтары — имамға немесе еліңіздің мұсылмандар діни басқармасына.',
     источник: 'Дереккөз: HadeethEnc.com',
     какЕсть: 'Мәтін, аударма, дәреже және түсіндірме — HadeethEnc.com-нан сөзбе-сөз. ЖИ хадис жазбайды және аудармайды.',
     разделы: 'Бөлімдер',
@@ -90,7 +90,7 @@ const СЛОВАРЬ = создатьСловарь({
     польза: 'Hadisning foydalari',
     слова: 'Soʻzlarning maʼnosi (arabcha)',
     ссылки: 'Manbalarga havolalar (arabcha)',
-    фикх: 'Sharh — HadeethEnc.com dan, oʻzgartirishsiz. Shaxsiy fiqh savollari — imomga yoki muftiyatga.',
+    фикх: 'Sharh — HadeethEnc.com dan, oʻzgartirishsiz. Shaxsiy fiqh savollari — imomga yoki mamlakatingiz musulmonlari diniy idorasiga.',
     источник: 'Manba: HadeethEnc.com',
     какЕсть: 'Matn, tarjima, daraja va sharh — HadeethEnc.com dan soʻzma-soʻz. SI hadis yozmaydi va tarjima qilmaydi.',
     разделы: 'Boʻlimlar',
@@ -111,7 +111,7 @@ const СЛОВАРЬ = создатьСловарь({
     польза: 'Benefits of the hadith',
     слова: 'Meanings of words (in Arabic)',
     ссылки: 'References (in Arabic)',
-    фикх: 'The explanation is from HadeethEnc.com, unchanged. Personal fiqh questions — to an imam or a muftiate.',
+    фикх: 'The explanation is from HadeethEnc.com, unchanged. Personal fiqh questions — to an imam or the Muslim religious authority of your country.',
     источник: 'Source: HadeethEnc.com',
     какЕсть: 'Text, translation, grade and explanation — word for word from HadeethEnc.com. AI does not write or translate hadith.',
     разделы: 'Sections',
@@ -121,7 +121,7 @@ const СЛОВАРЬ = создатьСловарь({
     ошибка: 'Report a mistake',
     ошибкаПодпись: 'A mistake in the text, translation or grade? Write to us',
   },
-});
+}, 'screens/HadithItemScreen');
 
 /** Раскрывающийся блок: строка-кнопка (aria-expanded) и под ней весь текст. */
 function Раскрывашка({ заголовок, testID, children }: { заголовок: string; testID: string; children: ReactNode }) {
@@ -171,6 +171,7 @@ export function Хадис({ параметры }: ПропсыЭкрана<'х�
       <Значок имя="настройки" размер={24} цвет={цвет.акцент} толщина={2} />
     </Pressable>
   );
+  const п = д?.перевод ?? null;
 
   return (
     <Экран заголовок={д ? т('номер', { n: д.запись.n }) : т('хадис')} справа={кнопкаМеню} testID="экран-хадис">
@@ -220,15 +221,22 @@ export function Хадис({ параметры }: ПропсыЭкрана<'х�
           ) : null}
 
           <Карточка>
-            <Текст вид="подзаголовок" accessibilityRole="header" уровень={2} selectable testID="хадис-заголовок">
-              {д.перевод.title}
-            </Текст>
-            <АрабскийАбзац текст={арабскийТекст(д.ar, д.перевод)} testID="хадис-арабский" />
-            <View style={{ height: 1, backgroundColor: цвет.граница }} />
-            <Текст selectable testID="хадис-перевод">
-              {д.перевод.hadeeth}
-            </Текст>
-            {д.языкПеревода === 'uz' ? (
+            {/* ar (владелец 28.11.2026): только арабский текст выгрузки — заголовок, хадис, степень, такхридж. */}
+            {п ? (
+              <Текст вид="подзаголовок" accessibilityRole="header" уровень={2} selectable testID="хадис-заголовок">
+                {д.заголовок}
+              </Текст>
+            ) : (
+              <АрабскийАбзац текст={д.заголовок} мелкий testID="хадис-заголовок" />
+            )}
+            <АрабскийАбзац текст={п ? арабскийТекст(д.ar, п) : д.ar.hadeeth} testID="хадис-арабский" />
+            {п ? <View style={{ height: 1, backgroundColor: цвет.граница }} /> : null}
+            {п ? (
+              <Текст selectable testID="хадис-перевод">
+                {п.hadeeth}
+              </Текст>
+            ) : null}
+            {п && д.языкПеревода === 'uz' ? (
               <Текст вид="мелкий" testID="хадис-кириллица">
                 {т('кириллица')}
               </Текст>
@@ -237,19 +245,25 @@ export function Хадис({ параметры }: ПропсыЭкрана<'х�
 
           <View style={{ gap: отступ.xs }}>
             <Текст стиль={{ fontWeight: '600' }} selectable testID="хадис-степень">
-              {т('степень', { степень: д.перевод.grade })}
+              {т('степень', { степень: п ? п.grade : д.ar.grade })}
             </Текст>
-            <Текст selectable testID="хадис-такхридж">
-              {д.перевод.attribution}
-            </Текст>
+            {п ? (
+              <Текст selectable testID="хадис-такхридж">
+                {п.attribution}
+              </Текст>
+            ) : (
+              <АрабскийАбзац текст={д.ar.attribution} мелкий testID="хадис-такхридж" />
+            )}
           </View>
 
-          <Раскрывашка заголовок={т('разъяснение')} testID="хадис-разъяснение">
-            <Абзацы текст={д.перевод.explanation} />
-          </Раскрывашка>
-          {д.перевод.hints.length ? (
+          {п ? (
+            <Раскрывашка заголовок={т('разъяснение')} testID="хадис-разъяснение">
+              <Абзацы текст={п.explanation} />
+            </Раскрывашка>
+          ) : null}
+          {п && п.hints.length ? (
             <Раскрывашка заголовок={т('польза')} testID="хадис-польза">
-              {д.перевод.hints.map((п, i) => (
+              {п.hints.map((п, i) => (
                 <View key={i} style={{ flexDirection: 'row', gap: отступ.s }}>
                   <Текст цвет={цвет.акцент}>•</Текст>
                   <Текст selectable стиль={{ flex: 1 }}>
@@ -278,7 +292,7 @@ export function Хадис({ параметры }: ПропсыЭкрана<'х�
           <Текст вид="мелкий" testID="хадис-фикх">
             {т('фикх')}
           </Текст>
-          <СсылкаHadeethEnc адрес={д.перевод.link} надпись={т('источник')} testID="хадис-источник" />
+          <СсылкаHadeethEnc адрес={п ? п.link : д.ar.link} надпись={т('источник')} testID="хадис-источник" />
           <Текст вид="мелкий" testID="хадис-как-есть">
             {т('какЕсть')}
           </Текст>

@@ -72,7 +72,7 @@ const СЛОВАРЬ = создатьСловарь({
     удалитьВсё: 'Delete all downloads ({мб} MB)',
     пусто: 'Nothing downloaded yet. You can download a surah (⚙ menu on the surah screen) or an ayah (tap the ayah).',
   },
-});
+}, 'components/quran/AudioDownload');
 
 const мб = (байт: number) => (байт / 1048576).toFixed(1);
 

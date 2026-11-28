@@ -46,7 +46,7 @@ import type { ИтогПроверки } from '../../speech/answer';
 import { подсветкаИзИтога, type МестоПодсветки } from '../../speech/highlight';
 import { подписьПодсветки } from '../../speech/hints';
 import { СмешанныйТекст } from '../info/MixedText';
-import { создатьСловарь, useПеревод, useСловарь, type Язык } from '../../i18n';
+import { основной, создатьСловарь, useПеревод, useСловарь, type Язык } from '../../i18n';
 import { useТема } from '../../theme';
 import { АрабскийТекст, type РазмерАрабского } from '../ArabicText';
 import { Карточка } from '../Card';
@@ -151,7 +151,7 @@ export const СЛОВАРЬ_УПРАЖНЕНИЙ = создатьСловарь(
     кари: 'The qari voice will appear once the reference recording is made. There is no AI voice check yet.',
     кариКнопка: 'Listen to the qari',
   },
-});
+}, 'components/exercises/common');
 
 /** Кегли учебного арабского (как РАЗМЕРЫ в ArabicText.tsx). */
 const КЕГЛИ: Record<РазмерАрабского, number> = { малый: 24, средний: 32, крупный: 46, огромный: 68 };
@@ -386,7 +386,7 @@ export function КнопкаВарианта({
           style={{
             position: 'absolute',
             top: 6,
-            right: 6,
+            end: 6,
             width: 24,
             height: 24,
             borderRadius: радиус.круг,
@@ -542,7 +542,7 @@ export function useПодсветкаПроверки() {
 export function ПодписиПодсветки({ места }: { места: readonly МестоПодсветки[] }) {
   const { язык } = useПеревод();
   const { отступ, цвет } = useТема();
-  const подписи = места.map((м) => ({ м, текст: подписьПодсветки(м.замечание, язык) })).filter((п) => п.текст);
+  const подписи = места.map((м) => ({ м, текст: подписьПодсветки(м.замечание, основной(язык)) })).filter((п) => п.текст);
   if (подписи.length === 0) return null;
   return (
     <View style={{ gap: отступ.xs, alignSelf: 'stretch' }} accessibilityLiveRegion="polite">

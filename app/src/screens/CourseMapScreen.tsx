@@ -201,7 +201,7 @@ const СЛОВАРЬ = создатьСловарь({
     начатьУрок: 'Start lesson {метка}',
     всёПройдено: 'All prototype lessons are completed — you can repeat any of them below.',
   },
-});
+}, 'screens/CourseMapScreen');
 
 type Т = (ключ: keyof (typeof СЛОВАРЬ)['ru'], параметры?: ПараметрыСтроки) => string;
 

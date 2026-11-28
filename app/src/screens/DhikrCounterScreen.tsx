@@ -25,11 +25,11 @@
  */
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Pressable, ScrollView, View, type GestureResponderEvent } from 'react-native';
-import { Кнопка, Плашка, Значок, Текст, Экран } from '../components';
-import { добавить, задатьЦель, сбросить, сегодняЗикра, useЗикры, useСчётЗикров, цельЗикра, ЦЕЛИ, type Зикр } from '../dhikr/data';
+import { Кнопка, ПереводГотовится, Плашка, Значок, Текст, Экран } from '../components';
+import { добавить, естьЯзыкЗикра, текстЗикра, толькоАрабский, задатьЦель, сбросить, сегодняЗикра, useЗикры, useСчётЗикров, цельЗикра, ЦЕЛИ, type Зикр } from '../dhikr/data';
 import { useНавигация } from '../engine/navigation';
 import type { ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { создатьСловарь, этоНовый, useПеревод, useСловарь } from '../i18n';
 import { ШИРИНА_КОЛОНКИ, useТема } from '../theme';
 import { АрабскийЗикра, ВЕБ, СЛОВАРЬ_ЗИКРОВ, ЗикрыНедоступны, подписьИсточника } from './dhikr/common';
 
@@ -114,7 +114,7 @@ const СЛОВАРЬ = создатьСловарь({
     кСписку: 'To the dhikr list',
     примечаниеИсточника: 'The Arabic text is word for word from the source. Pronunciation and translation are a draft reviewed by an ustaz.',
   },
-});
+}, 'screens/DhikrCounterScreen');
 
 /** Короткая вибрация, где она есть (телефон с Android в браузере); без неё — тихо. */
 function вибрация(узор: number | number[]) {
@@ -186,20 +186,26 @@ function Карточка({ зикр }: { зикр: Зикр }) {
         <Плашка вид="черновик" надпись={тз('черновик')} testID="зикр-черновик" />
       </View>
       <Текст вид="метка" цвет={цвет.текстВторой} стиль={{ textAlign: 'center', textTransform: 'uppercase', letterSpacing: 1.5 }} testID="зикр-название">
-        {зикр.название[язык]}
+        {текстЗикра(зикр.название, язык)}
       </Текст>
       <АрабскийЗикра зикр={зикр} testID="зикр-арабский" />
-      <Текст стиль={{ textAlign: 'center', fontWeight: '700', fontSize: 18, lineHeight: 26 }} testID="зикр-произношение">
-        {зикр.произношение[язык]}
-      </Текст>
-      <Текст вид="второй" стиль={{ textAlign: 'center', fontSize: 17, lineHeight: 26 }} testID="зикр-перевод">
-        {зикр.перевод[язык]}
-      </Текст>
-      {зикр.примечание ? (
-        <Текст вид="мелкий" стиль={{ textAlign: 'center' }} testID="зикр-примечание">
-          {зикр.примечание[язык]}
-        </Текст>
-      ) : null}
+      {/* ar (владелец 28.11.2026): только арабский текст — без произношения, перевода и пояснения. */}
+      {толькоАрабский(язык) ? null : (
+        <>
+          <Текст стиль={{ textAlign: 'center', fontWeight: '700', fontSize: 18, lineHeight: 26 }} testID="зикр-произношение">
+            {текстЗикра(зикр.произношение, язык)}
+          </Текст>
+          <Текст вид="второй" стиль={{ textAlign: 'center', fontSize: 17, lineHeight: 26 }} testID="зикр-перевод">
+            {текстЗикра(зикр.перевод, язык)}
+          </Текст>
+          {зикр.примечание ? (
+            <Текст вид="мелкий" стиль={{ textAlign: 'center' }} testID="зикр-примечание">
+              {текстЗикра(зикр.примечание, язык)}
+            </Текст>
+          ) : null}
+          <ПереводГотовится показать={этоНовый(язык) && !естьЯзыкЗикра(зикр.перевод, язык)} testID="зикр-перевод-готовится" />
+        </>
+      )}
     </View>
   );
 }

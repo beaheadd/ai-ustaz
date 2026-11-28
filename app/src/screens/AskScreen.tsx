@@ -69,7 +69,7 @@ import { useНавигация } from '../engine/navigation';
 import { useПрогресс } from '../engine/progress';
 import { записатьJSON, прочитатьJSON } from '../engine/storage';
 import { изХэша, type ПропсыЭкрана } from '../engine/routes';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { основной, создатьСловарь, useПеревод, useСловарь } from '../i18n';
 import { useСура } from '../quran/data';
 import { ТаджвидАята } from './quran/AyahActions';
 import { ШИРИНА_КОЛОНКИ, ШРИФТ_ИНТЕРФЕЙСА, useТема, useУменьшитьДвижение } from '../theme';
@@ -88,7 +88,7 @@ const СЛОВАРЬ = создатьСловарь({
   ru: {
     заголовок: 'Спросите AI Ustaz',
     подзаголовок: 'Наставник по исламу — по проверенным материалам',
-    граница: 'Отвечает только по проверенным материалам AI Ustaz. Не фетва — личные вопросы к имаму / ДУМК.',
+    граница: 'Отвечает только по проверенным материалам AI Ustaz. Не фетва — личные вопросы к имаму или в духовное управление мусульман вашей страны.',
     ии: 'AI Ustaz — помощник, а не учёный: ищет по нашей базе и может ошибаться. Сверяйте с источниками.',
     пусто: 'Ассаляму алейкум! Спросите о чтении Корана, таджвиде, хадисах, дуа или намазе.',
     пример1: 'Как читается аят 2:255?',
@@ -128,7 +128,7 @@ const СЛОВАРЬ = создатьСловарь({
     аятЗагрузка: 'Загружаем аят…',
     шаблонОтвет: 'Вот что есть в нашей базе по вашему вопросу:',
     шаблонНет: 'В нашей базе пока нет ответа на этот вопрос. Спросите иначе или обратитесь к имаму.',
-    шаблонИмам: 'Это личный вопрос фикха — на него отвечает имам. Задайте его имаму вашей мечети или в ДУМК (muftyat.kz). AI Ustaz фетв не даёт.',
+    шаблонИмам: 'Это личный вопрос фикха — на него отвечает имам. Задайте его имаму вашей мечети или в духовное управление мусульман вашей страны. AI Ustaz фетв не даёт.',
     шаблонВне: 'Здесь отвечаем только по нашей базе: Коран, таджвид, хадисы, дуа, намаз и как пользоваться AI Ustaz.',
     общие: 'Общие сведения из нашей базы — не ответ на ваш случай:',
     распознано: 'На фото: «{т}»',
@@ -170,7 +170,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: {
     заголовок: 'AI Ustaz-ға сұрақ қойыңыз',
     подзаголовок: 'Ислам бойынша тәлімгер — тексерілген материалдар бойынша',
-    граница: 'Тек AI Ustaz-тың тексерілген материалдары бойынша жауап береді. Пәтуа емес — жеке сұрақтар имамға / ҚМДБ-ға.',
+    граница: 'Тек AI Ustaz-тың тексерілген материалдары бойынша жауап береді. Пәтуа емес — жеке сұрақтар имамға немесе еліңіздің мұсылмандар діни басқармасына.',
     ии: 'AI Ustaz — ғалым емес, көмекші: базамыздан іздейді және қателесуі мүмкін. Дереккөздермен салыстырыңыз.',
     пусто: 'Ассаламу алейкум! Құран оқу, тәжуид, хадис, дұға немесе намаз туралы сұраңыз.',
     пример1: '2:255 аяты қалай оқылады?',
@@ -210,7 +210,7 @@ const СЛОВАРЬ = создатьСловарь({
     аятЗагрузка: 'Аят жүктелуде…',
     шаблонОтвет: 'Сұрағыңыз бойынша базамызда мыналар бар:',
     шаблонНет: 'Базамызда бұл сұраққа әзірге жауап жоқ. Басқаша сұраңыз немесе имамға жүгініңіз.',
-    шаблонИмам: 'Бұл — жеке фиқһ сұрағы, оған имам жауап береді. Мешітіңіздің имамына немесе ҚМДБ-ға (muftyat.kz) қойыңыз. AI Ustaz пәтуа бермейді.',
+    шаблонИмам: 'Бұл — жеке фиқһ сұрағы, оған имам жауап береді. Мешітіңіздің имамына немесе еліңіздің мұсылмандар діни басқармасына қойыңыз. AI Ustaz пәтуа бермейді.',
     шаблонВне: 'Мұнда тек базамыз бойынша жауап береміз: Құран, тәжуид, хадис, дұға, намаз және AI Ustaz-ды қолдану.',
     общие: 'Базамыздағы жалпы мәліметтер — сіздің жағдайыңызға жауап емес:',
     распознано: 'Суретте: «{т}»',
@@ -252,7 +252,7 @@ const СЛОВАРЬ = создатьСловарь({
   uz: {
     заголовок: 'AI Ustazdan soʻrang',
     подзаголовок: 'Islom boʻyicha ustoz — tekshirilgan materiallar asosida',
-    граница: 'Faqat AI Ustazning tekshirilgan materiallari boʻyicha javob beradi. Fatvo emas — shaxsiy savollar imomga.',
+    граница: 'Faqat AI Ustazning tekshirilgan materiallari boʻyicha javob beradi. Fatvo emas — shaxsiy savollar imomga yoki mamlakatingiz musulmonlari diniy idorasiga.',
     ии: 'AI Ustaz — olim emas, yordamchi: bazamizdan qidiradi va xato qilishi mumkin. Manbalar bilan solishtiring.',
     пусто: 'Assalomu alaykum! Qurʼon oʻqish, tajvid, hadis, duo yoki namoz haqida soʻrang.',
     пример1: '2:255 oyati qanday oʻqiladi?',
@@ -292,7 +292,7 @@ const СЛОВАРЬ = создатьСловарь({
     аятЗагрузка: 'Oyat yuklanmoqda…',
     шаблонОтвет: 'Savolingiz boʻyicha bazamizda quyidagilar bor:',
     шаблонНет: 'Bazamizda bu savolga hozircha javob yoʻq. Boshqacha soʻrang yoki imomga murojaat qiling.',
-    шаблонИмам: 'Bu shaxsiy fiqh savoli — unga imom javob beradi. Uni masjidingiz imomiga bering. AI Ustaz fatvo bermaydi.',
+    шаблонИмам: 'Bu shaxsiy fiqh savoli — unga imom javob beradi. Uni masjidingiz imomiga yoki mamlakatingiz musulmonlari diniy idorasiga bering. AI Ustaz fatvo bermaydi.',
     шаблонВне: 'Bu yerda faqat bazamiz boʻyicha javob beramiz: Qurʼon, tajvid, hadis, duo, namoz va AI Ustazdan foydalanish.',
     общие: 'Bazamizdagi umumiy maʼlumotlar — sizning holatingizga javob emas:',
     распознано: 'Rasmda: «{т}»',
@@ -334,7 +334,7 @@ const СЛОВАРЬ = создатьСловарь({
   en: {
     заголовок: 'Ask AI Ustaz',
     подзаголовок: 'A mentor on Islam — from verified materials',
-    граница: 'Answers only from verified AI Ustaz materials. Not a fatwa — ask an imam your personal questions.',
+    граница: 'Answers only from verified AI Ustaz materials. Not a fatwa — ask an imam or the Muslim religious authority of your country your personal questions.',
     ии: 'AI Ustaz is a helper, not a scholar: it searches our base and can be wrong. Check against the sources.',
     пусто: 'Assalamu alaikum! Ask about Quran reading, tajweed, hadith, dua or prayer.',
     пример1: 'How is ayah 2:255 read?',
@@ -374,7 +374,7 @@ const СЛОВАРЬ = создатьСловарь({
     аятЗагрузка: 'Loading the ayah…',
     шаблонОтвет: 'Here is what our base has on your question:',
     шаблонНет: 'Our base has no answer to this question yet. Ask differently or ask an imam.',
-    шаблонИмам: 'This is a personal fiqh question — an imam answers it. Ask the imam of your mosque or the SAMK (muftyat.kz). AI Ustaz does not give fatwas.',
+    шаблонИмам: 'This is a personal fiqh question — an imam answers it. Ask the imam of your mosque or the Muslim religious authority of your country. AI Ustaz does not give fatwas.',
     шаблонВне: 'Here we answer only from our base: the Quran, tajweed, hadith, dua, prayer and how to use AI Ustaz.',
     общие: 'General information from our base — not an answer for your case:',
     распознано: 'In the photo: “{т}”',
@@ -413,7 +413,7 @@ const СЛОВАРЬ = создатьСловарь({
     'ошибка.фото': 'Could not prepare the photo — choose another one.',
     выключено: 'AI Ustaz answers on our website aiustaz.pro.',
   },
-});
+}, 'screens/AskScreen');
 type Т = ReturnType<typeof useСловарь<keyof (typeof СЛОВАРЬ)['ru']>>;
 type Ключ = Parameters<Т>[0];
 type Заметка =
@@ -515,7 +515,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
     установитьВопрос('');
     установитьЗаписи((з) => [...з, { кто: 'вы', текст: q, ид: новыйИд() }]);
     установитьЗанят('ответ');
-    const итог = await спросить(q, язык);
+    const итог = await спросить(q, основной(язык));
     if (!живой.current) return;
     установитьЗанят(null);
     if (итог.ок) добавитьОтвет(итог.ответ);
@@ -533,7 +533,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
       return установитьЗаметку('фото');
     }
     установитьЗанят('фото');
-    const итог = await фотографией(картинка, язык);
+    const итог = await фотографией(картинка, основной(язык));
     if (!живой.current) return;
     установитьЗанят(null);
     if (итог.ок) добавитьОтвет(итог.ответ);
@@ -572,7 +572,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
     if (готово.мс < ГОЛОС_МИН_МС || !готово.blob.size) return установитьЗаметку('голосПусто');
     if (готово.blob.size > ГОЛОС_МАКС_БАЙТ) return установитьЗаметку('голосБольшой');
     установитьЗанят('голос');
-    const итог = await голосом(готово.blob, язык);
+    const итог = await голосом(готово.blob, основной(язык));
     if (!живой.current) return;
     установитьЗанят(null);
     if (итог.ок) {
@@ -669,7 +669,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
   // Шапка — одна строка (владелец 28.11.2026: «уменьшить … место»): аватар 32, «AI Ustaz»; подзаголовок — в
   // предупреждении сверху ленты. Свернули предупреждение — справа значок «i», чтобы снова открыть.
   const шапка = (
-    <View testID="устаз-шапка" style={{ flexDirection: 'row', alignItems: 'center', gap: отступ.s, alignSelf: 'stretch', paddingLeft: 4 }}>
+    <View testID="устаз-шапка" style={{ flexDirection: 'row', alignItems: 'center', gap: отступ.s, alignSelf: 'stretch', paddingStart: 4 }}>
       <ОбразУстаза размер={32} testID="устаз-образ" />
       <Текст вид="метка" numberOfLines={1} стиль={{ flex: 1, minWidth: 0, fontSize: 17 }} {...((ВЕБ ? { 'aria-hidden': true } : {}) as object)}>
         {т('устаз')}
@@ -716,7 +716,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
         {предупреждениеСвёрнуто ? null : (
           <View
             testID="устаз-граница"
-            style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 4, borderRadius: 10, backgroundColor: цвет.акцентМягкий, paddingVertical: 6, paddingLeft: 10, paddingRight: 2 }}
+            style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 4, borderRadius: 10, backgroundColor: цвет.акцентМягкий, paddingVertical: 6, paddingStart: 10, paddingEnd: 2 }}
           >
             <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
               <Текст вид="мелкий" стиль={ПРЕДУПРЕЖДЕНИЕ}>
@@ -774,7 +774,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
                   maxWidth: '85%',
                   backgroundColor: цвет.акцент,
                   borderRadius: 18,
-                  borderBottomRightRadius: 6,
+                  borderBottomEndRadius: 6,
                   paddingHorizontal: отступ.m,
                   paddingVertical: отступ.s,
                 }}
@@ -1061,7 +1061,7 @@ function Ответ({
   const прочие = ответ.источники.filter((и) => и !== аят);
   // 🔊 — только наш текст ответа и переводы/пояснения источников; заголовки (транслитерация названий дуа) — нет.
   const дляОзвучки = [текст, ...прочие.slice(0, 2).map((и) => и.текст)].join('. ');
-  const озвучкаМожно = озвучкаЕсть(язык);
+  const озвучкаМожно = озвучкаЕсть(основной(язык));
   const первая = прочие.find((и) => адресИсточника(и));
   const чипыПримеров = ответ.намерение === 'приветствие' || ответ.намерение === 'уточнить';
   const чипыПродолжения = ответ.вид === 'ответ' && !ответ.намерение;
@@ -1078,7 +1078,7 @@ function Ответ({
             minWidth: 0,
             backgroundColor: цвет.поверхность,
             borderRadius: радиус.l,
-            borderBottomLeftRadius: 6,
+            borderBottomStartRadius: 6,
             borderWidth: 1,
             borderColor: ответ.вид === 'к-имаму' ? цвет.акцент : цвет.граница,
             paddingTop: отступ.s,
@@ -1135,7 +1135,7 @@ function Ответ({
                   if (говорю) {
                     остановитьОзвучку();
                     установитьГоворю(false);
-                  } else if (озвучить(дляОзвучки, язык, () => установитьГоворю(false))) установитьГоворю(true);
+                  } else if (озвучить(дляОзвучки, основной(язык), () => установитьГоворю(false))) установитьГоворю(true);
                 }}
                 testID={'устаз-озвучить-' + номер}
                 style={({ pressed }) => ({ minWidth: 36, minHeight: 36, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 })}
@@ -1147,14 +1147,14 @@ function Ответ({
         </View>
       </View>
       {чипыПримеров && спроситьПример ? (
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingLeft: 32 + отступ.s }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingStart: 32 + отступ.s }}>
           {ПРИМЕРЫ.map((к, i) => (
             <Чип key={к} надпись={т(к)} приНажатии={() => спроситьПример(т(к))} testID={'устаз-чип-пример-' + номер + '-' + (i + 1)} />
           ))}
         </View>
       ) : null}
       {чипыПродолжения ? (
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingLeft: 32 + отступ.s }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingStart: 32 + отступ.s }}>
           {первая ? <Чип надпись={т('подробнее')} приНажатии={() => открыть(перейти, первая)} testID={'устаз-чип-подробнее-' + номер} /> : null}
           {прочие.length ? <Чип надпись={т('покажите')} приНажатии={() => установитьПодробно((п) => !п)} testID={'устаз-чип-источник-' + номер} /> : null}
           <Чип
@@ -1168,7 +1168,7 @@ function Ответ({
         </View>
       ) : null}
       {проверка && проверка !== 'ждём' ? (
-        <View style={{ paddingLeft: 32 + отступ.s }}>
+        <View style={{ paddingStart: 32 + отступ.s }}>
           <Проверка вопрос={проверка} т={т} ключ={ид} />
         </View>
       ) : null}
@@ -1207,8 +1207,8 @@ function АятОтвет({ и, т }: { и: ИсточникОтвета; т: Т
         borderRadius: радиус.l,
         borderWidth: 1,
         borderColor: цвет.граница,
-        borderLeftWidth: 4,
-        borderLeftColor: цвет.золотоДекор,
+        borderStartWidth: 4,
+        borderStartColor: цвет.золотоДекор,
         padding: отступ.m,
         gap: отступ.s,
         backgroundColor: цвет.фон,
@@ -1286,8 +1286,8 @@ function КарточкаИсточника({ и, т, полностью }: { и
         borderRadius: радиус.m,
         borderWidth: 1,
         borderColor: цвет.граница,
-        borderLeftWidth: 3,
-        borderLeftColor: цвет.золотоДекор,
+        borderStartWidth: 3,
+        borderStartColor: цвет.золотоДекор,
         paddingVertical: отступ.s,
         paddingHorizontal: 10,
         gap: 4,

@@ -18,7 +18,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { подпись: 'Араб мәтінінің өлшемі', меньше: 'Араб мәтінін кішірейту', больше: 'Араб мәтінін үлкейту', значение: 'Өлшемі {к}' },
   uz: { подпись: 'Arabcha matn oʻlchami', меньше: 'Arabcha matnni kichikroq qilish', больше: 'Arabcha matnni kattaroq qilish', значение: 'Oʻlcham {к}' },
   en: { подпись: 'Arabic text size', меньше: 'Smaller Arabic text', больше: 'Larger Arabic text', значение: 'Size {к}' },
-});
+}, 'components/quran/ArabicSize');
 
 export function РазмерАрабского({ вид = 'строка', testID = 'размер-арабского' }: { вид?: 'строка' | 'кнопки'; testID?: string }) {
   const т = useСловарь(СЛОВАРЬ);

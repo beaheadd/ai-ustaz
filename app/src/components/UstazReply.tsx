@@ -29,7 +29,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { подпись: 'AI Ustaz · ЖИ-тәлімгер', предупреждение: 'ЖИ тексеруі қателесуі мүмкін және ұстазды алмастырмайды.' },
   uz: { подпись: 'AI Ustaz · SI-murabbiy', предупреждение: 'SI tekshiruvi xato qilishi mumkin va ustozning oʻrnini bosmaydi.' },
   en: { подпись: 'AI Ustaz · AI mentor', предупреждение: 'The AI check can make mistakes and does not replace an ustaz.' },
-});
+}, 'components/UstazReply');
 
 export type СвойстваРеплики = {
   children?: ReactNode;
@@ -65,7 +65,7 @@ export function РепликаУстаза({ children, состояние = 'о�
           borderWidth: 1,
           borderColor: цвет.граница,
           borderRadius: радиус.l,
-          borderTopLeftRadius: радиус.s / 2,
+          borderTopStartRadius: радиус.s / 2,
         }}
       >
         {компактная ? (

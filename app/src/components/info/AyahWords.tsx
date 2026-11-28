@@ -13,6 +13,7 @@
  * - Пока Amiri Quran не загружен (useАрабскийШрифтГотов, как у <АрабскийТекст>), текст прозрачен и держит место:
  *   Коран не мелькает системным шрифтом (вкладка «Коран» при прямом входе по #/quran на медленной сети).
  */
+import { РЯД_АРАБСКИЙ } from '../../i18n';
 import { Platform, Text, View } from 'react-native';
 import type { ФрагментКорана } from '../../content/types';
 import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов, useТема } from '../../theme';
@@ -41,7 +42,7 @@ export function АятСоСловами({
   const шрифтГотов = useАрабскийШрифтГотов();
   const слова = словаАята(фрагмент.текст);
   return (
-    <View style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
+    <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
       <View
         accessibilityLabel={`${фрагмент.сура}:${фрагмент.аят}`}
         style={{

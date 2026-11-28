@@ -28,7 +28,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { раздел: 'Хадистер бөлімі', подразделы: 'Ішкі бөлімдер', хадисы: 'Бөлімдегі хадистер', нет: 'Мұндай бөлім жоқ.', кРазделам: 'Хадис бөлімдеріне' },
   uz: { раздел: 'Hadislar boʻlimi', подразделы: 'Ichki boʻlimlar', хадисы: 'Boʻlimdagi hadislar', нет: 'Bunday boʻlim yoʻq.', кРазделам: 'Hadis boʻlimlariga' },
   en: { раздел: 'Hadith section', подразделы: 'Subsections', хадисы: 'Hadiths in this section', нет: 'There is no such section.', кРазделам: 'To hadith sections' },
-});
+}, 'screens/HadithCategoryScreen');
 
 export function РазделХадисов({ параметры }: ПропсыЭкрана<'разделХадисов'>) {
   const { t, язык } = useПеревод();

@@ -6,8 +6,8 @@
  */
 export const МАНИФЕСТ_ХАДИСОВ = {
   формат: 1,
-  индекс: 'hadith/index.f8af5746815c66a6d629.json',
-  sha256Индекса: 'f8af5746815c66a6d6296e1bc933acfe97f950b255c8cb75b5b9886e716b7476',
+  индекс: 'hadith/index.f19c4952c8f37685cffa.json',
+  sha256Индекса: 'f19c4952c8f37685cffa162d8132a5ec73ba30727ad07cf137b0e267538d2b58',
   хадисов: 813,
   источник: 'hadeethenc',
 } as const;

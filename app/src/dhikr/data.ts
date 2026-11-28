@@ -29,12 +29,30 @@
  */
 import { useEffect, useState } from 'react';
 import { прочитатьJSON, записатьJSON } from '../engine/storage';
-import type { Язык } from '../i18n';
+import { этоНовый, type Язык, type ЯзыкНовый, type ЯзыкОсновной } from '../i18n/languages';
 import { загрузитьФайл, изКэша, useЗагрузка, type Результат } from '../quran/data';
 import { деньРК } from '../prayer/day';
 import { МАНИФЕСТ_ЗИКРОВ } from './manifest.generated';
 
-export type Тексты = Record<Язык, string>;
+/** Тексты записи: ru, kk, uz, en — всегда; ar, tr, id, ur — если есть (черновики, владелец 28.11.2026). */
+export type Тексты = Record<ЯзыкОсновной, string> & Partial<Record<ЯзыкНовый, string>>;
+
+/** Текст на языке интерфейса: своего нет — для ar/tr/id/ur английский (экран пишет «Перевод на ваш язык готовится»). */
+export function текстЗикра(т: Тексты | undefined, язык: Язык): string {
+  if (!т) return '';
+  return т[язык] || (этоНовый(язык) ? т.en : '') || т.ru;
+}
+
+/** Есть ли своё поле для языка (ar/tr/id/ur — не у всех записей). */
+export function естьЯзыкЗикра(т: Тексты | undefined, язык: Язык): boolean {
+  return !!т?.[язык]?.trim();
+}
+
+/**
+ * Арабский интерфейс (владелец 28.11.2026): только арабский текст зикра — без произношения и перевода
+ * (арабский читатель читает сам текст источника).
+ */
+export const толькоАрабский = (язык: Язык) => язык === 'ar';
 
 export type Зикр = {
   id: string;
@@ -72,7 +90,8 @@ export type ВремяЗикра = (typeof ВРЕМЕНА_ЗИКРОВ)[number];
 export const ТЕМЫ_ДУА = ['утро-вечер', 'дом', 'мечеть', 'путь', 'еда', 'сон', 'одежда', 'туалет', 'болезнь', 'беда', 'погода', 'покаяние', 'разное'] as const;
 export type ТемаДуа = (typeof ТЕМЫ_ДУА)[number];
 
-const ЯЗЫКИ_ЗИКРОВ: readonly Язык[] = ['kk', 'ru', 'uz', 'en'];
+const ЯЗЫКИ_ЗИКРОВ: readonly ЯзыкОсновной[] = ['kk', 'ru', 'uz', 'en'];
+const ЯЗЫКИ_НОВЫЕ: readonly ЯзыкНовый[] = ['ar', 'tr', 'id', 'ur'];
 const КЛЮЧ_КЭША = 'зикры';
 
 function строка(з: unknown): з is string {
@@ -83,7 +102,13 @@ function тексты(з: unknown): Тексты | null {
   if (!з || typeof з !== 'object') return null;
   const о = з as Record<string, unknown>;
   for (const я of ЯЗЫКИ_ЗИКРОВ) if (!строка(о[я])) return null;
-  return { kk: о.kk as string, ru: о.ru as string, uz: о.uz as string, en: о.en as string };
+  const итог: Тексты = { kk: о.kk as string, ru: о.ru as string, uz: о.uz as string, en: о.en as string };
+  for (const я of ЯЗЫКИ_НОВЫЕ) {
+    if (о[я] === undefined) continue;
+    if (!строка(о[я])) return null;
+    итог[я] = о[я] as string;
+  }
+  return итог;
 }
 
 function целое(з: unknown, мин: number, макс: number): з is number {

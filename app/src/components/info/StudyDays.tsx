@@ -56,7 +56,7 @@ const СЛОВАРЬ = создатьСловарь({
     давно: '30 days ago',
     сегодня: 'today',
   },
-});
+}, 'components/info/StudyDays');
 
 export function ДниЗанятий({ testID = 'главная-дни-занятий' }: { testID?: string }) {
   const { t } = useПеревод();

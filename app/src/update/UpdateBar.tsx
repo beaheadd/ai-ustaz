@@ -21,7 +21,7 @@ const СЛОВАРЬ = создатьСловарь({
   kk: { текст: 'AI\u00A0Ustaz жаңартылды', обновить: 'Жаңарту', идёт: 'Жаңартып жатырмыз…', подсказка: 'Жаңа нұсқа ашылады, сабақтарыңыз сақталады', скрыть: 'Келесі жаңартуға дейін жасыру' },
   uz: { текст: 'AI\u00A0Ustaz yangilandi', обновить: 'Yangilash', идёт: 'Yangilanmoqda…', подсказка: 'Yangi versiya ochiladi, darslaringiz saqlanadi', скрыть: 'Keyingi yangilanishgacha yashirish' },
   en: { текст: 'An AI\u00A0Ustaz update is out', обновить: 'Update', идёт: 'Updating…', подсказка: 'The new version opens; your progress is kept', скрыть: 'Hide until the next update' },
-});
+}, 'update/UpdateBar');
 
 export function ПолосаОбновления() {
   const т = useСловарь(СЛОВАРЬ);
@@ -51,8 +51,8 @@ export function ПолосаОбновления() {
         gap: отступ.s,
         marginHorizontal: отступ.s,
         marginTop: отступ.s,
-        paddingLeft: отступ.m,
-        paddingRight: отступ.xs,
+        paddingStart: отступ.m,
+        paddingEnd: отступ.xs,
         paddingVertical: 2,
         borderRadius: радиус.l,
         borderWidth: 1,

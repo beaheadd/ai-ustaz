@@ -13,11 +13,14 @@
  * - подпись: если задана — значок «картинка» с этим названием для экранного диктора;
  *   без подписи значок декоративный и скрыт от диктора (aria-hidden — понимают и react-native-web, и RN ≥ 0.71;
  *   смысл несёт текст рядом).
+ * RTL (ar, ur; владелец 28.11.2026): стрелки «назад», «вперёд», «внешняя» отражаются по горизонтали — «назад»
+ *   смотрит вправо, как принято в арабском и урду интерфейсе. Остальные значки не отражаются (компас, часы, коран).
  * Правила: без лиц и людей; звезда «хатам» — геометрия, не оценка и не награда.
  */
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { Circle, Path, Svg } from './primitives/svg';
 import { ЗНАЧКИ, type ИмяЗначка, type ФигураЗначка } from '../design/icons';
+import { useНаправление } from '../i18n';
 import { useТема } from '../theme';
 
 export type { ИмяЗначка } from '../design/icons';
@@ -33,15 +36,19 @@ export type СвойстваЗначка = {
   testID?: string;
 };
 
+/** Значки направления — отражаются в RTL. */
+const ЗЕРКАЛЬНЫЕ: ReadonlySet<string> = new Set(['назад', 'вперёд', 'внешняя']);
+
 export function Значок({ имя, размер = 24, цвет, толщина = 1.75, подпись, стиль, testID }: СвойстваЗначка) {
   const тема = useТема();
+  const зеркально = useНаправление() === 'rtl' && ЗЕРКАЛЬНЫЕ.has(имя);
   const c = цвет ?? тема.цвет.текст;
   const фигуры: readonly ФигураЗначка[] = ЗНАЧКИ[имя] ?? [];
   const доступность = подпись
     ? { accessible: true, accessibilityRole: 'image' as const, accessibilityLabel: подпись }
     : { 'aria-hidden': true as const };
   return (
-    <View testID={testID} {...доступность} style={[{ width: размер, height: размер, pointerEvents: 'none' }, стиль]}>
+    <View testID={testID} {...доступность} style={[{ width: размер, height: размер, pointerEvents: 'none' }, зеркально ? { transform: [{ scaleX: -1 }] } : null, стиль]}>
       <Svg width={размер} height={размер} viewBox="0 0 24 24">
         {фигуры.map((ф, i) => {
           const общее = ф.заливка

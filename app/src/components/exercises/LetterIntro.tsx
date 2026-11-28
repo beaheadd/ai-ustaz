@@ -15,7 +15,7 @@ import { View } from 'react-native';
 import type { ЗаданиеЗнакомство } from '../../content/types';
 import { локально } from '../../engine/lessonEngine';
 import { СмешанныйТекст } from '../info/MixedText';
-import { создатьСловарь, useПеревод, useСловарь } from '../../i18n';
+import { создатьСловарь, useПеревод, useСловарь, РЯД_АРАБСКИЙ } from '../../i18n';
 import { useТема } from '../../theme';
 import { АрабскийТекст } from '../ArabicText';
 import { Карточка } from '../Card';
@@ -72,7 +72,7 @@ const СЛОВАРЬ = создатьСловарь({
     вниманию: 'Note',
     примеры: 'With vowel marks',
   },
-});
+}, 'components/exercises/LetterIntro');
 
 /** Ряды сетки форм: справа налево (row-reverse) — «отдельно» справа сверху, как в книге. */
 const РЯДЫ_ФОРМ = [
@@ -109,7 +109,7 @@ export function ЗнакомствоСБуквой({ задание, приГо�
           <ЗаголовокРаздела надпись={т('формы')} />
           <View style={{ gap: отступ.s }} testID="формы-буквы">
             {РЯДЫ_ФОРМ.map((ряд, r) => (
-              <View key={r} style={{ flexDirection: 'row-reverse', gap: отступ.s }}>
+              <View key={r} {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', gap: отступ.s }}>
                 {ряд.map((ключ) => (
                   <View
                     key={ключ}
@@ -144,7 +144,7 @@ export function ЗнакомствоСБуквой({ задание, приГо�
       {задание.примеры.length > 0 ? (
         <Карточка>
           <ЗаголовокРаздела надпись={т('примеры')} />
-          <View style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl, marginTop: отступ.l }}>
+          <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl, marginTop: отступ.l }}>
             {задание.примеры.map((пример, i) => (
               <АрабскийТекст key={i} размер="огромный" стиль={стильКрупного(60)}>
                 {пример}

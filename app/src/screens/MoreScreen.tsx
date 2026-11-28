@@ -72,7 +72,7 @@ const СЛОВАРЬ = создатьСловарь({
     какПояснение: 'Пример на аль-Фатихе — не проверка вашего чтения',
     оПроектеРаздел: 'О проекте и источники',
     оПроекте: 'О проекте',
-    оПроектеПояснение: 'Прототип: что есть и что будет; бесплатно, без рекламы; приватность; линия ДУМК',
+    оПроектеПояснение: 'Прототип: что есть и что будет; бесплатно, без рекламы; приватность; ханафитский мазхаб',
     лицензии: 'Лицензии и источники',
     лицензииПояснение: 'Текст Корана, шрифты, расчёт времени, пакеты',
     статистика: 'Анонимная статистика',
@@ -115,7 +115,7 @@ const СЛОВАРЬ = создатьСловарь({
     какПояснение: 'Әл-Фатихадағы мысал — сіздің оқуыңызды тексеру емес',
     оПроектеРаздел: 'Жоба және дереккөздер',
     оПроекте: 'Жоба туралы',
-    оПроектеПояснение: 'Прототип: не бар, не болады; тегін, жарнамасыз; құпиялылық; ҚМДБ бағыты',
+    оПроектеПояснение: 'Прототип: не бар, не болады; тегін, жарнамасыз; құпиялылық; ханафи мазхабы',
     лицензии: 'Лицензиялар мен дереккөздер',
     лицензииПояснение: 'Құран мәтіні, қаріптер, уақыт есебі, пакеттер',
     статистика: 'Жасырын статистика',
@@ -158,7 +158,7 @@ const СЛОВАРЬ = создатьСловарь({
     какПояснение: 'Al-Fotiha misolida — oʻqishingizni tekshirish emas',
     оПроектеРаздел: 'Loyiha va manbalar haqida',
     оПроекте: 'Loyiha haqida',
-    оПроектеПояснение: 'Prototip: nima bor va nima boʻladi; bepul, reklamasiz; maxfiylik; QMDB yoʻnalishi',
+    оПроектеПояснение: 'Prototip: nima bor va nima boʻladi; bepul, reklamasiz; maxfiylik; hanafiy mazhabi',
     лицензии: 'Litsenziyalar va manbalar',
     лицензииПояснение: 'Qurʼon matni, shriftlar, vaqt hisobi, paketlar',
     статистика: 'Anonim statistika',
@@ -201,7 +201,7 @@ const СЛОВАРЬ = создатьСловарь({
     какПояснение: 'An example on al-Fatiha — not a check of your reading',
     оПроектеРаздел: 'About the project and sources',
     оПроекте: 'About',
-    оПроектеПояснение: 'Prototype: what we have and what is coming; free, no ads; privacy; the SAMK approach',
+    оПроектеПояснение: 'Prototype: what we have and what is coming; free, no ads; privacy; the Hanafi madhhab',
     лицензии: 'Licenses and sources',
     лицензииПояснение: 'Quran text, fonts, time calculation, packages',
     статистика: 'Anonymous statistics',
@@ -217,7 +217,7 @@ const СЛОВАРЬ = создатьСловарь({
     ошибкаПодпись: 'Found a mistake in a text, translation or time? Write to us',
     безВхода: 'No sign-in or accounts: progress is stored only on this device.',
   },
-});
+}, 'screens/MoreScreen');
 
 /** Раздел страницы: заголовок и содержимое. */
 function Раздел({ заголовок, children, testID }: { заголовок: string; children: ReactNode; testID?: string }) {

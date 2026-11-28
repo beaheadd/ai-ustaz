@@ -164,7 +164,7 @@ export function Экран({ заголовок, children, плашка = 'не�
               </Pressable>
             </View>
           ) : эмблема ? (
-            <View style={[стили.слот, { paddingLeft: 8 }]} testID="шапка-эмблема">
+            <View style={[стили.слот, { paddingStart: 8 }]} testID="шапка-эмблема">
               <ЭмблемаУстаза размер={28} />
             </View>
           ) : null}
@@ -217,9 +217,9 @@ const стили = StyleSheet.create({
   колонкаСодержимого: { width: '100%', maxWidth: ШИРИНА_КОЛОНКИ, alignSelf: 'center' },
   шапка: { flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingHorizontal: 8, gap: 4, borderBottomWidth: StyleSheet.hairlineWidth },
   слот: { justifyContent: 'center' },
-  назад: { flexDirection: 'row', alignItems: 'center', gap: 2, minHeight: 48, paddingVertical: 8, paddingRight: 8, paddingLeft: 2 },
+  назад: { flexDirection: 'row', alignItems: 'center', gap: 2, minHeight: 48, paddingVertical: 8, paddingEnd: 8, paddingStart: 2 },
   заголовок: { flex: 1, paddingHorizontal: 8 },
-  заголовокУзкий: { flexShrink: 1, paddingLeft: 4, paddingRight: 0 },
+  заголовокУзкий: { flexShrink: 1, paddingStart: 4, paddingEnd: 0 },
   // Только для диктора: вне потока, 1×1, прозрачный (не display:none — иначе пропадёт h1).
   заголовокСкрыт: { position: 'absolute', width: 1, height: 1, overflow: 'hidden', opacity: 0 },
   середина: { flex: 1, minWidth: 0, alignItems: 'center', justifyContent: 'center' },

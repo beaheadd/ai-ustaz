@@ -120,25 +120,51 @@ export function временаИзТаблицы(таблица: Таблица�
   return итог;
 }
 
-export const ВЕДОМСТВО_ОФИЦИАЛЬНОЕ: Readonly<Record<ИсточникОфициальный, { ru: string; kk: string; uz: string; en: string }>> = {
-  dumk: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB', en: 'SAMK' },
-  umuz: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасының', uz: 'Oʻzbekiston musulmonlari idorasi', en: 'the Muslim Board of Uzbekistan' },
+type Язык = import('../i18n/languages').Язык;
+
+export const ВЕДОМСТВО_ОФИЦИАЛЬНОЕ: Readonly<Record<ИсточникОфициальный, Record<Язык, string>>> = {
+  dumk: { ru: 'ДУМК', kk: 'ҚМДБ', uz: 'QMDB', en: 'SAMK', ar: 'الإدارة الدينية لمسلمي كازاخستان', tr: 'Kazakistan Müslümanları Dini İdaresi', id: 'Dewan Agama Muslim Kazakhstan', ur: 'قازقستان کے مسلمانوں کی دینی انتظامیہ' },
+  umuz: { ru: 'Управления мусульман Узбекистана', kk: 'Өзбекстан мұсылмандары басқармасының', uz: 'Oʻzbekiston musulmonlari idorasi', en: 'the Muslim Board of Uzbekistan', ar: 'إدارة مسلمي أوزبكستان', tr: 'Özbekistan Müslümanları İdaresi', id: 'Dewan Muslim Uzbekistan', ur: 'ازبکستان کے مسلمانوں کی انتظامیہ' },
 };
 
 /** «По данным ДУМК · обновлено 20.11.2026» / «ҚМДБ деректері бойынша · 20.11.2026 жаңартылды» /
- * «QMDB maʼlumotlari boʻyicha · 20.11.2026 yangilandi» / «Per SAMK data · updated 20.11.2026» (kk, uz и en — черновики). */
-export function подписьОфициального(src: ИсточникОфициальный, обновлено: string, язык: 'ru' | 'kk' | 'uz' | 'en'): string {
+ * «QMDB maʼlumotlari boʻyicha · 20.11.2026 yangilandi» / «Per SAMK data · updated 20.11.2026» (kk, uz и en — черновики).
+ * кратко (владелец 28.11.2026: «во многих местах не писать „по ДУМК Казахстана“») — без имени ведомства: «По
+ * официальным данным вашей страны · обновлено …» (главная, карточка); полная подпись — экран «Как считаем». */
+export function подписьОфициального(src: ИсточникОфициальный, обновлено: string, язык: Язык, { кратко = false }: { кратко?: boolean } = {}): string {
   const р = ДАТА.exec(обновлено);
   const дата = р ? `${р[3]}.${р[2]}.${р[1]}` : обновлено;
+  const правило = src === 'umuz';
+  if (кратко)
+    return {
+      ru: `${правило ? 'По официальному правилу' : 'По официальным данным'} вашей страны · обновлено ${дата}`,
+      kk: `Еліңіздің ресми ${правило ? 'ережесі' : 'деректері'} бойынша · ${дата} жаңартылды`,
+      uz: `Mamlakatingiz rasmiy ${правило ? 'qoidasi' : 'maʼlumotlari'} boʻyicha · ${дата} yangilandi`,
+      en: `Per your country's official ${правило ? 'rule' : 'data'} · updated ${дата}`,
+      ar: `وفق ${правило ? 'القاعدة الرسمية' : 'البيانات الرسمية'} في بلدك · حُدّث ${дата}`,
+      tr: `Ülkenizin resmî ${правило ? 'kuralına' : 'verilerine'} göre · güncelleme ${дата}`,
+      id: `Menurut ${правило ? 'aturan' : 'data'} resmi negara Anda · diperbarui ${дата}`,
+      ur: `آپ کے ملک کے سرکاری ${правило ? 'قاعدے' : 'اعداد و شمار'} کے مطابق · تازہ کاری ${дата}`,
+    }[язык];
   const в = ВЕДОМСТВО_ОФИЦИАЛЬНОЕ[src][язык];
   // УМУз не публикует машиночитаемых таблиц: сервер считает их по правилу и точкам ведомства (как islom.uz) — честно
   // «по правилу», а не «по данным» (ведущий, 20.11.2026). ДУМК — таблица скачана у ведомства: «по данным».
-  if (src === 'umuz') {
-    if (язык === 'uz') return `${в} qoidasi boʻyicha · ${дата} yangilandi`;
-    if (язык === 'en') return `Per ${в} rule · updated ${дата}`;
-    return язык === 'kk' ? `${в} ережесі бойынша · ${дата} жаңартылды` : `По правилу ${в} · обновлено ${дата}`;
+  switch (язык) {
+    case 'uz':
+      return правило ? `${в} qoidasi boʻyicha · ${дата} yangilandi` : `${в} maʼlumotlari boʻyicha · ${дата} yangilandi`;
+    case 'en':
+      return правило ? `Per ${в} rule · updated ${дата}` : `Per ${в} data · updated ${дата}`;
+    case 'kk':
+      return правило ? `${в} ережесі бойынша · ${дата} жаңартылды` : `${в} деректері бойынша · ${дата} жаңартылды`;
+    case 'ar':
+      return правило ? `وفق قاعدة ${в} · حُدّث ${дата}` : `وفق بيانات ${в} · حُدّث ${дата}`;
+    case 'tr':
+      return правило ? `${в} kuralına göre · güncelleme ${дата}` : `${в} verilerine göre · güncelleme ${дата}`;
+    case 'id':
+      return правило ? `Menurut aturan ${в} · diperbarui ${дата}` : `Menurut data ${в} · diperbarui ${дата}`;
+    case 'ur':
+      return правило ? `${в} کے قاعدے کے مطابق · تازہ کاری ${дата}` : `${в} کے اعداد و شمار کے مطابق · تازہ کاری ${дата}`;
+    default:
+      return правило ? `По правилу ${в} · обновлено ${дата}` : `По данным ${в} · обновлено ${дата}`;
   }
-  if (язык === 'uz') return `${в} maʼlumotlari boʻyicha · ${дата} yangilandi`;
-  if (язык === 'en') return `Per ${в} data · updated ${дата}`;
-  return язык === 'kk' ? `${в} деректері бойынша · ${дата} жаңартылды` : `По данным ${в} · обновлено ${дата}`;
 }

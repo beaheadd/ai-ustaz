@@ -33,7 +33,7 @@ import { createContext, createElement, useContext, useEffect, useMemo, useRef, u
 import { Linking, Platform, Text, View, type TextProps } from 'react-native';
 import type { ЗаданиеЗнакомство, Урок } from '../content/types';
 import { локально } from '../engine/lessonEngine';
-import { создатьСловарь, useПеревод, useСловарь } from '../i18n';
+import { создатьСловарь, useПеревод, useСловарь, РЯД_АРАБСКИЙ } from '../i18n';
 import { предпросмотрМедиа } from '../media/flag';
 import { клипыКари, материалыУрока, type МатериалыМедиа, type ПоказАудио, type ПоказВидео } from '../media/media';
 import { useТема } from '../theme';
@@ -145,7 +145,7 @@ const СЛОВАРЬ = создатьСловарь({
     стоп: 'Stop',
     предпросмотр: 'Preview: no permission from the author — students do not see this',
   },
-});
+}, 'components/LessonMaterials');
 
 const ПУСТО: МатериалыМедиа = { видео: [], аудио: [] };
 const ЯЗЫКИ_ВИДЕО = ['uz', 'kk', 'ar', 'ru'] as const;
@@ -289,7 +289,7 @@ function Объяснение({ урок }: { урок: Урок }) {
       {новоеБезБукв.length > 0 ? (
         <Карточка>
           <ЗаголовокРаздела надпись={т('новое')} />
-          <View style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl }}>
+          <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'center', columnGap: отступ.xl }}>
             {новоеБезБукв.map((з, i) => (
               <АрабскийТекст key={i} размер="огромный" стиль={стильКрупного('огромный', { безЗнаков: true })}>
                 {з}
@@ -387,8 +387,8 @@ function СсылкаYoutube({ видео, номер }: { видео: Пока�
           {
             minHeight: 48,
             paddingVertical: 13,
-            paddingLeft: отступ.l + 28,
-            paddingRight: отступ.l,
+            paddingStart: отступ.l + 28,
+            paddingEnd: отступ.l,
             borderRadius: радиус.m,
             backgroundColor: цвет.акцентМягкий,
             color: цвет.акцент,
@@ -399,7 +399,7 @@ function СсылкаYoutube({ видео, номер }: { видео: Пока�
       >
         {т('смотреть')}
       </ТекстСсылка>
-      <View style={{ position: 'absolute', left: отступ.l, top: 0, bottom: 0, justifyContent: 'center', pointerEvents: 'none' }}>
+      <View style={{ position: 'absolute', start: отступ.l, top: 0, bottom: 0, justifyContent: 'center', pointerEvents: 'none' }}>
         <Значок имя="внешняя" размер={20} цвет={цвет.акцент} толщина={2} />
       </View>
     </View>

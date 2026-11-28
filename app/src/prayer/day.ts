@@ -26,13 +26,16 @@
  * шығуы», чтобы не путать «күн» = «день»), ru — как на muftyat.kz/ru. kk — черновик для редактора-носителя.
  * uz (латиница, владелец 20.11.2026) — Bomdod, Quyosh, Peshin, Asr, Shom, Xufton; черновик для редактора-носителя.
  * en (владелец 20.11.2026) — Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha; черновик для редактора-носителя.
+ * Владелец 28.11.2026 (ar, tr, id, ur; черновики): ar — الفجر، الشروق، الظهر، العصر، المغرب، العشاء; tr — как в
+ * таблицах Диянета: İmsak, Güneş, Öğle, İkindi, Akşam, Yatsı; id — Subuh, Terbit, Zuhur, Asar, Magrib, Isya;
+ * ur — فجر، طلوع آفتاب، ظہر، عصر، مغرب، عشاء. Цифры — западные во всех языках (i18n/languages.ts ЛОКАЛЬ_INTL).
  * Модуль без импортов своих файлов, кроме типов (node снимает типы сам — scripts/test-prayer.mjs).
  * Решение владельца 19.11.2026: главный экран — 6 блоков времени намаза, ниже обучение.
  * Владелец 20.11.2026 («Мы мировое приложение»): день и время — в поясе места (IANA), а не всегда UTC+5.
  */
 import type { ВременаДня, ДеньРК, КлючВремени } from './times';
 
-type Язык = 'ru' | 'kk' | 'uz' | 'en';
+type Язык = import('../i18n/languages').Язык;
 
 const МИНУТА = 60_000;
 
@@ -109,14 +112,17 @@ export function поясНеРК(смещениеМин: number): boolean {
 
 export const НАЗВАНИЯ: Record<
   КлючВремени,
-  { ru: string; kk: string; uz: string; en: string; ar: string; послеRu: string; послеKk: string; послеUz: string; послеEn: string }
+  {
+    ru: string; kk: string; uz: string; en: string; ar: string; tr: string; id: string; ur: string;
+    послеRu: string; послеKk: string; послеUz: string; послеEn: string; послеAr: string; послеTr: string; послеId: string; послеUr: string;
+  }
 > = {
-  fajr: { ru: 'Фаджр', kk: 'Таң', uz: 'Bomdod', en: 'Fajr', ar: 'الفجر', послеRu: 'фаджра', послеKk: 'Таңнан', послеUz: 'Bomdoddan', послеEn: 'Fajr' },
-  sunrise: { ru: 'Восход', kk: 'Күн шығуы', uz: 'Quyosh', en: 'Sunrise', ar: 'الشروق', послеRu: 'восхода', послеKk: 'Күн шыққаннан', послеUz: 'Quyosh chiqqandan', послеEn: 'sunrise' },
-  dhuhr: { ru: 'Зухр', kk: 'Бесін', uz: 'Peshin', en: 'Dhuhr', ar: 'الظهر', послеRu: 'зухра', послеKk: 'Бесіннен', послеUz: 'Peshindan', послеEn: 'Dhuhr' },
-  asr: { ru: 'Аср', kk: 'Екінті', uz: 'Asr', en: 'Asr', ar: 'العصر', послеRu: 'асра', послеKk: 'Екінтіден', послеUz: 'Asrdan', послеEn: 'Asr' },
-  maghrib: { ru: 'Магриб', kk: 'Ақшам', uz: 'Shom', en: 'Maghrib', ar: 'المغرب', послеRu: 'магриба', послеKk: 'Ақшамнан', послеUz: 'Shomdan', послеEn: 'Maghrib' },
-  isha: { ru: 'Иша', kk: 'Құптан', uz: 'Xufton', en: 'Isha', ar: 'العشاء', послеRu: 'иши', послеKk: 'Құптаннан', послеUz: 'Xuftondan', послеEn: 'Isha' },
+  fajr: { ru: 'Фаджр', kk: 'Таң', uz: 'Bomdod', en: 'Fajr', ar: 'الفجر', tr: 'İmsak', id: 'Subuh', ur: 'فجر', послеRu: 'фаджра', послеKk: 'Таңнан', послеUz: 'Bomdoddan', послеEn: 'Fajr', послеAr: 'الفجر', послеTr: 'sabah namazından', послеId: 'Subuh', послеUr: 'فجر' },
+  sunrise: { ru: 'Восход', kk: 'Күн шығуы', uz: 'Quyosh', en: 'Sunrise', ar: 'الشروق', tr: 'Güneş', id: 'Terbit', ur: 'طلوع آفتاب', послеRu: 'восхода', послеKk: 'Күн шыққаннан', послеUz: 'Quyosh chiqqandan', послеEn: 'sunrise', послеAr: 'الشروق', послеTr: 'güneş doğduktan', послеId: 'matahari terbit', послеUr: 'طلوع آفتاب' },
+  dhuhr: { ru: 'Зухр', kk: 'Бесін', uz: 'Peshin', en: 'Dhuhr', ar: 'الظهر', tr: 'Öğle', id: 'Zuhur', ur: 'ظہر', послеRu: 'зухра', послеKk: 'Бесіннен', послеUz: 'Peshindan', послеEn: 'Dhuhr', послеAr: 'الظهر', послеTr: 'öğle namazından', послеId: 'Zuhur', послеUr: 'ظہر' },
+  asr: { ru: 'Аср', kk: 'Екінті', uz: 'Asr', en: 'Asr', ar: 'العصر', tr: 'İkindi', id: 'Asar', ur: 'عصر', послеRu: 'асра', послеKk: 'Екінтіден', послеUz: 'Asrdan', послеEn: 'Asr', послеAr: 'العصر', послеTr: 'ikindi namazından', послеId: 'Asar', послеUr: 'عصر' },
+  maghrib: { ru: 'Магриб', kk: 'Ақшам', uz: 'Shom', en: 'Maghrib', ar: 'المغرب', tr: 'Akşam', id: 'Magrib', ur: 'مغرب', послеRu: 'магриба', послеKk: 'Ақшамнан', послеUz: 'Shomdan', послеEn: 'Maghrib', послеAr: 'المغرب', послеTr: 'akşam namazından', послеId: 'Magrib', послеUr: 'مغرب' },
+  isha: { ru: 'Иша', kk: 'Құптан', uz: 'Xufton', en: 'Isha', ar: 'العشاء', tr: 'Yatsı', id: 'Isya', ur: 'عشاء', послеRu: 'иши', послеKk: 'Құптаннан', послеUz: 'Xuftondan', послеEn: 'Isha', послеAr: 'العشاء', послеTr: 'yatsı namazından', послеId: 'Isya', послеUr: 'عشاء' },
 };
 
 export const ЭТО_НАМАЗ: Record<КлючВремени, boolean> = { fajr: true, sunrise: false, dhuhr: true, asr: true, maghrib: true, isha: true };
@@ -193,6 +199,10 @@ export function обратныйОтсчёт(мс: number, язык: Язык): 
   if (язык === 'kk') return ч > 0 ? `${ч} сағ ${String(м).padStart(2, '0')} мин қалды` : `${м} мин қалды`;
   if (язык === 'uz') return ч > 0 ? `${ч} soat ${String(м).padStart(2, '0')} daq. qoldi` : `${м} daq. qoldi`;
   if (язык === 'en') return ч > 0 ? `in ${ч} h ${String(м).padStart(2, '0')} min` : `in ${м} min`;
+  if (язык === 'ar') return ч > 0 ? `بعد ${ч} س ${String(м).padStart(2, '0')} د` : `بعد ${м} د`;
+  if (язык === 'tr') return ч > 0 ? `${ч} sa ${String(м).padStart(2, '0')} dk sonra` : `${м} dk sonra`;
+  if (язык === 'id') return ч > 0 ? `${ч} j ${String(м).padStart(2, '0')} mnt lagi` : `${м} mnt lagi`;
+  if (язык === 'ur') return ч > 0 ? `${ч} گھنٹے ${String(м).padStart(2, '0')} منٹ باقی` : `${м} منٹ باقی`;
   return ч > 0 ? `через ${ч} ч ${String(м).padStart(2, '0')} мин` : `через ${м} мин`;
 }
 
@@ -205,9 +215,21 @@ export function обратныйОтсчётПолностью(мс: number, я�
   if (язык === 'uz') return [ч ? `${ч} soat` : '', м ? `${м} daqiqa` : ''].filter(Boolean).join(' ') + ' qoldi';
   if (язык === 'en')
     return 'in ' + [ч ? `${ч} ${ч === 1 ? 'hour' : 'hours'}` : '', м ? `${м} ${м === 1 ? 'minute' : 'minutes'}` : ''].filter(Boolean).join(' ');
+  if (язык === 'ar') return 'بعد ' + [ч ? числоАр(ч, ['ساعة', 'ساعتين', 'ساعات', 'ساعة']) : '', м ? числоАр(м, ['دقيقة', 'دقيقتين', 'دقائق', 'دقيقة']) : ''].filter(Boolean).join(' و');
+  if (язык === 'tr') return [ч ? `${ч} saat` : '', м ? `${м} dakika` : ''].filter(Boolean).join(' ') + ' sonra';
+  if (язык === 'id') return [ч ? `${ч} jam` : '', м ? `${м} menit` : ''].filter(Boolean).join(' ') + ' lagi';
+  if (язык === 'ur') return [ч ? `${ч} ${ч === 1 ? 'گھنٹہ' : 'گھنٹے'}` : '', м ? `${м} منٹ` : ''].filter(Boolean).join(' ') + ' باقی';
   const формаЧ = склонение(ч, ['час', 'часа', 'часов']);
   const формаМ = склонение(м, ['минуту', 'минуты', 'минут']);
   return 'через ' + [ч ? `${ч} ${формаЧ}` : '', м ? `${м} ${формаМ}` : ''].filter(Boolean).join(' ');
+}
+
+/** Арабское число со счётным словом: 1 — «ساعة», 2 — «ساعتين», 3–10 — «3 ساعات», 11+ — «11 ساعة» (как Intl.PluralRules ar). */
+function числоАр(n: number, [одна, две, мало, много]: [string, string, string, string]): string {
+  if (n === 1) return одна;
+  if (n === 2) return две;
+  const д = n % 100;
+  return `${n} ${д >= 3 && д <= 10 ? мало : много}`;
 }
 
 function склонение(n: number, [одна, две, пять]: [string, string, string]): string {
@@ -242,6 +264,11 @@ const МЕСЯЦЫ: Record<Язык, string[]> = {
   kk: ['қаңтар', 'ақпан', 'наурыз', 'сәуір', 'мамыр', 'маусым', 'шілде', 'тамыз', 'қыркүйек', 'қазан', 'қараша', 'желтоқсан'],
   uz: ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avgust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'],
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  // ar, tr, id, ur — черновики (владелец 28.11.2026); ar — названия, принятые в Египте и Заливе (يناير…).
+  ar: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+  tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+  id: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  ur: ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
 };
 const ДНИ_НЕДЕЛИ: Record<Язык, string[]> = {
   // getUTCDay: 0 — воскресенье
@@ -249,6 +276,10 @@ const ДНИ_НЕДЕЛИ: Record<Язык, string[]> = {
   kk: ['жс', 'дс', 'сс', 'ср', 'бс', 'жм', 'сб'], // kk — черновик (сокращения как в календарях: Дс, Сс, Ср, Бс, Жм, Сб, Жс)
   uz: ['ya', 'du', 'se', 'ch', 'pa', 'ju', 'sh'], // uz — черновик (Yakshanba, Dushanba, Seshanba, Chorshanba, Payshanba, Juma, Shanba)
   en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  ar: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+  tr: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
+  id: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+  ur: ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'],
 };
 
 /** '20 ноября' / '20 қараша' / '20-noyabr' (узбекская запись даты — через дефис) / '20 November'. */
@@ -260,8 +291,8 @@ export function датаДня(день: ДеньРК, язык: Язык): stri
 /** 'Сегодня, 19 ноября' / 'Завтра, 20 ноября' / '21 ноября' (kk: 'Бүгін, 19 қараша'). */
 export function подписьДня(день: ДеньРК, язык: Язык, сегодня: ДеньРК): string {
   const дата = датаДня(день, язык);
-  if (день === сегодня) return { ru: 'Сегодня, ', kk: 'Бүгін, ', uz: 'Bugun, ', en: 'Today, ' }[язык] + дата;
-  if (день === сдвигДня(сегодня, 1)) return { ru: 'Завтра, ', kk: 'Ертең, ', uz: 'Ertaga, ', en: 'Tomorrow, ' }[язык] + дата;
+  if (день === сегодня) return { ru: 'Сегодня, ', kk: 'Бүгін, ', uz: 'Bugun, ', en: 'Today, ', ar: 'اليوم، ', tr: 'Bugün, ', id: 'Hari ini, ', ur: 'آج، ' }[язык] + дата;
+  if (день === сдвигДня(сегодня, 1)) return { ru: 'Завтра, ', kk: 'Ертең, ', uz: 'Ertaga, ', en: 'Tomorrow, ', ar: 'غدًا، ', tr: 'Yarın, ', id: 'Besok, ', ur: 'کل، ' }[язык] + дата;
   return дата;
 }
 

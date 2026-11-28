@@ -184,7 +184,7 @@ const СЛОВАРЬ = создатьСловарь({
     сура: 'Surah {н}',
     найдено: 'Surahs found: {н}',
   },
-});
+}, 'screens/QuranScreen');
 
 export function Коран(_: ПропсыЭкрана<'коран'>) {
   const { t, язык } = useПеревод();

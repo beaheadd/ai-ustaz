@@ -15,7 +15,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useТема } from '../theme';
 import { Значок, этоЗначок } from './Icon';
-import { стильТекста } from './Text';
+import { useЯзыкМягко } from '../i18n';
+import { стильТекста, стильУрду } from './Text';
 
 export type ВидКнопки = 'основная' | 'вторичная' | 'тихая';
 
@@ -44,6 +45,7 @@ export function Кнопка({
   подсказка,
   testID,
 }: СвойстваКнопки) {
+  const урду = useЯзыкМягко() === 'ur';
   const { цвет, радиус, отступ, поверхность } = useТема();
   const герой = поверхность === 'герой';
   const фон = (нажата: boolean) =>
@@ -92,7 +94,7 @@ export function Кнопка({
             <Text style={[стили.символ, { color: цветТекста, fontSize: крупная ? 22 : 18 }]}>{значок}</Text>
           )
         ) : null}
-        <Text style={[стильТекста('кнопка'), { color: цветТекста, textAlign: 'center' }]}>
+        <Text style={[стильТекста('кнопка'), урду ? стильУрду('кнопка') : null, { color: цветТекста, textAlign: 'center' }]}>
           {надпись}
         </Text>
       </View>

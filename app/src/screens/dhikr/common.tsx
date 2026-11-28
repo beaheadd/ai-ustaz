@@ -16,7 +16,7 @@
  */
 import { Platform, Text, View } from 'react-native';
 import { АрабскийТекст, Кнопка, Текст } from '../../components';
-import type { Зикр } from '../../dhikr/data';
+import { текстЗикра, type Зикр } from '../../dhikr/data';
 import type { ПричинаОтказа } from '../../quran/data';
 import { создатьСловарь, useСловарь, type Язык } from '../../i18n';
 import { useТема } from '../../theme';
@@ -72,7 +72,7 @@ export const СЛОВАРЬ_ЗИКРОВ = создатьСловарь({
     обновить: 'Refresh the page',
     нетСверки: 'The dhikr file did not pass verification — not shown.',
   },
-});
+}, 'screens/dhikr/common');
 
 /** Атрибуты HTML для react-native-web (Text их поддерживает, в типах RN их нет). */
 const АРАБСКИЙ_ВЕБ = (ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object;
@@ -118,8 +118,10 @@ export function подписьИсточника(зикр: Зикр, язык: �
   const и = зикр.источник;
   if (зикр.вид === 'коран') return т('коран', { ссылка: и.коран ?? '' });
   const части = [т('hadeethenc', { n: и.hadeethenc ?? '' })];
-  if (и.степень_ar) части.push(`${и.степень_ar} (${и.степень?.[язык] ?? ''})`);
-  if (и.передали_ar) части.push(`${и.передали_ar} (${и.передали?.[язык] ?? ''})`);
+  // ar — только арабская степень и «рواه …» как в источнике; остальные — с пояснением в скобках (ar/tr/id/ur — en).
+  const пояснение = (т: Зикр['источник']['степень']) => (язык === 'ar' || !т ? '' : ` (${текстЗикра(т, язык)})`);
+  if (и.степень_ar) части.push(`${и.степень_ar}${пояснение(и.степень)}`);
+  if (и.передали_ar) части.push(`${и.передали_ar}${пояснение(и.передали)}`);
   return части.join(' · ');
 }
 

@@ -48,7 +48,7 @@ const СЛОВАРЬ = создатьСловарь({
     урокПодпись: 'Lesson {н} — open the course map',
     линия: "Rules — Hafs from 'Asim via ash-Shatibiyyah, in continuous reading; stopping — at the end of the ayah. The colouring is built by AI Ustaz rules, without AI.",
   },
-});
+}, 'components/quran/TajweedLegend');
 
 /** Плашка «Цвета таджвида — черновик, проверяет устаз» (правило 11) — над страницей с цветами. */
 export function ПлашкаТаджвида() {
