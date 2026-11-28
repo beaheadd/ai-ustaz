@@ -1302,9 +1302,11 @@ export async function видыЧтения(браузер, база, данны�
     п.проверить(ключи.length >= Math.min(20, данные.сура(н).аяты.length) && ключи.join() === ждём.join(), `${где}: аяты ${ключи[0]}…${ключи[ключи.length - 1]} подряд (${ключи.length})`);
     await сверитьСтраницу(стр, п, ждём, где);
   };
+  // Выбор в меню вида (решение владельца 28.11.2026: вид-обычный|мусхаф, чтение-<тема>, таджвид-<режим>).
   const выбрать = async (стр, п, вид) => {
-    if (!(await п.есть('вид-' + вид))) await п.э('сура-вид').click();
-    await п.э('вид-' + вид).click();
+    const id = /^(вид|чтение|таджвид|режим)-/.test(вид) ? вид : 'вид-' + вид;
+    if (!(await п.есть(id))) await п.э('сура-вид').click();
+    await п.э(id).click();
     await стр.keyboard.press('Escape');
     await п.э('сура-меню').waitFor({ state: 'detached', timeout: 3000 });
   };
@@ -1319,9 +1321,14 @@ export async function видыЧтения(браузер, база, данны�
     await выбрать(стр, п, 'мусхаф');
     await стр.waitForFunction(() => document.querySelector('[data-ayah="1:1"]'), null, { timeout: 10000 });
     п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).вид === 'мусхаф', 'выбор сохранён: aiustaz:quran-view.v1 = { вид: «мусхаф» }');
+    // Цвета таджвида по умолчанию — «Традиционные» (владелец 28.11.2026); «Без цвета» — чистый мусхаф.
+    await стр.waitForFunction(() => document.querySelectorAll('[data-t]').length > 0, null, { timeout: 10000 });
+    п.проверить(true, 'мусхаф: по умолчанию цвета таджвида «Традиционные»');
+    await выбрать(стр, п, 'таджвид-безЦвета');
+    await стр.waitForFunction(() => document.querySelectorAll('[data-t]').length === 0, null, { timeout: 5000 });
     await сверитьСтраницу(стр, п, ['1:1', '1:2', '1:3', '1:4', '1:5', '1:6', '1:7'], 'аль-Фатиха потоком');
     п.проверить(await стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="мусхаф-текст-1"]')).textAlign === 'center'), 'аль-Фатиха — по центру, как в мусхафе');
-    п.проверить((await стр.evaluate(() => document.querySelectorAll('[data-t]').length)) === 0, 'вид «Страница мусхафа» — без цветов таджвида');
+    п.проверить((await стр.evaluate(() => document.querySelectorAll('[data-t]').length)) === 0, 'мусхаф + «Без цвета» — без цветов таджвида');
     п.проверить(await стр.evaluate(() => getComputedStyle(document.querySelector('[data-end]')).userSelect === 'none'), 'знак конца аята не выделяется (user-select: none)');
     п.проверить(
       !(await п.есть('мусхаф-джуз')) && !(await п.есть('мусхаф-где')) && !(await п.есть('мусхаф-следующая')) && !(await п.есть('мусхаф-страница')) && !(await п.есть('нижнее-меню')),
@@ -1340,7 +1347,7 @@ export async function видыЧтения(браузер, база, данны�
     п.проверить((await п.сырой('мусхаф-бисмилла-2')) === данные.сура(2).бисмилла && (await п.есть('мусхаф-сура-2')), 'картуш суры и бисмилла = атрибуту Tanzil');
     const безЦвета = await ширинаГрупп(стр);
 
-    await выбрать(стр, п, 'таджвид');
+    await выбрать(стр, п, 'таджвид-традиционные');
     await стр.waitForFunction(() => document.querySelectorAll('[data-t]').length > 10, null, { timeout: 10000 });
     await сверитьПоток(стр, п, 2, 1, 'цвета таджвида');
     const сЦветом = await ширинаГрупп(стр);
@@ -1426,17 +1433,47 @@ export async function видыЧтения(браузер, база, данны�
     const р255 = await стр.evaluate(() => document.querySelector('[data-ayah="2:255"]').getBoundingClientRect().top);
     п.проверить(р255 >= 40 && р255 < 260, `2:255 — вверху экрана (y = ${р255.toFixed(0)}); аяты выше дорисованы: ${await стр.evaluate(() => !!document.querySelector('[data-ayah="2:240"]'))}`);
 
-    // Ночной: тёмная «бумага», без цветов по умолчанию; переключатель в меню — с цветами.
-    await выбрать(стр, п, 'ночной');
+    // Темы страницы (владелец 28.11.2026: дизайн A + B): «Ночь» — свой набор цветов таджвида (ночь-традиция-v2 A).
+    const фонСуры = () => стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor);
+    const цветКода = (к) => стр.evaluate((к) => (document.querySelector(`[data-t="${к}"]`) ? getComputedStyle(document.querySelector(`[data-t="${к}"]`)).color : null), к);
+    await выбрать(стр, п, 'чтение-ночь');
     await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor === 'rgb(23, 20, 15)', null, { timeout: 5000 });
-    п.проверить((await стр.evaluate(() => document.querySelectorAll('[data-t]').length)) === 0, 'ночной: тёмный фон, без цветов по умолчанию');
-    await п.э('сура-вид').click();
-    await п.э('вид-ночь-цвета').click();
-    await стр.keyboard.press('Escape');
     await стр.waitForFunction(() => document.querySelectorAll('[data-t]').length > 10, null, { timeout: 10000 });
-    п.проверить(await стр.evaluate(() => getComputedStyle(document.querySelector('[data-t="g"]')).color === 'rgb(124, 192, 142)'), 'ночной + «Цвета таджвида ночью»: приглушённые цвета (гунна #7CC08E)');
-    await сверитьСтраницу(стр, п, (await текстыСтраницы(стр)).map((х) => х.ключ), 'ночной с цветами, у 2:255');
-    await п.безГоризонтальнойПрокрутки('ночной, 412 px');
+    п.проверить((await цветКода('g')) === 'rgb(79, 175, 110)', `«Ночь»: тёмный фон, свои цвета таджвида (гунна #4FAF6E: ${await цветКода('g')})`);
+    await сверитьСтраницу(стр, п, (await текстыСтраницы(стр)).map((х) => х.ключ), 'ночь с цветами, у 2:255');
+    await п.безГоризонтальнойПрокрутки('ночь, 412 px');
+    // «Различимые» — одно касание: 5 семейств, мадд 4–6 подчёркнут (признак не только цветом).
+    await выбрать(стр, п, 'таджвид-различимые');
+    await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-t="g"]')).color === 'rgb(108, 203, 234)', null, { timeout: 5000 });
+    const различимые = await стр.evaluate(() => ({
+      нунМим: new Set(['g', 'n', 'k', 'q', 'b'].map((к) => document.querySelector(`[data-t="${к}"]`)).filter(Boolean).map((э) => getComputedStyle(э).color)).size,
+      мадд: ['m', 'f', 'l'].map((к) => document.querySelector(`[data-t="${к}"]`)).filter(Boolean).every((э) => getComputedStyle(э).textDecorationLine.includes('underline')),
+      мадд2: getComputedStyle(document.querySelector('[data-t="t"]')).textDecorationLine.includes('underline'),
+    }));
+    п.проверить(различимые.нунМим === 1 && различимые.мадд && !различимые.мадд2, `«Различимые»: нун/мим — один цвет, мадд 4–6 подчёркнут, мадд 2 — нет (${JSON.stringify(различимые)})`);
+    await сверитьСтраницу(стр, п, (await текстыСтраницы(стр)).map((х) => х.ключ), '«Различимые», текст = Tanzil');
+    п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).таджвид === 'различимые', 'выбор сохранён: таджвид «различимые»');
+    // «Без синего» (B): янтарь, калькаля без цвета, синий канал ≤ 0x8A.
+    await выбрать(стр, п, 'чтение-безСинего');
+    await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor === 'rgb(19, 14, 8)', null, { timeout: 5000 });
+    const янтарь = await стр.evaluate(() => {
+      const цвета = [...new Set([...document.querySelectorAll('[data-t]')].map((э) => getComputedStyle(э).color))];
+      const чернила = getComputedStyle(document.querySelector('[data-testid^="мусхаф-текст-"]')).color;
+      return { цвета, чернила, калькаля: document.querySelectorAll('[data-t="c"]').length };
+    });
+    const синий = (ц) => Number(ц.match(/\d+/g)[2]);
+    п.проверить(янтарь.чернила === 'rgb(230, 195, 138)' && янтарь.калькаля === 0 && [...янтарь.цвета, янтарь.чернила].every((ц) => синий(ц) <= 0x8a), `«Без синего»: чернила #E6C38A, калькаля без цвета, синий канал ≤ 138 (${янтарь.цвета.join(' ')})`);
+    await сверитьСтраницу(стр, п, (await текстыСтраницы(стр)).map((х) => х.ключ), '«Без синего», текст = Tanzil');
+    await выбрать(стр, п, 'чтение-сепия');
+    await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor === 'rgb(242, 231, 207)', null, { timeout: 5000 });
+    п.проверить((await цветКода('g')) === 'rgb(8, 114, 143)', `«Сепия» + «Различимые»: свой набор сепии (нун/мим #08728F: ${await цветКода('g')})`);
+    await выбрать(стр, п, 'таджвид-традиционные');
+    await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-t="g"]')).color === 'rgb(11, 120, 58)', null, { timeout: 5000 });
+    п.проверить(true, '«Сепия» + «Традиционные»: гунна #0B783A');
+    await выбрать(стр, п, 'чтение-авто');
+    await стр.waitForFunction(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor === 'rgb(251, 246, 233)', null, { timeout: 5000 });
+    п.проверить(true, '«Авто» в светлой теме — «День» (#FBF6E9)');
+    void фонСуры;
 
     // «Ещё» → Настройки → вид чтения.
     await стр.evaluate(() => {
@@ -1463,6 +1500,28 @@ export async function видыЧтения(браузер, база, данны�
     await сверитьСтраницу(стр, п, (await текстыСтраницы(стр)).map((х) => х.ключ), '360 px, 2:282 (самый длинный аят) с цветами');
     await п.безГоризонтальнойПрокрутки('цвета таджвида, 360 px');
     await п.безПроблем('360 px: без ошибок');
+    await контекст.close();
+  }
+
+  // Аудит P0-1 (владелец 28.11.2026: «в тёмной теме мусхаф сам в ночном виде»): тёмная тема приложения, тема страницы
+  // «Авто» — мусхаф ночной, шапка тёмная; явная «Сепия» — сепия и в тёмной теме; строки аятов в цветах темы страницы.
+  {
+    const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { схема: 'dark' });
+    const п = помощники(стр, проблемы, 'тёмная тема — ночной мусхаф', null);
+    await стр.addInitScript(() => {
+      if (!localStorage.getItem('aiustaz:quran-view.v1')) localStorage.setItem('aiustaz:quran-view.v1', JSON.stringify({ версия: 2, вид: 'мусхаф', тема: 'авто', таджвид: 'традиционные', режим: 'аяты' }));
+    });
+    await стр.goto(адрес('#/quran/sura?n=1'));
+    await стр.waitForFunction(() => document.querySelector('[data-ayah="1:1"]') && document.querySelector('[data-t]'), null, { timeout: 15000 });
+    const фон = await стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor);
+    п.проверить(фон === 'rgb(23, 20, 15)', `тёмная тема + «Авто» → «Ночь» (${фон}), без вспышки кремовой страницы`);
+    await сверитьСтраницу(стр, п, ['1:1', '1:2', '1:3', '1:4', '1:5', '1:6', '1:7'], 'ночной мусхаф в тёмной теме');
+    await стр.evaluate(() => localStorage.setItem('aiustaz:quran-view.v1', JSON.stringify({ версия: 2, вид: 'обычный', тема: 'сепия', таджвид: 'традиционные', режим: 'аяты' })));
+    await стр.reload();
+    await п.э('коран-аят-1-7-текст').waitFor({ timeout: 15000 });
+    const строка = await стр.evaluate(() => ({ фон: getComputedStyle(document.querySelector('[data-testid="экран-сура"]')).backgroundColor, текст: getComputedStyle(document.querySelector('[data-testid="коран-аят-1-7-текст"]')).color }));
+    п.проверить(строка.фон === 'rgb(242, 231, 207)' && строка.текст === 'rgb(51, 40, 27)', `аят за аятом, «Сепия» в тёмной теме: страница и текст сепии (${строка.фон}, ${строка.текст})`);
+    await п.безПроблем('тёмная тема — ночной мусхаф: без ошибок');
     await контекст.close();
   }
 
