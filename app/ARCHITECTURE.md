@@ -455,6 +455,24 @@ type Прогресс = { версия: 1; язык: 'ru'|'kk'|'uz'|'en'|null; �
 - Тесты: `npm run test:notify`; `scripts/e2e-notify.mjs` (в `e2e.mjs`, `E2E_NOTIFY=0` — пропустить; снимки —
   `SHOTS_NOTIFY=папка`); сервер — `server/tests` (pytest). Бюджет JS — 1430 КБ (+48 488 байт, `check-dist.mjs`).
 
+## Обновление приложения (`src/update/`, полоса «Вышло обновление AI Ustaz»)
+
+Владелец 28.11.2026: «Каждый раз, когда выходит обновление, как на batr.kz выводи кнопку „Обновить“ на приложение, чтобы не
+приходилось закрывать, заново заходить».
+
+- **Свой коммит** — `<meta name="aiustaz-commit">` в `index.html` (`scripts/after-export.mjs`, п. 8: `MUGALIM_COMMIT` или
+  `git rev-parse HEAD`; нет git — метки нет, полосы нет). **Коммит сайта** — `/aiustaz/version.json` (`tools/release-batr.sh`).
+- `update/update.ts`: `запуститьПроверку(приНовой)` — запрос `version.json` (`cache: 'no-store'`, без cookie) через 3 с после
+  запуска, при возвращении во вкладку (не чаще раза в минуту) и каждые 10 минут, пока вкладка видна; без сети — молчит.
+  Только веб, aiustaz.pro и batr.kz (на 127.0.0.1 — флаг `aiustaz:update-test`). На batr.kz worker сайта BATR отдаёт
+  статику cache-first — перед запросом убираем из его кэша только свою запись `version.json`.
+  `обновитьПриложение()` — `registration.update()` нашего worker'а + `fetch(страница, { cache: 'reload' })` (обновляет
+  «aiustaz-страница-v1» и HTTP-кэш), затем `location.reload()`; localStorage и «aiustaz-аудио-v1» не трогает.
+  «×» — `aiustaz:update-dismissed.v1` = скрытый коммит (до следующей другой версии).
+- `update/UpdateBar.tsx` — `<ПолосаОбновления>` в `App.tsx` над экраном обычным элементом колонки (любой экран, меню не
+  закрывает). testID: `обновление`, `обновление-обновить`, `обновление-скрыть`.
+- Тест: `scripts/e2e-update.mjs` (в `e2e.mjs`, `E2E_UPDATE=0` — пропустить; `UPDATE_SHOT=файл.png` — снимок полосы).
+
 ## Сборка и проверка (из `app/`)
 
 ```

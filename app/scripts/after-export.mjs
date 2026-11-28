@@ -31,6 +31,10 @@
  *    файлов сборки dist/offline/files.<sha256[:20]>.json — { версия, оболочка: [JS, шрифты, значки], группы: { коран,
  *    зикры, махраджи, хадисы, намаз: { файлы, байт } } } (адреса от /aiustaz/) — и подставляет его адрес в push-sw.js
  *    (__ОФЛАЙН__). Worker кэширует оболочку при установке, группы — по просьбе страницы (src/offline/offline.ts).
+ * 8) Метка коммита сборки <meta name="aiustaz-commit" content="<sha>"> (владелец 28.11.2026: «как на batr.kz выводи кнопку
+ *    „Обновить“»): MUGALIM_COMMIT или git rev-parse HEAD дерева mugalim. Приложение (src/update/update.ts) сравнивает её с
+ *    /aiustaz/version.json, который пишет tools/release-batr.sh из того же чистого коммита, и показывает «Обновить».
+ *    Нет git и переменной — метки нет, полоса не показывается (дев-сервер и сборки без git).
  * media-src 'self' blob: https://cdn.islamic.network — видео и аудио партнёров только со своего сервера (относительные
  * пути media/…); чтение Корана — аудио AlQuran Cloud (владелец 27.11.2026, условия: учебное использование, стриминг)
  * и своя запись; YouTube не встраивается (frame-src 'none'), а открывается ссылкой во внешнем приложении.
@@ -40,6 +44,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { ИМЯ_МАНИФЕСТА, ПАПКА_PWA, ЦВЕТ_ТЕМЫ_СВЕТЛАЯ, ЦВЕТ_ТЕМЫ_ТЁМНАЯ, найтиЗначки, построитьМанифест } from './pwa.mjs';
 
@@ -194,4 +199,26 @@ export const ОБОЛОЧКА_ОФЛАЙН = ['_expo/', 'assets/', 'pwa/'];
   fs.writeFileSync(путьSW, новый);
   const мб = (б) => (б / 1048576).toFixed(1) + ' МБ';
   console.log(`Без сети: ${ПАПКА_ОФЛАЙН}/${имя} — оболочка ${оболочка.length} файлов, ` + Object.entries(группы).map(([и, г]) => `${и} ${г.файлы.length} (${мб(г.байт)})`).join(', '));
+}
+
+// 8. Коммит сборки — для полосы «Вышло обновление» (владелец 28.11.2026).
+export const МЕТКА_КОММИТА = 'aiustaz-commit';
+{
+  let коммит = (process.env.MUGALIM_COMMIT ?? '').trim().toLowerCase();
+  if (!коммит) {
+    try {
+      коммит = execFileSync('git', ['-C', корень, 'rev-parse', 'HEAD'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim().toLowerCase();
+    } catch {
+      коммит = '';
+    }
+  }
+  if (коммит && !/^[0-9a-f]{7,40}$/.test(коммит)) throw new Error(`MUGALIM_COMMIT — не коммит git: «${коммит}»`);
+  const текущий = fs.readFileSync(файл, 'utf8');
+  const образец = new RegExp(`\\s*<meta name="${МЕТКА_КОММИТА}"[^>]*>`, 'g');
+  const без = текущий.replace(образец, '');
+  const после = /(<meta name="aiustaz-media-preview"[^>]*>)/i;
+  if (!после.test(без)) throw new Error('не нашёл место для метки коммита в index.html');
+  const новый = коммит ? без.replace(после, `$1\n    <meta name="${МЕТКА_КОММИТА}" content="${коммит}" />`) : без;
+  fs.writeFileSync(файл, новый);
+  console.log(`Коммит сборки (полоса «Обновить»): ${коммит || 'нет — git недоступен, полоса выключена'}`);
 }
