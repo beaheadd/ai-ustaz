@@ -315,6 +315,16 @@ export async function обновлениеСквозной(браузер, { п�
         // прогона это дольше минуты.
         180000,
       );
+      if (новый !== коммитB) {
+        console.log('    отладка: ' + JSON.stringify(await стр.evaluate(async ([список, старый]) => {
+          const ф = await caches.open('aiustaz-файлы-v1');
+          const с = await (await caches.open('aiustaz-страница-v1')).match('/aiustaz/index.html');
+          const т = с ? await с.text() : '';
+          const рег = await navigator.serviceWorker.getRegistration();
+          return { список: !!(await ф.match(список)), старый: !!(await ф.match(старый)), метка: (/aiustaz-commit" content="([0-9a-f]+)"/.exec(т) || [])[1] || null,
+            ключей: (await ф.keys()).length, активный: рег?.active?.scriptURL, ждёт: !!рег?.waiting, ставится: !!рег?.installing, кэши: await caches.keys() };
+        }, [списокB, чанкA])));
+      }
       проверить(новый === коммитB, 'новый worker: список офлайн B в кэше, старого чанка нет, сохранённая страница — B');
       проверить(await стр.evaluate(async (а) => !!(await (await caches.open('aiustaz-аудио-v1')).match(а)), АЯТ), 'скачанное чтение (aiustaz-аудио-v1) не удалено');
       проверить(JSON.stringify(await о.прогресс()) === JSON.stringify(прогрессДо), 'прогресс (localStorage) на месте');
