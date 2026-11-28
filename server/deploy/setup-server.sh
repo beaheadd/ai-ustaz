@@ -144,7 +144,10 @@ for i in $(seq 1 30); do
     # или они старше 2 суток (НБ РК и ЦБ РФ, ≈ 20 с). Только показать в журнале выкатки — выкатку не роняет.
     for j in $(seq 1 30); do curl -fsS -o /dev/null "http://127.0.0.1:$PORT/api/zakat/prices" 2>/dev/null && break; sleep 3; done
     echo "цены металлов: $(curl -sS "http://127.0.0.1:$PORT/api/zakat/prices" 2>&1 | head -c 400)"
-    journalctl -u mugalim-jobs --since '-15 min' --no-pager 2>/dev/null | grep 'цены металлов' | tail -3 || true
+    # Курсы валют мира к тенге (rates.py, владелец 28.11.2026: «выбор валюты всего мира») — тот же поток, сразу после цен.
+    for j in $(seq 1 30); do curl -fsS -o /dev/null "http://127.0.0.1:$PORT/api/zakat/rates" 2>/dev/null && break; sleep 3; done
+    echo "курсы валют: $(curl -sS "http://127.0.0.1:$PORT/api/zakat/rates" 2>&1 | head -c 300)"
+    journalctl -u mugalim-jobs --since '-15 min' --no-pager 2>/dev/null | grep -E 'цены металлов|курсы валют' | tail -4 || true
     if systemctl is-active --quiet mugalim-jobs; then echo "OK: mugalim-jobs работает"; exit 0; fi
     echo "ОШИБКА: mugalim-jobs не запущен — journalctl -u mugalim-jobs -n 50"; exit 1
   fi

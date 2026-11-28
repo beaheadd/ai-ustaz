@@ -32,6 +32,7 @@
 | `prayer.py` | официальное время намаза КЗ/УЗ: `GET /api/prayer/official`, скачивание и проверка таблиц ДУМК, правило УМУз в точке региона, фоновое обновление (раздел ниже) |
 | `prayer_places.json` | пункты наших списков (KZ 168 → пункт ДУМК, UZ 176 → координаты); собирает `tools/prayer/build_server_places.py` |
 | `migrations/NNN_*.sql` | только добавляющие (тест `test_миграции_только_добавляющие`); 003 — таблицы времени намаза; 004 — база знаний «Спросить AI Ustaz»; 005 — язык uz (столбец `lang_ui`: ограничение `lang` из 001 не меняем, для uz там запасной `ru`); 006 — язык en (столбец `lang_code` ru/kk/uz/en — db.py читает `COALESCE(lang_code, lang_ui, lang)`, в `lang` и `lang_ui` для en пишет запасной `ru`; таблица `kb_texts_en` — английские тексты базы знаний, словарь `english`: в `kb_texts` язык ограничен ru/kk/uz). **Сервер выкатывать раньше клиента:** старый сервер ответит на en-подписку и en-вопрос 400 `lang`; 025 — языки ar, tr, id, ur уведомлений (владелец 28.11.2026; столбец `lang_tag` из 8 языков — db.py читает `COALESCE(lang_tag, lang_code, lang_ui, lang)`, в `lang_code` пишет запасной `en`; чат для этих языков клиент спрашивает с `lang: 'en'`) |
+| `rates.py` | курсы валют мира к тенге для закята: `GET /api/zakat/rates`, НБ РК → ЦБ РФ → ЕЦБ → открытый набор CC0, проверка; миграция 026 (раздел «Цены золота и серебра…») |
 | `metals.py` | цены золота и серебра за 1 г в тенге для калькулятора закята: `GET /api/zakat/prices`, выгрузка НБ РК + ЦБ РФ раз в сутки (поток `metals` в jobs), проверка; миграция 021 (раздел ниже) |
 | `stats.py` | своя анонимная статистика: `POST /api/stats/e` (только aiustaz.pro; без cookie, IP, строки браузера, мест), суточные итоги, сводка для админки; сырые события 90 дней (владелец 27.11.2026) |
 | `admin.py` | админка: вход по коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
@@ -149,8 +150,21 @@ API (только чтение из БД, 60 запросов в минуту с
 | `GET /api/zakat/prices` | `200 {date, gold_per_g, silver_per_g, currency:'KZT', unit:'g', source, silver_source, silver_method:'cbr-usd-nbk', updated}`, `Cache-Control: public, max-age=10800`, ETag / 304; 60 в минуту с хэша IP |
 | цен ещё нет | `503 {ошибка:'not_ready'}` (no-store) — клиент оставляет ручной ввод |
 
+**Валюты мира** (`rates.py`, миграция 026; владелец 28.11.2026: «Должен быть выбор валюты всего мира»). Цены — в тенге;
+приложение пересчитывает по курсу к тенге. Источники по старшинству (образцы — `tests/fixtures/rates/`, условия —
+`content/sources.json`): НБ РК `nationalbank.kz/rss/get_rates.cfm` (47 валют, ₸ за quant) → Банк России `XML_daily.asp`
+(+11: DZD, BHD, BOB, CUP, NGN, NZD, BDT, TMT, ETB, RSD, MMK; кросс через доллар) → ЕЦБ `eurofxref-daily.xml` (+ISK, PHP)
+→ fawazahmed0/exchange-api, CC0 (остальные ≈ 93). Итого 154 действующих кода ISO 4217 из 154. Проверка: свежесть
+источника, сверка кросс-курсов источника с НБ РК (медиана ≤ 3 %, иначе источник целиком не берём), границы, скачок валюты
+≥ 30 % — валюту не берём, две одинаковые выгрузки подряд. Курса нет — приложение просит цену 1 г вручную.
+
+| Запрос | Ответ |
+|---|---|
+| `GET /api/zakat/rates` | `200 {date, base:'KZT', updated, count, rates:{КОД:[₸ за 1, 'nbk'\|'cbr'\|'ecb'\|'fx']}, sources:{источник:{date, url}}}` ≈ 4 КБ, кэш 3 ч, ETag; 503 — курсов ещё нет |
+
+nginx aiustaz.pro (batr-world `deploy/aiustaz-app.nginx.conf`): `location = /api/zakat/rates` — как у цен.
 nginx aiustaz.pro (batr-world `deploy/aiustaz-app.nginx.conf`): `location = /api/zakat/prices` → 127.0.0.1:8031, только GET,
-без журнала. Серверу нужен выход к `nationalbank.kz` и `www.cbr.ru` (HTTPS) — для `mugalim-jobs`.
+без журнала. Серверу нужен выход к `nationalbank.kz`, `www.cbr.ru`, `www.ecb.europa.eu` и `cdn.jsdelivr.net` (HTTPS) — для `mugalim-jobs`.
 
 ## «Спросить AI Ustaz» — чат в центре меню (`ask.py`, `ask_media.py`, `quran_ref.py`, `kb.py`, `kb_load.py`, миграции 004 и 020)
 
@@ -218,7 +232,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest
 .venv/bin/python -m pytest -q tests                      # логика без БД (тесты БД пропускаются)
 # с настоящим PostgreSQL — своя временная база mugalim_test_<…> создаётся и удаляется в каждом тесте:
 MUGALIM_TEST_PG='postgresql://postgres@127.0.0.1:5432/postgres' .venv/bin/python -m pytest -q tests
-python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py metals.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py feedback.py
+python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py metals.py rates.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py feedback.py
 # API вручную (своя база mugalim_dev):
 MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_VAPID_PRIVATE=… \
   .venv/bin/python -m uvicorn --app-dir . --factory app:создать_приложение --port 8030
@@ -317,7 +331,8 @@ MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_
 | `MUGALIM_METALS_HOUR` | 11 (0–23) | с какого часа по Алматы выгружать цены за сутки |
 | `MUGALIM_METALS_TICK_SEC` | 600 (60–3600) | как часто проверять, пора ли |
 | `MUGALIM_METALS_CHECK_PCT` | 5 (0,5–20) | сверка золота ЦБ РФ с НБ РК, % |
-| `MUGALIM_METALS_MAX_JUMP_PCT` | 30 (5–90) | наибольший скачок к прошлому дню, % |
+| `MUGALIM_METALS_MAX_JUMP_PCT` | 30 (5–90) | наибольший скачок к прошлому дню, % (и для курсов валют) |
+| `MUGALIM_RATES_CHECK_PCT` | 3 (0,5–20) | сверка кросс-курсов ЦБ РФ, ЕЦБ, открытого набора с НБ РК (медиана), % |
 | `MUGALIM_ASK_DRAFTS` | 1 (0/1) | «Спросить»: показывать записи со статусом «черновик» (всегда с пометкой); 1 — на время запуска среди своих |
 | `MUGALIM_ASK_MIN_SHARE` | 0,3 (0,05–1) | порог релевантности: доля значимых слов вопроса, найденных в записи |
 | `MUGALIM_FEEDBACK_DIGEST` | 1 (0/1) | письмо админам о новых сообщениях об ошибках раз в сутки (mugalim-jobs) |
