@@ -368,7 +368,9 @@
    "подпись": "Ukuran teks Arab",
    "меньше": "Perkecil teks Arab",
    "больше": "Perbesar teks Arab",
-   "значение": "Ukuran {к}"
+   "значение": "Ukuran {к}",
+   "образец": "Contoh: Al-Fatihah, 1:1",
+   "сам": "Di mode “Halaman” ukuran menyesuaikan layar sendiri."
   },
   "components/quran/AudioDownload": {
    "скачатьСуру": "Unduh surah untuk didengar tanpa internet",
@@ -1482,6 +1484,14 @@
    "подпись": "Fon Al-Qur'an",
    "мединский": "Mushaf Madinah",
    "классический": "Klasik"
+  },
+  "components/HomeContinue": {
+   "тренер": "Pelatih tajwid",
+   "тренерУрок": "Pelatih tajwid · pelajaran {метка}",
+   "прогресс": "{пройдено} dari {всего}",
+   "чтение": "Lanjutkan membaca",
+   "начать": "Mulai membaca Al-Qur'an",
+   "страница": "hlm. {н}"
   }
  }
 }

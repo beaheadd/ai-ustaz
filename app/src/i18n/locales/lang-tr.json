@@ -368,7 +368,9 @@
    "подпись": "Arapça metin boyutu",
    "меньше": "Arapça metni küçült",
    "больше": "Arapça metni büyüt",
-   "значение": "Boyut {к}"
+   "значение": "Boyut {к}",
+   "образец": "Örnek: Fâtiha, 1:1",
+   "сам": "“Sayfalar” modunda boyut ekrana kendiliğinden uyar."
   },
   "components/quran/AudioDownload": {
    "скачатьСуру": "Sureyi internetsiz dinlemek için indir",
@@ -1482,6 +1484,14 @@
    "подпись": "Kur'an yazı tipi",
    "мединский": "Medine Mushafı",
    "классический": "Klasik"
+  },
+  "components/HomeContinue": {
+   "тренер": "Tecvid eğitmeni",
+   "тренерУрок": "Tecvid eğitmeni · {метка}. ders",
+   "прогресс": "{всего} dersten {пройдено}",
+   "чтение": "Okumaya devam et",
+   "начать": "Kur'an okumaya başla",
+   "страница": "s. {н}"
   }
  }
 }
