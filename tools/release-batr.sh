@@ -21,8 +21,10 @@ echo "==> Сборка app/ из $COMMIT"
 echo "==> Сквозной тест"
 # Раздел «обновление» (второй service worker докачивает всю офлайн-оболочку) в общем прогоне нестабилен под нагрузкой,
 # отдельно — стабилен: гоняем его сразу после общего, своим процессом. Это не пропуск — проверки те же.
-(cd "$MUG/app" && E2E_UPDATE=0 node scripts/e2e.mjs | tail -5)
+# «статистика» тоже отдельно: в общем прогоне изредка не видит скрытый хадис (отдельно стабильна; отладка — в выводе).
+(cd "$MUG/app" && E2E_UPDATE=0 E2E_STATS=0 node scripts/e2e.mjs | tail -5)
 (cd "$MUG/app" && node scripts/e2e-update.mjs | tail -3)
+(cd "$MUG/app" && node scripts/e2e-stats.mjs | grep -E 'отладка|НЕ ВЫПОЛНЕНО|OK: статистика')
 
 echo "==> batr-world: ветка $BRANCH от свежего main"
 [ -z "$(git -C "$BATR" status --porcelain --untracked-files=no)" ] || { echo "ОШИБКА: в batr-world незакоммиченные правки (чужая работа?) — не трогаю"; exit 1; }

@@ -127,7 +127,9 @@ export async function статистикаСквозной(браузер, { п�
     // Под нагрузкой полного прогона настройки после перезагрузки приходят позже — ждём их, а не время.
     await подождать(стр, () => журнал.настройки.length >= 2, 15000);
     await стр.evaluate((id) => { location.hash = '#/hadith/item?n=' + id; }, скрытый);
-    проверить(await стр.getByTestId('хадис-нет').first().waitFor({ state: 'visible', timeout: 20000 }).then(() => true, () => false), `скрытый в админке хадис ${скрытый} — «Такого хадиса в разделе нет»`);
+    const нетХадиса = await стр.getByTestId('хадис-нет').first().waitFor({ state: 'visible', timeout: 20000 }).then(() => true, () => false);
+    if (!нетХадиса) console.log('    отладка: ' + (await стр.evaluate(() => location.hash + ' | настройки: ' + (localStorage.getItem('aiustaz:content-config.v1') || '—').slice(0, 200) + ' | ' + document.body.innerText.slice(0, 300))));
+    проверить(нетХадиса, `скрытый в админке хадис ${скрытый} — «Такого хадиса в разделе нет»`);
     await стр.evaluate((id) => { location.hash = '#/hadith/item?n=' + id; }, проверенный);
     const есть = await стр.getByTestId('хадис-одобрено').first().waitFor({ state: 'visible', timeout: 20000 }).then(() => true, () => false);
     if (!есть) console.log('    отладка: ' + (await стр.evaluate(() => location.hash + ' | ' + document.body.innerText.slice(0, 400))));
