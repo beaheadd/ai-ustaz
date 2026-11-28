@@ -211,9 +211,18 @@ def test_служебные_тексты():
 
 def test_тексты_без_арабского_эмодзи_и_призывов():
     """Правила CLAUDE.md: в уведомлениях нет текста Корана (арабского), хадисов, призывов, наград, эмодзи."""
-    все = [с for язык in push.ТЕКСТЫ.values() for с in язык.values()] + [с for я in push.НАЗВАНИЯ.values() for с in я.values()] + list(push.ДЖУМА.values())
-    for с in все:
+    # ar и ur (владелец 28.11.2026) пишутся арабским письмом — для них признак текста Корана другой: огласовки
+    # (наш Коран всегда Uthmani с харакатами; тексты интерфейса — без них).
+    АРАБСКИЕ_ЯЗЫКИ = ('ar', 'ur')
+    def тексты(языки):
+        return ([с for я in языки for с in push.ТЕКСТЫ[я].values()] + [с for я in языки for с in push.НАЗВАНИЯ[я].values()]
+                + [push.ДЖУМА[я] for я in языки])
+    for с in тексты([я for я in push.ЯЗЫКИ if я in АРАБСКИЕ_ЯЗЫКИ]):
+        assert not re.search(r'[\u064B-\u065F\u0670\u06D6-\u06ED]', с), с
+    все = тексты(push.ЯЗЫКИ)
+    for с in тексты([я for я in push.ЯЗЫКИ if я not in АРАБСКИЕ_ЯЗЫКИ]):
         assert not re.search(r'[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]', с), с
+    for с in все:
         assert not re.search(r'[\U0001F000-\U0001FAFF☀-➿]', с), с
         assert not re.search(r'(?i)сур|аят|хадис|прочитайте|награ|серия|рейтинг|хасанат|недействит|сүре|аят|хадис', с), с
 
@@ -282,3 +291,25 @@ def test_джума_и_тег_по_дню_места():
     # 21.11 01:30 в UTC+14 — это 20.11 по UTC+5, но у места — суббота: не «Джума»
     assert not push.уведомление(с, 'ru', 'Kiritimati')['title'].startswith('Джума')
     assert push.уведомление(с, 'ru', 'Kiritimati')['tag'].endswith('2026-11-21')
+
+
+def test_текст_новые_языки():
+    """ar, tr, id, ur (владелец 28.11.2026): названия = app/src/prayer/day.ts; пятница — свой «джума»; текст = примеру экрана."""
+    п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
+    for язык, джума, тело_ in (
+        ('ar', 'صلاة الجمعة', 'حان وقت الصلاة · Makkah. التالية — العصر في 15:20'),
+        ('tr', 'Cuma namazı', 'Namaz vakti girdi · Makkah. Sıradaki — İkindi, 15:20'),
+        ('id', 'Salat Jumat', 'Waktu salat telah tiba · Makkah. Berikutnya — Asar pukul 15:20'),
+        ('ur', 'جمعہ کی نماز', 'نماز کا وقت ہو گیا · Makkah. اگلی — عصر، 15:20'),
+    ):
+        assert push.разобрать_подписку(тело(город='Makkah', язык=язык), СЕЙЧАС).язык == язык
+        у = push.уведомление(п, язык, 'Makkah')
+        assert у['title'] == f'{джума} · 13:05' and у['lang'] == язык
+        assert у['body'] == тело_
+        assert set(push.ТЕКСТЫ[язык]) == set(push.ТЕКСТЫ['ru']) and set(push.НАЗВАНИЯ[язык]) == set(push.НАЗВАНИЯ['ru'])
+        for с in [*push.ТЕКСТЫ[язык].values(), *push.НАЗВАНИЯ[язык].values(), push.ДЖУМА[язык]]:
+            assert not re.search(r'[а-яёәіңғүұқөһ]', re.sub(r'\{[^}]+\}', '', с), re.I), с  # кроме {подстановок}
+            # Правило 9: без текста Корана в уведомлениях — нет слов «сура/аят» и цитат.
+            assert not re.search(r'(?i)sure|surah|ayet|ayat|سورة|آية', с), с
+    п2 = push.Пункт(момент('2026-11-21', '05:50'), 'fajr', '06:00', 10, 'sunrise', '07:30')
+    assert push.уведомление(п2, 'tr', 'İstanbul')['title'] == '10 dk sonra — İmsak (06:00)'

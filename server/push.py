@@ -17,7 +17,7 @@
     время места: смещение — минуты к востоку от UTC (по умолчанию 300 = UTC+5, Казахстан и Узбекистан)
 
 Что приходит от клиента (координаты НЕ приходят — клиент сам считает расписание на 30 дней методом страны места):
-  { subscription: { endpoint, keys: { p256dh, auth } }, lang: 'ru'|'kk'|'uz'|'en', city: 'Алматы',
+  { subscription: { endpoint, keys: { p256dh, auth } }, lang: 'ru'|'kk'|'uz'|'en'|'ar'|'tr'|'id'|'ur', city: 'Алматы',
     items: [ { at: мс UTC, key: 'fajr'…'isha', time: '14:39', before: 0|5|10|15|30, next?: { key, time }, off?: 300 } ] }
   at — момент уведомления: время намаза или (before > 0) за before минут до него; time — местное время намаза;
   off — смещение пояса места в момент намаза, минуты (−720…+840, кратно 15; нет — 300: клиенты до 20.11.2026).
@@ -48,7 +48,8 @@ from urllib.parse import urlsplit
 КЛЮЧИ = ('fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha')
 НАМАЗЫ = ('fajr', 'dhuhr', 'asr', 'maghrib', 'isha')
 ЗАРАНЕЕ = (0, 5, 10, 15, 30)
-ЯЗЫКИ = ('ru', 'kk', 'uz', 'en')
+# ar, tr, id, ur — владелец 28.11.2026 (языки интерфейса); тексты — черновик для редактора-носителя.
+ЯЗЫКИ = ('ru', 'kk', 'uz', 'en', 'ar', 'tr', 'id', 'ur')
 
 МАКС_ДНЕЙ = 31  # клиент шлёт 30 дней вперёд; сутки — запас на границу дня
 МАКС_В_СУТКИ = 12  # 6 времён × (в момент + напоминание)
@@ -67,8 +68,14 @@ from urllib.parse import urlsplit
     'kk': {'fajr': 'Таң', 'sunrise': 'Күн шығуы', 'dhuhr': 'Бесін', 'asr': 'Екінті', 'maghrib': 'Ақшам', 'isha': 'Құптан'},
     'uz': {'fajr': 'Bomdod', 'sunrise': 'Quyosh', 'dhuhr': 'Peshin', 'asr': 'Asr', 'maghrib': 'Shom', 'isha': 'Xufton'},
     'en': {'fajr': 'Fajr', 'sunrise': 'Sunrise', 'dhuhr': 'Dhuhr', 'asr': 'Asr', 'maghrib': 'Maghrib', 'isha': 'Isha'},
+    # = app/src/prayer/day.ts НАЗВАНИЯ (tr — как в таблицах Диянета).
+    'ar': {'fajr': 'الفجر', 'sunrise': 'الشروق', 'dhuhr': 'الظهر', 'asr': 'العصر', 'maghrib': 'المغرب', 'isha': 'العشاء'},
+    'tr': {'fajr': 'İmsak', 'sunrise': 'Güneş', 'dhuhr': 'Öğle', 'asr': 'İkindi', 'maghrib': 'Akşam', 'isha': 'Yatsı'},
+    'id': {'fajr': 'Subuh', 'sunrise': 'Terbit', 'dhuhr': 'Zuhur', 'asr': 'Asar', 'maghrib': 'Magrib', 'isha': 'Isya'},
+    'ur': {'fajr': 'فجر', 'sunrise': 'طلوع آفتاب', 'dhuhr': 'ظہر', 'asr': 'عصر', 'maghrib': 'مغرب', 'isha': 'عشاء'},
 }
-ДЖУМА = {'ru': 'Джума', 'kk': 'Жұма намазы', 'uz': 'Juma namozi', 'en': "Jumu'ah prayer"}
+ДЖУМА = {'ru': 'Джума', 'kk': 'Жұма намазы', 'uz': 'Juma namozi', 'en': "Jumu'ah prayer",
+         'ar': 'صلاة الجمعة', 'tr': 'Cuma namazı', 'id': 'Salat Jumat', 'ur': 'جمعہ کی نماز'}
 
 ТЕКСТЫ = {
     'ru': {
@@ -118,6 +125,55 @@ from urllib.parse import urlsplit
         'проверка': 'This is how prayer time notifications will arrive · {город}',
         'кнопка_намаз': 'Prayer times',
         'кнопка_кибла': 'Qibla',
+    },
+    # ar, tr, id, ur — черновик (владелец 28.11.2026); «наступило» + «следующий» = примерТекст экрана уведомлений.
+    'ar': {
+        'наступило': 'حان وقت الصلاة · {город}',
+        'восход': 'شروق الشمس · {город}',
+        'следующий': 'التالية — {намаз} في {время}',
+        'напоминание': 'بعد {мин} د — {намаз} ({время})',
+        'обновить_заголовок': 'AI Ustaz',
+        'обновить': 'افتح AI Ustaz لتحديث مواقيت الصلاة',
+        'проверка_заголовок': 'تجربة التنبيهات · AI Ustaz',
+        'проверка': 'هكذا ستصلك تنبيهات مواقيت الصلاة · {город}',
+        'кнопка_намаз': 'مواقيت الصلاة',
+        'кнопка_кибла': 'القبلة',
+    },
+    'tr': {
+        'наступило': 'Namaz vakti girdi · {город}',
+        'восход': 'Güneş doğdu · {город}',
+        'следующий': 'Sıradaki — {намаз}, {время}',
+        'напоминание': '{мин} dk sonra — {намаз} ({время})',
+        'обновить_заголовок': 'AI Ustaz',
+        'обновить': "Namaz vakitlerini güncellemek için AI Ustaz'ı açın",
+        'проверка_заголовок': 'Bildirim denemesi · AI Ustaz',
+        'проверка': 'Namaz vakti bildirimleri böyle gelecek · {город}',
+        'кнопка_намаз': 'Namaz vakitleri',
+        'кнопка_кибла': 'Kıble',
+    },
+    'id': {
+        'наступило': 'Waktu salat telah tiba · {город}',
+        'восход': 'Matahari terbit · {город}',
+        'следующий': 'Berikutnya — {намаз} pukul {время}',
+        'напоминание': '{мин} menit lagi — {намаз} ({время})',
+        'обновить_заголовок': 'AI Ustaz',
+        'обновить': 'Buka AI Ustaz untuk memperbarui waktu salat',
+        'проверка_заголовок': 'Uji notifikasi · AI Ustaz',
+        'проверка': 'Beginilah notifikasi waktu salat akan datang · {город}',
+        'кнопка_намаз': 'Waktu salat',
+        'кнопка_кибла': 'Kiblat',
+    },
+    'ur': {
+        'наступило': 'نماز کا وقت ہو گیا · {город}',
+        'восход': 'طلوع آفتاب · {город}',
+        'следующий': 'اگلی — {намаз}، {время}',
+        'напоминание': '{мин} منٹ بعد — {намаз} ({время})',
+        'обновить_заголовок': 'AI Ustaz',
+        'обновить': 'نماز کے اوقات تازہ کرنے کے لیے AI Ustaz کھولیں',
+        'проверка_заголовок': 'اطلاعات کی آزمائش · AI Ustaz',
+        'проверка': 'نماز کے اوقات کی اطلاعات یوں آئیں گی · {город}',
+        'кнопка_намаз': 'نماز کے اوقات',
+        'кнопка_кибла': 'قبلہ',
     },
 }
 

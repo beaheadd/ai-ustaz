@@ -210,7 +210,7 @@ def test_бд_загрузка_и_поиск_справки(база, pg_адр�
     assert первый('Намаз уақыты қайдан алынады?', 'kk') == 'spravka-vremya-namaza'
     з = база.kb_найти(ask.термы('Намаз уақыты қайдан алынады?', 'kk'), 'kk', True, 5)[0]
     assert з['язык'] == 'kk' and з['заголовок'].startswith('Намаз уақыты') and з['черновик'] is True
-    assert з['версия'].startswith('2.') and len(з['версия']) == 10   # версия 2 — добавлен en (20.11.2026)
+    assert з['версия'].startswith('3.') and len(з['версия']) == 10   # версия 2 — добавлен en (20.11.2026); 3 — нейтральные подписи (28.11.2026)
     # en (миграция 006: тексты — в kb_texts_en, словарь 'english')
     assert первый('Where do the prayer times come from?', 'en') == 'spravka-vremya-namaza'
     assert первый('Are there ads? Is the app paid?', 'en') == 'spravka-besplatno'

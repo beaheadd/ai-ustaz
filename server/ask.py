@@ -18,7 +18,7 @@
   классифицировать() — детерминированно, словари фраз ru/kk/uz/en (черновик; проверяет устаз; en — владелец 20.11.2026):
     'вне-темы' — политика, течения, экстремизм, споры мазхабов/акыды, не-исламские темы → шаблон отказа;
     тафсир аята — ИИ-тафсира нет: запись вида 'тафсир' с той же ссылкой «сура:аят» показываем как есть, иначе отказ;
-    'к-имаму' — личный вопрос фикха → шаблон «к имаму / в ДУМК / Imam AI» + общие материалы базы, если нашлись
+    'к-имаму' — личный вопрос фикха → шаблон «к имаму или в духовное управление мусульман вашей страны» (владелец 28.11.2026: нейтрально, без ДУМК) + общие материалы базы, если нашлись
       («не ответ на ваш случай»); никогда не говорим о действительности намаза;
     иначе поиск: ничего (ниже порога доли совпавших слов) → 'нет-в-базе' и счётчик дня (вопрос не храним).
   Режим 'поиск' (по умолчанию): текст — шаблон, источники — до 5 лучших записей как есть.
@@ -315,10 +315,10 @@ def слишком_пусто(обезличенный: str) -> bool:
         'ответ': 'Вот что есть в нашей базе по вашему вопросу. Откройте источник, чтобы прочитать его целиком.',
         'черновик': 'Материалы с пометкой «черновик» ещё проверяет устаз.',
         'нет-в-базе': 'В нашей базе пока нет ответа на этот вопрос. Мы отметили, что такой ответ нужен (сам текст вопроса '
-                      'не сохраняем). Личные вопросы фикха задайте имаму вашей мечети, в ДУМК (muftyat.kz) или Imam AI.',
+                      'не сохраняем). Личные вопросы фикха задайте имаму вашей мечети или в духовное управление мусульман вашей страны.',
         'нет-точного': 'Точного ответа в нашей базе нет. Ниже — близкие материалы из базы.',
         'к-имаму': 'Это личный вопрос: ответ на него зависит от ваших обстоятельств, а AI Ustaz не выносит фетв. Задайте '
-                   'его имаму вашей мечети, в ДУМК (muftyat.kz) или Imam AI.',
+                   'его имаму вашей мечети или в духовное управление мусульман вашей страны.',
         'к-имаму-материалы': 'Ниже — общие сведения из нашей базы. Это не ответ на ваш случай.',
         'вне-темы': 'AI Ustaz отвечает только по своей базе об исламе, чтении Корана и самом приложении. Политику, течения, '
                     'споры между мазхабами и другие темы мы не обсуждаем. Такие вопросы лучше задать имаму вашей мечети.',
@@ -335,10 +335,10 @@ def слишком_пусто(обезличенный: str) -> bool:
         'ответ': 'Сұрағыңыз бойынша біздің базада мыналар бар. Толық оқу үшін дереккөзді ашыңыз.',
         'черновик': '«Жоба» белгісі бар материалдарды ұстаз әлі тексеріп жатыр.',
         'нет-в-базе': 'Біздің базада бұл сұраққа әзірге жауап жоқ. Мұндай жауап керек екенін белгілеп қойдық (сұрақтың '
-                      'мәтінін сақтамаймыз). Жеке фиқһ сұрақтарын мешітіңіздің имамына, ҚМДБ-ға (muftyat.kz) немесе Imam AI-ға қойыңыз.',
+                      'мәтінін сақтамаймыз). Жеке фиқһ сұрақтарын мешітіңіздің имамына немесе еліңіздің мұсылмандар діни басқармасына қойыңыз.',
         'нет-точного': 'Біздің базада нақты жауап жоқ. Төменде — базадағы жақын материалдар.',
         'к-имаму': 'Бұл — жеке сұрақ: жауабы сіздің жағдайыңызға байланысты, ал AI Ustaz пәтуа бермейді. Оны мешітіңіздің '
-                   'имамына, ҚМДБ-ға (muftyat.kz) немесе Imam AI-ға қойыңыз.',
+                   'имамына немесе еліңіздің мұсылмандар діни басқармасына қойыңыз.',
         'к-имаму-материалы': 'Төменде — біздің базадағы жалпы мәліметтер. Бұл сіздің жағдайыңызға жауап емес.',
         'вне-темы': 'AI Ustaz тек өз базасы бойынша ислам, Құран оқу және қосымшаның өзі туралы жауап береді. Саясат, '
                     'ағымдар, мазхабтар арасындағы даулар және басқа тақырыптарды талқыламаймыз. Мұндай сұрақтарды '
@@ -356,11 +356,11 @@ def слишком_пусто(обезличенный: str) -> bool:
         'ответ': "Savolingiz bo'yicha bazamizda quyidagilar bor. To'liq o'qish uchun manbani oching.",
         'черновик': "«Qoralama» belgisi bor materiallarni ustoz hali tekshirmoqda.",
         'нет-в-базе': "Bazamizda bu savolga hozircha javob yo'q. Bunday javob kerakligini belgilab qo'ydik (savol matnini "
-                      "saqlamaymiz). Shaxsiy fiqh savollarini masjidingiz imomiga, Qozog'iston musulmonlari diniy "
-                      "boshqarmasiga (muftyat.kz) yoki Imam AI ga bering.",
+                      "saqlamaymiz). Shaxsiy fiqh savollarini masjidingiz imomiga yoki mamlakatingiz musulmonlari diniy "
+                      "idorasiga bering.",
         'нет-точного': "Bazamizda aniq javob yo'q. Quyida — bazadagi yaqin materiallar.",
         'к-имаму': "Bu shaxsiy savol: javobi sizning holatingizga bog'liq, AI Ustaz esa fatvo bermaydi. Uni masjidingiz "
-                   "imomiga, Qozog'iston musulmonlari diniy boshqarmasiga (muftyat.kz) yoki Imam AI ga bering.",
+                   "imomiga yoki mamlakatingiz musulmonlari diniy idorasiga bering.",
         'к-имаму-материалы': "Quyida — bazamizdagi umumiy ma'lumotlar. Bu sizning holatingizga javob emas.",
         'вне-темы': "AI Ustaz faqat o'z bazasi bo'yicha islom, Qur'on o'qish va ilovaning o'zi haqida javob beradi. Siyosat, "
                     "oqimlar, mazhablar o'rtasidagi bahslar va boshqa mavzularni muhokama qilmaymiz. Bunday savollarni "
@@ -378,11 +378,11 @@ def слишком_пусто(обезличенный: str) -> bool:
         'ответ': 'Here is what our base has on your question. Open the source to read it in full.',
         'черновик': 'Materials marked “draft” are still being reviewed by an ustaz.',
         'нет-в-базе': 'Our base has no answer to this question yet. We have noted that such an answer is needed (we do not '
-                      'store the text of the question). Ask personal fiqh questions to the imam of your mosque, the Spiritual '
-                      'Administration of Muslims of Kazakhstan (muftyat.kz) or Imam AI.',
+                      'store the text of the question). Ask personal fiqh questions to the imam of your mosque or the Muslim '
+                      'religious authority of your country.',
         'нет-точного': 'Our base has no exact answer. Below are related materials from the base.',
         'к-имаму': 'This is a personal question: the answer depends on your circumstances, and AI Ustaz does not issue fatwas. '
-                   'Ask the imam of your mosque, the Spiritual Administration of Muslims of Kazakhstan (muftyat.kz) or Imam AI.',
+                   'Ask the imam of your mosque or the Muslim religious authority of your country.',
         'к-имаму-материалы': 'Below is general information from our base. It is not an answer for your case.',
         'вне-темы': 'AI Ustaz answers only from its own base about Islam, Quran reading and the app itself. We do not discuss '
                     'politics, movements, disputes between madhhabs or other topics. Such questions are better asked of the '
@@ -405,7 +405,7 @@ def шаблон(язык: str, ключ: str) -> str:
 2. Кратко: не больше 120 слов, простым языком, на языке из поля "язык" (ru — русский, kk — казахский, uz — узбекский латиницей, en — английский).
 3. Не цитируй аяты и хадисы дословно и не выдавай свой пересказ за текст Корана или хадиса. Укажи id записей в поле "источники"; в тексте можно назвать ссылку записи (например, 2:255 или «Сахих аль-Бухари, 1»), но не id.
 4. Не пиши арабским письмом и не пиши транслитерацию аятов.
-5. Не давай фетв и личных решений: не говори, действителен ли чей-то намаз, пост или брак; не пиши «вы обязаны», «вам харам». Если вопрос личный — напиши, что его нужно задать имаму мечети или в ДУМК, и приведи только общие сведения из записей.
+5. Не давай фетв и личных решений: не говори, действителен ли чей-то намаз, пост или брак; не пиши «вы обязаны», «вам харам». Если вопрос личный — напиши, что его нужно задать имаму мечети или в духовное управление мусульман своей страны, и приведи только общие сведения из записей.
 6. Не толкуй Коран (тафсир) от себя. Не обсуждай политику, течения и споры мазхабов.
 7. Слова в кавычках — только дословные куски текста записей.
 8. В "источники" — только id приложенных записей, на которые опирается ответ; для вида "ответ" — хотя бы один.
