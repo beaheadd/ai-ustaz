@@ -141,7 +141,7 @@ def test_текст_намаза_ru():
     п = push.Пункт(момент('2026-11-20', '14:39'), 'asr', '14:39', 0, 'maghrib', '16:28')
     у = push.уведомление(п, 'ru', 'Алматы')
     assert у['title'] == 'Аср · 14:39'
-    assert у['body'] == 'Наступило время намаза · Алматы. Следующий — Магриб в 16:28'
+    assert у['body'] == 'Алматы'  # владелец 28.11.2026: как Sajda — только место
     assert у['tag'] == 'aiustaz-asr-2026-11-20' and у['url'] == '#/prayer' and у['silent'] is False
     assert [к['action'] for к in у['actions']] == ['prayer', 'qibla'] and у['actions'][0]['title'] == 'Время намаза'
 
@@ -151,7 +151,7 @@ def test_текст_kk_и_джума():
     assert push.уведомление(п, 'ru', 'Алматы')['title'] == 'Джума · 13:05'
     у = push.уведомление(п, 'kk', 'Алматы')
     assert у['title'] == 'Жұма намазы · 13:05'
-    assert у['body'] == 'Намаз уақыты кірді · Алматы. Келесі — Екінті, 15:20'
+    assert у['body'] == 'Алматы'
     п2 = push.Пункт(момент('2026-11-21', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # суббота
     assert push.уведомление(п2, 'ru', 'Алматы')['title'] == 'Зухр · 13:05'
 
@@ -161,7 +161,7 @@ def test_текст_uz():
     п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
     у = push.уведомление(п, 'uz', 'Toshkent')
     assert у['title'] == 'Juma namozi · 13:05' and у['lang'] == 'uz'
-    assert у['body'] == 'Namoz vaqti kirdi · Toshkent. Keyingi — Asr, 15:20'
+    assert у['body'] == 'Toshkent'
     assert [к['title'] for к in у['actions']] == ['Namoz vaqti', 'Qibla']
     п2 = push.Пункт(момент('2026-11-21', '05:50'), 'fajr', '06:00', 10, 'sunrise', '07:30')
     assert push.уведомление(п2, 'uz', 'Toshkent')['title'] == '10 daqiqadan keyin — Bomdod (06:00)'
@@ -178,7 +178,7 @@ def test_текст_en():
     п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
     у = push.уведомление(п, 'en', 'Almaty')
     assert у['title'] == "Jumu'ah prayer · 13:05" and у['lang'] == 'en'
-    assert у['body'] == 'It is time for prayer · Almaty. Next — Asr at 15:20'
+    assert у['body'] == 'Almaty'
     assert [к['title'] for к in у['actions']] == ['Prayer times', 'Qibla']
     п2 = push.Пункт(момент('2026-11-21', '05:50'), 'fajr', '06:00', 10, 'sunrise', '07:30')
     assert push.уведомление(п2, 'en', 'Almaty')['title'] == 'In 10 min — Fajr (06:00)'
@@ -196,10 +196,9 @@ def test_напоминание_и_восход():
     assert у['tag'] == 'aiustaz-soon-asr-2026-11-20' and у['kind'] == 'soon'
     assert push.уведомление(п, 'kk', 'Алматы')['title'] == '10 минуттан кейін — Екінті (14:39)'
     в = push.уведомление(push.Пункт(момент('2026-11-21', '07:40'), 'sunrise', '07:40', 0, 'dhuhr', '12:45'), 'ru', 'Астана')
-    assert в['title'] == 'Восход · 07:40' and в['body'] == 'Восход солнца · Астана. Следующий — Зухр в 12:45'
-    # Иша в четверг: следующий — фаджр пятницы (не «Джума»: это не зухр)
+    assert в['title'] == 'Восход · 07:40' and в['body'] == 'Астана'
     и = push.уведомление(push.Пункт(момент('2026-11-19', '19:00'), 'isha', '19:00', 0, 'fajr', '06:13'), 'ru', 'Алматы')
-    assert и['body'].endswith('Следующий — Фаджр в 06:13')
+    assert и['title'] == 'Иша · 19:00' and и['body'] == 'Алматы'
 
 
 def test_служебные_тексты():
@@ -297,10 +296,10 @@ def test_текст_новые_языки():
     """ar, tr, id, ur (владелец 28.11.2026): названия = app/src/prayer/day.ts; пятница — свой «джума»; текст = примеру экрана."""
     п = push.Пункт(момент('2026-11-20', '13:05'), 'dhuhr', '13:05', 0, 'asr', '15:20')  # пятница
     for язык, джума, тело_ in (
-        ('ar', 'صلاة الجمعة', 'حان وقت الصلاة · Makkah. التالية — العصر في 15:20'),
-        ('tr', 'Cuma namazı', 'Namaz vakti girdi · Makkah. Sıradaki — İkindi, 15:20'),
-        ('id', 'Salat Jumat', 'Waktu salat telah tiba · Makkah. Berikutnya — Asar pukul 15:20'),
-        ('ur', 'جمعہ کی نماز', 'نماز کا وقت ہو گیا · Makkah. اگلی — عصر، 15:20'),
+        ('ar', 'صلاة الجمعة', 'Makkah'),
+        ('tr', 'Cuma namazı', 'Makkah'),
+        ('id', 'Salat Jumat', 'Makkah'),
+        ('ur', 'جمعہ کی نماز', 'Makkah'),
     ):
         assert push.разобрать_подписку(тело(город='Makkah', язык=язык), СЕЙЧАС).язык == язык
         у = push.уведомление(п, язык, 'Makkah')

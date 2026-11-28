@@ -491,7 +491,7 @@ export async function уведомленияСквозной(браузер, { �
       });
       await cdp.send('ServiceWorker.enable');
       for (let i = 0; i < 50 && ид === null; i++) await стр.waitForTimeout(50);
-      const нагрузка = { v: 1, kind: 'prayer', title: 'Аср · 14:39', body: 'Наступило время намаза · Алматы. Следующий — Магриб в 16:28', tag: 'aiustaz-asr-2026-11-20', url: '#/prayer', actions: [{ action: 'prayer', title: 'Время намаза' }, { action: 'qibla', title: 'Кибла' }], silent: false, lang: 'ru', ts: Date.now() };
+      const нагрузка = { v: 1, kind: 'prayer', title: 'Аср · 14:39', body: 'Алматы', tag: 'aiustaz-asr-2026-11-20', url: '#/prayer', actions: [{ action: 'prayer', title: 'Время намаза' }, { action: 'qibla', title: 'Кибла' }], silent: false, lang: 'ru', ts: Date.now() };
       await cdp.send('ServiceWorker.deliverPushMessage', { origin: 'https://aiustaz.pro', registrationId: String(ид), data: JSON.stringify(нагрузка) });
       let показано = [];
       for (let i = 0; i < 40 && !показано.length; i++) {

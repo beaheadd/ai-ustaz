@@ -1109,7 +1109,7 @@
    "итог.нетПодписки": "Langganan tidak ditemukan — matikan lalu nyalakan lagi notifikasi.",
    "состояние": "Jadwal 30 hari — sampai {дата}. Diperbarui saat Anda membuka AI Ustaz.",
    "пример": "Beginilah tampilannya",
-   "примерТекст": "Waktu salat telah tiba · {город}. Berikutnya — {намаз} pukul {время}",
+   "примерТекст": "{город}",
    "приватность": "Apa yang disimpan",
    "приватностьТекст": "Di server AI Ustaz di Kazakhstan: langganan browser (alamat dan kunci enkripsi), bahasa, nama kota, dan jadwal 30 hari. Tanpa koordinat, nama, atau nomor telepon. Tanpa iklan atau analitik. Matikan — semuanya segera dihapus.",
    "звук": "Suara — suara notifikasi biasa di ponsel Anda.",

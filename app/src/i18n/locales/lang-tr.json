@@ -1109,7 +1109,7 @@
    "итог.нетПодписки": "Abonelik bulunamadı — bildirimleri kapatıp yeniden açın.",
    "состояние": "30 günlük takvim — {дата} tarihine kadar. AI Ustaz'ı açtığınızda güncellenir.",
    "пример": "Böyle görünecek",
-   "примерТекст": "Namaz vakti girdi · {город}. Sıradaki — {намаз}, {время}",
+   "примерТекст": "{город}",
    "приватность": "Ne saklanıyor",
    "приватностьТекст": "Kazakistan'daki AI Ustaz sunucusunda: tarayıcı aboneliği (adres ve şifreleme anahtarları), dil, şehir adı ve 30 günlük takvim. Koordinat, ad ya da telefon numarası yok. Reklam ya da analitik yok. Kapatın — her şey hemen silinir.",
    "звук": "Ses — telefonunuzun her zamanki bildirim sesi.",
