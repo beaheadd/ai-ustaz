@@ -110,7 +110,9 @@
    "хадисы": "Hadisler",
    "намаз": "Namaz öğrenelim",
    "таджвид": "Tecvid",
-   "закят": "Zekât"
+   "закят": "Zekât",
+   "время": "Namaz vakitleri",
+   "кибла": "Kıble"
   },
   "components/InstallHint": {
    "заголовок": "AI Ustaz'ı telefonunuza kurun",

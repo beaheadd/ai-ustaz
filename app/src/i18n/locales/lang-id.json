@@ -110,7 +110,9 @@
    "хадисы": "Hadis",
    "намаз": "Belajar salat",
    "таджвид": "Tajwid",
-   "закят": "Zakat"
+   "закят": "Zakat",
+   "время": "Waktu salat",
+   "кибла": "Kiblat"
   },
   "components/InstallHint": {
    "заголовок": "Pasang AI Ustaz di ponsel Anda",
