@@ -499,7 +499,7 @@
    "безДанных": "Bersama laporan dikirim layar, versi aplikasi, bahasa, dan tema — tanpa nama atau IP.",
    "отправить": "Kirim",
    "отправка": "Mengirim…",
-   "спасибо": "Terima kasih! Kami akan memeriksa dan memperbaikinya.",
+   "спасибо": "Terima kasih! Kami akan segera meninjau kesalahan yang Anda laporkan.",
    "спасибоПояснение": "Jika kesalahan ada di teks keagamaan, ustaz akan memeriksa perbaikannya.",
    "закрыть": "Tutup",
    "нетСвязи": "Tidak ada koneksi — coba lagi nanti. Teks Anda masih di sini.",
@@ -810,7 +810,9 @@
    "кибла": "Kiblat",
    "языкПодсказка": "Bahasa: {язык}. Ganti",
    "городПодсказка": "Kota: {город}, {дата}. Ganti",
-   "городПоУмолчанию": "Kota: {город}, bawaan, {дата}. Ganti"
+   "городПоУмолчанию": "Kota: {город}, bawaan, {дата}. Ganti",
+   "нашлиОшибку": "Menemukan kesalahan?",
+   "нашлиОшибкуПодпись": "Tulis kepada kami, akan kami perbaiki"
   },
   "screens/HowWeExplainScreen": {
    "заголовок": "Cara kami menjelaskan kesalahan",

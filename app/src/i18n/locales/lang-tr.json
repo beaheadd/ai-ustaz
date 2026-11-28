@@ -499,7 +499,7 @@
    "безДанных": "Bildirimle birlikte ekran, uygulama sürümü, dil ve tema gönderilir — ad ya da IP yok.",
    "отправить": "Gönder",
    "отправка": "Gönderiliyor…",
-   "спасибо": "Teşekkürler! Kontrol edip düzelteceğiz.",
+   "спасибо": "Teşekkürler! Bildirdiğiniz hatayı en kısa sürede inceleyeceğiz.",
    "спасибоПояснение": "Hata dinî bir metindeyse düzeltmeyi hoca inceleyecek.",
    "закрыть": "Kapat",
    "нетСвязи": "Bağlantı yok — daha sonra tekrar deneyin. Metniniz burada duruyor.",
@@ -810,7 +810,9 @@
    "кибла": "Kıble",
    "языкПодсказка": "Dil: {язык}. Değiştir",
    "городПодсказка": "Şehir: {город}, {дата}. Değiştir",
-   "городПоУмолчанию": "Şehir: {город}, varsayılan, {дата}. Değiştir"
+   "городПоУмолчанию": "Şehir: {город}, varsayılan, {дата}. Değiştir",
+   "нашлиОшибку": "Bir hata mı buldunuz?",
+   "нашлиОшибкуПодпись": "Bize yazın, düzeltelim"
   },
   "screens/HowWeExplainScreen": {
    "заголовок": "Bir hatayı nasıl açıklıyoruz",
