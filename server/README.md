@@ -36,6 +36,7 @@
 | `stats.py` | своя анонимная статистика: `POST /api/stats/e` (только aiustaz.pro; без cookie, IP, строки браузера, мест), суточные итоги, сводка для админки; сырые события 90 дней (владелец 27.11.2026) |
 | `admin.py` | админка: вход по коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
 | `content_admin.py` | настройки содержимого: чтецы (включены, по умолчанию), хадисы (скрыть, проверено устазом) — только отметки, без текста; `GET /api/content/config` для приложения; версии с sha256 |
+| `feedback.py` | «Сообщить об ошибке» (владелец 28.11.2026): `POST /api/feedback` (только aiustaz.pro), раздел «Ошибки» админки, уборка контакта через 90 дней после закрытия, письмо админам раз в сутки (раздел ниже) |
 | `admin_static/` | собранная админка (`node admin/build.mjs`, вне git mugalim) — nginx отдаёт на https://aiustaz.pro/admin/ |
 | `deploy/` | `mugalim-api.service`, `mugalim-jobs.service`, `setup-server.sh` |
 
@@ -56,6 +57,27 @@
 setup-server.sh), `MUGALIM_ADMIN_OWNER_EMAILS` (через запятую; ставит workflow batr-world «AI Ustaz admin: set owner» из
 секрета `AIUSTAZ_ADMIN_OWNER_EMAIL`, затем перезапуск mugalim-api). Тесты: `server/tests/test_admin.py` (временная база),
 `admin/e2e-admin.mjs` (Playwright против `admin/test_server.py` с выдуманными данными).
+
+## «Сообщить об ошибке» (`feedback.py`, миграция 022; владелец 28.11.2026)
+
+Владелец: «клиент мог выделить и нажать на кнопку „Ошибка“. И написать, какая там ошибка… Любой человек увидел ошибку,
+нажал, он попадает к нам и обрабатывает. Если это реальная ошибка, то мы улучшаем». Клиент — `app/src/feedback/`.
+
+| Метод | Путь | Кто | Что |
+|---|---|---|---|
+| POST | `/api/feedback` | приложение (aiustaz.pro) | `{cat, text, route, quote?, ref?, contact?, ver?, lang?, theme?, dev?}` → `{ок}`; лишнее поле — 400 `body`; `cat` — quran/hadith/translation/dhikr/prayer/ui/other; `text` 5–1000; `quote` ≤ 500; `route` — hash-адрес приложения (`#/hadith/item?n=1751`); `ref` — `2:255`, `hadith:1751`; `contact` ≤ 200 (по желанию). 403 `origin`, 413 `size` (> 8 КБ), 429 `rate` (3/мин, 20/час, 60/сутки с хэша IP), 503 `db` |
+| GET | `/api/admin/feedback?status=&cat=&before=&limit=` | просмотр+ | список новыми сверху, кратко, без контакта; `дальше` — id для «Показать ещё» |
+| GET | `/api/admin/feedback/item?id=` | просмотр+ | сообщение целиком; контакт — только админ+ |
+| GET | `/api/admin/feedback/count` | просмотр+ | `{новых, заНеделю, новыхЗаНеделю, всего}` — значок пункта «Ошибки», плитка статистики |
+| POST | `/api/admin/feedback/update` `{id, status?, note?}` | админ+ | статус (новое / в работе / исправлено / не ошибка / дубль) и заметка; каждое изменение — в `admin_audit` |
+
+Хранится: раздел, цитата, экран, место, текст (почта и телефоны в тексте и цитате → `[почта]`, `[номер]`), версия сборки,
+язык, тема, класс устройства; контакт — только если оставили, `NULL` через 90 дней после закрытия (`closed_at`; jobs.py).
+Не хранится: IP (только хэш в `push_limits` для лимита), строка браузера, id статистики. Письмо админам (owner/admin):
+раз в сутки после 9:00 по Алматы, если есть новые, — число по разделам и ссылка https://aiustaz.pro/admin/#/feedback, без
+текста и контактов (SMTP 127.0.0.1:25; отметка дня — `feedback_digest`; `MUGALIM_FEEDBACK_DIGEST=0` — не слать).
+nginx aiustaz.pro: `location = /api/feedback` (только POST, ≤ 8 КБ, без журнала доступа); на batr.kz его нет — там
+приложение показывает «Отправить можно на aiustaz.pro» и ссылку на то же место.
 
 ## API
 
@@ -184,6 +206,9 @@ limit_except GET POST { deny all; } proxy_pass http://127.0.0.1:8031; … access
 «Спросить AI Ustaz»: `kb_entries`, `kb_texts` — база знаний (записи, не люди); `ask_log` — дата, вид ответа, режим,
 код причины отката, число источников (90 дней); `ask_misses` — число «не нашли» за день. Текста вопроса и IP нет нигде;
 лимиты — хэш IP в `push_limits` (минутные — час, суточные `askd:` — двое суток).
+«Сообщить об ошибке»: `feedback` — раздел, цитата, экран, место, текст, версия, язык, тема, устройство, статус и заметка
+разбора (кто, когда); контакт — только оставленный, удаляется через 90 дней после закрытия; `feedback_digest` — дата
+письма админам. IP и строки браузера нет.
 
 ## Запуск локально и тесты
 
@@ -193,7 +218,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest
 .venv/bin/python -m pytest -q tests                      # логика без БД (тесты БД пропускаются)
 # с настоящим PostgreSQL — своя временная база mugalim_test_<…> создаётся и удаляется в каждом тесте:
 MUGALIM_TEST_PG='postgresql://postgres@127.0.0.1:5432/postgres' .venv/bin/python -m pytest -q tests
-python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py metals.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py
+python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py metals.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py feedback.py
 # API вручную (своя база mugalim_dev):
 MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_VAPID_PRIVATE=… \
   .venv/bin/python -m uvicorn --app-dir . --factory app:создать_приложение --port 8030
@@ -295,6 +320,7 @@ MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_
 | `MUGALIM_METALS_MAX_JUMP_PCT` | 30 (5–90) | наибольший скачок к прошлому дню, % |
 | `MUGALIM_ASK_DRAFTS` | 1 (0/1) | «Спросить»: показывать записи со статусом «черновик» (всегда с пометкой); 1 — на время запуска среди своих |
 | `MUGALIM_ASK_MIN_SHARE` | 0,3 (0,05–1) | порог релевантности: доля значимых слов вопроса, найденных в записи |
+| `MUGALIM_FEEDBACK_DIGEST` | 1 (0/1) | письмо админам о новых сообщениях об ошибках раз в сутки (mugalim-jobs) |
 | `MUGALIM_ASK_ORIGINS` | `https://aiustaz.pro,https://www.aiustaz.pro` | разрешённые Origin для `/api/ask/` |
 | `MUGALIM_ASK_LLM` | 0 (0/1) | режим «ии» — только по решению владельца (вопрос свободным текстом уходит во внешний ИИ) |
 | `ANTHROPIC_API_KEY` | — | ключ Claude API (секрет; только здесь, не в git и не в журнал); без него — режим «поиск» |

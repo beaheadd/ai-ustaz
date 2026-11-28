@@ -2,7 +2,7 @@
 
 Для admin/e2e-admin.mjs (снимки и проверки страниц). Прод-данные не трогает (CLAUDE.md): база создаётся на сервере из
 MUGALIM_TEST_PG и удаляется при выходе. Письма не отправляются: код входа отдаёт GET /__test/code (только здесь).
-Отдаёт: /api/… (stats, admin, content_admin), /admin/ (server/admin_static), /aiustaz/ (app/dist — файлы Корана и хадисов).
+Отдаёт: /api/… (stats, admin, content_admin, feedback), /admin/ (server/admin_static), /aiustaz/ (app/dist — файлы Корана и хадисов).
 Запуск: MUGALIM_TEST_PG=postgresql://postgres@127.0.0.1:55432/postgres python3 admin/test_server.py <порт>
 """
 from __future__ import annotations
@@ -27,6 +27,7 @@ from psycopg.conninfo import conninfo_to_dict, make_conninfo  # noqa: E402
 
 import admin  # noqa: E402
 import content_admin  # noqa: E402
+import feedback  # noqa: E402
 import stats  # noqa: E402
 from db import Хранилище  # noqa: E402
 
@@ -90,6 +91,16 @@ def заполнить(х: Хранилище, статистика: stats.Хр�
     с_.отметить_хадис(2750, True, None, '2026-11-27', ВЛАДЕЛЕЦ)
     админы.записать({'id': 1, 'email': ВЛАДЕЛЕЦ}, 'чтецы изменены', '', {'версия': 1})
     админы.записать({'id': 1, 'email': ВЛАДЕЛЕЦ}, 'хадис: проверено устазом: Устаз Мурат', '1751')
+    # «Сообщить об ошибке» (владелец 28.11.2026): выдуманные сообщения из приложения.
+    сообщения = feedback.ХранилищеСообщений(х)
+    for минут, д in ((300, {'cat': 'quran', 'quote': 'Мадд таби‘и — 2 счёта', 'route': '#/quran/sura?n=2&a=255', 'ref': '2:255',
+                            'text': 'Здесь мадд муттасыль, должно быть 4 счёта, а написано 2 счёта.', 'contact': '@kari_test'}),
+                     (120, {'cat': 'translation', 'quote': 'Деяния оцениваются по намерениям', 'route': '#/hadith/item?n=1751',
+                            'ref': 'hadith:1751', 'text': 'В казахском переводе пропущено слово «тек».'}),
+                     (45, {'cat': 'prayer', 'route': '#/prayer', 'text': 'Аср в Шымкенте на 2 минуты раньше, чем у ДУМК.'}),
+                     (5, {'cat': 'ui', 'route': '#/more', 'text': 'Кнопка «Обновить» перекрывает заголовок на iPhone SE.'})):
+        з = feedback.разобрать({'ver': 'e3d79e2', 'lang': 'ru', 'theme': 'light', 'dev': 'phone', **д})
+        сообщения.добавить(з, сейчас - минут * 60_000)
 
 
 def main() -> None:
@@ -117,6 +128,8 @@ def main() -> None:
                             отправить_код=lambda почта, код: коды.append(код) or True, секрет='тест', ключ_лимита=ключ,
                             владельцы=frozenset({ВЛАДЕЛЕЦ}), источники=f'http://127.0.0.1:{порт}', безопасная_кука=False)
     content_admin.register(app, содержимое=content_admin.ХранилищеСодержимого(х), доступ=доступ, админы=админы)
+    feedback.register(app, сообщения=feedback.ХранилищеСообщений(х), хранилище=х, доступ=доступ, админы=админы,
+                      ключ_лимита=ключ, источники=f'http://127.0.0.1:{порт}')
 
     @app.get('/__test/code')
     async def код():

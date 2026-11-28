@@ -190,3 +190,16 @@ select { width: auto; }
 .сеансы { list-style: none; padding: 0; }
 .сеансы .кнопка { float: right; }
 .строка-заголовка { display: flex; align-items: center; justify-content: space-between; }
+
+/* Ошибки (сообщения из приложения; владелец 28.11.2026) */
+.число-новых { margin-left: 6px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--плохо); color: #fff; font-size: 0.78rem; font-weight: 700; display: inline-grid; place-items: center; font-variant-numeric: tabular-nums; }
+.пункт[aria-current='page'] .число-новых { background: var(--на-акценте); color: var(--акцент); }
+.сообщение-ошибки { padding: 0; }
+.сообщение-ошибки.новое { border-left: 4px solid var(--плохо); }
+.ссылка-карты { display: block; padding: 14px 16px; color: inherit; text-decoration: none; border-radius: var(--радиус); }
+.ссылка-карты p { margin: 6px 0 0; overflow-wrap: anywhere; }
+.цитата { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--акцент); background: var(--акцент-мягкий); border-radius: 0 8px 8px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.текст-сообщения { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ссылка-плитки { color: inherit; text-decoration: none; border-color: var(--акцент); }
+textarea { font: inherit; color: var(--текст); background: var(--поверхность); border: 1px solid var(--граница); border-radius: 10px; padding: 10px 12px; width: 100%; resize: vertical; }
+.свойства dd { overflow-wrap: anywhere; }

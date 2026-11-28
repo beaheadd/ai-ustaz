@@ -1,6 +1,7 @@
 """Хранилище на настоящем PostgreSQL — своя временная база mugalim_test_<…> (без MUGALIM_TEST_PG — пропуск)."""
 from __future__ import annotations
 
+import pathlib
 import threading
 
 import pytest
@@ -18,7 +19,11 @@ def база(pg_адрес):
     from db import Хранилище
 
     х = Хранилище(pg_адрес)
-    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz', '006_lang_en', '007_admin_stats', '020_ask_reports', '021_metal_prices']
+    # Все файлы migrations/ по порядку (новая миграция другой задачи не ломает этот тест), и среди них — известные.
+    применено = х.применить_миграции()
+    assert применено == sorted(ф.stem for ф in (pathlib.Path(__file__).resolve().parent.parent / 'migrations').glob('[0-9][0-9][0-9]_*.sql'))
+    assert {'001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz', '006_lang_en', '007_admin_stats',
+            '020_ask_reports', '022_feedback'} <= set(применено)
     assert х.применить_миграции() == []  # второй раз — ничего
     return х
 

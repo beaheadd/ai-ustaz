@@ -3,7 +3,10 @@
  * Сквозной тест админки (Playwright): admin/test_server.py — настоящий API на временной базе с выдуманными данными.
  * Проверяет: вход по коду; статистика (плитки, график, страницы, языки, удержание, часы); Коран (114 сур, аль-Фатиха с
  * цветами таджвида, текст = файлу сборки, легенда, «▶» у аята); чтецы (включить/выключить, по умолчанию — версия
- * растёт); хадисы (скрыть, проверено устазом, «ждут устаза»); админы (добавить, роль); журнал; мои входы; выход.
+ * растёт); хадисы (скрыть, проверено устазом, «ждут устаза»); «Ошибки» (значок новых на пункте меню, плитка недели на
+ * статистике, список новыми сверху, фильтры, сообщение со ссылкой в приложение, статус и заметка → журнал; просмотр —
+ * только читает и не видит контакт); админы (добавить, роль); журнал; мои входы; выход.
+ * Снимки «Ошибок» 360×780 — SHOTS_FEEDBACK=папка (feedback-admin-list.png, feedback-admin-report.png).
  * И всё время: ни исключений, ни нарушений CSP, ни горизонтальной прокрутки на 390 px.
  * Снимки 390×844 — SHOTS_ADMIN=папка. Запуск (из корня mugalim, после node admin/build.mjs и сборки app/dist):
  *   MUGALIM_TEST_PG=postgresql://postgres@127.0.0.1:55432/postgres node admin/e2e-admin.mjs
@@ -21,6 +24,8 @@ const ПОРТ = 8000 + Math.floor(Math.random() * 900);
 const АДРЕС = `http://127.0.0.1:${ПОРТ}`;
 const снимки = process.env.SHOTS_ADMIN ?? null;
 if (снимки) fs.mkdirSync(снимки, { recursive: true });
+const снимкиОшибок = process.env.SHOTS_FEEDBACK ?? null;
+if (снимкиОшибок) fs.mkdirSync(снимкиОшибок, { recursive: true });
 
 let проверок = 0;
 const проверить = (условие, что) => {
@@ -88,6 +93,9 @@ try {
   проверить((await стр.locator('.полосы li').count()) > 10, 'страницы, языки, устройства, источники — полосами');
   проверить(await стр.getByText('Коран: сура').first().isVisible(), 'понятные имена страниц («Коран: сура»)');
   await снимок('статистика');
+  проверить(await стр.getByTestId('плитка-ошибок').waitFor({ timeout: 5000 }).then(() => true, () => false), 'статистика: плитка «Сообщений об ошибках за 7 дней»');
+  проверить(/^4$/.test((await стр.getByTestId('плитка-ошибок').locator('.значение').innerText()).trim()), 'плитка ошибок: 4 за неделю');
+  проверить((await стр.locator('a.пункт[href="#/feedback"] .число-новых').innerText()) === '4', 'пункт «Ошибки»: значок 4 новых');
   await стр.locator('.график').hover({ position: { x: 200, y: 80 } });
   проверить(await стр.locator('.подсказка-графика').isVisible(), 'наведение на график — подсказка с числами');
   await стр.getByRole('button', { name: '7 дней' }).click();
@@ -149,6 +157,44 @@ try {
   await снимок('хадисы-ждут');
   await безПроблем('хадисы');
 
+  // Ошибки (владелец 28.11.2026: «Любой человек увидел ошибку, нажал, он попадает к нам и обрабатывает»).
+  await стр.click('a.пункт[href="#/feedback"]');
+  await стр.locator('li.сообщение-ошибки').first().waitFor();
+  const номераОшибок = await стр.locator('li.сообщение-ошибки .хадис-шапка strong').allInnerTexts();
+  проверить(номераОшибок.length === 4 && номераОшибок[0] === '№ 4' && номераОшибок[3] === '№ 1', 'список ошибок: 4, новые сверху');
+  await стр.selectOption('#категория-ошибок', 'translation');
+  await стр.waitForFunction(() => document.querySelectorAll('li.сообщение-ошибки').length === 1);
+  проверить((await стр.locator('li.сообщение-ошибки').innerText()).includes('пропущено слово'), 'фильтр «Перевод» — одно сообщение');
+  await стр.selectOption('#категория-ошибок', '');
+  await стр.getByRole('button', { name: 'исправлено' }).click();
+  await стр.getByText('Сообщений нет.').waitFor();
+  await стр.getByRole('button', { name: 'Все', exact: true }).click();
+  await стр.waitForFunction(() => document.querySelectorAll('li.сообщение-ошибки').length === 4);
+  проверить(true, 'фильтр по статусу «исправлено» — пусто, «Все» — снова 4');
+  if (снимкиОшибок) {
+    await стр.setViewportSize({ width: 360, height: 780 });
+    await стр.evaluate(() => document.querySelector('#категория-ошибок').scrollIntoView({ block: 'start' }));
+    await стр.evaluate(() => window.scrollBy(0, -130)); // под липкой шапкой и меню
+    await стр.waitForTimeout(300);
+    await стр.screenshot({ path: path.join(снимкиОшибок, 'feedback-admin-list.png') });
+  }
+  await безПроблем('ошибки: список');
+  await стр.locator('li.сообщение-ошибки', { hasText: 'муттасыль' }).locator('a').click();
+  await стр.getByTestId('ошибка-текст').waitFor();
+  проверить((await стр.getByTestId('ошибка-цитата').innerText()).includes('2 счёта'), 'сообщение: выделенный текст');
+  проверить((await стр.getByTestId('ошибка-открыть').getAttribute('href')) === '/aiustaz/#/quran/sura?n=2&a=255', 'ссылка «Открыть это место в приложении» — /aiustaz/#/quran/sura?n=2&a=255');
+  проверить((await стр.getByTestId('ошибка-контакт').innerText()).includes('@kari_test'), 'владелец видит контакт');
+  проверить(await стр.getByText('сура 2, аят 255').first().isVisible(), 'место: «сура 2, аят 255»');
+  if (снимкиОшибок) await стр.screenshot({ path: path.join(снимкиОшибок, 'feedback-admin-report.png'), fullPage: true });
+  await стр.selectOption('#статус-ошибки', 'исправлено');
+  await стр.fill('#заметка-ошибки', 'Исправили в таджвиде 2:255, проверил кари.');
+  await стр.getByRole('button', { name: 'Сохранить' }).click();
+  await стр.getByText('Сохранено. Изменение записано в журнал.').waitFor();
+  await стр.waitForFunction(() => document.querySelector('a.пункт[href="#/feedback"] .число-новых')?.textContent === '3');
+  проверить(true, 'статус «исправлено» и заметка сохранены, значок новых — 3');
+  if (снимкиОшибок) await стр.setViewportSize({ width: 390, height: 844 });
+  await безПроблем('ошибки: сообщение');
+
   // Админы.
   await стр.click('a.пункт[href="#/admins"]');
   await стр.locator('article.админ').first().waitFor();
@@ -165,6 +211,7 @@ try {
   await стр.click('a.пункт[href="#/audit"]');
   await стр.locator('.таблица tbody tr').first().waitFor();
   проверить(await стр.getByText('админ добавлен').first().isVisible(), 'журнал: «админ добавлен»');
+  проверить(await стр.getByText('ошибка: статус').first().isVisible() && await стр.getByText('ошибка: заметка').first().isVisible(), 'журнал: «ошибка: статус», «ошибка: заметка»');
   await снимок('журнал');
   await стр.click('a.пункт[href="#/sessions"]');
   await стр.getByText('Этот вход').waitFor();
@@ -184,6 +231,20 @@ try {
   await стр.getByRole('button', { name: 'Выйти' }).click();
   await стр.locator('#почта').waitFor();
   проверить((await (await стр.request.get(АДРЕС + '/api/admin/me')).status()) === 401, 'выход — сеанс закрыт');
+
+  // Просмотр (устаз): «Ошибки» читает, контакта не видит, менять не может.
+  await стр.fill('#почта', 'ustaz@example.org');
+  await стр.click('button[type=submit]');
+  await стр.locator('#код').waitFor({ state: 'visible' });
+  await стр.getByText(/ушёл код/).waitFor();
+  await стр.fill('#код', (await (await fetch(АДРЕС + '/__test/code')).json()).code);
+  await стр.click('button[type=submit]');
+  await стр.getByText('просмотр', { exact: true }).waitFor({ timeout: 20000 });
+  await стр.evaluate(() => { location.hash = '#/feedback/1'; });
+  await стр.getByTestId('ошибка-контакт').waitFor();
+  проверить((await стр.getByTestId('ошибка-контакт').innerText()).includes('видят админы') && !(await стр.getByTestId('ошибка-контакт').innerText()).includes('@kari'), 'просмотр: контакт скрыт');
+  проверить(await стр.locator('#статус-ошибки').isDisabled() && await стр.getByRole('button', { name: 'Сохранить' }).isDisabled(), 'просмотр: статус и заметку менять нельзя');
+  await безПроблем('ошибки: просмотр');
   console.log(`OK: админка — ${проверок} проверок`);
 } finally {
   await браузер.close();
