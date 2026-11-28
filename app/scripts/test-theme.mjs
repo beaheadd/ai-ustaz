@@ -6,6 +6,8 @@
  *                      и APCA 0.0.98G-4g (|Lc| — где у пары задан 4-й порог; дизайн A, 28.11.2026);
  *                      у тем одинаковые ключи; цвета — #RRGGBB (кроме наложения);
  *   design/icons.ts  — у каждого значка есть фигуры, пути только из команд SVG, координаты в сетке 24;
+ *   design/illustrations.ts — 10 иллюстраций A (28.11.2026): фигуры с ролями палитры, координаты в сетке 64, пути — только
+ *                      команды SVG; ПАЛИТРА_ИЛЛЮСТРАЦИЙ — те же роли в светлой и тёмной теме;
  *   design/emblem.ts — у эмблемы оба варианта (полный и значок), роли цветов известны;
  *   design/geometry.ts — путьАрки замкнут и не выходит за ширину/высоту.
  * Модули — TypeScript без импортов (кроме `import type`): node ≥ 22.18 снимает типы сам.
@@ -15,6 +17,8 @@ import assert from 'node:assert/strict';
 
 const { светлая, тёмная, ПАРЫ_КОНТРАСТА, ПАРЫ_КОНТРАСТА_СВЕТЛОЙ } = await import('../src/theme/tokens.ts');
 const { ЗНАЧКИ } = await import('../src/design/icons.ts');
+const { ИЛЛЮСТРАЦИИ, РОЛИ_ИЛЛЮСТРАЦИЙ } = await import('../src/design/illustrations.ts');
+const { ПАЛИТРА_ИЛЛЮСТРАЦИЙ } = await import('../src/theme/tokens.ts');
 const { ЭМБЛЕМА, РОЛИ_ЭМБЛЕМЫ } = await import('../src/design/emblem.ts');
 const { путьАрки } = await import('../src/design/geometry.ts');
 
@@ -101,6 +105,33 @@ const КОМАНДЫ = /^[MmLlHhVvCcSsQqTtAaZz0-9.,\s-]+$/;
       }
     }
   }
+});
+
+console.log('illustrations');
+тест('иллюстраций 10 (дизайн A): зикры, дуа, коран, хадисы, намаз, таджвид, закят, кибла, время намаза, устаз', () => {
+  assert.deepEqual(Object.keys(ИЛЛЮСТРАЦИИ).sort(), ['времяНамаза', 'дуа', 'закят', 'зикры', 'кибла', 'коран', 'намаз', 'таджвид', 'устаз', 'хадисы'].sort());
+});
+тест('у каждой фигуры — известная роль цвета; координаты в сетке 0…64; пути — команды SVG', () => {
+  const роли = new Set(Object.values(РОЛИ_ИЛЛЮСТРАЦИЙ));
+  for (const тема of ['светлая', 'тёмная']) assert.deepEqual(Object.keys(ПАЛИТРА_ИЛЛЮСТРАЦИЙ[тема]).sort(), [...роли].sort(), тема);
+  for (const [имя, фигуры] of Object.entries(ИЛЛЮСТРАЦИИ)) {
+    assert.ok(фигуры.length > 3, имя);
+    for (const ф of фигуры) {
+      const р = ф.з ?? ф.об;
+      assert.ok(р && РОЛИ_ИЛЛЮСТРАЦИЙ[р], `${имя}: роль ${р}`);
+      if (ф.d) {
+        assert.match(ф.d, КОМАНДЫ, имя);
+        const числа = ф.d.match(/-?\d*\.?\d+/g).map(Number);
+        assert.ok(числа.every((ч) => ч >= -64 && ч <= 64), `${имя}: путь за сеткой`);
+      }
+      for (const к of ['cx', 'cy', 'x', 'y']) if (ф[к] !== undefined) assert.ok(ф[к] >= 0 && ф[к] <= 64, `${имя}: ${к}`);
+    }
+  }
+  for (const тема of ['светлая', 'тёмная']) for (const [к, ц] of Object.entries(ПАЛИТРА_ИЛЛЮСТРАЦИЙ[тема])) assert.match(ц, /^#[0-9A-F]{6}$/, `${тема}.${к}`);
+});
+тест('иллюстрации легче 6 КБ каждая (данные), арка — одна на всех (не повторяется в данных)', () => {
+  for (const [имя, фигуры] of Object.entries(ИЛЛЮСТРАЦИИ)) assert.ok(JSON.stringify(фигуры).length < 6000, имя);
+  assert.ok(!Object.values(ИЛЛЮСТРАЦИИ).flat().some((ф) => ф.з === 'a' || ф.об === 'a'));
 });
 
 console.log('emblem');

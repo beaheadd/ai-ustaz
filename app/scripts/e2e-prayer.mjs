@@ -75,7 +75,7 @@ async function новаяСтраница(браузер, база, { язык =
     ...(гео ? { geolocation: гео } : {}),
     permissions: разрешитьГео ? ['geolocation'] : [],
   });
-  // Тема по умолчанию — светлая (владелец 26.11.2026); тёмную проверяем явным выбором, как его делает человек в «Ещё».
+  // Тема по умолчанию — как в телефоне (владелец 28.11.2026); тёмную всё равно ставим явным выбором, как его делает человек в «Ещё».
   if (схема === 'dark') await контекст.addInitScript(() => { try { if (!localStorage.getItem('aiustaz:theme.v1')) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: 'тёмная' })); } catch {} });
   await контекст.addInitScript((прогресс) => {
     window.__csp = [];
