@@ -78,7 +78,12 @@ async function перечитать(): Promise<void> {
   оповестить();
 }
 
-export async function скачать(адреса: readonly string[], ход?: (готово: number, всего: number) => void): Promise<{ готово: number; ошибок: number }> {
+/** сигнал — остановка (повторное нажатие на кнопку): уже скачанное остаётся, недокачанное догрузится в следующий раз. */
+export async function скачать(
+  адреса: readonly string[],
+  ход?: (готово: number, всего: number) => void,
+  сигнал?: AbortSignal,
+): Promise<{ готово: number; ошибок: number }> {
   if (!естьКэш()) return { готово: 0, ошибок: адреса.length };
   const кэш = await caches.open(КЭШ_АУДИО);
   const всего = адреса.length;
@@ -96,15 +101,17 @@ export async function скачать(адреса: readonly string[], ход?: (
   ход?.(готово, всего);
   async function поток() {
     while (очередь.length) {
+      if (сигнал?.aborted) return;
       const а = очередь.shift()!;
       try {
-        const ответ = await fetch(а, { credentials: 'omit', referrerPolicy: 'no-referrer' });
+        const ответ = await fetch(а, { credentials: 'omit', referrerPolicy: 'no-referrer', signal: сигнал });
         if (ответ.ok && ответ.status === 200 && (ответ.headers.get('content-type') ?? '').toLowerCase().startsWith('audio/')) {
           await кэш.put(а, ответ);
           (скачано ??= new Set()).add(а);
           готово += 1;
         } else ошибок += 1;
       } catch {
+        if (сигнал?.aborted) return;
         ошибок += 1;
       }
       ход?.(готово, всего);

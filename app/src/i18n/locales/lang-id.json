@@ -377,7 +377,8 @@
    "строка": "{кари}: {файлов} ayat, {мб} MB",
    "удалить": "Hapus",
    "удалитьВсё": "Hapus semua unduhan ({мб} MB)",
-   "пусто": "Belum ada yang diunduh. Anda bisa mengunduh surah (menu ⚙ di layar surah) atau ayat (ketuk ayat)."
+   "пусто": "Belum ada yang diunduh. Anda bisa mengunduh surah (menu ⚙ di layar surah) atau ayat (ketuk ayat).",
+   "остановить": "Hentikan unduhan"
   },
   "components/quran/MushafView": {
    "конец": "akhir ayat {а}"

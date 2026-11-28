@@ -15,7 +15,7 @@
  *   скачанное, скачанное-<издание>, скачанное-<издание>-удалить, скачанное-всё-удалить.
  * kk, uz, en — черновик для редактора-носителя.
  */
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Pressable, View } from 'react-native';
 import { адресаСуры, можноСкачать, скачать, сводкаСкачанного, удалитьСкачанное, useСкачанное, type СводкаИздания } from '../../audio/download';
 import { подписатьсяНаЗеркало, версияЗеркала } from '../../audio/mirror';
@@ -30,6 +30,7 @@ import { Текст } from '../Text';
 const СЛОВАРЬ = создатьСловарь({
   ru: {
     скачатьСуру: 'Скачать суру для прослушивания без интернета',
+    остановить: 'Остановить загрузку',
     ход: 'Скачиваем: {готово} из {всего}',
     готово: 'Сура скачана — слушается без интернета',
     ошибка: 'Не всё скачалось. Повторить',
@@ -41,6 +42,7 @@ const СЛОВАРЬ = создатьСловарь({
   },
   kk: {
     скачатьСуру: 'Сүрені интернетсіз тыңдау үшін жүктеу',
+    остановить: 'Жүктеуді тоқтату',
     ход: 'Жүктелуде: {всего} ішінен {готово}',
     готово: 'Сүре жүктелді — интернетсіз тыңдалады',
     ошибка: 'Бәрі жүктелмеді. Қайталау',
@@ -52,6 +54,7 @@ const СЛОВАРЬ = создатьСловарь({
   },
   uz: {
     скачатьСуру: 'Surani internetsiz tinglash uchun yuklab olish',
+    остановить: 'Yuklashni toʻxtatish',
     ход: 'Yuklanmoqda: {всего} dan {готово}',
     готово: 'Sura yuklandi — internetsiz tinglanadi',
     ошибка: 'Hammasi yuklanmadi. Qayta urinish',
@@ -63,6 +66,7 @@ const СЛОВАРЬ = создатьСловарь({
   },
   en: {
     скачатьСуру: 'Download the surah to listen without internet',
+    остановить: 'Stop downloading',
     ход: 'Downloading: {готово} of {всего}',
     готово: 'Surah downloaded — plays without internet',
     ошибка: 'Not everything downloaded. Retry',
@@ -92,20 +96,35 @@ export function КнопкаСкачатьСуру({ сура, подпись }:
   useЧтец();
   const скачанное = useСкачанное();
   const [ход, установитьХод] = useState<{ готово: number; всего: number } | null>(null);
+  const отмена = useRef<AbortController | null>(null);
   const источник = доступныйИсточник();
   if (!источник || !можноСкачать(источник)) return null;
   const адреса = адресаСуры(источник, сура);
   const все = адреса.every((а) => скачанное.есть(а));
   const начать = () => {
-    if (ход || все) return;
+    // Повторное нажатие во время загрузки — остановить (владелец 28.11.2026); скачанное остаётся.
+    if (ход) {
+      отмена.current?.abort();
+      отмена.current = null;
+      установитьХод(null);
+      return;
+    }
+    if (все) return;
+    const к = new AbortController();
+    отмена.current = к;
     установитьХод({ готово: 0, всего: адреса.length });
-    void скачать(адреса, (готово, всего) => установитьХод({ готово, всего })).then(() => установитьХод(null));
+    void скачать(адреса, (готово, всего) => !к.signal.aborted && установитьХод({ готово, всего }), к.signal).then(() => {
+      if (отмена.current === к) {
+        отмена.current = null;
+        установитьХод(null);
+      }
+    });
   };
   const процент = ход && ход.всего ? Math.floor((ход.готово / ход.всего) * 100) : 0;
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={все ? `${подпись}: ${т('готово')}` : `${подпись}: ${т('скачатьСуру')}`}
+      accessibilityLabel={ход ? `${подпись}: ${т('остановить')}` : все ? `${подпись}: ${т('готово')}` : `${подпись}: ${т('скачатьСуру')}`}
       disabled={все}
       onPress={начать}
       testID={`скачать-суру-${сура}`}

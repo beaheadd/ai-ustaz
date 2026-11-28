@@ -377,7 +377,8 @@
    "строка": "{кари}: {файлов} ayet, {мб} MB",
    "удалить": "Sil",
    "удалитьВсё": "Tüm indirmeleri sil ({мб} MB)",
-   "пусто": "Henüz bir şey indirilmedi. Bir sureyi (sure ekranında ⚙ menüsü) ya da bir ayeti (ayete dokunun) indirebilirsiniz."
+   "пусто": "Henüz bir şey indirilmedi. Bir sureyi (sure ekranında ⚙ menüsü) ya da bir ayeti (ayete dokunun) indirebilirsiniz.",
+   "остановить": "İndirmeyi durdur"
   },
   "components/quran/MushafView": {
    "конец": "{а}. ayetin sonu"
