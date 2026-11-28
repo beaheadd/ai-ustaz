@@ -54,6 +54,7 @@ const ОТВЕТЫ = {
     вид: 'ответ', режим: 'поиск', текст: 'Вот что есть в нашей базе по вашему вопросу.', черновик: true,
     источники: [и({ id: 'site.tajweed.k', вид: 'статья', заголовок: 'Ихфа', ссылка: '#/lesson/35', текст: 'Правило таджвида. Ихфа: нун/танвин перед 15 буквами, мим перед «ба» — 4 счёта. Читается «Ля иляха илляЛлах».', источник: 'AI Ustaz: правила таджвида', черновик: true })],
   },
+  'Ассалаумағалайкум': { вид: 'ответ', режим: 'поиск', намерение: 'приветствие', текст: 'Ва алейкум ассалам! Я AI Ustaz — отвечаю по проверенным материалам: чтение Корана и таджвид, хадисы, дуа и зикры, намаз. Спросите, например:', черновик: false, источники: [] },
   'Мой намаз действителен?': { вид: 'к-имаму', режим: 'поиск', текст: 'Ваш намаз недействителен', черновик: false, источники: [] },
   'Проверка арабского': { вид: 'ответ', режим: 'поиск', текст: 'Сказано: بِسْمِ ٱللَّهِ', черновик: false, источники: [и({ id: 's2' })] },
   'Проверка хадиса': { вид: 'ответ', режим: 'поиск', текст: 'Вот что есть:', черновик: false, источники: [и({ id: 'h-без-степени', вид: 'хадис', ссылка: 'сборник, №', степень: null, кто_оценил: null })] },
@@ -66,10 +67,11 @@ function проверить(условие, что) {
   console.log('  ✓ ' + что);
 }
 
-async function страница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', уроки = {}, возможности = { голос: false, фото: false } } = {}) {
+async function страница(браузер, база, { ширина = 412, высота = 800, язык = 'ru', уроки = {}, возможности = { голос: false, фото: false }, тема = null } = {}) {
   const к = await браузер.newContext({ viewport: { width: ширина, height: высота }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, locale: 'ru-RU', timezoneId: 'Asia/Almaty' });
   await к.addInitScript((п) => {
-    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(п)); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
+    if (!localStorage.getItem('aiustaz:progress.v1')) localStorage.setItem('aiustaz:progress.v1', JSON.stringify(п.прогресс));
+    if (п.тема) localStorage.setItem('aiustaz:theme.v1', JSON.stringify({ версия: 1, режим: п.тема })); try { localStorage.setItem('aiustaz:quran-reciter-asked.v1', '1'); } catch {} // лист первого выбора чтеца — свой тест (e2e-download.mjs)
     // Подставной синтез речи: голос ru-RU и kk-KZ; что «прочитано» — в window.__сказано.
     window.__сказано = [];
     const голоса = [{ lang: 'ru-RU', name: 'ru', localService: true, default: true }, { lang: 'kk-KZ', name: 'kk', localService: true }];
@@ -83,7 +85,7 @@ async function страница(браузер, база, { ширина = 412, 
         addEventListener: () => {},
       },
     });
-  }, ПРОГРЕСС(язык, уроки));
+  }, { прогресс: ПРОГРЕСС(язык, уроки), тема });
   const стр = await к.newPage();
   const проблемы = [];
   const запросы = [];
@@ -163,6 +165,13 @@ export async function спроситьСквозной(браузер, порт,
     проверить(/Отвечает только по проверенным материалам AI Ustaz/.test(await с.текст('устаз-граница')) && /Не фетва/.test(await с.текст('устаз-граница')), 'граница: «только по проверенным материалам … Не фетва»');
     проверить((await с.стр.getByTestId(/^устаз-пример-/).count()) === 4 && !(await с.есть('устаз-микрофон')) && !(await с.есть('устаз-камера')), '4 чипа-примера; health без голоса и фото — нет 🎤 и 📷');
     await с.снимок('chat-empty-ru');
+    const рамка = await с.стр.evaluate(() => {
+      const р = (id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect();
+      const кн = document.querySelector('[data-testid="устаз-отправить"]');
+      return { рамка: р('устаз-рамка'), поле: р('устаз-поле'), кнопка: р('устаз-отправить'), выкл: кн?.getAttribute('aria-disabled') === 'true' || кн?.hasAttribute('disabled') };
+    });
+    проверить(рамка.кнопка.width >= 40 && рамка.выкл && рамка.кнопка.top > рамка.поле.bottom - 2 && рамка.кнопка.right <= рамка.рамка.right && рамка.поле.left >= рамка.рамка.left,
+      'поле ввода — одна рамка: сверху поле, внизу справа ➤ (видна и без текста, неактивна)');
 
     await с.э('устаз-пример-1').click();
     await с.э('устаз-аят').waitFor({ timeout: 8000 });
@@ -176,6 +185,21 @@ export async function спроситьСквозной(браузер, порт,
     await с.спросить('Что такое ихфа?');
     проверить((await с.есть('устаз-источник-site.tajweed.k')) && (await с.есть('устаз-открыть-site.tajweed.k')), 'статья «Ихфа» из базы и «Открыть в приложении»');
     проверить((await с.есть('устаз-чип-подробнее-3')) && (await с.есть('устаз-чип-источник-3')) && (await с.есть('устаз-чип-проверка-3')), 'чипы под ответом: «Подробнее», «Покажите источник», «Проверьте меня»');
+    const вид = await с.стр.evaluate(() => {
+      const р = (id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect();
+      const пузырь = document.querySelector('[data-testid="устаз-пузырь-3"]');
+      return {
+        внутри: !!пузырь?.querySelector('[data-testid="устаз-пожаловаться-3"]') && !!пузырь?.querySelector('[data-testid="устаз-озвучить-3"]'),
+        пузырь: р('устаз-пузырь-3'), жалоба: р('устаз-пожаловаться-3'), аватар: р('устаз-аватар-3'), чип: р('устаз-чип-проверка-3'),
+      };
+    });
+    проверить(вид.внутри && вид.жалоба.right > вид.пузырь.left + вид.пузырь.width / 2 && Math.abs(вид.жалоба.bottom - вид.пузырь.bottom) < 16,
+      '«Пожаловаться» и 🔊 — внутри пузыря, в нижней строке справа (как у Айалема)');
+    проверить(вид.аватар.right <= вид.пузырь.left + 1 && Math.abs(вид.аватар.bottom - вид.пузырь.bottom) < 4 && вид.чип.top >= вид.пузырь.bottom,
+      'аватар Устаза — слева у низа пузыря; чипы — под пузырём');
+    await с.стр.waitForTimeout(400);
+    await с.стр.getByTestId('устаз-чип-проверка-3').first().evaluate((э) => э.scrollIntoView({ block: 'end' }));
+    await с.снимок('chat2-answer');
     await с.э('устаз-озвучить-3').click();
     await с.стр.waitForFunction(() => window.__сказано.length > 0, null, { timeout: 3000 });
     const сказано = await с.стр.evaluate(() => window.__сказано.join(' '));
@@ -206,6 +230,12 @@ export async function спроситьСквозной(браузер, порт,
     const о6 = await с.спросить('Как варить плов?');
     проверить(/пока нет ответа/.test(о6), '«нет-в-базе» — «В нашей базе пока нет ответа…»');
     await с.снимок('chat-none-ru');
+    const о7 = await с.спросить('Ассалаумағалайкум');
+    проверить(/^Ва алейкум ассалам!/.test(о7) && !АРАБСКИЙ.test(о7) && (await с.стр.getByTestId(/^устаз-чип-пример-13-/).count()) === 4,
+      '«Ассалаумағалайкум» → «Ва алейкум ассалам! Я AI Ustaz…» и 4 чипа-примера (не «нет в базе»)');
+    await с.стр.waitForTimeout(400);
+    await с.стр.getByTestId('устаз-чип-пример-13-4').first().evaluate((э) => э.scrollIntoView({ block: 'end' }));
+    await с.снимок('chat2-salam');
 
     await с.э('устаз-открыть-site.tajweed.k').click();
     await с.стр.waitForFunction(() => location.hash === '#/lesson/35' || location.hash.startsWith('#/lesson'), null, { timeout: 5000 }).catch(() => null);
@@ -213,7 +243,7 @@ export async function спроситьСквозной(браузер, порт,
     await с.стр.goto(свой + '/aiustaz/index.html#/ask');
     await с.э('устаз-ответ-1').waitFor({ timeout: 10000 });
     const ключ = await с.стр.evaluate(() => localStorage.getItem('aiustaz:ask-chat.v1') || '');
-    проверить(/Как варить плов/.test(ключ) && (await с.стр.locator('[data-testid^="устаз-вопрос-"]').count()) === 6, 'история — на телефоне (ask-chat.v1): после перезагрузки 6 вопросов на месте');
+    проверить(/Как варить плов/.test(ключ) && (await с.стр.locator('[data-testid^="устаз-вопрос-"]').count()) === 7, 'история — на телефоне (ask-chat.v1): после перезагрузки 7 вопросов на месте');
     с.включитьЛимит();
     await с.спросить('Ещё один вопрос');
     проверить(/подождите минуту/.test(await с.текст('устаз-ошибка')), '429 — «подождите минуту»');
@@ -246,6 +276,7 @@ export async function спроситьСквозной(браузер, порт,
     await с.э('устаз-микрофон').waitFor({ timeout: 15000 });
     проверить((await с.есть('устаз-камера')) && (await с.есть('устаз-галерея')), 'health объявил голос и фото — 📷 🖼 🎤 на месте');
     await с.снимок('chat-input-ru');
+    await с.снимок('chat2-input');
     const р = await с.э('устаз-микрофон').boundingBox();
     await с.стр.mouse.move(р.x + р.width / 2, р.y + р.height / 2);
     await с.стр.mouse.down();
@@ -283,6 +314,25 @@ export async function спроситьСквозной(браузер, порт,
     await с.э('устаз-проверка-итог').waitFor();
     проверить(/Верно|Не совсем/.test(await с.текст('устаз-проверка-итог')), 'ответ отмечен: «Верно!» или «Не совсем…»');
     с.безПроблем('проверка: без ошибок');
+    await с.к.close();
+  }
+
+  console.log('\n══ AI Ustaz: тёмная тема ══');
+  {
+    const с = await страница(браузер, свой, { тема: 'тёмная', возможности: { голос: true, фото: true } });
+    await с.стр.goto(свой + '/aiustaz/index.html#/ask');
+    await с.э('устаз-пусто').waitFor({ timeout: 15000 });
+    await с.спросить('Что такое ихфа?');
+    const ф = await с.стр.evaluate(() => {
+      const яркость = (el) => {
+        const [r, g, b] = getComputedStyle(el).backgroundColor.match(/\d+/g).map(Number);
+        return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      };
+      return { пузырь: яркость(document.querySelector('[data-testid="устаз-пузырь-1"]')), рамка: яркость(document.querySelector('[data-testid="устаз-рамка"]')) };
+    });
+    проверить(ф.пузырь < 0.35 && ф.рамка < 0.35, `тёмная тема: пузырь и рамка поля тёмные (яркость ${ф.пузырь.toFixed(2)}, ${ф.рамка.toFixed(2)})`);
+    await с.снимок('chat2-dark');
+    с.безПроблем('тёмная: без ошибок');
     await с.к.close();
   }
 

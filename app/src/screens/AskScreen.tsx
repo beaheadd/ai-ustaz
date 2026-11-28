@@ -74,6 +74,8 @@ import { ТаджвидАята } from './quran/AyahActions';
 import { ШИРИНА_КОЛОНКИ, ШРИФТ_ИНТЕРФЕЙСА, useТема, useУменьшитьДвижение } from '../theme';
 
 const ВЕБ = Platform.OS === 'web';
+/** Поле растёт с текстом до 5 строк (строка 22 px + поля 20 px). */
+const МАКС_ВЫСОТА_ПОЛЯ = 5 * 22 + 20;
 
 const СЛОВАРЬ = создатьСловарь({
   ru: {
@@ -448,6 +450,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
     тап: boolean;
   }>(null);
   const [сдвиг, установитьСдвиг] = useState(0);
+  const [высотаПоля, установитьВысотуПоля] = useState(44);
   const включено = спроситьВключено();
   const свиток = useRef<ComponentRef<typeof ScrollView>>(null);
   const живой = useRef(true);
@@ -742,7 +745,7 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
                 <Текст цвет={цвет.акцентТекст}>{з.текст}</Текст>
               </View>
             ) : (
-              <Ответ key={з.ид} ид={з.ид} ответ={з.ответ} номер={i} т={т} пожаловаться={() => установитьЖалобу(з.ид)} />
+              <Ответ key={з.ид} ид={з.ид} ответ={з.ответ} номер={i} т={т} пожаловаться={() => установитьЖалобу(з.ид)} спроситьПример={(q) => void отправить(q)} />
             ),
           )
         )}
@@ -794,61 +797,30 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
               {т('выключено')}
             </Текст>
           ) : null}
-          <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
-            {фотоЕсть && !запись ? (
-              <>
-                <КругКнопка значок="камера" подпись={т('камера')} выкл={!!занят} приНажатии={() => файлКамера.current?.click()} testID="устаз-камера" />
-                <КругКнопка значок="галерея" подпись={т('галерея')} выкл={!!занят} приНажатии={() => файлГалерея.current?.click()} testID="устаз-галерея" />
-                {createElement('input', {
-                  ref: файлКамера,
-                  type: 'file',
-                  accept: 'image/*',
-                  capture: 'environment',
-                  hidden: true,
-                  'data-testid': 'устаз-файл-камера',
-                  onChange: (е: { target: HTMLInputElement }) => {
-                    void отправитьФото(е.target.files?.[0]);
-                    е.target.value = '';
-                  },
-                })}
-                {createElement('input', {
-                  ref: файлГалерея,
-                  type: 'file',
-                  accept: 'image/*',
-                  hidden: true,
-                  'data-testid': 'устаз-файл-галерея',
-                  onChange: (е: { target: HTMLInputElement }) => {
-                    void отправитьФото(е.target.files?.[0]);
-                    е.target.value = '';
-                  },
-                })}
-              </>
-            ) : null}
+          {/* Поле ввода — как у Айалема (владелец 28.11.2026): одна скруглённая рамка; сверху поле (растёт до 5 строк),
+              внизу внутри рамки слева 📷 🖼, справа 🎤 и ➤ (➤ видна всегда: без текста — неактивна). */}
+          <View
+            testID="устаз-рамка"
+            style={{
+              borderRadius: 22,
+              borderWidth: 1,
+              borderColor: цвет.граница,
+              backgroundColor: цвет.поверхность,
+              paddingTop: 6,
+              paddingBottom: 4,
+              paddingHorizontal: 6,
+              gap: 2,
+            }}
+          >
             {запись ? (
               <View
                 testID="устаз-запись"
-                style={{
-                  flex: 1,
-                  minWidth: 0,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: отступ.s,
-                  minHeight: 44,
-                }}
+                style={{ flexDirection: 'row', alignItems: 'center', gap: отступ.s, minHeight: 44, paddingHorizontal: отступ.s }}
                 {...((ВЕБ ? { role: 'status' } : {}) as object)}
               >
-                <View
-                  style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: 6,
-                    backgroundColor: '#C0392B',
-                  }}
-                />
+                <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: '#C0392B' }} />
                 <Текст стиль={{ flex: 1, transform: [{ translateX: сдвиг }] }}>
-                  {т(запись.тап ? 'записьТап' : 'запись', {
-                    в: ммсс(запись.сек),
-                  })}
+                  {т(запись.тап ? 'записьТап' : 'запись', { в: ммсс(запись.сек) })}
                   {запись.тап ? '' : '  ' + т('сдвиг')}
                 </Текст>
               </View>
@@ -866,62 +838,97 @@ export function СпроситьУстаза(_: ПропсыЭкрана<'уст
                 blurOnSubmit
                 enterKeyHint="send"
                 testID="устаз-поле"
+                onContentSizeChange={(е) => установитьВысотуПоля(е.nativeEvent.contentSize.height)}
                 style={{
-                  flex: 1,
-                  minWidth: 0,
                   minHeight: 44,
-                  maxHeight: 120,
-                  paddingHorizontal: отступ.m,
+                  height: Math.min(Math.max(44, высотаПоля), МАКС_ВЫСОТА_ПОЛЯ),
+                  maxHeight: МАКС_ВЫСОТА_ПОЛЯ,
+                  paddingHorizontal: отступ.s,
                   paddingVertical: 10,
-                  borderRadius: 22,
-                  borderWidth: 1,
-                  borderColor: цвет.граница,
-                  backgroundColor: цвет.поверхность,
                   fontFamily: ШРИФТ_ИНТЕРФЕЙСА,
                   fontSize: 16,
+                  lineHeight: 22,
                   color: цвет.текст,
-                  ...(ВЕБ ? ({ outlineStyle: 'none' } as object) : null),
+                  ...(ВЕБ ? ({ outlineStyle: 'none', resize: 'none', fieldSizing: 'content' } as object) : null),
                 }}
               />
             )}
-            {запись?.тап ? (
-              <>
-                <КругКнопка значок="закрыть" подпись={т('отмена')} приНажатии={отменитьЗапись} testID="устаз-запись-отмена" />
-                <КругКнопка значок="стоп" подпись={т('стоп')} акцент приНажатии={стопГолос} testID="устаз-запись-стоп" />
-              </>
-            ) : голосЕсть && (!есть || запись) ? (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={т('микрофон')}
-                disabled={!!занят}
-                testID="устаз-микрофон"
-                {...(жестМикрофона as object)}
-                style={({ pressed }) => ({
-                  width: 44,
-                  height: 44,
-                  borderRadius: 22,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: запись ? '#C0392B' : цвет.акцент,
-                  transform: [{ scale: запись ? 1.15 : 1 }],
-                  opacity: занят ? 0.5 : pressed ? 0.8 : 1,
-                  ...(ВЕБ ? ({ touchAction: 'none', userSelect: 'none' } as object) : null),
-                })}
-              >
-                <Значок имя="микрофон" размер={22} цвет={цвет.акцентТекст} толщина={2.25} />
-              </Pressable>
-            ) : (
-              <КругКнопка
-                значок="вперёд"
-                подпись={т('отправить')}
-                акцент={есть && включено && !занят}
-                выкл={!есть || !включено || !!занят}
-                приНажатии={() => void отправить(вопрос)}
-                testID="устаз-отправить"
-              />
-            )}
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+              {фотоЕсть && !запись ? (
+                <>
+                  <КругКнопка значок="камера" подпись={т('камера')} выкл={!!занят} приНажатии={() => файлКамера.current?.click()} testID="устаз-камера" />
+                  <КругКнопка значок="галерея" подпись={т('галерея')} выкл={!!занят} приНажатии={() => файлГалерея.current?.click()} testID="устаз-галерея" />
+                  {createElement('input', {
+                    ref: файлКамера,
+                    type: 'file',
+                    accept: 'image/*',
+                    capture: 'environment',
+                    hidden: true,
+                    'data-testid': 'устаз-файл-камера',
+                    onChange: (е: { target: HTMLInputElement }) => {
+                      void отправитьФото(е.target.files?.[0]);
+                      е.target.value = '';
+                    },
+                  })}
+                  {createElement('input', {
+                    ref: файлГалерея,
+                    type: 'file',
+                    accept: 'image/*',
+                    hidden: true,
+                    'data-testid': 'устаз-файл-галерея',
+                    onChange: (е: { target: HTMLInputElement }) => {
+                      void отправитьФото(е.target.files?.[0]);
+                      е.target.value = '';
+                    },
+                  })}
+                </>
+              ) : null}
+              <View style={{ flex: 1 }} />
+              {запись?.тап ? (
+                <>
+                  <КругКнопка значок="закрыть" подпись={т('отмена')} приНажатии={отменитьЗапись} testID="устаз-запись-отмена" />
+                  <КругКнопка значок="стоп" подпись={т('стоп')} акцент приНажатии={стопГолос} testID="устаз-запись-стоп" />
+                </>
+              ) : (
+                <>
+                  {голосЕсть ? (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={т('микрофон')}
+                      disabled={!!занят}
+                      testID="устаз-микрофон"
+                      {...(жестМикрофона as object)}
+                      style={({ pressed }) => ({
+                        width: 44,
+                        height: 44,
+                        borderRadius: 22,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: запись ? '#C0392B' : 'transparent',
+                        transform: [{ scale: запись ? 1.15 : 1 }],
+                        opacity: занят ? 0.5 : pressed ? 0.7 : 1,
+                        ...(ВЕБ ? ({ touchAction: 'none', userSelect: 'none' } as object) : null),
+                      })}
+                    >
+                      <Значок имя="микрофон" размер={22} цвет={запись ? '#FFFFFF' : цвет.акцент} толщина={2} />
+                    </Pressable>
+                  ) : null}
+                  {запись ? null : (
+                    <КругКнопка
+                      значок="вперёд"
+                      подпись={т('отправить')}
+                      акцент={есть && включено && !занят}
+                      круг
+                      выкл={!есть || !включено || !!занят}
+                      приНажатии={() => void отправить(вопрос)}
+                      testID="устаз-отправить"
+                    />
+                  )}
+                </>
+              )}
+            </View>
           </View>
-          <Текст вид="мелкий" стиль={{ textAlign: 'center' }}>
+          <Текст вид="мелкий" цвет={цвет.текстВторой} стиль={{ textAlign: 'center', fontSize: 12 }}>
             {т('личное')}
           </Текст>
         </View>
@@ -964,6 +971,7 @@ function КругКнопка({
   testID,
   акцент,
   выкл,
+  круг,
 }: {
   значок: 'камера' | 'галерея' | 'вперёд' | 'стоп' | 'закрыть';
   подпись: string;
@@ -971,6 +979,8 @@ function КругКнопка({
   testID: string;
   акцент?: boolean;
   выкл?: boolean;
+  /** Всегда круг (➤ «Отправить»): без акцента — серый. */
+  круг?: boolean;
 }) {
   const { цвет } = useТема();
   return (
@@ -986,17 +996,32 @@ function КругКнопка({
         borderRadius: 22,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: акцент ? цвет.акцент : 'transparent',
-        opacity: выкл ? 0.45 : pressed ? 0.7 : 1,
+        backgroundColor: акцент ? цвет.акцент : круг ? цвет.граница : 'transparent',
+        opacity: выкл && !круг ? 0.45 : pressed ? 0.7 : 1,
       })}
     >
-      <Значок имя={значок} размер={22} цвет={акцент ? цвет.акцентТекст : цвет.акцент} толщина={2} />
+      <Значок имя={значок} размер={22} цвет={акцент ? цвет.акцентТекст : круг ? цвет.текстВторой : цвет.акцент} толщина={2} />
     </Pressable>
   );
 }
 
 /** Пузырь ответа Устаза: аватар, текст, аят (если «как читается»), источники, «Пожаловаться», 🔊, чипы. */
-function Ответ({ ид, ответ, номер, т, пожаловаться: открытьЖалобу }: { ид: string; ответ: ОтветУстаза; номер: number; т: Т; пожаловаться: () => void }) {
+function Ответ({
+  ид,
+  ответ,
+  номер,
+  т,
+  пожаловаться: открытьЖалобу,
+  спроситьПример,
+}: {
+  ид: string;
+  ответ: ОтветУстаза;
+  номер: number;
+  т: Т;
+  пожаловаться: () => void;
+  /** Чип-пример под приветствием или «уточните» — сразу задать этот вопрос. */
+  спроситьПример?: (вопрос: string) => void;
+}) {
   const { цвет, отступ, радиус } = useТема();
   const { язык } = useПеревод();
   const { перейти } = useНавигация();
@@ -1017,33 +1042,36 @@ function Ответ({ ид, ответ, номер, т, пожаловаться
   const дляОзвучки = [текст, ...прочие.slice(0, 2).map((и) => и.текст)].join('. ');
   const озвучкаМожно = озвучкаЕсть(язык);
   const первая = прочие.find((и) => адресИсточника(и));
+  const чипыПримеров = ответ.намерение === 'приветствие' || ответ.намерение === 'уточнить';
+  const чипыПродолжения = ответ.вид === 'ответ' && !ответ.намерение;
   return (
-    <View testID={'устаз-ответ-' + номер} style={{ alignSelf: 'stretch', flexDirection: 'row', gap: отступ.s }}>
-      <ОбразУстаза размер={36} />
-      <View style={{ flex: 1, minWidth: 0, gap: отступ.s }}>
+    <View testID={'устаз-ответ-' + номер} style={{ alignSelf: 'stretch', gap: отступ.s }}>
+      {/* Как у Айалема (владелец 28.11.2026): аватар — слева у низа пузыря; «Пожаловаться» и 🔊 — в нижней строке
+          пузыря справа; под пузырём — чипы-продолжения. */}
+      <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: отступ.s }}>
+        <ОбразУстаза размер={32} testID={'устаз-аватар-' + номер} />
         <View
+          testID={ответ.вид === 'к-имаму' ? 'устаз-к-имаму' : 'устаз-пузырь-' + номер}
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: отступ.s,
-            flexWrap: 'wrap',
-          }}
-        >
-          <Текст вид="метка">{т('устаз')}</Текст>
-          {ответ.черновик ? <Плашка вид="черновик" надпись={т('черновик')} малая /> : null}
-        </View>
-        <View
-          testID={ответ.вид === 'к-имаму' ? 'устаз-к-имаму' : undefined}
-          style={{
+            flex: 1,
+            minWidth: 0,
             backgroundColor: цвет.поверхность,
             borderRadius: радиус.l,
-            borderTopLeftRadius: 6,
+            borderBottomLeftRadius: 6,
             borderWidth: 1,
             borderColor: ответ.вид === 'к-имаму' ? цвет.акцент : цвет.граница,
-            padding: отступ.m,
+            paddingTop: отступ.s,
+            paddingHorizontal: отступ.m,
+            paddingBottom: 2,
             gap: отступ.s,
           }}
         >
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: отступ.s, flexWrap: 'wrap' }}>
+            <Текст вид="метка" цвет={цвет.акцент}>
+              {т('устаз')}
+            </Текст>
+            {ответ.черновик ? <Плашка вид="черновик" надпись={т('черновик')} малая /> : null}
+          </View>
           {ответ.распознано ? (
             <Текст вид="мелкий" цвет={цвет.текстВторой} testID="устаз-распознано">
               {т('распознано', { т: ответ.распознано })}
@@ -1051,84 +1079,76 @@ function Ответ({ ид, ответ, номер, т, пожаловаться
           ) : null}
           <Текст testID={'устаз-ответ-' + номер + '-текст'}>{текст}</Текст>
           {ответ.вид === 'к-имаму' && прочие.length ? <Текст вид="мелкий">{т('общие')}</Текст> : null}
-        </View>
-        {аят ? <АятОтвет и={аят} т={т} /> : null}
-        {прочие.length ? (
-          <View style={{ gap: отступ.s }} {...((ВЕБ ? { role: 'list' } : {}) as object)}>
-            {прочие.map((и) => (
-              <КарточкаИсточника key={и.id} и={и} т={т} полностью={подробно} />
-            ))}
-          </View>
-        ) : null}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: отступ.s,
-            flexWrap: 'wrap',
-          }}
-        >
-          <Pressable
-            accessibilityRole="button"
-            onPress={открытьЖалобу}
-            testID={'устаз-пожаловаться-' + номер}
-            style={({ pressed }) => ({
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 4,
-              minHeight: 36,
-              opacity: pressed ? 0.6 : 1,
-            })}
-          >
-            <Значок имя="флаг" размер={16} цвет={цвет.текстВторой} />
-            <Текст вид="мелкий" цвет={цвет.текстВторой}>
-              {т('пожаловаться')}
-            </Текст>
-          </Pressable>
-          {озвучкаМожно ? (
+          {аят ? <АятОтвет и={аят} т={т} /> : null}
+          {прочие.length ? (
+            <View style={{ gap: отступ.s }} {...((ВЕБ ? { role: 'list' } : {}) as object)}>
+              {прочие.map((и) => (
+                <КарточкаИсточника key={и.id} и={и} т={т} полностью={подробно} />
+              ))}
+            </View>
+          ) : null}
+          <View testID={'устаз-действия-' + номер} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: отступ.m }}>
+            {говорю ? (
+              <Текст вид="мелкий" цвет={цвет.текстВторой} стиль={{ flex: 1 }}>
+                {т('синтез')}
+              </Текст>
+            ) : null}
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={т('озвучить')}
-              onPress={() => {
-                if (говорю) {
-                  остановитьОзвучку();
-                  установитьГоворю(false);
-                } else if (озвучить(дляОзвучки, язык, () => установитьГоворю(false))) установитьГоворю(true);
-              }}
-              testID={'устаз-озвучить-' + номер}
-              style={({ pressed }) => ({
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 4,
-                minHeight: 36,
-                opacity: pressed ? 0.6 : 1,
-              })}
+              onPress={открытьЖалобу}
+              testID={'устаз-пожаловаться-' + номер}
+              style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 36, opacity: pressed ? 0.6 : 1 })}
             >
-              <Значок имя={говорю ? 'стоп' : 'аудио'} размер={18} цвет={цвет.акцент} />
-              {говорю ? (
-                <Текст вид="мелкий" цвет={цвет.текстВторой}>
-                  {т('синтез')}
-                </Текст>
-              ) : null}
+              <Значок имя="флаг" размер={15} цвет={цвет.текстВторой} />
+              <Текст вид="мелкий" цвет={цвет.текстВторой}>
+                {т('пожаловаться')}
+              </Текст>
             </Pressable>
-          ) : null}
-        </View>
-        {ответ.вид === 'ответ' ? (
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s }}>
-            {первая ? <Чип надпись={т('подробнее')} приНажатии={() => открыть(перейти, первая)} testID={'устаз-чип-подробнее-' + номер} /> : null}
-            {прочие.length ? <Чип надпись={т('покажите')} приНажатии={() => установитьПодробно((п) => !п)} testID={'устаз-чип-источник-' + номер} /> : null}
-            <Чип
-              надпись={т('проверьте')}
-              приНажатии={() => {
-                установитьПроверку('ждём');
-                void взятьВопрос(прогресс).then((в) => установитьПроверку(в ?? 'нет'));
-              }}
-              testID={'устаз-чип-проверка-' + номер}
-            />
+            {озвучкаМожно ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={т('озвучить')}
+                onPress={() => {
+                  if (говорю) {
+                    остановитьОзвучку();
+                    установитьГоворю(false);
+                  } else if (озвучить(дляОзвучки, язык, () => установитьГоворю(false))) установитьГоворю(true);
+                }}
+                testID={'устаз-озвучить-' + номер}
+                style={({ pressed }) => ({ minWidth: 36, minHeight: 36, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 })}
+              >
+                <Значок имя={говорю ? 'стоп' : 'аудио'} размер={20} цвет={цвет.акцент} />
+              </Pressable>
+            ) : null}
           </View>
-        ) : null}
-        {проверка && проверка !== 'ждём' ? <Проверка вопрос={проверка} т={т} ключ={ид} /> : null}
+        </View>
       </View>
+      {чипыПримеров && спроситьПример ? (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingLeft: 32 + отступ.s }}>
+          {ПРИМЕРЫ.map((к, i) => (
+            <Чип key={к} надпись={т(к)} приНажатии={() => спроситьПример(т(к))} testID={'устаз-чип-пример-' + номер + '-' + (i + 1)} />
+          ))}
+        </View>
+      ) : null}
+      {чипыПродолжения ? (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: отступ.s, paddingLeft: 32 + отступ.s }}>
+          {первая ? <Чип надпись={т('подробнее')} приНажатии={() => открыть(перейти, первая)} testID={'устаз-чип-подробнее-' + номер} /> : null}
+          {прочие.length ? <Чип надпись={т('покажите')} приНажатии={() => установитьПодробно((п) => !п)} testID={'устаз-чип-источник-' + номер} /> : null}
+          <Чип
+            надпись={т('проверьте')}
+            приНажатии={() => {
+              установитьПроверку('ждём');
+              void взятьВопрос(прогресс).then((в) => установитьПроверку(в ?? 'нет'));
+            }}
+            testID={'устаз-чип-проверка-' + номер}
+          />
+        </View>
+      ) : null}
+      {проверка && проверка !== 'ждём' ? (
+        <View style={{ paddingLeft: 32 + отступ.s }}>
+          <Проверка вопрос={проверка} т={т} ключ={ид} />
+        </View>
+      ) : null}
     </View>
   );
 }
