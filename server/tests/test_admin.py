@@ -31,8 +31,10 @@ def test_почта_и_роли():
     assert admin.можно('owner', 'admin') and admin.можно('admin', 'viewer') and not admin.можно('viewer', 'admin')
     assert not admin.можно('кто-то', 'viewer')
     к = admin.новый_код()
-    assert len(к) == 6 and к.isdigit()
-    assert admin.хэш_кода('с', 'a@b.kz', '123456') != admin.хэш_кода('с', 'a@b.kz', '123457')
+    assert len(к) == 4 and к.isdigit()  # владелец 28.11.2026: «Код четырёхзначный сделай»
+    assert admin.хэш_кода('с', 'a@b.kz', '1234') != admin.хэш_кода('с', 'a@b.kz', '1235')
+    assert admin.код_верного_вида(' 0042 ') == '0042' and admin.код_верного_вида('123456') is None
+    assert admin.код_верного_вида('12a4') is None and admin.код_верного_вида(1234) is None
     assert admin.класс_устройства('Mozilla/5.0 (Linux; Android 14) Chrome/130') == 'Android · Chrome'
 
 
@@ -128,7 +130,7 @@ def test_вход_по_коду(среда):
     with х.соединение() as с:
         assert код not in str(с.execute('SELECT code_hash FROM admin_codes').fetchall())
     # Неверный код 5 раз — код сгорает, даже верный больше не подходит.
-    неверный = '000000' if код != '000000' else '111111'
+    неверный = '0000' if код != '0000' else '1111'
     for _ in range(5):
         assert клиент.post('/api/admin/login/verify', json={'email': ВЛАДЕЛЕЦ, 'code': неверный}, headers=СВОЙ).status_code == 400
     assert клиент.post('/api/admin/login/verify', json={'email': ВЛАДЕЛЕЦ, 'code': код}, headers=СВОЙ).status_code == 400
@@ -137,8 +139,8 @@ def test_вход_по_коду(среда):
     код = письма[-1][1]
     часы.мс += 11 * 60_000
     assert клиент.post('/api/admin/login/verify', json={'email': ВЛАДЕЛЕЦ, 'code': код}, headers=СВОЙ).status_code == 400
-    # Третий код за 15 минут — можно, четвёртый — лимит.
-    часы.мс += 16 * 60_000
+    # Новый код через час (лимит — 5 кодов в час на почту).
+    часы.мс += 61 * 60_000
     войти(клиент, письма)
     assert клиент.get('/api/admin/me').json() == {'email': ВЛАДЕЛЕЦ, 'роль': 'owner', 'имя': ''}
     # Код одноразовый.
@@ -158,9 +160,20 @@ def test_вход_по_коду(среда):
 
 
 def test_лимит_кодов(среда):
+    клиент, _, часы, письма = среда
+    # Не больше 5 кодов в час на почту (4 цифры — владелец 28.11.2026), через час — снова можно.
+    коды = [клиент.post('/api/admin/login/code', json={'email': ВЛАДЕЛЕЦ}, headers=СВОЙ).status_code for _ in range(6)]
+    assert коды == [200] * 5 + [429] and len(письма) == 5
+    assert all(len(к) == 4 and к.isdigit() for _, к in письма)
+    часы.мс += 61 * 60_000
+    assert клиент.post('/api/admin/login/code', json={'email': ВЛАДЕЛЕЦ}, headers=СВОЙ).status_code == 200
+
+
+def test_лимит_кодов_с_ip(среда):
     клиент, _, _, письма = среда
-    коды = [клиент.post('/api/admin/login/code', json={'email': ВЛАДЕЛЕЦ}, headers=СВОЙ).status_code for _ in range(4)]
-    assert коды == [200, 200, 200, 429] and len(письма) == 3
+    # 20 кодов в час с одного IP (хэш) на разные почты, 21-й — 429.
+    итоги = [клиент.post('/api/admin/login/code', json={'email': f'n{и}@example.org'}, headers=СВОЙ).status_code for и in range(21)]
+    assert итоги == [200] * 20 + [429]
 
 
 def test_роли_и_админы(среда):

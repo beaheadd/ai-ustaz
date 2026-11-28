@@ -46,7 +46,8 @@ function вход(): void {
   очистить(корень);
   const сообщение = h('p', { class: 'сообщение', role: 'status', 'aria-live': 'polite' });
   const почта = h('input', { type: 'email', id: 'почта', autocomplete: 'email', inputmode: 'email', required: true, placeholder: 'name@example.com' });
-  const код = h('input', { type: 'text', id: 'код', autocomplete: 'one-time-code', inputmode: 'numeric', pattern: '[0-9]{6}', maxlength: 6, placeholder: '123456' });
+  // Код — 4 цифры (владелец 28.11.2026: «Код четырёхзначный сделай, чтобы было проще»); после 4-й цифры — сразу «Войти».
+  const код = h('input', { type: 'text', id: 'код', autocomplete: 'one-time-code', inputmode: 'numeric', pattern: '[0-9]{4}', maxlength: 4, placeholder: '1234' });
   const шагКода = h('div', { class: 'поле', hidden: true }, h('label', { for: 'код' }, 'Код из письма'), код,
     h('p', { class: 'подсказка' }, 'Код действует 10 минут. Письмо может попасть в «Спам».'));
   const кнопка = h('button', { type: 'submit', class: 'кнопка главная' }, 'Прислать код');
@@ -80,6 +81,11 @@ function вход(): void {
     } finally {
       кнопка.disabled = false;
     }
+  });
+  код.addEventListener('input', () => {
+    const цифры = код.value.replace(/\D/g, '').slice(0, 4);
+    if (цифры !== код.value) код.value = цифры;
+    if (цифры.length === 4 && этап === 'код' && !кнопка.disabled) форма.requestSubmit();
   });
   корень.appendChild(h('main', { class: 'экран-входа' }, форма));
   почта.focus();
