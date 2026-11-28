@@ -22,7 +22,9 @@
  * Без импортов кода (проверяется в node).
  */
 
-export type НамерениеОтвета = 'аят' | 'приветствие' | 'спасибо' | 'уточнить';
+export type НамерениеОтвета = 'аят' | 'тафсир' | 'приветствие' | 'спасибо' | 'уточнить';
+/** Контекст разговора (владелец 28.11.2026): ссылка прошлого ответа — только структура, без текстов вопросов. */
+export type КонтекстВопроса = { вид: 'аят'; сура: number; аят: number; до?: number } | { вид: 'хадис'; id: string };
 export type ВидОтвета = 'ответ' | 'нет-в-базе' | 'к-имаму' | 'вне-темы';
 export type ВидИсточника = 'коран' | 'хадис' | 'тафсир' | 'статья' | 'справка';
 export type ЯзыкВопроса = 'ru' | 'kk' | 'uz' | 'en';
@@ -148,7 +150,7 @@ export function разобратьОтвет(данные: unknown): Ответ�
       ? источники.some((и) => и.вид === 'коран')
         ? 'аят'
         : null
-      : (['приветствие', 'спасибо', 'уточнить'] as const).find((н) => н === д.намерение) ?? null;
+      : (['тафсир', 'приветствие', 'спасибо', 'уточнить'] as const).find((н) => н === д.намерение) ?? null;
   const распознаноСырое = typeof д.распознано === 'string' ? д.распознано.trim().slice(0, МАКС_ВОПРОС) : '';
   const распознано = распознаноСырое && !АРАБСКОЕ.test(распознаноСырое) ? распознаноСырое : null;
   return {
@@ -164,7 +166,11 @@ export function разобратьОтвет(данные: unknown): Ответ�
 
 type Fetch = (адрес: string, параметры: { method: string; headers: Record<string, string>; body: string; signal?: AbortSignal }) => Promise<{ status: number; json(): Promise<unknown> }>;
 
-export async function спросить(вопрос: string, язык: ЯзыкВопроса, о: { fetch?: Fetch; signal?: AbortSignal } = {}): Promise<ИтогВопроса> {
+export async function спросить(
+  вопрос: string,
+  язык: ЯзыкВопроса,
+  о: { fetch?: Fetch; signal?: AbortSignal; контекст?: КонтекстВопроса | null } = {},
+): Promise<ИтогВопроса> {
   const q = вопрос.trim();
   if (q.length < МИН_ВОПРОС || q.length > МАКС_ВОПРОС) return { ок: false, причина: 'вопрос' };
   const получить = о.fetch ?? (globalThis.fetch as unknown as Fetch | undefined);
@@ -176,7 +182,7 @@ export async function спросить(вопрос: string, язык: Язык�
     const ответ = await получить(АДРЕС_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ q, lang: язык }),
+      body: JSON.stringify(о.контекст ? { q, lang: язык, контекст: о.контекст } : { q, lang: язык }),
       signal: таймаут?.signal,
     });
     if (ответ.status === 429) return { ок: false, причина: 'лимит' };
@@ -277,3 +283,16 @@ export async function фотографией(картинка: Blob, язык: �
     return { ок: false, причина: 'нет-связи' };
   }
 }
+
+/** Контекст для следующего вопроса из ответа Устаза: аят («как читается», тафсир) или первый хадис-источник. Чистая. */
+export function контекстИзОтвета(ответ: ОтветУстаза | null | undefined): КонтекстВопроса | null {
+  if (!ответ) return null;
+  if (ответ.намерение === 'аят' || ответ.намерение === 'тафсир') {
+    const к = ответ.источники.find((и) => и.вид === 'коран');
+    const с = к ? ссылкаАята(к.ссылка) : null;
+    if (с) return с.до > с.аят ? { вид: 'аят', сура: с.сура, аят: с.аят, до: с.до } : { вид: 'аят', сура: с.сура, аят: с.аят };
+  }
+  const х = ответ.источники.find((и) => и.вид === 'хадис' && /^site\.hadith\.\d{1,6}$/.test(и.id));
+  return х ? { вид: 'хадис', id: х.id } : null;
+}
+

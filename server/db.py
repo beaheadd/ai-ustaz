@@ -419,6 +419,20 @@ class Хранилище:
             ).fetchall()
         return [self._запись_kb(р) for р in строки]
 
+    def kb_по_ид(self, ид: str, язык: str, черновые: bool) -> list[dict]:
+        """Одна запись базы по id (контекст чата: «что значит этот хадис»)."""
+        with self._соединение() as с:
+            строки = с.execute(
+                f"""
+                SELECT DISTINCT ON (e.id) {self._ПОЛЯ_ЗАПИСИ}
+                FROM kb_entries e JOIN {self._ТЕКСТЫ} x ON x.entry_id = e.id AND x.lang IN (%(язык)s, 'ru')
+                WHERE e.id = %(ид)s AND (%(черновые)s OR e.status = 'утверждено')
+                ORDER BY e.id, (x.lang = %(язык)s) DESC LIMIT 1
+                """,
+                {'язык': язык, 'ид': ид, 'черновые': bool(черновые)},
+            ).fetchall()
+        return [self._запись_kb(р) for р in строки]
+
     def ask_записать(self, вид: str, режим: str, причина: str | None, источников: int) -> None:
         with self._соединение() as с:
             с.execute('INSERT INTO ask_log (kind, mode, reason, sources) VALUES (%s, %s, %s, %s)',
