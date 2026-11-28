@@ -192,9 +192,10 @@ export async function установкаСквозной(браузер, баз�
     await вЕщё(стр);
     const первая = await стр.evaluate(() => {
       const экран = document.querySelector('[data-testid="экран-ещё"]');
-      return [...экран.querySelectorAll('[data-testid^="ещё-"]')][0]?.getAttribute('data-testid');
+      // С 28.11.2026 выше — только строка аккаунта («Войти и сохранить прогресс», владелец: «создай вход»).
+      return [...экран.querySelectorAll('[data-testid^="ещё-"]')].map((э) => э.getAttribute('data-testid')).filter((id) => !/^ещё-(вход|аккаунт|админка)$/.test(id))[0];
     });
-    проверить(первая === 'ещё-установка', `«Ещё»: первая строка — «Установить приложение» (${первая})`);
+    проверить(первая === 'ещё-установка', `«Ещё»: первая строка после входа — «Установить приложение» (${первая})`);
     await стр.getByTestId('ещё-установка').first().click();
     await ждать(стр, 'экран-установка');
     проверить((await стр.evaluate(() => location.hash)) === '#/install', 'адрес экрана — #/install');

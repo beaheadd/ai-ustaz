@@ -52,18 +52,23 @@ const корень = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 
 const папка = path.resolve(корень, process.argv[2] ?? 'dist');
 const файл = path.join(папка, 'index.html');
 
+// «Войти через Google» (владелец 28.11.2026: «Google авторизация»): Google Identity Services — ровно те адреса, что
+// требует GIS, и только они: скрипт …/gsi/client, его окно и запросы …/gsi/, стиль кнопки …/gsi/style. Скрипт грузится
+// ТОЛЬКО по нажатию «Войти через Google» (src/account/google.ts) и только на aiustaz.pro (на batr.kz входа нет; сборка
+// одна, поэтому адреса в политике есть и там, но код их не трогает). check-dist (п. 8) пропускает google только так.
+export const GIS = 'https://accounts.google.com/gsi/';
 export const ПОЛИТИКА = [
   "default-src 'self'",
-  "script-src 'self'",
-  "style-src 'self' 'unsafe-inline'", // react-native-web вставляет стили через <style>
+  `script-src 'self' ${GIS}client`,
+  `style-src 'self' 'unsafe-inline' ${GIS}style`, // react-native-web вставляет стили через <style>
   "img-src 'self' data: blob:", // значок — встроенный SVG (data:)
   "font-src 'self' data:",
   // Своя запись (object URL); видео и аудио партнёров — только свои файлы media/…; чтение Корана — ТОЛЬКО CDN AlQuran
   // Cloud (владелец 27.11.2026; их условия: стриминг для учебного использования; src/audio/sources.ts РАЗРЕШЁННЫЕ_CDN).
   "media-src 'self' blob: https://cdn.islamic.network",
-  "connect-src 'self'",
+  `connect-src 'self' ${GIS}`,
   "worker-src 'self'", // только /aiustaz/push-sw.js (уведомления о времени намаза, 20.11.2026; регистрируется лишь на aiustaz.pro)
-  "frame-src 'none'",
+  `frame-src ${GIS}`, // только окно кнопки Google; YouTube и прочее не встраиваются
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",

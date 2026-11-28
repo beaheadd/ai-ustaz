@@ -32,7 +32,9 @@
  *     — свои файлы — только в media/ с расширением аудио/видео и хэшем в имени (относительные пути из данных);
  *     — ссылки https://www.youtube.com/watch?v=… — только как текст в данных (кнопка «Смотреть на YouTube»
  *       открывает внешнее приложение); встраивания нет: ни youtube.com/embed, ни youtube-nocookie, ни ytimg,
- *       ни <iframe; CSP: frame-src 'none', media-src только 'self' (+ blob: для своей записи), без youtube;
+ *       ни <iframe; CSP: media-src только 'self' (+ blob: для своей записи), без youtube; google — только Google Identity
+ *       Services для «Войти через Google» (владелец 28.11.2026): script-src …/gsi/client, connect-src и frame-src …/gsi/,
+ *       style-src …/gsi/style — и больше нигде (скрипт вставляется только по нажатию, src/account/google.ts);
  *     — метка <meta name="aiustaz-media-preview" content="on|off">: «on» (сборка с EXPO_PUBLIC_MEDIA_PREVIEW=1,
  *       видео без разрешения авторов) — ошибка, если не сказано MUGALIM_TARGET=preview.
  *  9. Полный Коран для показа (решение владельца 19.11.2026; tools/quran/build_quran.py → app/public/quran → dist/quran):
@@ -271,7 +273,15 @@ const ПУТЬ_В_BATR = 'web/public/aiustaz/';
 // языковых чанков): 476c2bc 2 218 180 → 2 232 803 байт (+14 623 = 14,3 КБ). 2170 → 2185 КБ.
 // Вместе с главной веткой (контекст чата +1,3 КБ): 2185 → 2188 КБ.
 // Кнопка «Нашли ошибку?» на главной (владелец 28.11.2026): +≈1 КБ. 2188 → 2190 КБ.
-const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 2190);
+// Аккаунт по желанию и синхронизация (владелец 28.11.2026: «создай вход… прогресс сохраняется… с другого устройства»;
+// «Google авторизация»): 2189 → 2256 КБ, замер сборкой df2758f против ветки claude/accounts: JS без языковых чанков
+// 2 241 154 → 2 309 140 байт (+67 986 = 66,4 КБ). Состав: основной чанк +6 469 (строки «Ещё», account/state.ts, повторное
+// чтение ключей после синхронизации в 10 модулях, маршрут #/account), ленивый чанк account 61 517 (экран входа на 8 языках,
+// синхронизация, слияние, запросы, загрузчик Google — грузится только при открытии экрана или если человек вошёл);
+// языковые чанки +1 034 (строки «Ещё» на ar/tr/id/ur; в этот бюджет не входят). Переводы экрана ar/tr/id/ur — в чанке
+// account, не в lang-*.json: ur был бы 112 КБ > 110. Один чанк, а не три: иначе Metro выносит общее в __common, который
+// index.html грузит сразу. 2190 → 2256 КБ.
+const БЮДЖЕТ_JS_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_JS_КБ ?? 2256);
 // Один языковой чанк (ur — самый большой: 100 147 байт = 97,8 КБ; арабское письмо — 2 байта на букву). 110 КБ — запас
 // на правки текста; больше — делить словари или ждать решения владельца.
 const БЮДЖЕТ_ЯЗЫКА_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ЯЗЫКА_КБ ?? 110);
@@ -323,7 +333,9 @@ const ЧАНК_ЯЗЫКА = /^_expo\/static\/js\/web\/lang-(ar|tr|id|ur)-[0-9a-f
 // Выбор валюты (28.11.2026): JS +14 623 и языковые чанки +2 817 байт (ключи валюты на ar/tr/id/ur): сборка 476c2bc
 // 24 673 290 → 24 690 730 байт (+17 440 = 17 КБ). 24100 → 24118 КБ.
 // Вместе с главной веткой (контекст чата, зикры без вступления): 24118 → 24130 КБ.
-const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 24130);
+// Аккаунт (28.11.2026): JS +69 020 (с языковыми чанками) и privacy.html +18 644 байт (раздел об аккаунте, статистике,
+// чате и сообщениях об ошибках на ru/kk/en): сборка df2758f 24 699 899 → 24 787 774 байт (+87 875 = 85,8 КБ). 24130 → 24207 КБ.
+const БЮДЖЕТ_ВСЕГО_КБ = Number(process.env.MUGALIM_БЮДЖЕТ_ВСЕГО_КБ ?? 24207);
 
 const РАСТР = /\.(png|jpe?g|webp|gif|ico|bmp|avif|tiff?)$/i;
 /** Свои видео и аудио партнёров (content/media.json → файл_видео, аудио.файл) — только в media/. */
@@ -348,6 +360,7 @@ const РАЗРЕШЁННЫЕ_URL = [
   ['https://aiustaz.pro/', 'свой домен AI Ustaz: ссылка «ставить с aiustaz.pro» на экране установки (#/install) — переход по нажатию, не загрузка'],
   ['https://www.youtube.com/watch?v=', 'content/media.json: ссылка на урок учителя — текст для кнопки «Смотреть на YouTube» (внешнее приложение); не загрузка, не встраивание'],
   ['https://cdn.islamic.network', 'аудио Корана AlQuran Cloud: только CSP media-src (стриминг, не connect/script; адрес аята собирается в src/audio/core.ts); владелец 27.11.2026, условия AlQuran Cloud — учебное использование'],
+  ['https://accounts.google.com/gsi/', '«Войти через Google» (владелец 28.11.2026): src/account/google.ts вставляет скрипт …/gsi/client ТОЛЬКО по нажатию кнопки на aiustaz.pro; в index.html — только CSP (script-src …/gsi/client, connect-src и frame-src …/gsi/, style-src …/gsi/style; п. 8)'],
   ['https://hadeethenc.com/', 'hadith/: поле link HadeethEnc — ссылка «Источник: HadeethEnc.com» на страницу хадиса (условие HadeethEnc: ясная ссылка на источник); переход по нажатию, не загрузка'],
 ];
 /** Точные строки (не префиксы): схемы без адреса и фиктивные базы для new URL(). */
@@ -564,8 +577,13 @@ for (const { абс, отн } of файлы) {
 {
   const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/)?.[1] ?? '';
   const директива = (имя) => csp.split(';').map((ч) => ч.trim()).find((ч) => ч.startsWith(имя + ' ')) ?? '';
-  if (/youtube|google/i.test(csp)) ошибка('CSP открыта для youtube/google — видео партнёров только ссылкой или своим файлом');
-  if (директива('frame-src') !== "frame-src 'none'") ошибка(`CSP: нужен frame-src 'none', сейчас «${директива('frame-src')}»`);
+  // Google — только Google Identity Services для «Войти через Google» (владелец 28.11.2026) и ровно в этих директивах.
+  const GIS = 'https://accounts.google.com/gsi/';
+  const безGIS = csp.split(GIS + 'client').join('').split(GIS + 'style').join('').split(GIS).join('');
+  if (/youtube|google/i.test(безGIS)) ошибка('CSP открыта для youtube/google — видео партнёров только ссылкой или своим файлом; Google — только ' + GIS);
+  if (директива('frame-src') !== `frame-src ${GIS}`) ошибка(`CSP: нужен frame-src ${GIS} (только кнопка Google), сейчас «${директива('frame-src')}»`);
+  if (директива('script-src') !== `script-src 'self' ${GIS}client`) ошибка(`CSP: script-src — только 'self' и ${GIS}client, сейчас «${директива('script-src')}»`);
+  if (директива('connect-src') !== `connect-src 'self' ${GIS}`) ошибка(`CSP: connect-src — только 'self' и ${GIS}, сейчас «${директива('connect-src')}»`);
   // Чтение Корана — только CDN AlQuran Cloud (владелец 27.11.2026; условия: стриминг для учебного использования).
   if (!/^media-src 'self'( blob:)?( https:\/\/cdn\.islamic\.network)?$/.test(директива('media-src'))) ошибка(`CSP: media-src только 'self' (+ blob:, + https://cdn.islamic.network), сейчас «${директива('media-src')}»`);
   if (/cdn\.islamic\.network/.test(директива('connect-src') + директива('script-src') + директива('img-src'))) ошибка('CSP: cdn.islamic.network — только в media-src (аудио), не в connect/script/img');

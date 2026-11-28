@@ -35,7 +35,8 @@
 | `rates.py` | курсы валют мира к тенге для закята: `GET /api/zakat/rates`, НБ РК → ЦБ РФ → ЕЦБ → открытый набор CC0, проверка; миграция 026 (раздел «Цены золота и серебра…») |
 | `metals.py` | цены золота и серебра за 1 г в тенге для калькулятора закята: `GET /api/zakat/prices`, выгрузка НБ РК + ЦБ РФ раз в сутки (поток `metals` в jobs), проверка; миграция 021 (раздел ниже) |
 | `stats.py` | своя анонимная статистика: `POST /api/stats/e` (только aiustaz.pro; без cookie, IP, строки браузера, мест), суточные итоги, сводка для админки; сырые события 90 дней (владелец 27.11.2026) |
-| `admin.py` | админка: вход по коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
+| `admin.py` | админка: вход по 4-значному коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
+| `account.py` | аккаунты приложения по желанию (владелец 28.11.2026): вход по 4-значному коду из письма или Google (ID token — подпись по ключам Google, aud, iss, exp, email_verified), 16+, сеансы (cookie `aiustaz_account`, SameSite=Lax, Path=/api/account), документы синхронизации с версиями, «Скачать мои данные», «Удалить аккаунт», мост в админку; миграция 027 (раздел ниже) |
 | `content_admin.py` | настройки содержимого: чтецы (включены, по умолчанию), хадисы (скрыть, проверено устазом) — только отметки, без текста; `GET /api/content/config` для приложения; версии с sha256 |
 | `feedback.py` | «Сообщить об ошибке» (владелец 28.11.2026): `POST /api/feedback` (только aiustaz.pro), раздел «Ошибки» админки, уборка контакта через 90 дней после закрытия, письмо админам раз в сутки (раздел ниже) |
 | `admin_static/` | собранная админка (`node admin/build.mjs`, вне git mugalim) — nginx отдаёт на https://aiustaz.pro/admin/ |
@@ -47,7 +48,7 @@
 |---|---|---|---|
 | POST | `/api/stats/e` | приложение (aiustaz.pro) | события `{v:1, sid, sess, lang, dev, os, st, ref, ver, ev:[{t:'o'\|'v'\|'b', s?, n?, d?}]}` → 204; 60/мин с IP, 30/мин на устройство |
 | GET | `/api/content/config` | приложение | `{формат, версия, sha256, чтецы:{включены, поУмолчанию}, хадисы:{скрыты, проверены}}`, ETag, 5 мин |
-| POST | `/api/admin/login/code`, `/login/verify`, `/logout` | все | вход по коду из письма; ответ «код отправлен» одинаков для любой почты |
+| POST | `/api/admin/login/code`, `/login/verify`, `/logout` | все | вход по 4-значному коду из письма (5 попыток, 10 минут, 5 кодов в час на почту, 20 с IP); ответ «код отправлен» одинаков для любой почты |
 | GET | `/api/admin/me`, `/sessions`; POST `/sessions/revoke` | вошедший | кто я, мои входы |
 | GET/POST | `/api/admin/users`, `/users/update`, `/users/remove` | владелец | админы; владельца из `MUGALIM_ADMIN_OWNER_EMAILS` не изменить |
 | GET | `/api/admin/stats?days=1\|7\|30\|90` | просмотр+ | сводка для первой страницы |
@@ -58,6 +59,33 @@
 setup-server.sh), `MUGALIM_ADMIN_OWNER_EMAILS` (через запятую; ставит workflow batr-world «AI Ustaz admin: set owner» из
 секрета `AIUSTAZ_ADMIN_OWNER_EMAIL`, затем перезапуск mugalim-api). Тесты: `server/tests/test_admin.py` (временная база),
 `admin/e2e-admin.mjs` (Playwright против `admin/test_server.py` с выдуманными данными).
+
+## Аккаунты приложения (`account.py`, миграция 027; владелец 28.11.2026 — docs/дизайн/13-аккаунт-и-синхронизация.md)
+
+Владелец: «создай вход, чтобы кто хочет, мог заходить входом, и у него прогресс сохраняется. И с другого устройства он также
+может зайти с сохраненным прогрессом»; «Google авторизация»; «Код четырёхзначный сделай». Клиент — `app/src/account/`.
+
+| Метод | Путь | Что |
+|---|---|---|
+| GET | `/api/account/config` | `{google_client_id \| null, apple_services_id \| null, apple_redirect \| null, код: 4}` — нет client ID — нет кнопки Google |
+| POST | `/api/account/start` `{email}` | код 4 цифры письмом («Код входа: 1234»); 400 `email`, 429 `rate` (5 в час на почту, 20 в час с IP), 503 `mail` / `no_secret` |
+| POST | `/api/account/verify` `{email, code, age16}` | `{ок, я}` + cookie; 400 `code` (5 попыток, 10 минут), 400 `age` — новый аккаунт без 16+ |
+| POST | `/api/account/google` `{credential, age16}` | ID token Google → `{ок, я}` + cookie; 400 `token`, 503 `google` (нет `MUGALIM_GOOGLE_CLIENT_ID`), 503 `keys` (ключи Google недоступны и кэша нет) |
+| POST | `/api/account/apple` `{id_token, age16}` | то же для Apple — только при `MUGALIM_APPLE_SERVICES_ID` (кнопки в приложении пока нет) |
+| GET | `/api/account/me` | `{email, создан, способы, роль, закят}`; 401 `login` |
+| POST | `/api/account/logout`, `/logout-all`; GET `/sessions`; POST `/sessions/revoke {id}` | выход, выход везде, мои входы |
+| POST | `/api/account/settings` `{zakat: bool}` | «Сохранять суммы закята в аккаунте»; выключили — документ `zakat` удалён сразу |
+| GET / PUT | `/api/account/sync` | `{docs:{ключ:{v, at, data}}, закят}` / `{docs:{ключ:{base, data}}}` → `{docs:{ключ:{v, at}}, conflicts:{ключ: текущий \| null}}`; ключи `progress`, `dhikr`, `quran`, `settings`, `zakat`; документ ≤ 64 КБ, тело ≤ 256 КБ, 30 записей в минуту |
+| GET | `/api/account/export` | JSON «мои данные» (attachment) |
+| POST | `/api/account/delete` `{confirm: true}` | аккаунт, сеансы, документы и коды — удалены сразу |
+| POST | `/api/account/admin` | почта аккаунта — админ → cookie `aiustaz_admin` (Path=/api/admin, SameSite=Strict) и `{адрес: '/admin/'}`; иначе 403 `role`; в `admin_audit` — «вход через аккаунт приложения» |
+
+Изменения — только с `X-Aiustaz-Account: 1` и своим Origin. Сервер не сливает документы — пишет только поверх версии, которую
+видел клиент; сливает приложение (`app/src/account/merge.ts`). Окружение: `MUGALIM_ADMIN_SECRET` (HMAC кодов, своя область),
+`MUGALIM_GOOGLE_CLIENT_ID` (ставит workflow batr-world «AI Ustaz account: Google client ID» из секрета или переменной
+`AIUSTAZ_GOOGLE_CLIENT_ID`), `MUGALIM_APPLE_SERVICES_ID` и `MUGALIM_APPLE_REDIRECT` (пока не задаются). Ключи Google —
+`https://www.googleapis.com/oauth2/v3/certs` (кэш в `account_jwks` на 6 часов). Уборка — jobs.py раз в час. Тесты —
+`server/tests/test_account.py`, `app/scripts/e2e-account.mjs` (+ `app/scripts/e2e-account-server.py`).
 
 ## «Сообщить об ошибке» (`feedback.py`, миграция 022; владелец 28.11.2026)
 

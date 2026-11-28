@@ -1024,7 +1024,12 @@
    "модуль.намазПояснение": "Hanefi mezhebi, adım adım",
    "модуль.дуа": "Dualar",
    "модуль.дуаПояснение": "Kaynaklı ve hoca incelemeli",
-   "безВхода": "Giriş ya da hesap yok: ilerleme yalnızca bu cihazda saklanır."
+   "безВхода": "Giriş yapmazsanız ilerleme yalnızca bu cihazda saklanır.",
+   "вход": "Giriş yap ve ilerlemeni kaydet",
+   "входПодпись": "İsteğe bağlı: ilerlemen tüm cihazlarında",
+   "аккаунт": "Hesap",
+   "админка": "Yönetim paneli",
+   "админкаПодпись": "İstatistik, içerik, bildirimler"
   },
   "screens/NamazLearnScreen": {
    "вступление": "Hanefi mezhebine göre namaz, adım adım: abdest, farzlar, rekât sayısı ve namazın kendisi.",

@@ -25,7 +25,7 @@
  */
 import { createContext, createElement, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { AccessibilityInfo, Platform, useColorScheme, type ViewStyle } from 'react-native';
-import { записатьJSON, прочитатьJSON } from '../engine/storage';
+import { записатьJSON, прочитатьJSON, приВнешнемИзменении } from '../engine/storage';
 import { ТЕНЬ, ТИПОГРАФИКА, отступ, радиус, светлая, тёмная, шрифт, type Палитра } from './tokens';
 
 export * from './tokens';
@@ -137,6 +137,8 @@ export function ПоставщикТемы({ children }: { children?: ReactNode 
       живой = false;
     };
   }, []);
+  // Аккаунт (владелец 28.11.2026): тема пришла с другого устройства.
+  useEffect(() => приВнешнемИзменении(КЛЮЧ, () => установить(режимСразу())), []);
   const установитьРежим = useCallback((новый: РежимТемы) => {
     установить(новый);
     void записатьJSON(КЛЮЧ, { версия: 1, режим: новый } satisfies Сохранённое);

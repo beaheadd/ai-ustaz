@@ -39,6 +39,13 @@ export const ЦВЕТ_СЛОВА = { светлая: 'rgba(255, 196, 0, 0.42)', 
 // ── Настройка ──
 let вклСейчас: boolean | null = null;
 const слушатели = new Set<() => void>();
+// Аккаунт (владелец 28.11.2026): синхронизация записала данные другого устройства — перечитать.
+// (событие окна, а не engine/storage: этот модуль без зависимостей импортируют тесты под node).
+globalThis.addEventListener?.('aiustaz:внешнее', (е) => {
+  if (!(е as CustomEvent<string[]>).detail?.includes('quran-words.v1')) return;
+  вклСейчас = null;
+  for (const ф of [...слушатели]) ф();
+});
 function вкл(): boolean {
   if (вклСейчас === null) {
     try {

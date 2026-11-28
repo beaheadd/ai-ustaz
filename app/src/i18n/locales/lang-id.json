@@ -1024,7 +1024,12 @@
    "модуль.намазПояснение": "Mazhab Hanafi, langkah demi langkah",
    "модуль.дуа": "Doa",
    "модуль.дуаПояснение": "Dengan sumber dan pemeriksaan ustaz",
-   "безВхода": "Tanpa login atau akun: kemajuan hanya disimpan di perangkat ini."
+   "безВхода": "Tanpa masuk, kemajuan hanya disimpan di perangkat ini.",
+   "вход": "Masuk dan simpan kemajuan",
+   "входПодпись": "Opsional: kemajuan Anda di semua perangkat",
+   "аккаунт": "Akun",
+   "админка": "Panel admin",
+   "админкаПодпись": "Statistik, konten, laporan"
   },
   "screens/NamazLearnScreen": {
    "вступление": "Salat menurut mazhab Hanafi, langkah demi langkah: wudu, rukun dan kewajiban, jumlah rakaat, dan salat itu sendiri.",

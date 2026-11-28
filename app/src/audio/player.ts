@@ -33,6 +33,7 @@ import { useSyncExternalStore } from 'react';
 import { Platform } from 'react-native';
 import данныеИсточников from '@content/audio-sources.json';
 import { отобратьЧтецов } from '../content/remoteConfig';
+import { приВнешнемИзменении } from '../engine/storage';
 import { загрузитьИндексСур, индексИзКэша } from '../quran/data';
 import { создатьПлеер, type СнимокПлеера, type Шаг } from './core';
 import { выбратьИсточник, играющиеИсточники, проверитьИсточникиЧтения, type ИсточникЧтения, type ПричинаБезЗвука } from './sources';
@@ -64,6 +65,16 @@ let выбранныйЧтец: string | null = (() => {
   }
 })();
 const слушателиЧтеца = new Set<() => void>();
+// Аккаунт (владелец 28.11.2026): чтец выбран на другом устройстве.
+приВнешнемИзменении('quran-reciter.v1', () => {
+  try {
+    const з = localStorage.getItem(КЛЮЧ_ЧТЕЦА);
+    if (з && /^[a-z0-9-]+$/.test(з)) выбранныйЧтец = з;
+  } catch {
+    return;
+  }
+  for (const ф of [...слушателиЧтеца]) ф();
+});
 
 /** Чтецы, которых можно слушать здесь (для выбора). */
 export function чтецы(): ИсточникЧтения[] {

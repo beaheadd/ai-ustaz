@@ -78,11 +78,11 @@ try {
   await стр.locator('#код').waitFor({ state: 'visible' });
   await стр.getByText(/ушёл код/).waitFor();
   const код = (await (await fetch(АДРЕС + '/__test/code')).json()).code;
-  await стр.fill('#код', '000000' === код ? '111111' : '000000');
-  await стр.click('button[type=submit]');
+  проверить(/^\d{4}$/.test(код) && (await стр.locator('#код').getAttribute('maxlength')) === '4', 'код — 4 цифры (владелец 28.11.2026), поле на 4 цифры');
+  // 4-я цифра — вход сам, без кнопки.
+  await стр.fill('#код', '0000' === код ? '1111' : '0000');
   проверить(await стр.getByText(/Код неверный или устарел/).waitFor({ timeout: 5000 }).then(() => true, () => false), 'неверный код — понятная ошибка');
   await стр.fill('#код', код);
-  await стр.click('button[type=submit]');
   await стр.locator('.плитка').first().waitFor({ timeout: 20000 });
   проверить(true, 'вход по коду из письма');
 
@@ -238,7 +238,6 @@ try {
   await стр.locator('#код').waitFor({ state: 'visible' });
   await стр.getByText(/ушёл код/).waitFor();
   await стр.fill('#код', (await (await fetch(АДРЕС + '/__test/code')).json()).code);
-  await стр.click('button[type=submit]');
   await стр.getByText('просмотр', { exact: true }).waitFor({ timeout: 20000 });
   await стр.evaluate(() => { location.hash = '#/feedback/1'; });
   await стр.getByTestId('ошибка-контакт').waitFor();
