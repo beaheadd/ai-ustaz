@@ -15,7 +15,7 @@
  *   useИндексХадисов(), useЗаголовки(язык), useХадис(id | null, языкИнтерфейса) → состояние как у Корана
  *     ({ состояние: 'загрузка' } | { 'нет', нетСвязи, причина } | { 'есть', данные }) & { повторить() }
  */
-import { применитьКХадисам, скрытХадис } from '../content/remoteConfig';
+import { применитьКХадисам, скрытХадис, useВерсияНастроек } from '../content/remoteConfig';
 import { загрузитьФайл, изКэша, useЗагрузка } from '../quran/data';
 import { МАНИФЕСТ_ХАДИСОВ as М } from './manifest.generated';
 import {
@@ -125,7 +125,8 @@ export function useЗаголовки(язык: ЯзыкЗаголовков) {
 }
 
 export function useХадис(id: number | null, языкИнтерфейса: string) {
-  return useЗагрузка<ХадисДляПоказа | null>(id === null ? null : `хадис-${id}-${языкИнтерфейса}`, null, () =>
+  const в = useВерсияНастроек();
+  return useЗагрузка<ХадисДляПоказа | null>(id === null ? null : `хадис-${id}-${языкИнтерфейса}-н${в}`, null, () =>
     id === null ? Promise.resolve({ ок: true as const, данные: null }) : загрузитьХадис(id, языкИнтерфейса),
   );
 }
