@@ -533,7 +533,7 @@ export async function главнаяСквозной(браузер, база, {
     await шагОнбординга(стр, п, 1);
     п.проверить((await стр.evaluate(() => document.documentElement.lang)) === 'kk', 'телефон на kk-KZ — интерфейс сразу казахский (lang=kk)');
     const языки = await стр.locator('[data-testid^="онбординг-язык-"]').evaluateAll((э) => э.map((х) => [х.getAttribute('data-testid').slice(-2), х.getAttribute('aria-checked')]));
-    п.проверить(JSON.stringify(языки) === JSON.stringify([['kk', 'true'], ['ru', 'false'], ['uz', 'false'], ['en', 'false']]), `4 строки: Қазақша (выбрана) / Русский / Oʻzbekcha / English (${JSON.stringify(языки)})`);
+    п.проверить(JSON.stringify(языки) === JSON.stringify([['kk', 'true'], ['ru', 'false'], ['uz', 'false'], ['en', 'false'], ['ar', 'false'], ['tr', 'false'], ['id', 'false'], ['ur', 'false']]), `8 строк (владелец 28.11.2026: + ar, tr, id, ur): Қазақша (выбрана) / Русский / Oʻzbekcha / English / العربية / Türkçe / Bahasa Indonesia / اردو (${JSON.stringify(языки)})`);
     const фон = await стр.evaluate(() => getComputedStyle(document.querySelector('[data-testid="онбординг-язык-kk"]')).backgroundColor);
     п.проверить(яркость(фон) < 0.3, `выбранная строка — зелёная (${фон})`);
     await п.снимок('онбординг-kk-360-1-язык');
@@ -555,7 +555,8 @@ export async function главнаяСквозной(браузер, база, {
     await п.снимок('онбординг-kk-360-2-место');
     await п.э('онбординг-далее').click();
     await шагОнбординга(стр, п, 3);
-    п.проверить(/ҚМДБ/.test(await п.текстЭ('онбординг-ведомство')) && /Қазақстан/.test(await п.текстЭ('онбординг-ведомство')), 'ведомство по стране: ҚМДБ, Қазақстан (текстом)');
+    // Владелец 28.11.2026: нейтрально — без имени ведомства и страны (подробности — «Как считаем»).
+    п.проверить(/ресми діни басқармасы/.test(await п.текстЭ('онбординг-ведомство')) && !/ҚМДБ|Қазақстан/.test(await п.текстЭ('онбординг-ведомство')), 'ведомство текстом и нейтрально: «Еліңіздің ресми діни басқармасы бойынша…» (без ҚМДБ и страны)');
     п.проверить((await п.э('онбординг-аср-hanafi').getAttribute('aria-pressed')) === 'true' && (await п.э('онбординг-аср-shafi').getAttribute('aria-pressed')) === 'false', 'аср по умолчанию — ханафи');
     п.проверить(/көлеңке заттан екі есе/.test(await п.текстЭ('онбординг-аср-пояснение')), 'пояснение про тень');
     await п.э('онбординг-аср-shafi').click();

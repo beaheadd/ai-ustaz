@@ -41,7 +41,7 @@ app/
     notify/            уведомления о времени намаза (20.11.2026): schedule.ts (расписание на 30 дней, настройки — чистые),
                        support.ts (где можно включить — чистая), push.ts (SW, PushManager, /api/push/), store.ts,
                        useNotify.ts (поддержка, данные расписания, <СинхронизацияУведомлений>) — раздел «Уведомления»
-    i18n/              ru.ts, kk.ts, uz.ts (латиница), en.ts, index.tsx (useПеревод, создатьСловарь), translit.ts (транскрипция для uz и en)
+    i18n/              ru.ts, kk.ts, uz.ts (латиница), en.ts, languages.ts (8 языков, RTL), locales/lang-{ar,tr,id,ur}.json (ленивые словари по имени), index.tsx (useПеревод, создатьСловарь(словарь, имя)), translit.ts (транскрипция: uz — латиница, en и новые языки — английская)
     theme/             дизайн-система: tokens.ts (токены — чистые данные), index.ts (useТема, ПоставщикТемы,
                        поверхность «герой», useУменьшитьДвижение), fonts(.web).ts (Inter + Amiri Quran)
     design/            геометрия как данные: icons.ts (значки), emblem.ts (эмблема-шырақ), geometry.ts (арка, орнамент);
