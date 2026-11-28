@@ -30,6 +30,7 @@ import { Platform, Pressable, TextInput, View } from 'react-native';
 import { Карточка, Кнопка, Плашка, СтрокаСписка, Значок, Текст, Экран } from '../components';
 import { ИллюстрацияРаздела } from '../components/SectionArt';
 import type { ПропсыЭкрана } from '../engine/routes';
+import { useМестоНамаза } from '../prayer/store';
 import { прочитатьJSON, удалитьКлюч, записатьJSON } from '../engine/storage';
 import { создатьСловарь, useСловарь } from '../i18n';
 import { ШРИФТ_ИНТЕРФЕЙСА, useТема } from '../theme';
@@ -48,7 +49,7 @@ const СЛОВАРЬ = создатьСловарь({
     заголовок: 'Закят',
     вступление: 'Посчитайте закят со своих сбережений в тенге. Цифры остаются только на этом телефоне.',
     черновик: 'Черновик — проверяет устаз',
-    кИмаму: 'Личные вопросы — к имаму или в ДУМК',
+    кИмаму: 'Личные вопросы — к имаму или в духовное управление мусульман вашей страны',
     имущество: 'Ваше имущество',
     наличные: 'Наличные',
     счета: 'Деньги на картах и счетах',
@@ -78,6 +79,7 @@ const СЛОВАРЬ = создатьСловарь({
     используем: 'сравниваем с ним',
     поУмолчанию: 'По умолчанию — по серебру: в ханафитском мазхабе берут меньший нисаб, так полезнее бедным.',
     думк: 'ДУМК ежегодно объявляет нисаб в тенге — сверьтесь с muftyat.kz',
+    нисабСтрана: 'Духовное управление мусульман вашей страны ежегодно объявляет нисаб — сверьтесь с ним',
     хауль: 'Прошёл лунный год (хауль) с момента, как сумма достигла нисаба',
     итог: 'Итог',
     всего: 'Всё имущество',
@@ -103,8 +105,8 @@ const СЛОВАРЬ = создатьСловарь({
     как3: 'Вычитаем: ваши долги, которые нужно отдать сейчас.',
     как4: 'Не считаем: свой дом, машину для себя, домашние вещи и одежду.',
     как5: 'Нисаб — 85 г золота или 595 г серебра. По умолчанию сравниваем по серебру (меньший нисаб — полезнее бедным); можно выбрать золото.',
-    как6: 'Здесь не считается закят со скота и урожая и особенности бизнеса — об этом спросите имама или ДУМК.',
-    как7: 'Калькулятор помогает посчитать по вашим цифрам. С вопросами о своём случае — к имаму или в ДУМК.',
+    как6: 'Здесь не считается закят со скота и урожая и особенности бизнеса — об этом спросите имама или духовное управление мусульман вашей страны.',
+    как7: 'Калькулятор помогает посчитать по вашим цифрам. С вопросами о своём случае — к имаму или в духовное управление мусульман вашей страны.',
     сбросить: 'Сбросить',
     хранится: 'Цифры хранятся только на этом телефоне и никуда не отправляются.',
     ценаЗаГрамм: 'Цена 1 г: {сумма}',
@@ -119,7 +121,7 @@ const СЛОВАРЬ = создатьСловарь({
     заголовок: 'Зекет',
     вступление: 'Жинағыңыздан зекетті теңгемен есептеңіз. Сандар тек осы телефонда қалады.',
     черновик: 'Жоба — ұстаз тексеріп жатыр',
-    кИмаму: 'Жеке сұрақтар — имамға немесе ҚМДБ-ға',
+    кИмаму: 'Жеке сұрақтар — имамға немесе еліңіздің мұсылмандар діни басқармасына',
     имущество: 'Мүлкіңіз',
     наличные: 'Қолма-қол ақша',
     счета: 'Карталар мен шоттардағы ақша',
@@ -149,6 +151,7 @@ const СЛОВАРЬ = создатьСловарь({
     используем: 'осымен салыстырамыз',
     поУмолчанию: 'Әдепкі бойынша — күміс: ханафи мәзһабында аз нисап алынады, бұл кедейлерге пайдалырақ.',
     думк: 'ҚМДБ жыл сайын нисапты теңгемен жариялайды — muftyat.kz сайтымен салыстырыңыз',
+    нисабСтрана: 'Еліңіздің мұсылмандар діни басқармасы жыл сайын нисапты жариялайды — соныменен салыстырыңыз',
     хауль: 'Сома нисапқа жеткеннен бері бір қамари жыл (хауль) өтті',
     итог: 'Қорытынды',
     всего: 'Барлық мүлік',
@@ -174,8 +177,8 @@ const СЛОВАРЬ = создатьСловарь({
     как3: 'Шегереміз: қазір қайтаруға тиіс қарыздарыңыз.',
     как4: 'Есептемейміз: өз үйіңіз, өзіңізге арналған көлік, үй заттары мен киім.',
     как5: 'Нисап — 85 г алтын немесе 595 г күміс. Әдепкі бойынша күміспен салыстырамыз (аз нисап — кедейлерге пайдалырақ); алтынды таңдауға болады.',
-    как6: 'Мұнда мал мен егіннің зекеті және бизнестің ерекшеліктері есептелмейді — ол туралы имамнан немесе ҚМДБ-дан сұраңыз.',
-    как7: 'Есептегіш сіздің сандарыңыз бойынша есептеуге көмектеседі. Өз жағдайыңыз туралы сұрақтар — имамға немесе ҚМДБ-ға.',
+    как6: 'Мұнда мал мен егіннің зекеті және бизнестің ерекшеліктері есептелмейді — ол туралы имамнан немесе еліңіздің мұсылмандар діни басқармасынан сұраңыз.',
+    как7: 'Есептегіш сіздің сандарыңыз бойынша есептеуге көмектеседі. Өз жағдайыңыз туралы сұрақтар — имамға немесе еліңіздің мұсылмандар діни басқармасына.',
     сбросить: 'Тазалау',
     хранится: 'Сандар тек осы телефонда сақталады және ешқайда жіберілмейді.',
     ценаЗаГрамм: '1 г бағасы: {сумма}',
@@ -190,7 +193,7 @@ const СЛОВАРЬ = создатьСловарь({
     заголовок: 'Zakot',
     вступление: 'Jamgʻarmangizdan zakotni tengeda hisoblang. Raqamlar faqat shu telefonda qoladi.',
     черновик: 'Qoralama — ustoz tekshiryapti',
-    кИмаму: 'Shaxsiy savollar — imomga yoki QMDBga',
+    кИмаму: 'Shaxsiy savollar — imomga yoki mamlakatingiz musulmonlari diniy idorasiga',
     имущество: 'Mol-mulkingiz',
     наличные: 'Naqd pul',
     счета: 'Karta va hisoblardagi pul',
@@ -220,6 +223,7 @@ const СЛОВАРЬ = создатьСловарь({
     используем: 'shu bilan solishtiramiz',
     поУмолчанию: 'Odatiy holda — kumush boʻyicha: hanafiy mazhabida kamroq nisob olinadi, bu kambagʻallarga foydaliroq.',
     думк: 'QMDB har yili nisobni tengeda eʼlon qiladi — muftyat.kz bilan solishtiring',
+    нисабСтрана: 'Mamlakatingiz musulmonlari diniy idorasi har yili nisobni eʼlon qiladi — u bilan solishtiring',
     хауль: 'Summa nisobga yetganidan beri bir qamariy yil (havl) oʻtdi',
     итог: 'Natija',
     всего: 'Barcha mol-mulk',
@@ -245,8 +249,8 @@ const СЛОВАРЬ = создатьСловарь({
     как3: 'Ayiramiz: hozir qaytarishingiz kerak boʻlgan qarzlaringiz.',
     как4: 'Hisoblamaymiz: oʻz uyingiz, oʻzingiz uchun mashina, uy-roʻzgʻor buyumlari va kiyim.',
     как5: 'Nisob — 85 g oltin yoki 595 g kumush. Odatiy holda kumush bilan solishtiramiz (kamroq nisob — kambagʻallarga foydaliroq); oltinni tanlash mumkin.',
-    как6: 'Bu yerda chorva va hosil zakoti hamda biznes xususiyatlari hisoblanmaydi — bu haqda imomdan yoki QMDBdan soʻrang.',
-    как7: 'Hisoblagich raqamlaringiz boʻyicha hisoblashga yordam beradi. Oʻz holatingiz haqidagi savollar — imomga yoki QMDBga.',
+    как6: 'Bu yerda chorva va hosil zakoti hamda biznes xususiyatlari hisoblanmaydi — bu haqda imomdan yoki mamlakatingiz musulmonlari diniy idorasidan soʻrang.',
+    как7: 'Hisoblagich raqamlaringiz boʻyicha hisoblashga yordam beradi. Oʻz holatingiz haqidagi savollar — imomga yoki mamlakatingiz musulmonlari diniy idorasiga.',
     сбросить: 'Tozalash',
     хранится: 'Raqamlar faqat shu telefonda saqlanadi va hech qayerga yuborilmaydi.',
     ценаЗаГрамм: '1 g narxi: {сумма}',
@@ -261,7 +265,7 @@ const СЛОВАРЬ = создатьСловарь({
     заголовок: 'Zakat',
     вступление: 'Work out zakat on your savings in tenge. The numbers stay on this phone only.',
     черновик: 'Draft — being reviewed by an ustaz',
-    кИмаму: 'Personal questions — ask an imam or SAMK',
+    кИмаму: 'Personal questions — ask an imam or the Muslim religious authority of your country',
     имущество: 'Your assets',
     наличные: 'Cash',
     счета: 'Money on cards and accounts',
@@ -291,6 +295,7 @@ const СЛОВАРЬ = создатьСловарь({
     используем: 'we compare with this',
     поУмолчанию: 'Silver by default: in the Hanafi school the lower nisab is taken, which benefits the poor more.',
     думк: 'SAMK announces the nisab in tenge every year — check it on muftyat.kz',
+    нисабСтрана: 'The Muslim religious authority of your country announces the nisab every year — check with it',
     хауль: 'A lunar year (hawl) has passed since the amount reached the nisab',
     итог: 'Result',
     всего: 'All assets',
@@ -316,8 +321,8 @@ const СЛОВАРЬ = создатьСловарь({
     как3: 'We subtract: your debts that are due now.',
     как4: 'We do not count: your own home, a car for personal use, household items and clothes.',
     как5: 'Nisab is 85 g of gold or 595 g of silver. By default we compare by silver (the lower nisab benefits the poor more); you can choose gold.',
-    как6: 'Zakat on livestock and crops and business specifics are not covered here — ask an imam or SAMK about them.',
-    как7: 'The calculator helps you count with your own numbers. For questions about your own case, ask an imam or SAMK.',
+    как6: 'Zakat on livestock and crops and business specifics are not covered here — ask an imam or the Muslim religious authority of your country about them.',
+    как7: 'The calculator helps you count with your own numbers. For questions about your own case, ask an imam or the Muslim religious authority of your country.',
     сбросить: 'Reset',
     хранится: 'The numbers are stored only on this phone and are not sent anywhere.',
     ценаЗаГрамм: 'Price of 1 g: {сумма}',
@@ -328,7 +333,7 @@ const СЛОВАРЬ = создатьСловарь({
     ценаВручную: 'Prices of 1 g entered manually',
     вернутьАвто: 'Use the National Bank price',
   },
-});
+}, 'screens/ZakatScreen');
 
 const ВЕБ = Platform.OS === 'web';
 
@@ -508,6 +513,7 @@ function СтрокаИтога({ подпись, значение, testID, жи
 }
 
 export function Закят(_: ПропсыЭкрана<'закят'>) {
+  const { место } = useМестоНамаза();
   const т = useСловарь(СЛОВАРЬ);
   const { цвет, отступ, радиус } = useТема();
   const { данные, изменить, сбросить } = useСохранённое();
@@ -718,8 +724,9 @@ export function Закят(_: ПропсыЭкрана<'закят'>) {
           </View>
         ) : null}
         <Текст вид="мелкий">{т('поУмолчанию')}</Текст>
+        {/* Владелец 28.11.2026: про ДУМК — только если город в Казахстане; иначе — ведомство страны без имени. */}
         <Текст вид="мелкий" testID="закят-думк">
-          {т('думк')}
+          {место.страна === 'KZ' ? т('думк') : т('нисабСтрана')}
         </Текст>
       </View>
 
