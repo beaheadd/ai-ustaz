@@ -54,7 +54,7 @@ def test_сохранить_заменить_удалить(база, pg_адр�
     with psycopg.connect(pg_адрес) as с:
         assert с.execute('SELECT lang, lang_ui, lang_code FROM push_subscriptions').fetchone() == ('ru', 'ru', 'en')
         # подписка до 006 (lang_code пуст) читается по-старому: lang_ui, затем lang
-        с.execute("UPDATE push_subscriptions SET lang_code = NULL, lang_ui = 'uz'")
+        с.execute("UPDATE push_subscriptions SET lang_tag = NULL, lang_code = NULL, lang_ui = 'uz'")  # 025: lang_tag главнее
     assert база.подписка(з.хэш)['язык'] == 'uz'
     with psycopg.connect(pg_адрес) as с:
         с.execute('UPDATE push_subscriptions SET lang_code = NULL, lang_ui = NULL')
