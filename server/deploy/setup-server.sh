@@ -140,6 +140,11 @@ for i in $(seq 1 30); do
       for j in $(seq 1 30); do curl -fsS http://127.0.0.1:8033/health >/dev/null 2>&1 && break; sleep 2; done
       echo "голос: $(curl -fsS http://127.0.0.1:8033/health || echo 'служба mugalim-asr не отвечает — journalctl -u mugalim-asr')"
     fi
+    # Цены золота и серебра для закята (metals.py, владелец 28.11.2026): mugalim-jobs скачивает при запуске, если цен нет
+    # или они старше 2 суток (НБ РК и ЦБ РФ, ≈ 20 с). Только показать в журнале выкатки — выкатку не роняет.
+    for j in $(seq 1 30); do curl -fsS -o /dev/null "http://127.0.0.1:$PORT/api/zakat/prices" 2>/dev/null && break; sleep 3; done
+    echo "цены металлов: $(curl -sS "http://127.0.0.1:$PORT/api/zakat/prices" 2>&1 | head -c 400)"
+    journalctl -u mugalim-jobs --since '-15 min' --no-pager 2>/dev/null | grep 'цены металлов' | tail -3 || true
     if systemctl is-active --quiet mugalim-jobs; then echo "OK: mugalim-jobs работает"; exit 0; fi
     echo "ОШИБКА: mugalim-jobs не запущен — journalctl -u mugalim-jobs -n 50"; exit 1
   fi

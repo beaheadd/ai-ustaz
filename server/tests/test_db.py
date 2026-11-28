@@ -18,7 +18,7 @@ def база(pg_адрес):
     from db import Хранилище
 
     х = Хранилище(pg_адрес)
-    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz', '006_lang_en', '007_admin_stats', '020_ask_reports']
+    assert х.применить_миграции() == ['001_push', '002_push_offset', '003_prayer_official', '004_kb', '005_push_lang_uz', '006_lang_en', '007_admin_stats', '020_ask_reports', '021_metal_prices']
     assert х.применить_миграции() == []  # второй раз — ничего
     return х
 

@@ -32,6 +32,7 @@
 | `prayer.py` | официальное время намаза КЗ/УЗ: `GET /api/prayer/official`, скачивание и проверка таблиц ДУМК, правило УМУз в точке региона, фоновое обновление (раздел ниже) |
 | `prayer_places.json` | пункты наших списков (KZ 168 → пункт ДУМК, UZ 176 → координаты); собирает `tools/prayer/build_server_places.py` |
 | `migrations/NNN_*.sql` | только добавляющие (тест `test_миграции_только_добавляющие`); 003 — таблицы времени намаза; 004 — база знаний «Спросить AI Ustaz»; 005 — язык uz (столбец `lang_ui`: ограничение `lang` из 001 не меняем, для uz там запасной `ru`); 006 — язык en (столбец `lang_code` ru/kk/uz/en — db.py читает `COALESCE(lang_code, lang_ui, lang)`, в `lang` и `lang_ui` для en пишет запасной `ru`; таблица `kb_texts_en` — английские тексты базы знаний, словарь `english`: в `kb_texts` язык ограничен ru/kk/uz). **Сервер выкатывать раньше клиента:** старый сервер ответит на en-подписку и en-вопрос 400 `lang` |
+| `metals.py` | цены золота и серебра за 1 г в тенге для калькулятора закята: `GET /api/zakat/prices`, выгрузка НБ РК + ЦБ РФ раз в сутки (поток `metals` в jobs), проверка; миграция 021 (раздел ниже) |
 | `stats.py` | своя анонимная статистика: `POST /api/stats/e` (только aiustaz.pro; без cookie, IP, строки браузера, мест), суточные итоги, сводка для админки; сырые события 90 дней (владелец 27.11.2026) |
 | `admin.py` | админка: вход по коду из письма (SMTP 127.0.0.1:25, HMAC кода, `MUGALIM_ADMIN_SECRET`), роли owner/admin/viewer, сеансы (cookie HttpOnly, SameSite=Strict), админы, журнал действий, `GET /api/admin/stats` |
 | `content_admin.py` | настройки содержимого: чтецы (включены, по умолчанию), хадисы (скрыть, проверено устазом) — только отметки, без текста; `GET /api/content/config` для приложения; версии с sha256 |
@@ -106,6 +107,29 @@ API (только чтение из БД, 60 запросов в минуту с
 Хранится (`prayer_official`, `prayer_wanted`, `prayer_log` — год, `prayer_meta`): таблицы ведомств по пунктам,
 очередь, журнал, последний принятый список регионов УМУз. Ни IP, ни координат пользователей.
 
+## Цены золота и серебра для закята (`metals.py`, миграция 021)
+
+Владелец 28.11.2026: «Данные серебра и золота подтягивай сам из официальных источников. Не нужно, чтобы человек это
+делал.» Калькулятор `#/zakat` подставляет цены сам; поля цены — за «Изменить цену вручную».
+
+| | Откуда | Единица |
+|---|---|---|
+| Золото | Национальный банк РК, «Стоимость 1 грамма золота в тенге»: `https://nationalbank.kz/ru/gold/zoloto` (HTML-таблица «Дата / Стоимость», 30 рабочих дней). Формула НБ РК: фиксинг LBMA (утро предыдущего дня, $/тр. унция) × курс USD/KZT НБ РК ÷ 31,1034768 | ₸ за 1 г |
+| Серебро | НБ РК серебро не публикует. Та же формула НБ РК: учётная цена серебра Банка России (`https://www.cbr.ru/scripts/xml_metall.asp`, Code 2, ₽ за 1 г) ÷ курс доллара ЦБ РФ (`XML_dynamic.asp`, R01235) × курс USD/KZT НБ РК на дату золота (`https://nationalbank.kz/rss/get_rates.cfm?fdate=ДД.ММ.ГГГГ`). LBMA напрямую — 403 и лицензия | ₸ за 1 г |
+
+Проверка: две выгрузки подряд совпали; золото 10 000–1 000 000 ₸/г, серебро 50–20 000 ₸/г, золото/серебро 20–200; дата
+не в будущем и не старше 10 дней; скачок к прошлому дню < 30 %; сверка — золото ЦБ РФ тем же пересчётом отличается от
+НБ РК не больше 5 % (день ЦБ РФ — тот, где сверка ближе: тот же фиксинг; ноябрь 2026 — 0,03–1,9 %). Не прошло — запись в
+`metal_log`, прежняя цена остаётся. Образцы настоящих ответов — `tests/fixtures/metals/`, тесты — `tests/test_metals.py`.
+
+| Запрос | Ответ |
+|---|---|
+| `GET /api/zakat/prices` | `200 {date, gold_per_g, silver_per_g, currency:'KZT', unit:'g', source, silver_source, silver_method:'cbr-usd-nbk', updated}`, `Cache-Control: public, max-age=10800`, ETag / 304; 60 в минуту с хэша IP |
+| цен ещё нет | `503 {ошибка:'not_ready'}` (no-store) — клиент оставляет ручной ввод |
+
+nginx aiustaz.pro (batr-world `deploy/aiustaz-app.nginx.conf`): `location = /api/zakat/prices` → 127.0.0.1:8031, только GET,
+без журнала. Серверу нужен выход к `nationalbank.kz` и `www.cbr.ru` (HTTPS) — для `mugalim-jobs`.
+
 ## «Спросить AI Ustaz» — чат в центре меню (`ask.py`, `ask_media.py`, `quran_ref.py`, `kb.py`, `kb_load.py`, миграции 004 и 020)
 
 Владелец 20.11.2026: «люди могут задавать свои вопросы и получать ответы … Только с нашей базы данных, в интернете не
@@ -169,7 +193,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest
 .venv/bin/python -m pytest -q tests                      # логика без БД (тесты БД пропускаются)
 # с настоящим PostgreSQL — своя временная база mugalim_test_<…> создаётся и удаляется в каждом тесте:
 MUGALIM_TEST_PG='postgresql://postgres@127.0.0.1:5432/postgres' .venv/bin/python -m pytest -q tests
-python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py
+python3 -m py_compile app.py push.py jobs.py db.py boot.py envnum.py vapid.py prayer.py metals.py ask.py kb.py kb_load.py ask_media.py quran_ref.py asr_service.py
 # API вручную (своя база mugalim_dev):
 MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_VAPID_PRIVATE=… \
   .venv/bin/python -m uvicorn --app-dir . --factory app:создать_приложение --port 8030
@@ -264,6 +288,11 @@ MUGALIM_DATABASE_URL='dbname=mugalim_test_dev' MUGALIM_VAPID_PUBLIC=… MUGALIM_
 | `MUGALIM_PRAYER_RECHECK_DAYS` | 7 (1–60) | как часто перепроверять принятую таблицу |
 | `MUGALIM_UMUZ_MODEL` | `nuqta` | УМУз: `nuqta` — правило в точке региона (как islom.uz/taqvim), `farq` — Ташкент + differ_minute |
 | `MUGALIM_UMUZ_REGIONS_URL` | `https://new.islom.uz/api/v1/regions` | список регионов УМУз (точки) |
+| `MUGALIM_METALS_FETCH` | 1 (0/1) | скачивать цены золота и серебра (0 — API отдаёт то, что уже в базе) |
+| `MUGALIM_METALS_HOUR` | 11 (0–23) | с какого часа по Алматы выгружать цены за сутки |
+| `MUGALIM_METALS_TICK_SEC` | 600 (60–3600) | как часто проверять, пора ли |
+| `MUGALIM_METALS_CHECK_PCT` | 5 (0,5–20) | сверка золота ЦБ РФ с НБ РК, % |
+| `MUGALIM_METALS_MAX_JUMP_PCT` | 30 (5–90) | наибольший скачок к прошлому дню, % |
 | `MUGALIM_ASK_DRAFTS` | 1 (0/1) | «Спросить»: показывать записи со статусом «черновик» (всегда с пометкой); 1 — на время запуска среди своих |
 | `MUGALIM_ASK_MIN_SHARE` | 0,3 (0,05–1) | порог релевантности: доля значимых слов вопроса, найденных в записи |
 | `MUGALIM_ASK_ORIGINS` | `https://aiustaz.pro,https://www.aiustaz.pro` | разрешённые Origin для `/api/ask/` |
