@@ -35,6 +35,8 @@
  *   8. kk: список «2-сүре», заголовки, действия, мини-плеер — по-казахски (черновик);
  *   9. виды чтения (владелец 20.11.2026): 4 вида, сохранение выбора, страницы 1–2 и 42 (2:255), текст = Tanzil во всех
  *      видах, связность (ширина групп с цветами = без), плашка и легенда, ночь, листание, «Ещё» (подробно — видыЧтения).
+ *  10. «Страницами» (владельцы 27–28.11.2026): страница целиком, листание, плеер, альбомная, кнопки ▶/🎤, переворот;
+ *      412×915 — текст до низа листа, огласовки внутри, кегль крупнее прежнего, «во весь экран» (страницыКрупноВесьЭкран).
  * и всё время: нет ошибок в консоли и исключений, запросов на другие адреса (кроме media с cdn.islamic.network — аудио
  * AlQuran Cloud, в тесте тоны), нарушений CSP, чужих ключей localStorage.
  * Сборка с проверкой голосом (из e2e.mjs, п. 9): коранПроверкаГолосом(браузер, папка) — «Проверить» на экране
@@ -1176,6 +1178,7 @@ export async function коранСквозной(браузер, база, { п�
   await режимСтраниц(браузер, база, папка, данные, адрес, папкаСнимков);
   await страницыПлеерАльбом(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
   await страницыКнопкиЛистание(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
+  await страницыКрупноВесьЭкран(браузер, база, адрес, страницаАятаМусхафа(папка), папкаСнимков);
   await выборИЧтение(браузер, база, адрес);
   await подсветкаСлов(браузер, база, адрес, папка);
 
@@ -1609,7 +1612,10 @@ async function режимСтраниц(браузер, база, папка, д
   п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-view.v1'))).режим === 'страницы', 'выбор сохранён: aiustaz:quran-view.v1 = { режим: «страницы» }');
   await сверить(1, 'аль-Фатиха');
   п.проверить((await п.текстЭ('мусхаф-страница-номер')).includes('1'), 'внизу — номер страницы');
-  п.проверить((await п.текстЭ('мусхаф-страница-шапка')).includes('Джуз 1'), 'сверху — сура и «Джуз 1»');
+  п.проверить((await п.текстЭ('мусхаф-страница-шапка')).includes('Джуз 1'), 'в шапке экрана рядом с названием суры — «Джуз 1»');
+  // Владелец 28.11.2026: строки «Сура … Джуз» над листом больше нет — лист сразу под шапкой.
+  const подШапкой = await стр.evaluate(() => document.querySelector('[data-testid="мусхаф-лист"]').getBoundingClientRect().top - document.querySelector('[data-testid="сура-шапка"]').getBoundingClientRect().bottom);
+  п.проверить(подШапкой >= -1 && подШапкой <= 4, `лист — сразу под шапкой, без строки «Сура … Джуз» (зазор ${Math.round(подШапкой)} px)`);
   await п.безГоризонтальнойПрокрутки('страница 1');
 
   await п.э('мусхаф-страница-след').click();
@@ -2072,6 +2078,213 @@ async function страницыКнопкиЛистание(браузер, ба
   await п.безГоризонтальнойПрокрутки('страницы с кнопками');
   await п.безПроблем('«Страницами»: кнопки и листание — без ошибок, чужих запросов и нарушений CSP');
   await контекст.close();
+}
+
+/**
+ * «Страницами» крупнее и «во весь экран» (владелец 28.11.2026, снимок 412×915: «шрифт очень мелкий, шрифт нужно
+ * увеличить… за счёт сокращения футера, шапки»). 412×915, страница 3 (2:6–2:16) и 1:
+ *   текст заполняет лист — низ последней строки не дальше одной строки от низа области текста; огласовки и знаки
+ *   («чернила» слов по canvas.measureText) внутри области; шапка ≤ 48 px, нижняя полоса ≤ 48 px, кнопки ▶/🎤 — 48 px;
+ *   кегль страницы 3 — не меньше 26 px (было 24 px на 1178329: строка «Сура … Джуз», шапка 56, полоса 72, межстрочный
+ *   1,9); страница 1 — не меньше 40 px (было 31 px и 350 px пустоты снизу);
+ *   ⤢ «Во весь экран» — шапка и полоса спрятаны, кегль крупнее обычного, лист до низа; выбор помнится (перезагрузка);
+ *   листание свайпом и краем работает; тап по аяту — лист действий (не выход); тап по полю — панели вернулись;
+ *   тонкая строка «Показать панели» и Esc — тоже;
+ *   причина прежней пустоты: шрифт пришёл после подбора (Amiri задержан на 2,5 с) — страница всё равно заполнена.
+ */
+async function страницыКрупноВесьЭкран(браузер, база, адрес, страницаАята, папкаСнимков) {
+  console.log('\n══ «Страницами»: текст на весь лист, «во весь экран» (412×915) ══');
+  const { контекст, стр, проблемы } = await новаяСтраница(браузер, база, { высота: 915, снимки: !!папкаСнимков });
+  const п = помощники(стр, проблемы, 'страницы: крупно и во весь экран', папкаСнимков);
+  const ждатьСтраницу = (н) => стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н, { timeout: 15000 });
+  const высотаЭ = (id) => стр.evaluate((id) => document.querySelector(`[data-testid="${id}"]`)?.getBoundingClientRect().height ?? null, id);
+  // Геометрия открытой страницы: кегль, межстрочный, пусто снизу (от низа последней строки до низа области текста),
+  // «чернила» первой и последней строк (огласовки): canvas.measureText каждого слова → край над и под базовой линией.
+  const геометрия = () =>
+    стр.evaluate(() => {
+      const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+      const о = э.getBoundingClientRect();
+      const аяты = [...э.querySelectorAll('[data-ayah]')];
+      const р = аяты[аяты.length - 1].getClientRects();
+      const абзац = аяты[0].parentElement;
+      const cs = getComputedStyle(абзац);
+      const ctx = document.createElement('canvas').getContext('2d');
+      let верх = Infinity;
+      let низ = -Infinity;
+      for (const p of э.querySelectorAll('p')) {
+        const ps = getComputedStyle(p);
+        ctx.font = `${ps.fontSize} ${ps.fontFamily}`;
+        const fa = ctx.measureText('ب').fontBoundingBoxAscent;
+        const w = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+        for (let n = w.nextNode(); n; n = w.nextNode()) {
+          const re = /\S+/g;
+          for (let m = re.exec(n.textContent); m; m = re.exec(n.textContent)) {
+            const д = document.createRange();
+            д.setStart(n, m.index);
+            д.setEnd(n, m.index + m[0].length);
+            const к = д.getClientRects()[0];
+            if (!к) continue;
+            const мт = ctx.measureText(m[0]);
+            верх = Math.min(верх, к.top + fa - мт.actualBoundingBoxAscent);
+            низ = Math.max(низ, к.top + fa + мт.actualBoundingBoxDescent);
+          }
+        }
+      }
+      return {
+        кегль: parseFloat(cs.fontSize),
+        строка: parseFloat(cs.lineHeight),
+        шрифт: cs.fontFamily,
+        пусто: о.bottom - р[р.length - 1].bottom,
+        прокрутка: э.scrollHeight - э.clientHeight,
+        чернилаСверху: верх - о.top,
+        чернилаСнизу: о.bottom - низ,
+        область: { в: о.top, н: о.bottom },
+        окно: innerHeight,
+      };
+    });
+  const заполнена = (г, где) => {
+    п.проверить(г.прокрутка <= 1, `${где}: страница целиком, без прокрутки`);
+    п.проверить(г.пусто >= 0 && г.пусто <= г.строка, `${где}: текст до низа листа — под последней строкой ${Math.round(г.пусто)} px ≤ строки ${г.строка} px`);
+    п.проверить(г.чернилаСверху >= -0.5 && г.чернилаСнизу >= -0.5, `${где}: огласовки и знаки внутри листа (сверху ${г.чернилаСверху.toFixed(1)} px, снизу ${г.чернилаСнизу.toFixed(1)} px)`);
+  };
+  const свайп = (dx) =>
+    стр.evaluate((dx) => {
+      const э = document.querySelector('[data-testid="мусхаф-страница"]');
+      const r = э.getBoundingClientRect();
+      const x = r.left + r.width / 2 - dx / 2;
+      const y = r.top + r.height / 2;
+      const т = (xx) => new Touch({ identifier: 1, target: э, pageX: xx, pageY: y, clientX: xx, clientY: y });
+      э.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [т(x)], changedTouches: [т(x)] }));
+      э.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [т(x + dx)] }));
+    }, dx);
+  const спрятаны = () => стр.evaluate(() => document.querySelector('[data-testid="сура-шапка"]')?.getAttribute('aria-hidden') === 'true' && !document.querySelector('[data-testid="мусхаф-страница-низ"]') && document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-full') === '1');
+  const ждатьПанели = (видны) =>
+    стр.waitForFunction((видны) => (document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-full') === '0') === видны && (document.querySelector('[data-testid="сура-шапка"]')?.getAttribute('aria-hidden') !== 'true') === видны, видны, { timeout: 5000 });
+  const подбор = () => стр.waitForTimeout(700);
+
+  // Страница 3: 2:6–2:16.
+  await стр.goto(адрес('#/quran/sura?n=2&a=6'));
+  await п.э('коран-аят-2-6-текст').waitFor({ timeout: 15000 });
+  await п.э('сура-вид').click();
+  await п.э('режим-страницы').click();
+  await стр.keyboard.press('Escape');
+  const н3 = страницаАята(2, 6);
+  await ждатьСтраницу(н3);
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"] [data-ayah="2:16"]'), null, { timeout: 15000 });
+  await стр.evaluate(() => document.fonts.ready);
+  await подбор();
+  const обычная = await геометрия();
+  п.проверить(/KFGQPC/i.test(обычная.шрифт), `шрифт по умолчанию — мединский (${обычная.шрифт.split(',')[0]})`);
+  п.проверить(обычная.кегль >= 26, `412×915, страница ${н3}: кегль ${обычная.кегль} px ≥ 26 (было 24 px)`);
+  заполнена(обычная, `страница ${н3}`);
+  const шапка = await высотаЭ('сура-шапка');
+  const низ = await высотаЭ('мусхаф-страница-низ');
+  const кн = [await высотаЭ('сура-слушать'), await высотаЭ('сура-записать')];
+  п.проверить(шапка <= 48 && низ <= 48 && кн.every((в) => в === 48), `шапка ${шапка} px и нижняя полоса ${низ} px — не выше 48; кнопки ▶ и 🎤 — по 48 px`);
+  п.проверить((await п.текстЭ('мусхаф-страница-шапка')).includes('Джуз 1') && (await п.текстЭ('сура-заголовок')).includes('аль-Бакара'), 'шапка: «Сура аль-Бакара (2) · Джуз 1»');
+  await п.снимок('страницы-крупно');
+
+  // ⤢ «Во весь экран»: шапка и полоса спрятаны, кегль крупнее, лист до низа.
+  await п.э('сура-весь-экран').click();
+  await ждатьПанели(false);
+  await подбор();
+  п.проверить(await спрятаны(), '⤢ «Во весь экран»: шапка спрятана (aria-hidden), нижней полосы нет');
+  п.проверить(await п.есть('мусхаф-подсказка-экрана'), 'подсказка, как вернуть панели');
+  const весь = await геометрия();
+  п.проверить(весь.кегль > обычная.кегль, `во весь экран кегль ${весь.кегль} px > обычного ${обычная.кегль} px`);
+  заполнена(весь, `во весь экран, страница ${н3}`);
+  п.проверить(весь.область.в <= 8 && весь.окно - весь.область.н <= 40, `лист на всю высоту: область текста ${Math.round(весь.область.в)}…${Math.round(весь.область.н)} px из ${весь.окно}`);
+  п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-pages-full.v1'))).вкл === true, 'выбор помнится: aiustaz:quran-pages-full.v1 = { вкл: true }');
+  п.проверить(await п.есть('сура-слушать'), 'во весь экран — маленькая ▶');
+  п.проверить((await высотаЭ('сура-слушать')) <= 32 && !(await п.есть('сура-записать')), '▶ — 32 px, 🎤 — с панелями');
+  await стр.waitForFunction(() => !document.querySelector('[data-testid="мусхаф-подсказка-экрана"]'), null, { timeout: 6000 });
+  await п.снимок('страницы-весь-экран');
+
+  // Листание во весь экран: свайп и край.
+  await свайп(160);
+  await ждатьСтраницу(н3 + 1);
+  п.проверить(await спрятаны(), `свайп вправо во весь экран — страница ${н3 + 1}, панели по-прежнему спрятаны`);
+  await п.э('мусхаф-край-пред').click();
+  await ждатьСтраницу(н3);
+  п.проверить(true, `тап по правому краю во весь экран — назад, страница ${н3}`);
+  // Тап по аяту — лист действий, не выход.
+  await стр.locator('[data-ayah="2:8"]').first().click();
+  await п.э('сура-действия').waitFor({ timeout: 5000 });
+  п.проверить(await спрятаны(), 'тап по аяту во весь экран — лист действий, панели не возвращаются');
+  await стр.keyboard.press('Escape');
+  await п.э('сура-действия').waitFor({ state: 'detached', timeout: 5000 });
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-full') === '1', null, { timeout: 2000 });
+  // Перезагрузка — режим помнится.
+  await стр.reload();
+  await ждатьСтраницу(н3);
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"] [data-ayah]'), null, { timeout: 15000 });
+  await подбор();
+  п.проверить(await спрятаны(), 'после перезагрузки — снова во весь экран');
+  // Тап по полю страницы (над первой строкой, не по аяту) — панели вернулись.
+  await стр.evaluate(() => document.querySelector('[data-testid="сура-выбран"]') && document.querySelector('[data-testid="сура-выбран"]').click());
+  const поле = await стр.evaluate(() => {
+    const о = document.querySelector('[data-testid="мусхаф-страница-текст"]').getBoundingClientRect();
+    return { x: о.left + о.width / 2, y: о.top + 1 };
+  });
+  п.проверить(await стр.evaluate(({ x, y }) => !document.elementFromPoint(x, y)?.closest('[data-ayah]'), поле), 'точка на поле страницы — не аят');
+  await стр.mouse.click(поле.x, поле.y);
+  await ждатьПанели(true);
+  await подбор();
+  const снова = await геометрия();
+  п.проверить(Math.abs(снова.кегль - обычная.кегль) < 0.01, `тап по полю — панели вернулись, кегль снова ${снова.кегль} px`);
+  // Тап по полю ещё раз — во весь экран; «Показать панели» внизу и Esc — назад.
+  await стр.mouse.click(поле.x, снова.область.в + 1);
+  await ждатьПанели(false);
+  await п.э('мусхаф-показать-панели').click();
+  await ждатьПанели(true);
+  п.проверить(true, 'тап по полю — снова во весь экран; «Показать панели» (номер страницы внизу) — панели вернулись');
+  await п.э('сура-весь-экран').click();
+  await ждатьПанели(false);
+  await стр.evaluate(() => document.activeElement?.blur?.());
+  await стр.keyboard.press('Escape');
+  await ждатьПанели(true);
+  п.проверить(JSON.parse(await стр.evaluate(() => localStorage.getItem('aiustaz:quran-pages-full.v1'))).вкл === false, 'Esc — панели вернулись, выбор сохранён (вкл: false)');
+
+  // Страница 1 (аль-Фатиха): мало текста — кегль крупный, лист заполнен.
+  await стр.goto(адрес('#/quran/sura?n=1&a=1'));
+  await ждатьСтраницу(1);
+  await стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"] [data-ayah="1:7"]'), null, { timeout: 15000 });
+  await подбор();
+  const перваяГ = await геометрия();
+  п.проверить(перваяГ.кегль >= 40, `страница 1: кегль ${перваяГ.кегль} px ≥ 40 (было 31 px и ~350 px пустоты снизу)`);
+  заполнена(перваяГ, 'страница 1');
+  await п.безГоризонтальнойПрокрутки('страница 1, 412×915');
+  await п.снимок('страницы-фатиха');
+  await п.безПроблем('«Страницами» крупно и во весь экран: без ошибок, чужих запросов и нарушений CSP');
+  await контекст.close();
+
+  // Причина пустоты на снимке владельца: подбор шёл по метрикам запасного шрифта, шрифт пришёл позже — прежний поиск
+  // не рос. Классический (Amiri) задержан на 2,5 с — страница всё равно заполнена.
+  const м = await новаяСтраница(браузер, база, { высота: 915 });
+  await м.контекст.addInitScript(() => {
+    localStorage.setItem('aiustaz:quran-view.v1', JSON.stringify({ версия: 1, вид: 'мусхаф', ночьЦвета: false, режим: 'страницы' }));
+    localStorage.setItem('aiustaz:quran-script.v1', JSON.stringify({ версия: 1, шрифт: 'классический' }));
+  });
+  await м.контекст.route(/AmiriQuran[^/]*\.(ttf|woff2?)$/, async (з) => {
+    await new Promise((ок) => setTimeout(ок, 2500));
+    await з.continue();
+  });
+  const п2 = помощники(м.стр, м.проблемы, 'страницы: шрифт позже', null);
+  await м.стр.goto(адрес('#/quran/sura?n=2&a=6'));
+  await м.стр.waitForFunction((н) => document.querySelector('[data-testid="мусхаф-страница"]')?.getAttribute('data-page') === String(н), н3, { timeout: 15000 });
+  await м.стр.waitForFunction(() => document.querySelector('[data-testid="мусхаф-страница-текст"] [data-ayah="2:16"]'), null, { timeout: 15000 });
+  await м.стр.evaluate(() => document.fonts.ready);
+  await м.стр.waitForTimeout(3500);
+  const позже = await м.стр.evaluate(() => {
+    const э = document.querySelector('[data-testid="мусхаф-страница-текст"]');
+    const а = [...э.querySelectorAll('[data-ayah]')];
+    const р = а[а.length - 1].getClientRects();
+    const cs = getComputedStyle(а[0].parentElement);
+    return { кегль: parseFloat(cs.fontSize), строка: parseFloat(cs.lineHeight), шрифт: cs.fontFamily, пусто: э.getBoundingClientRect().bottom - р[р.length - 1].bottom, прокрутка: э.scrollHeight - э.clientHeight };
+  });
+  п2.проверить(/Amiri/i.test(позже.шрифт) && позже.прокрутка <= 1 && позже.пусто <= позже.строка, `шрифт пришёл через 2,5 с после подбора: страница ${н3} всё равно заполнена (кегль ${позже.кегль} px, под последней строкой ${Math.round(позже.пусто)} px ≤ ${позже.строка}; прежде — 19 px и ~280 px пустоты)`);
+  await п2.безПроблем('шрифт позже: без ошибок');
+  await м.контекст.close();
 }
 
 async function страницыПлеерАльбом(браузер, база, адрес, страницаАята, папкаСнимков) {

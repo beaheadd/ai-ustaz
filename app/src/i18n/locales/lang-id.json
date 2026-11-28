@@ -1272,6 +1272,8 @@
    "ошибка": "Laporkan kesalahan",
    "назад": "Kembali",
    "вид": "Tampilan dan ukuran teks",
+   "весьЭкран": "Layar penuh",
+   "джуз": "Juz {н}",
    "закрыть": "Tutup",
    "нетАята": "Surah ini memiliki {аятов} ayat — tidak ada ayat {аят}. Ditampilkan dari awal.",
    "аят": "Ayat {аят}",
@@ -1450,8 +1452,9 @@
    "след": "Halaman berikutnya",
    "пред": "Halaman sebelumnya",
    "страница": "Halaman {н} dari 604",
-   "джуз": "Juz {н}",
-   "загрузка": "Memuat…"
+   "загрузка": "Memuat…",
+   "панели": "Tampilkan panel",
+   "подсказка": "Ketuk tepi halaman atau nomor di bawah untuk menampilkan panel kembali"
   },
   "screens/quran/QuranState": {
    "нетФайла": "Berkas teks tidak ditemukan — mungkin versi baru telah rilis. Muat ulang halaman.",

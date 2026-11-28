@@ -1272,6 +1272,8 @@
    "ошибка": "Hata bildir",
    "назад": "Geri",
    "вид": "Görünüm ve metin boyutu",
+   "весьЭкран": "Tam ekran",
+   "джуз": "{н}. cüz",
    "закрыть": "Kapat",
    "нетАята": "Bu surede {аятов} ayet var — {аят}. ayet yok. Baştan gösteriliyor.",
    "аят": "Ayet {аят}",
@@ -1450,8 +1452,9 @@
    "след": "Sonraki sayfa",
    "пред": "Önceki sayfa",
    "страница": "Sayfa {н} / 604",
-   "джуз": "{н}. cüz",
-   "загрузка": "Yükleniyor…"
+   "загрузка": "Yükleniyor…",
+   "панели": "Panelleri göster",
+   "подсказка": "Panelleri geri getirmek için sayfa kenarına veya alttaki numaraya dokunun"
   },
   "screens/quran/QuranState": {
    "нетФайла": "Metin dosyası bulunamadı — belki yeni bir sürüm çıktı. Sayfayı yenileyin.",
