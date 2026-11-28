@@ -7,7 +7,7 @@
  *   ЗНАЧКИ_PWA — какие значки должны быть: { вид, размер, purpose, образец имени <вид>.<md5>.png };
  *   найтиЗначки(файлы) → { [вид]: имя файла } (из списка имён в dist/pwa или app/public/pwa; бросает, если чего-то нет);
  *   построитьМанифест(значки, база='/aiustaz/') → объект манифеста (scope /aiustaz/, start_url ?source=pwa, id,
- *     display standalone, ru, цвета токенов: фон «слоновая кость» #F7F2E8, тема — изумруд #0F4C45);
+ *     display standalone, ru, цвета токенов: фон «бумага» #F5EFE2 (дизайн A, 28.11.2026), тема — изумруд #0F4C45 — цвет значков);
  *   ЦВЕТ_ТЕМЫ_СВЕТЛАЯ / ЦВЕТ_ТЕМЫ_ТЁМНАЯ — <meta name="theme-color"> (фон экрана, app/src/theme/tokens.ts).
  * Манифест — JSON с md5 содержимого в имени (pwa/manifest.<md5>.json): SW batr.kz кэширует по URL навсегда;
  * .json, а не .webmanifest — у любого nginx верный тип application/json. Для установки service worker не нужен: Chrome
@@ -17,10 +17,10 @@
  */
 
 export const ПАПКА_PWA = 'pwa';
-export const ЦВЕТ_ФОНА = '#F7F2E8';
+export const ЦВЕТ_ФОНА = '#F5EFE2';
 export const ЦВЕТ_БРЕНДА = '#0F4C45';
-export const ЦВЕТ_ТЕМЫ_СВЕТЛАЯ = '#F7F2E8';
-export const ЦВЕТ_ТЕМЫ_ТЁМНАЯ = '#0C1715';
+export const ЦВЕТ_ТЕМЫ_СВЕТЛАЯ = '#F5EFE2';
+export const ЦВЕТ_ТЕМЫ_ТЁМНАЯ = '#121715';
 /** Предел размера одного PNG-значка и всех вместе (check-dist), байт. */
 export const ПРЕДЕЛ_ЗНАЧКА = 128 * 1024;
 export const ПРЕДЕЛ_ЗНАЧКОВ = 320 * 1024;

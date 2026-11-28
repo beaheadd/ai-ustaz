@@ -422,7 +422,7 @@ const ТаблицаНедели = memo(function ТаблицаНедели({
     return итог;
   }, [место, мазхаб, сегодня, официальные]);
 
-  const мелко = узко ? { fontSize: 12, lineHeight: 16 } : null;
+  const мелко = узко ? { fontSize: 13, lineHeight: 16 } : null;
   const стильЗаголовка = [{ textAlign: 'center' as const }, мелко];
   const мин = узко ? МИН_СТОЛБЕЦ.узко : МИН_СТОЛБЕЦ.обычно;
   const длинноеСлово = (к: КлючВремени) => НАЗВАНИЯ[к][язык].split(' ').reduce((а, б) => (б.length > а.length ? б : а), '');

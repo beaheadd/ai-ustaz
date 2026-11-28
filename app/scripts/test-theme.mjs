@@ -3,6 +3,7 @@
  * Тест дизайн-системы (без браузера): node scripts/test-theme.mjs  (npm run test:theme)
  *   theme/tokens.ts  — контраст WCAG 2.1 всех пар ПАРЫ_КОНТРАСТА в светлой и тёмной теме
  *                      (текст ≥ 4,5:1, время намаза и основной текст ≥ 7:1, значки и рамки ≥ 3:1);
+ *                      и APCA 0.0.98G-4g (|Lc| — где у пары задан 4-й порог; дизайн A, 28.11.2026);
  *                      у тем одинаковые ключи; цвета — #RRGGBB (кроме наложения);
  *   design/icons.ts  — у каждого значка есть фигуры, пути только из команд SVG, координаты в сетке 24;
  *   design/emblem.ts — у эмблемы оба варианта (полный и значок), роли цветов известны;
@@ -12,7 +13,7 @@
  */
 import assert from 'node:assert/strict';
 
-const { светлая, тёмная, ПАРЫ_КОНТРАСТА } = await import('../src/theme/tokens.ts');
+const { светлая, тёмная, ПАРЫ_КОНТРАСТА, ПАРЫ_КОНТРАСТА_СВЕТЛОЙ } = await import('../src/theme/tokens.ts');
 const { ЗНАЧКИ } = await import('../src/design/icons.ts');
 const { ЭМБЛЕМА, РОЛИ_ЭМБЛЕМЫ } = await import('../src/design/emblem.ts');
 const { путьАрки } = await import('../src/design/geometry.ts');
@@ -34,6 +35,28 @@ export function контраст(а, б) {
   return (x + 0.05) / (y + 0.05);
 }
 
+/** APCA 0.0.98G-4g (W3 Silver): Lc текста на фоне; + тёмный на светлом, − светлый на тёмном. */
+export function apca(текст, фон) {
+  const y = (hex) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+    const v = 0.2126729 * r ** 2.4 + 0.7151522 * g ** 2.4 + 0.072175 * b ** 2.4;
+    return v < 0.022 ? v + (0.022 - v) ** 1.414 : v;
+  };
+  const т = y(текст);
+  const ф = y(фон);
+  if (Math.abs(ф - т) < 0.0005) return 0;
+  if (ф > т) {
+    const с = (ф ** 0.56 - т ** 0.57) * 1.14;
+    return с < 0.1 ? 0 : (с - 0.027) * 100;
+  }
+  const с = (ф ** 0.65 - т ** 0.62) * 1.14;
+  return с > -0.1 ? 0 : (с + 0.027) * 100;
+}
+тест('APCA сверен с эталоном (#1B2520 на #F5EFE2 = 93,4; #E6E1D6 на #121715 = −87,8)', () => {
+  assert.equal(Math.round(apca('#1B2520', '#F5EFE2') * 10) / 10, 93.4);
+  assert.equal(Math.round(apca('#E6E1D6', '#121715') * 10) / 10, -87.8);
+});
+
 console.log('tokens');
 тест('у тем одинаковые ключи', () => assert.deepEqual(Object.keys(светлая).sort(), Object.keys(тёмная).sort()));
 тест('цвета — #RRGGBB (кроме наложения)', () => {
@@ -47,13 +70,16 @@ console.log('tokens');
 const провалы = [];
 const строки = [];
 for (const [имяТемы, тема] of [['светлая', светлая], ['тёмная', тёмная]]) {
-  for (const [текст, фон, порог] of ПАРЫ_КОНТРАСТА) {
+  const пары = имяТемы === 'светлая' ? [...ПАРЫ_КОНТРАСТА, ...ПАРЫ_КОНТРАСТА_СВЕТЛОЙ] : ПАРЫ_КОНТРАСТА;
+  for (const [текст, фон, порог, порогLc] of пары) {
     const к = контраст(тема[текст], тема[фон]);
-    строки.push(`${имяТемы.padEnd(8)} ${текст.padEnd(18)} на ${фон.padEnd(18)} ${к.toFixed(2).padStart(6)} (≥ ${порог})`);
+    const lc = apca(тема[текст], тема[фон]);
+    строки.push(`${имяТемы.padEnd(8)} ${текст.padEnd(18)} на ${фон.padEnd(18)} ${к.toFixed(2).padStart(6)} (≥ ${порог})  Lc ${lc.toFixed(1).padStart(6)}${порогLc ? ` (|Lc| ≥ ${порогLc})` : ''}`);
     if (к < порог) провалы.push(`${имяТемы}: ${текст} ${тема[текст]} на ${фон} ${тема[фон]} = ${к.toFixed(2)} < ${порог}`);
+    if (порогLc && Math.abs(lc) < порогLc) провалы.push(`${имяТемы}: ${текст} на ${фон}: APCA |Lc| ${Math.abs(lc).toFixed(1)} < ${порогLc}`);
   }
 }
-тест(`контраст ${ПАРЫ_КОНТРАСТА.length * 2} пар не ниже порога`, () => assert.deepEqual(провалы, []));
+тест(`контраст ${ПАРЫ_КОНТРАСТА.length * 2 + ПАРЫ_КОНТРАСТА_СВЕТЛОЙ.length} пар не ниже порога (WCAG и APCA)`, () => assert.deepEqual(провалы, []));
 
 console.log('icons');
 const КОМАНДЫ = /^[MmLlHhVvCcSsQqTtAaZz0-9.,\s-]+$/;
@@ -98,6 +124,6 @@ console.log('geometry');
   }
 });
 
-console.log('\nКонтраст (WCAG 2.1):');
+console.log('\nКонтраст (WCAG 2.1 и APCA Lc):');
 for (const с of строки) console.log('  ' + с);
 console.log(`\nВсего проверок: ${проверок} — всё прошло.`);

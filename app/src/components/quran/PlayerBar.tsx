@@ -309,7 +309,7 @@ const стили = StyleSheet.create({
   название: { flex: 1, minWidth: 0, minHeight: 48, justifyContent: 'center', paddingEnd: 4 },
   ряд: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: 2 },
   сПодписью: { alignItems: 'center', gap: 2 },
-  подпись: { fontSize: 12, lineHeight: 14 },
+  подпись: { fontSize: 13, lineHeight: 16 },
   скрыто: { position: 'absolute', width: 1, height: 1, overflow: 'hidden', opacity: 0 },
   круг: { alignItems: 'center', justifyContent: 'center' },
   чип: { minWidth: 48, height: 48, paddingHorizontal: 10, borderRadius: 999, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },

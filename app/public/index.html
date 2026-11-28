@@ -26,11 +26,19 @@
       body {
         height: 100%;
       }
-      /* Фон до загрузки — светлый: тема по умолчанию светлая (владелец 26.11.2026). */
+      /* Фон до загрузки — как в телефоне: тема по умолчанию системная (владелец 28.11.2026, дизайн A). */
       body {
         overflow: hidden;
         margin: 0;
-        background: #f7f2e8;
+        background: #f5efe2;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #121715;
+        }
+        #aiustaz-zagruzka {
+          color: #b3bfba !important;
+        }
       }
       #root {
         display: flex;

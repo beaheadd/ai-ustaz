@@ -141,7 +141,7 @@ export async function установкаСквозной(браузер, баз�
     const apple = html.match(/<link rel="apple-touch-icon" sizes="180x180" href="([^"]+)"/)?.[1];
     проверить(!!манифестАдрес && /^\/aiustaz\/pwa\/manifest\.[0-9a-f]{32}\.json$/.test(манифестАдрес), `index.html: <link rel="manifest" href="${манифестАдрес}">`);
     проверить(!!apple && /^\/aiustaz\/pwa\/apple-touch-icon-180\.[0-9a-f]{32}\.png$/.test(apple), 'index.html: apple-touch-icon 180×180 из pwa/');
-    for (const м of ['<meta name="apple-mobile-web-app-capable" content="yes"', '<meta name="apple-mobile-web-app-title" content="AI Ustaz"', '<meta name="apple-mobile-web-app-status-bar-style" content="default"', '<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F2E8"', '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0C1715"'])
+    for (const м of ['<meta name="apple-mobile-web-app-capable" content="yes"', '<meta name="apple-mobile-web-app-title" content="AI Ustaz"', '<meta name="apple-mobile-web-app-status-bar-style" content="default"', '<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F5EFE2"', '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121715"'])
       проверить(html.includes(м), 'index.html: ' + м.replace('<meta ', ''));
     const ман = await (await fetch(база + манифестАдрес)).json();
     проверить(ман.scope === '/aiustaz/' && ман.id === '/aiustaz/' && ман.start_url === '/aiustaz/?source=pwa' && ман.display === 'standalone' && ман.name === 'AI Ustaz', 'манифест: scope/id /aiustaz/, start_url ?source=pwa, standalone, «AI Ustaz»');

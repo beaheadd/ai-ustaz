@@ -308,12 +308,12 @@ export type СвойстваКарточкиНамаза = {
 const К = {
   название: { fontSize: 13, lineHeight: 16 },
   время: { fontSize: 17, lineHeight: 20 },
-  ярлык: { fontSize: 12, lineHeight: 16 },
+  ярлык: { fontSize: 13, lineHeight: 16 },
   шапка: { fontSize: 20, lineHeight: 26 },
   строка: { fontSize: 16, lineHeight: 20 },
-  мелко: { fontSize: 12, lineHeight: 16 },
+  мелко: { fontSize: 13, lineHeight: 16 },
   сейчас: { fontSize: 13, lineHeight: 16 },
-  рядНазвание: { fontSize: 11, lineHeight: 14 },
+  рядНазвание: { fontSize: 13, lineHeight: 16 },
   рядВремя: { fontSize: 15, lineHeight: 18 },
   рядШапка: { fontSize: 17, lineHeight: 22 },
 } satisfies Record<string, TextStyle>;
@@ -1101,13 +1101,16 @@ function ПростаяКарточка({
         {аср}
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', columnGap: 8, flexShrink: 1 }}>
         {завтра ? (
-          <Текст вид="мелкий" цвет={цвет.следующийФон} стиль={{ fontSize: 11, lineHeight: 13, fontWeight: '600' }} testID="намаз-завтра">
+          <Текст вид="мелкий" цвет={цвет.следующийФон} стиль={{ fontSize: 13, lineHeight: 18, fontWeight: '600' }} testID="намаз-завтра">
             {т('завтраМалый')}
           </Текст>
         ) : null}
-        <Текст вид="мелкий" цвет={цвет.текстВторой} стиль={{ fontSize: 10, lineHeight: 13, textAlign: 'end' as 'right' }} testID="намаз-черновик">
-          {т('черновикМалый')}
-        </Текст>
+        {/* «Черновик» — песочная плашка 13 px (дизайн A, владелец 28.11.2026; аудит P0-3: серый 10 px на изумруде был 1,54:1). */}
+        <View style={{ backgroundColor: цвет.плашкаФон, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 1 }}>
+          <Текст вид="метка" цвет={цвет.плашкаТекст} стиль={{ fontSize: 13, lineHeight: 18, textAlign: 'end' as 'right' }} testID="намаз-черновик">
+            {т('черновикМалый')}
+          </Текст>
+        </View>
         </View>
       </View>
       <Pressable

@@ -156,7 +156,7 @@ const стили = StyleSheet.create({
   круг: { width: 56, height: 56, borderRadius: 28, marginTop: -26, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   // Подпись не шире пункта; слово, которое не влезает (крупный текст, масштаб страницы), переносится, а не налезает.
   подпись: {
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 16,
     textAlign: 'center',
     maxWidth: '100%',

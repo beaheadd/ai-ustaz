@@ -496,7 +496,7 @@ function ГородВШапке() {
         <Текст вид="метка" numberOfLines={2} testID="главная-город-имя" стиль={{ fontWeight: '600', textAlign: 'end' as 'right', fontSize: 15, lineHeight: 18 }}>
           {имя}
         </Текст>
-        <Текст вид="мелкий" цвет={цвет.текстВторой} numberOfLines={1} стиль={{ fontSize: 11, lineHeight: 14 }} testID="главная-дата">
+        <Текст вид="мелкий" цвет={цвет.текстВторой} numberOfLines={1} стиль={{ fontSize: 13, lineHeight: 16 }} testID="главная-дата">
           {дата}
         </Текст>
       </View>
