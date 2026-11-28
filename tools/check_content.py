@@ -43,6 +43,9 @@ content/quran/quran-uthmani-marks.xml (с 19.11.2026). Всё, что показ
       хадиса полный, хадисы из content/hadith/на-проверку-устаза.json без одобрения не опубликованы; если сырые
       выгрузки скачаны (content/hadith/raw, вне git) — каждое поле посимвольно = выгрузке и файлы = свежей сборке,
       иначе — предупреждение (полная сверка: python3 -I -B tools/hadith/build_hadith.py --check).
+  (л) перевод смыслов и тафсир QuranEnc.com (владелец 28.11.2026) — tools/quran_trans/build_translations.py: сырьё
+      content/quran-trans/raw = ЭТАЛОНЫ = sources.json («quranenc»), 114 сур и 6236 аятов каждого издания, без HTML,
+      без текста Корана QuranEnc (arabic_text не публикуется), производные app/public/quran-trans и манифест = свежей сборке.
   (и) audio-sources.json — источники чтения Корана для плеера: tools/audio/check_audio.py («разрешено» — только с датой,
       условиями и базой на своём домене; без разрешения база пустая; шаблон с {sura3}{aya3}; аудиофайлов Корана
       в app/public, app/src и content нет).
@@ -61,6 +64,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'dhikr'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'namaz'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'makharij'))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran_words'))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / 'quran_trans'))
+import build_translations as перевод_смыслов  # noqa: E402
 import build_dhikr  # noqa: E402
 import build_namaz  # noqa: E402
 import build_words as тайминги_слов  # noqa: E402
@@ -407,6 +412,11 @@ def main():
         ошибки_т, счёт_т = тайминги_слов.проверить()
         отчёт.ошибки.extend(ошибки_т)
         for к, в in счёт_т.items():
+            отчёт.счёт(к, в)
+        # Перевод смыслов и тафсир QuranEnc.com (владелец 28.11.2026): сырьё = ЭТАЛОНЫ = sources.json, производные = сборке.
+        ошибки_п, счёт_п = перевод_смыслов.проверить()
+        отчёт.ошибки.extend(ошибки_п)
+        for к, в in счёт_п.items():
             отчёт.счёт(к, в)
         # База знаний чата AI Ustaz из материалов сайта (владелец 27.11.2026: «только с информацией, которая у нас внутри
         # сайта»): content/kb/site.jsonl = свежей сборке tools/kb/build_from_site.py, без арабского письма, sha256.

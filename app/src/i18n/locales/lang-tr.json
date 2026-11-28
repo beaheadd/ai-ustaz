@@ -380,6 +380,21 @@
    "пусто": "Henüz bir şey indirilmedi. Bir sureyi (sure ekranında ⚙ menüsü) ya da bir ayeti (ayete dokunun) indirebilirsiniz.",
    "остановить": "İndirmeyi durdur"
   },
+  "components/quran/AyahMeaning": {
+   "перевод": "Meal: {автор} · {источник}",
+   "версия": "sürüm {версия}",
+   "черновикПеревода": "Meal — taslak, hoca inceliyor",
+   "сноски": "Mütercimin dipnotları",
+   "скрытьСноски": "Dipnotları gizle",
+   "загрузка": "Yükleniyor…",
+   "нетСвязи": "Yüklenmedi. Bağlantınızı kontrol edin.",
+   "повторить": "Tekrar dene",
+   "нетФайла": "Dosya bulunamadı. Sayfayı yenileyin.",
+   "неСверка": "Metin doğrulamadan geçmedi — gösterilmiyor.",
+   "заголовокПеревода": "Meal",
+   "неКоран": "Meal, mütercimin emeğidir; Kur'an'ın kendisi değildir. Kur'an, yukarıdaki Arapça metindir.",
+   "открытьИсточник": "{источник} sitesinde aç"
+  },
   "components/quran/MushafView": {
    "конец": "{а}. ayetin sonu"
   },
@@ -632,7 +647,9 @@
    "ошибка.голосБольшой": "Kayıt çok uzun — en fazla 30 saniye.",
    "ошибка.голосВыкл": "Sesli sorular şu an kullanılamıyor — sorunuzu yazın.",
    "ошибка.фото": "Fotoğraf hazırlanamadı — başka birini seçin.",
-   "выключено": "AI Ustaz sitemiz aiustaz.pro'da cevap verir."
+   "выключено": "AI Ustaz sitemiz aiustaz.pro'da cevap verir.",
+   "тафсирКарточка": "AI Ustaz Kur'an'ı kendiliğinden yorumlamaz. Aşağıda bu ayetin yayımlanmış meali, baskı adıyla birlikte olduğu gibi yer alır. Tefsiri âlimler açıklar — bir imama sorun.",
+   "смыслАята": "{с} — meal"
   },
   "screens/AyahCheckScreen": {
    "заголовок": "Ayet {сура}:{аят}",
@@ -1279,7 +1296,13 @@
    "закладкаСохранена": "Yer imi: {сура}:{аят}. “Kur'an” bölümünden açın.",
    "вернулись": "{аят}. ayette kalmıştınız",
    "закладкаУбрана": "Yer imi kaldırıldı",
-   "закладкаЗдесь": "Yer imi"
+   "закладкаЗдесь": "Yer imi",
+   "перевод": "Meal",
+   "переводВкл": "Ayetlerin altında meal: açık",
+   "переводВыкл": "Ayetlerin altında meal: kapalı",
+   "переводМеню": "Ayetlerin altında meal",
+   "переводПодпись": "Yalnızca “ayet ayet” görünümünde. Mushafta meal, ayete dokununca görünür.",
+   "переводНет": "Meal yüklenmedi. Bağlantınızı kontrol edin veya sayfayı yenileyin."
   },
   "screens/ZakatScreen": {
    "заголовок": "Zekât",
@@ -1418,7 +1441,10 @@
    "гдеВстречается": "Ayetin neresinde:",
    "нетПравил": "Bu ayette işaretli kural yok.",
    "нетРазметки": "Tecvid işaretleri yüklenmedi. Bağlantınızı kontrol edin.",
-   "загрузка": "Tecvid yükleniyor…"
+   "загрузка": "Tecvid yükleniyor…",
+   "смысл": "Meal",
+   "смыслЗаголовок": "Ayet {сура}:{аят} — meal",
+   "назад": "İşlemlere dön"
   },
   "screens/quran/MushafPages": {
    "след": "Sonraki sayfa",

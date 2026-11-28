@@ -1,0 +1,24 @@
+# Источник: QuranEnc.com — Encyclopedia of the Noble Quran, окно «Terms and Policies» на страницах переводов
+# (например, quranenc.com/en/browse/uzbek_mansour); страницы сохранены выгрузкой 28.11.2026 (batr-world,
+# .github/workflows/aiustaz-quran-trans.yml, прогон 46127997086).
+# Где в приложении: перевод смыслов под аятами, в листе аята и в чате (app/public/quran-trans,
+# tools/quran_trans/build_translations.py; владелец 28.11.2026: «Нам нужно теперь добавить перевод каждого аята!»;
+# решение владельца 28.11.2026 — только издания из официального списка QuranEnc, без тафсира).
+# Издания: english_saheeh 1.1.2, turkish_shahin 1.0.0, indonesian_affairs 1.0.1, urdu_junagarhi 1.1.3, uzbek_mansour 1.0.0.
+# sha256 сырья — content/sources.json, запись «quranenc».
+# Как соблюдаем: 1 — текст и сноски как есть (снимаются только HTML-теги и пробелы по краям строки; в этих изданиях тегов
+# нет); 2 — у каждого показа подпись «Перевод смыслов: переводчик · QuranEnc.com» и ссылка на страницу издания; 3 — номер
+# версии в подписи; 4 — служебные
+# сведения (название издания, переводчик, версия) — в индексе издания и на экране «Лицензии»; 5 — замечания отправляем
+# QuranEnc (форма заметок API); 6 — обновление: новая выгрузка тем же workflow; 7 — рекламы в приложении нет совсем.
+
+QuranEnc.com — Encyclopedia of the Noble Quran
+
+Contents of the translations can be downloaded and re-published, with the following terms and conditions:
+1. No modification, addition, or deletion of the content.
+2. Clearly referring to the publisher and the source (QuranEnc.com).
+3. Mentioning the version number when re-publishing the translation.
+4. Keeping the transcript information inside the document.
+5. Notifying the source (QuranEnc.com) of any note on the translation.
+6. Updating the translation according to the latest version issued from the source (QuranEnc.com).
+7. Inappropriate advertisements must not be included when displaying translations of the meanings of the Noble Quran.

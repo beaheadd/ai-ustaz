@@ -380,6 +380,21 @@
    "пусто": "Belum ada yang diunduh. Anda bisa mengunduh surah (menu ⚙ di layar surah) atau ayat (ketuk ayat).",
    "остановить": "Hentikan unduhan"
   },
+  "components/quran/AyahMeaning": {
+   "перевод": "Terjemahan makna: {автор} · {источник}",
+   "версия": "versi {версия}",
+   "черновикПеревода": "Terjemahan makna — draf, diperiksa ustaz",
+   "сноски": "Catatan kaki penerjemah",
+   "скрытьСноски": "Sembunyikan catatan kaki",
+   "загрузка": "Memuat…",
+   "нетСвязи": "Tidak termuat. Periksa koneksi Anda.",
+   "повторить": "Coba lagi",
+   "нетФайла": "Berkas tidak ditemukan. Muat ulang halaman.",
+   "неСверка": "Teks tidak lolos verifikasi — tidak ditampilkan.",
+   "заголовокПеревода": "Terjemahan makna",
+   "неКоран": "Terjemahan makna adalah karya penerjemah, bukan Al-Qur'an itu sendiri. Al-Qur'an adalah teks Arab di atas.",
+   "открытьИсточник": "Buka di {источник}"
+  },
   "components/quran/MushafView": {
    "конец": "akhir ayat {а}"
   },
@@ -632,7 +647,9 @@
    "ошибка.голосБольшой": "Rekaman terlalu panjang — maksimal 30 detik.",
    "ошибка.голосВыкл": "Pertanyaan suara sedang tidak tersedia — ketik pertanyaan Anda.",
    "ошибка.фото": "Foto tidak bisa disiapkan — pilih foto lain.",
-   "выключено": "AI Ustaz menjawab di situs kami aiustaz.pro."
+   "выключено": "AI Ustaz menjawab di situs kami aiustaz.pro.",
+   "тафсирКарточка": "AI Ustaz tidak menafsirkan Al-Qur'an sendiri. Di bawah ini terjemahan makna terbitan untuk ayat ini, apa adanya, dengan nama terbitannya. Tafsir dijelaskan oleh para ulama — tanyakan kepada imam.",
+   "смыслАята": "Terjemahan makna {с}"
   },
   "screens/AyahCheckScreen": {
    "заголовок": "Ayat {сура}:{аят}",
@@ -1279,7 +1296,13 @@
    "закладкаСохранена": "Penanda: {сура}:{аят}. Buka dari “Al-Qur'an”.",
    "вернулись": "Anda berhenti di ayat {аят}",
    "закладкаУбрана": "Penanda dihapus",
-   "закладкаЗдесь": "Penanda"
+   "закладкаЗдесь": "Penanda",
+   "перевод": "Terjemahan",
+   "переводВкл": "Terjemahan makna di bawah ayat: aktif",
+   "переводВыкл": "Terjemahan makna di bawah ayat: nonaktif",
+   "переводМеню": "Terjemahan makna di bawah ayat",
+   "переводПодпись": "Hanya pada tampilan “ayat per ayat”. Di mushaf, terjemahan muncul saat ayat diketuk.",
+   "переводНет": "Terjemahan makna tidak termuat. Periksa koneksi atau muat ulang halaman."
   },
   "screens/ZakatScreen": {
    "заголовок": "Zakat",
@@ -1418,7 +1441,10 @@
    "гдеВстречается": "Letak dalam ayat:",
    "нетПравил": "Tidak ada hukum yang ditandai di ayat ini.",
    "нетРазметки": "Tanda tajwid tidak termuat. Periksa koneksi Anda.",
-   "загрузка": "Memuat tajwid…"
+   "загрузка": "Memuat tajwid…",
+   "смысл": "Terjemahan makna",
+   "смыслЗаголовок": "Ayat {сура}:{аят} — terjemahan makna",
+   "назад": "Kembali ke tindakan"
   },
   "screens/quran/MushafPages": {
    "след": "Halaman berikutnya",

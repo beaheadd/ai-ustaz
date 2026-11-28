@@ -1,0 +1,3 @@
+{
+  "_о": "Переводы смыслов, которые посмотрел устаз (правило 11 CLAUDE.md): «<ключ издания>»: {«кто»: имя устаза, «когда»: ГГГГ-ММ-ДД}. Одобренное издание показывается без плашки «черновик». После правки — python3 -I -B tools/quran_trans/build_translations.py. Ключи — tools/quran_trans/build_translations.py ВЫБОР (uzbek_mansour, english_saheeh, turkish_shahin, indonesian_affairs, urdu_junagarhi)."
+}
