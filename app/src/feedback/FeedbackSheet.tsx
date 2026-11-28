@@ -157,7 +157,7 @@ const СЛОВАРЬ = создатьСловарь({
     неСвой: 'Reports can be sent on our website aiustaz.pro — open this place there.',
     наСайт: 'Open on aiustaz.pro',
   },
-});
+}, 'feedback/FeedbackSheet');
 
 type Итог = 'нетСвязи' | 'лимит' | 'сбой' | null;
 
@@ -266,9 +266,9 @@ export function ЛистСообщения({ запрос, закрыть }: { �
         style={{ position: 'absolute', left: 0, right: 0, bottom: 0, top: '6%', justifyContent: 'flex-end', alignItems: 'center' }}
       >
         <View style={{ width: '100%', maxWidth: ШИРИНА_КОЛОНКИ, maxHeight: '100%', backgroundColor: цвет.фон, borderTopLeftRadius: радиус.l, borderTopRightRadius: радиус.l, borderWidth: 1, borderBottomWidth: 0, borderColor: цвет.граница }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: отступ.l, paddingRight: отступ.s, paddingTop: отступ.xs, borderBottomWidth: 1, borderBottomColor: цвет.граница }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingStart: отступ.l, paddingEnd: отступ.s, paddingTop: отступ.xs, borderBottomWidth: 1, borderBottomColor: цвет.граница }}>
             <Значок имя="флаг" размер={20} цвет={цвет.акцент} толщина={2} />
-            <Текст вид="подзаголовок" accessibilityRole="header" уровень={2} стиль={{ flex: 1, marginLeft: отступ.s }}>
+            <Текст вид="подзаголовок" accessibilityRole="header" уровень={2} стиль={{ flex: 1, marginStart: отступ.s }}>
               {т('заголовок')}
             </Текст>
             <Pressable accessibilityRole="button" accessibilityLabel={т('закрыть')} onPress={закрыть} testID="ошибка-закрыть" style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}>
@@ -292,7 +292,7 @@ export function ЛистСообщения({ запрос, закрыть }: { �
                 {цитата ? (
                   <View style={{ gap: отступ.xs }}>
                     <Текст вид="мелкий">{т('выделено')}</Текст>
-                    <View style={{ borderLeftWidth: 3, borderLeftColor: цвет.акцент, backgroundColor: цвет.поверхностьАкцент, borderRadius: радиус.s, paddingHorizontal: отступ.m, paddingVertical: отступ.s }}>
+                    <View style={{ borderStartWidth: 3, borderStartColor: цвет.акцент, backgroundColor: цвет.поверхностьАкцент, borderRadius: радиус.s, paddingHorizontal: отступ.m, paddingVertical: отступ.s }}>
                       <Текст numberOfLines={6} testID="ошибка-цитата" {...((ВЕБ ? { dir: 'auto' } : {}) as object)}>
                         {цитата}
                       </Текст>

@@ -479,6 +479,35 @@
    "урокПодпись": "{н}. ders — ders haritasını aç",
    "линия": "Kurallar — Âsım kıraatinin Hafs rivayeti, Şâtıbiyye tarikiyle, vasl hâlinde; vakıf — ayet sonunda. Renklendirme yapay zekâ olmadan, AI Ustaz kurallarıyla yapılır."
   },
+  "feedback/FeedbackSheet": {
+   "заголовок": "Hata bildir",
+   "выделено": "Seçilen metin",
+   "где": "Nerede: {экран}",
+   "раздел": "Bölüm",
+   "quran": "Kur'an / tecvid",
+   "hadith": "Hadis",
+   "translation": "Çeviri",
+   "dhikr": "Zikir / dua",
+   "prayer": "Namaz vakitleri",
+   "ui": "Arayüz",
+   "other": "Diğer",
+   "что": "Yanlış olan ne?",
+   "чтоПодсказка": "Örneğin: buradaki med 4 elif, ama 2 yazıyor",
+   "мало": "En az 5 karakter yazın",
+   "контакт": "Size nasıl ulaşalım (isteğe bağlı)",
+   "контактПояснение": "İsteğe bağlı. Yalnızca cevap istiyorsanız telefon, e-posta veya Telegram bırakın. Yalnızca cevap vermek için saklar, incelemeden 3 ay sonra sileriz. Cevap gerekmiyorsa boş bırakın.",
+   "безДанных": "Bildirimle birlikte ekran, uygulama sürümü, dil ve tema gönderilir — ad ya da IP yok.",
+   "отправить": "Gönder",
+   "отправка": "Gönderiliyor…",
+   "спасибо": "Teşekkürler! Kontrol edip düzelteceğiz.",
+   "спасибоПояснение": "Hata dinî bir metindeyse düzeltmeyi hoca inceleyecek.",
+   "закрыть": "Kapat",
+   "нетСвязи": "Bağlantı yok — daha sonra tekrar deneyin. Metniniz burada duruyor.",
+   "лимит": "Art arda çok fazla bildirim. Birkaç dakika sonra tekrar deneyin.",
+   "сбой": "Gönderilemedi. Daha sonra tekrar deneyin.",
+   "неСвой": "Bildirimler sitemiz aiustaz.pro'da gönderilebilir — bu yeri orada açın.",
+   "наСайт": "aiustaz.pro'da aç"
+  },
   "screens/AboutScreen": {
    "девиз": "Kur'an'ı doğru okumak için yapay zekâ rehberi",
    "обещание1": "Ücretsiz",
@@ -711,6 +740,9 @@
    "кРазделам": "Hadis bölümlerine"
   },
   "screens/HadithItemScreen": {
+   "меню": "Hadis seçenekleri",
+   "ошибка": "Hata bildir",
+   "ошибкаПодпись": "Metinde, çeviride ya da derecede hata mı var? Bize yazın",
    "хадис": "Hadis",
    "номер": "Hadis No. {n}",
    "hadeethenc": "HadeethEnc No. {id}",
@@ -950,6 +982,8 @@
   "screens/MoreScreen": {
    "закят": "Zekât",
    "закятПодпись": "Hesaplayıcı: nisap, havl, %2,5",
+   "ошибка": "Hata bildir",
+   "ошибкаПодпись": "Bir metinde, çeviride ya da vakitte hata mı buldunuz? Bize yazın",
    "зикры": "Zikirler",
    "махраджи": "Harfler nasıl okunur",
    "махраджиПодпись": "Mahreçler: her harf için ağız ve boğaz şeması",
@@ -1208,6 +1242,7 @@
    "найдено": "Bulunan sure: {н}"
   },
   "screens/SuraScreen": {
+   "ошибка": "Hata bildir",
    "назад": "Geri",
    "вид": "Görünüm ve metin boyutu",
    "закрыть": "Kapat",
@@ -1345,6 +1380,7 @@
    "нетСверки": "Mahreç dosyası doğrulamayı geçemedi — gösterilmiyor."
   },
   "screens/quran/AyahActions": {
+   "ошибка": "Bu ayetteki bir hatayı bildir",
    "заголовок": "Ayet {сура}:{аят}",
    "слушать": "Ayeti dinle",
    "скачать": "Ayeti indir — internetsiz dinle",

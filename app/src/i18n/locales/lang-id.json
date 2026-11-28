@@ -479,6 +479,35 @@
    "урокПодпись": "Pelajaran {н} — buka peta kursus",
    "линия": "Hukum — riwayat Hafs dari 'Ashim melalui jalur asy-Syathibiyyah, saat bacaan bersambung; berhenti — di akhir ayat. Pewarnaan dibuat dengan aturan AI Ustaz, tanpa AI."
   },
+  "feedback/FeedbackSheet": {
+   "заголовок": "Laporkan kesalahan",
+   "выделено": "Teks yang dipilih",
+   "где": "Di mana: {экран}",
+   "раздел": "Bagian",
+   "quran": "Al-Qur'an / tajwid",
+   "hadith": "Hadis",
+   "translation": "Terjemahan",
+   "dhikr": "Zikir / doa",
+   "prayer": "Waktu salat",
+   "ui": "Antarmuka",
+   "other": "Lainnya",
+   "что": "Apa yang salah?",
+   "чтоПодсказка": "Misalnya: mad di sini 4 harakat, tetapi tertulis 2",
+   "мало": "Tulis minimal 5 karakter",
+   "контакт": "Cara menghubungi Anda (opsional)",
+   "контактПояснение": "Opsional. Tinggalkan telepon, email, atau Telegram hanya jika Anda ingin dibalas. Kami menyimpannya hanya untuk membalas dan menghapusnya 3 bulan setelah ditinjau. Tidak perlu balasan — biarkan kosong.",
+   "безДанных": "Bersama laporan dikirim layar, versi aplikasi, bahasa, dan tema — tanpa nama atau IP.",
+   "отправить": "Kirim",
+   "отправка": "Mengirim…",
+   "спасибо": "Terima kasih! Kami akan memeriksa dan memperbaikinya.",
+   "спасибоПояснение": "Jika kesalahan ada di teks keagamaan, ustaz akan memeriksa perbaikannya.",
+   "закрыть": "Tutup",
+   "нетСвязи": "Tidak ada koneksi — coba lagi nanti. Teks Anda masih di sini.",
+   "лимит": "Terlalu banyak laporan berturut-turut. Coba lagi dalam beberapa menit.",
+   "сбой": "Tidak bisa dikirim. Coba lagi nanti.",
+   "неСвой": "Laporan dapat dikirim di situs kami aiustaz.pro — buka tempat ini di sana.",
+   "наСайт": "Buka di aiustaz.pro"
+  },
   "screens/AboutScreen": {
    "девиз": "Pembimbing AI untuk membaca Al-Qur'an dengan benar",
    "обещание1": "Gratis",
@@ -711,6 +740,9 @@
    "кРазделам": "Ke bagian hadis"
   },
   "screens/HadithItemScreen": {
+   "меню": "Opsi hadis",
+   "ошибка": "Laporkan kesalahan",
+   "ошибкаПодпись": "Ada kesalahan di teks, terjemahan, atau derajat? Tulis kepada kami",
    "хадис": "Hadis",
    "номер": "Hadis No. {n}",
    "hadeethenc": "HadeethEnc No. {id}",
@@ -950,6 +982,8 @@
   "screens/MoreScreen": {
    "закят": "Zakat",
    "закятПодпись": "Kalkulator: nisab, haul, 2,5%",
+   "ошибка": "Laporkan kesalahan",
+   "ошибкаПодпись": "Menemukan kesalahan di teks, terjemahan, atau waktu? Tulis kepada kami",
    "зикры": "Zikir",
    "махраджи": "Cara melafalkan huruf",
    "махраджиПодпись": "Makharij: diagram mulut dan tenggorokan untuk setiap huruf",
@@ -1208,6 +1242,7 @@
    "найдено": "Surah ditemukan: {н}"
   },
   "screens/SuraScreen": {
+   "ошибка": "Laporkan kesalahan",
    "назад": "Kembali",
    "вид": "Tampilan dan ukuran teks",
    "закрыть": "Tutup",
@@ -1345,6 +1380,7 @@
    "нетСверки": "Berkas makhraj tidak lolos verifikasi — tidak ditampilkan."
   },
   "screens/quran/AyahActions": {
+   "ошибка": "Laporkan kesalahan di ayat ini",
    "заголовок": "Ayat {сура}:{аят}",
    "слушать": "Dengarkan ayat",
    "скачать": "Unduh ayat — dengarkan tanpa internet",
