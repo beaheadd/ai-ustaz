@@ -76,14 +76,18 @@ async function положить(кэш, адреса, ход) {
   }
   if (ход) ход(готово);
   let ошибок = 0;
+  // Загрузки, что уже идут, тоже обрываем, как только новый worker ждёт (раз в секунду): одна долгая или зависшая
+  // загрузка держала старый worker живым, новый оставался «ждущим», и после «Обновить» не чистились старые файлы.
+  const отмена = new AbortController();
+  const сторож = setInterval(() => заменяют() && отмена.abort(), 1000);
   async function поток() {
     while (очередь.length) {
       // Новая версия приложения уже ждёт (нажали «Обновить»): докачку прерываем, иначе новый worker ждёт её конца и
       // после перезагрузки остаётся старая версия. Недокачанное догрузит новый worker (offline.ts просит снова).
-      if (заменяют()) break;
+      if (заменяют() || отмена.signal.aborted) break;
       const а = очередь.shift();
       try {
-        const ответ = await fetch(а, { credentials: 'omit' });
+        const ответ = await fetch(а, { credentials: 'omit', signal: отмена.signal });
         if (ответ.ok) await кэш.put(а, ответ);
         else ошибок += 1;
       } catch (_) {
@@ -93,7 +97,11 @@ async function положить(кэш, адреса, ход) {
       if (ход) ход(готово);
     }
   }
-  await Promise.all(Array.from({ length: ПОТОКОВ }, поток));
+  try {
+    await Promise.all(Array.from({ length: ПОТОКОВ }, поток));
+  } finally {
+    clearInterval(сторож);
+  }
   return ошибок;
 }
 

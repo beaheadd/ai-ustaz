@@ -302,7 +302,7 @@ export async function обновлениеСквозной(браузер, { п�
       await нажатьИДождаться(стр, 'обновление-обновить');
       проверить((await о.метка()) === коммитB && (await о.чанк()) === чанкB, `«Обновить» → сборка B (коммит ${коммитB.slice(0, 7)}, ${path.basename(чанкB)})`);
       const списокB = /'(\/aiustaz\/offline\/files\.[0-9a-f]{20}\.json)'/.exec(fs.readFileSync(path.join(папкаB, 'push-sw.js'), 'utf8'))[1];
-      const новый = await пока(
+      let новый = await пока(
         стр,
         async ([список, старый]) => {
           const ф = await caches.open('aiustaz-файлы-v1');
@@ -315,6 +315,26 @@ export async function обновлениеСквозной(браузер, { п�
         // прогона это дольше минуты.
         180000,
       );
+      if (новый !== коммитB && (await стр.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())?.waiting))) {
+        // Изредка (Chromium, под нагрузкой) старый worker не отпускает вкладку и новый остаётся «ждущим», хотя страница
+        // уже B. Человек этого не видит: сборка новая, а старые файлы почистятся, когда вкладка закроется. Проверяем
+        // именно это — закрыли вкладку (ушли со страницы) и открыли снова, — и пишем в лог, что так было.
+        console.log('    заметка: новый worker ждал старый — проверяем после закрытия вкладки');
+        await стр.goto('about:blank');
+        await стр.waitForTimeout(1500);
+        await стр.goto(адрес('#/'));
+        новый = await пока(
+          стр,
+          async ([список, старый]) => {
+            const ф = await caches.open('aiustaz-файлы-v1');
+            const с = await (await caches.open('aiustaz-страница-v1')).match('/aiustaz/index.html');
+            const м = /aiustaz-commit" content="([0-9a-f]+)"/.exec(с ? await с.text() : '');
+            return !!(await ф.match(список)) && !(await ф.match(старый)) && м ? м[1] : false;
+          },
+          [списокB, чанкA],
+          60000,
+        );
+      }
       if (новый !== коммитB) {
         console.log('    отладка: ' + JSON.stringify(await стр.evaluate(async ([список, старый]) => {
           const ф = await caches.open('aiustaz-файлы-v1');
