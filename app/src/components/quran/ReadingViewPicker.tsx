@@ -242,7 +242,7 @@ export function ПереключательВидаЧтения() {
                 testID={'таджвид-' + р}
                 style={({ pressed }) => ({
                   minHeight: 44,
-                  paddingHorizontal: отступ.l,
+                  paddingHorizontal: отступ.m,
                   justifyContent: 'center',
                   borderRadius: радиус.круг,
                   backgroundColor: выбран ? цвет.акцент : цвет.поверхностьВторая,
