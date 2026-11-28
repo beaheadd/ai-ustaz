@@ -1,0 +1,20 @@
+# Источник: King Fahd Glorious Quran Printing Complex — qurancomplex.gov.sa/fonts/hafs (версия 3.0, hafs-3.0.zip,
+#   sha256 db6329e457b912e012160ec1eaa5cf15bd2116f47ea0f466a6c8951ea5f95c29 — как на странице Комплекса), загружено 28.11.2026.
+# Текст ниже — дословно из самого шрифта «KFGQPC Hafs V30.ttf»: поле name 13 (License Description) и поле name 0 (Copyright).
+# В приложении: веб — WOFF Комплекса qurancomplex.gov.sa/fonts/hafs-3.0.woff без изменений (sha256 0ad10c28…5775),
+#   нативно — TTF из архива без изменений (sha256 c9dd7e71…c47a). Не продаётся, не изменяется (AI Ustaz бесплатный).
+ELECTRONIC END-USER LICENSE AGREEMENT
+
+By installing this Font You accept all the terms and conditions of this Agreement.
+
+Copyright (c) 2010 by King Fahd Glorious Quran Printing Complex (KFGQPC), AlMadinah AlMunawarrah, Kingdom of Saudi Arabia. All Rights Reserved. KFGQPC retains full title and ownership of this Typeface both as artwork and font software. This Agreement does not grant you any intellectual property rights in the Font.
+
+Permission is hereby granted, Free of Cost, to any person obtaining a copy of this Font accompanying this license, the rights to Use, Copy, Distribute, subject to the following conditions:
+
+1.    The Font Software cannot be Sold, Modified, Altered, Translated, Reverse Engineered, Decompiled, Disassembled, Reproduced or Attempted to discover the Source Code of this Font in no means.
+
+2.    The Font Software is provided "AS IS", and KFGQPC makes no warranties as to its use or performance, fitness for a particular purpose. KFGQPC does not and cannot warrant the performance or results you may obtain by using the Font. In no event shall KFGQPC be liable for any Claims, Damages or other Liability, including any Damages, arising from, out of the use or inability to use the Font or from other dealings in the Font.
+
+The digitally signed machine readable Typeface(Font) licensed to you is copyrighted, (2010), King Fahd Glorious Quran Printing Complex.
+ISBN: 978-603-8010-15-0, Accession No. 1430/7278
+All rights reserved. This Font is the property of King Fahd Glorious Quran Printing Complex, and may not be reproduced, modified without the express written approval of King Fahd Glorious Quran Printing Complex.

@@ -16,6 +16,7 @@ import { useПеревод } from '../i18n';
 import { useТема } from '../theme';
 import { Текст } from '../components/Text';
 import { слушатьСообщения, type ЗапросСообщения } from './core';
+import { исходныйТекстВыделения } from '../quran/originalText';
 
 const ЛистСообщения = lazy(() => import('./FeedbackSheet').then((м) => ({ default: м.ЛистСообщения })));
 
@@ -62,7 +63,8 @@ export function СлойСообщения() {
     const приВыделении = () => {
       if (открытСсылка.current) return;
       const в = document.getSelection();
-      const текст = в && !в.isCollapsed && в.rangeCount ? в.toString().replace(/\s+/g, ' ').trim() : '';
+      // Цитата — исходный текст Tanzil, даже если Коран нарисован мединским шрифтом с подстройкой (quran/originalText.ts).
+      const текст = в && !в.isCollapsed && в.rangeCount ? исходныйТекстВыделения(в).replace(/\s+/g, ' ').trim() : '';
       if (текст.length < 2) return спрятать();
       const узел = в!.anchorNode;
       const эл = узел instanceof Element ? узел : узел?.parentElement;

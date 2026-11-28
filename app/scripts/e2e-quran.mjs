@@ -230,7 +230,15 @@ function помощники(стр, проблемы, имя, папкаСним
   const э = (id) => стр.getByTestId(id).first();
   const есть = async (id) => (await стр.getByTestId(id).count()) > 0;
   const текстЭ = async (id) => (await э(id).innerText()).trim();
-  const сырой = (id) => стр.evaluate((id) => document.querySelector(`[data-testid="${id}"]`)?.textContent ?? null, id);
+  // Исходный текст: подстроенные для мединского шрифта куски — <span data-o="исходный"> (quran/originalText.ts).
+  const сырой = (id) =>
+    стр.evaluate((id) => {
+      const е = document.querySelector(`[data-testid="${id}"]`);
+      if (!е) return null;
+      const к = е.cloneNode(true);
+      к.querySelectorAll('[data-o]').forEach((х) => х.replaceWith(х.getAttribute('data-o')));
+      return к.textContent;
+    }, id);
   const хэш = () => стр.evaluate(() => location.hash);
   const стек = () => стр.evaluate(() => history.state?.aiustaz?.стек ?? null);
   const проверить = (условие, что) => {
@@ -259,14 +267,15 @@ function помощники(стр, проблемы, имя, папкаСним
     await стр.waitForTimeout(400);
     await стр.screenshot({ path: path.join(папкаСнимков, файл + '.png') });
   };
-  /** Показанные аяты суры н: [{ аят, текст }] (textContent — без пересборки). */
+  /** Показанные аяты суры н: [{ аят, текст }] (textContent, подстроенные куски — исходным data-o). */
   const аятыНаЭкране = (н) =>
     стр.evaluate(
       (н) =>
-        [...document.querySelectorAll(`[data-testid^="коран-аят-${н}-"][data-testid$="-текст"]`)].map((е) => ({
-          аят: Number(е.getAttribute('data-testid').split('-')[3]),
-          текст: е.textContent,
-        })),
+        [...document.querySelectorAll(`[data-testid^="коран-аят-${н}-"][data-testid$="-текст"]`)].map((е) => {
+          const к = е.cloneNode(true);
+          к.querySelectorAll('[data-o]').forEach((х) => х.replaceWith(х.getAttribute('data-o')));
+          return { аят: Number(е.getAttribute('data-testid').split('-')[3]), текст: к.textContent };
+        }),
       н,
     );
   /** Прокрутка суры (ScrollView сура-прокрутка). */
@@ -505,11 +514,12 @@ export async function коранСквозной(браузер, база, { п�
         await document.fonts.ready;
         const е = document.querySelector(`[data-testid="${id}"]`);
         const семейство = getComputedStyle(е).fontFamily;
-        const загружен = [...document.fonts].some((ф) => /amiri/i.test(ф.family) && ф.status === 'loaded');
+        // Шрифт Корана по умолчанию — «Мединский мусхаф» (KFGQPCHafs, владелец 28.11.2026); загружен тот, которым рисуем.
+        const загружен = [...document.fonts].some((ф) => ф.family.replace(/["']/g, '') === семейство.replace(/["']/g, '') && ф.status === 'loaded');
         const р = е.getBoundingClientRect();
         return { семейство, загружен, видно: getComputedStyle(е).opacity === '1' && р.width > 0 && р.height > 0 };
       }, `коран-аят-${случай.н}-${случай.первый}-текст`);
-      п.проверить(/amiri/i.test(шрифт.семейство) && шрифт.загружен && шрифт.видно, `${случай.х}: аят виден, шрифт Amiri Quran загружен (${шрифт.семейство})`);
+      п.проверить(шрифт.семейство === 'KFGQPCHafs' && шрифт.загружен && шрифт.видно, `${случай.х}: аят виден, шрифт «Мединский мусхаф» загружен (${шрифт.семейство})`);
     }
     if (случай.заголовок) {
       const title = await стр.title();
@@ -1262,6 +1272,7 @@ export async function видыЧтения(браузер, база, данны�
       [...document.querySelectorAll('[data-ayah]')].map((е) => {
         const к = е.cloneNode(true);
         к.querySelectorAll('[data-end]').forEach((х) => х.remove());
+        к.querySelectorAll('[data-o]').forEach((х) => х.replaceWith(х.getAttribute('data-o')));
         return { ключ: е.getAttribute('data-ayah'), текст: к.textContent, конец: е.querySelector('[data-end]')?.textContent ?? null };
       }),
     );
@@ -1560,6 +1571,7 @@ async function режимСтраниц(браузер, база, папка, д
       [...document.querySelectorAll('[data-testid="мусхаф-страница"] [data-ayah]')].map((е) => {
         const к = е.cloneNode(true);
         к.querySelectorAll('[data-end]').forEach((х) => х.remove());
+        к.querySelectorAll('[data-o]').forEach((х) => х.replaceWith(х.getAttribute('data-o')));
         return { ключ: е.getAttribute('data-ayah'), текст: к.textContent, конец: е.querySelector('[data-end]')?.textContent ?? null };
       }),
     );

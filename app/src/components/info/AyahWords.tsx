@@ -16,7 +16,8 @@
 import { РЯД_АРАБСКИЙ } from '../../i18n';
 import { Platform, Text, View } from 'react-native';
 import type { ФрагментКорана } from '../../content/types';
-import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов, useТема } from '../../theme';
+import { useТема } from '../../theme';
+import { кусокКорана, useШрифтКорана } from '../quran/QuranFont';
 import { Текст } from '../Text';
 import { словаАята } from './data';
 
@@ -39,7 +40,8 @@ export function АятСоСловами({
   testID?: string;
 }) {
   const { цвет, отступ, радиус } = useТема();
-  const шрифтГотов = useАрабскийШрифтГотов();
+  // Шрифт Корана — выбор человека (владелец 28.11.2026); слова режутся по исходной строке, подстройка — к каждому слову.
+  const шрифт = useШрифтКорана();
   const слова = словаАята(фрагмент.текст);
   return (
     <View {...РЯД_АРАБСКИЙ} style={{ flexDirection: 'row-reverse', alignItems: 'flex-start', gap: отступ.s }} testID={testID}>
@@ -66,20 +68,20 @@ export function АятСоСловами({
         testID={testID ? testID + '-текст' : undefined}
         style={{
           flex: 1,
-          fontFamily: ШРИФТ_АРАБСКИЙ,
+          fontFamily: шрифт.семейство,
           fontSize: КЕГЛЬ,
           lineHeight: Math.round(КЕГЛЬ * 2),
           color: цвет.арабский,
           textAlign: 'right',
           writingDirection: 'rtl',
-          opacity: шрифтГотов ? 1 : 0,
+          opacity: шрифт.готов ? 1 : 0,
         }}
       >
         {слова.map((слово, i) => {
           const номер = i + 1;
           const пробел = i < слова.length - 1 ? ' ' : '';
           const id = подсвеченные.get(номер);
-          if (!id) return слово + пробел;
+          if (!id) return [кусокКорана(шрифт, слово, 'с' + номер), пробел];
           const выбрано = id === выбран;
           return [
             <Text
@@ -97,7 +99,7 @@ export function АятСоСловами({
                 ...(Platform.OS === 'web' ? ({ cursor: 'pointer' } as object) : {}),
               }}
             >
-              {слово}
+              {кусокКорана(шрифт, слово)}
             </Text>,
             пробел,
           ];

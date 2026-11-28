@@ -67,6 +67,15 @@ const ЛОКАЛЬНЫЕ_ФАЙЛЫ = [
     модуль: /src\/prayer\/world\.generated\.ts$/,
   },
   {
+    // Шрифт «Мединский мусхаф» (владелец 28.11.2026) — статический файл fonts/ (WOFF Комплекса без изменений, не JS);
+    // в бандле — его запись src/quran/kfgqpcFont.ts: запись есть, если модуль попал в source map.
+    пакет: 'KFGQPC HAFS Uthmanic Script — шрифт «Мединский мусхаф», Комплекс короля Фахда (app/public/fonts, без изменений)',
+    версия: '3.0',
+    лицензия: 'KFGQPC EULA (бесплатно; без продажи и изменений)',
+    файлЛицензии: 'licenses/fonts/KFGQPC-Hafs-EULA.txt',
+    модуль: /src\/quran\/kfgqpcFont\.ts$/,
+  },
+  {
     // Пословные тайминги чтения (владелец 27.11.2026) — статические файлы quran-words/; в бандле — их манифест.
     пакет: 'quran-align, Collin Fair (пословные тайминги чтения — app/public/quran-words)',
     версия: 'release-2016-11-24',

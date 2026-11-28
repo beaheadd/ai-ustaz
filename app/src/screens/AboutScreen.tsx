@@ -70,6 +70,7 @@ const СЛОВАРЬ = создатьСловарь({
     разработано: 'Разработано в Казахстане.',
     линия2: 'Чтение — Хафс от ‘Асыма (через аш-Шатибийю). Когда появится проверка голосом, допустимые варианты чтения будут засчитываться.',
     линия3: 'Текст Корана — только дословно из проверенной базы Tanzil Uthmani v1.1.',
+    линияШрифт: 'Шрифт: KFGQPC Hafs (Комплекс короля Фахда); подстройка знаков для шрифта — только при показе.',
     линия4: 'Объяснения ошибок — только из базы правил и шаблонов AI Ustaz (сейчас черновик, её проверяет устаз). Не уверен — не ругаем.',
     приватность: 'Приватность',
     приватность1: 'Входа нет. На aiustaz.pro приложение отправляет только на свой сервер в Казахстане: анонимную статистику (какие экраны открывали и сколько времени — без имени, телефона и места; выключается в «Ещё») и, если вы включили уведомления, подписку без координат. Данные никому не передаём и не продаём.',
@@ -113,6 +114,7 @@ const СЛОВАРЬ = создатьСловарь({
     разработано: 'Қазақстанда әзірленген.',
     линия2: 'Оқу — Хафс ‘Асым риуаяты (аш-Шатиби жолымен). Дауыс тексеруі пайда болғанда, рұқсат етілген оқу нұсқалары есептеледі.',
     линия3: 'Құран мәтіні — тек тексерілген Tanzil Uthmani v1.1 базасынан, сөзбе-сөз.',
+    линияШрифт: 'Қаріп: KFGQPC Hafs (Фаһд патша кешені); белгілерді қаріпке бейімдеу — тек көрсеткенде.',
     линия4: 'Қателердің түсіндірмесі — тек AI Ustaz ережелері мен үлгілерінің базасынан (әзірге жоба, оны ұстаз тексереді). Сенімді болмасақ — ұрыспаймыз.',
     приватность: 'Прототиптің құпиялылығы',
     приватность1: 'Кіру жоқ. aiustaz.pro-да қолданба тек Қазақстандағы өз серверіне жібереді: жасырын статистика (қай беттер ашылды және қанша уақыт — атыңызсыз, телефонсыз және орынсыз; «Тағы» бөлімінде өшіріледі) және хабарландыруды қоссаңыз — координатсыз жазылым. Деректерді ешкімге бермейміз және сатпаймыз.',
@@ -156,6 +158,7 @@ const СЛОВАРЬ = создатьСловарь({
     разработано: 'Qozogʻistonda ishlab chiqilgan.',
     линия2: 'Qiroat — Osimdan Hafs rivoyati (ash-Shotibiya orqali). Ovoz bilan tekshirish paydo boʻlganda, joiz qiroat variantlari hisobga olinadi.',
     линия3: 'Qurʼon matni — faqat tekshirilgan Tanzil Uthmani v1.1 bazasidan, aynan.',
+    линияШрифт: 'Shrift: KFGQPC Hafs (Qirol Fahd majmuasi); belgilarni shriftga moslash — faqat koʻrsatishda.',
     линия4: 'Xatolarni tushuntirish — faqat AI Ustaz qoidalar va andozalar bazasidan (hozir qoralama, uni ustoz tekshiryapti). Ishonch boʻlmasa — tanbeh bermaymiz.',
     приватность: 'Prototip maxfiyligi',
     приватность1: 'Kirish yoʻq. aiustaz.pro saytida ilova faqat Qozogʻistondagi oʻz serveriga yuboradi: anonim statistika (qaysi sahifalar ochilgani va qancha vaqt — ismingiz, telefoningiz va joyingizsiz; «Yana» boʻlimida oʻchiriladi) va bildirishnomalarni yoqsangiz — koordinatalarsiz obuna. Maʼlumotlarni hech kimga bermaymiz va sotmaymiz.',
@@ -199,6 +202,7 @@ const СЛОВАРЬ = создатьСловарь({
     разработано: 'Developed in Kazakhstan.',
     линия2: "Recitation — Hafs from 'Asim (via ash-Shatibiyyah). When the voice check arrives, acceptable recitation variants will be counted as correct.",
     линия3: 'Quran text — only verbatim from the verified Tanzil Uthmani v1.1 database.',
+    линияШрифт: 'Font: KFGQPC Hafs (King Fahd Complex); marks are adapted for the font only on display.',
     линия4: 'Explanations of mistakes — only from the AI Ustaz base of rules and templates (a draft for now, an ustaz is reviewing it). Not sure — no scolding.',
     приватность: 'Prototype privacy',
     приватность1: 'No sign-in. On aiustaz.pro the app sends only to its own server in Kazakhstan: anonymous statistics (which screens were opened and for how long — no name, phone or location; can be turned off in "More") and, if you turned on notifications, a subscription without coordinates. We never share or sell data.',
@@ -299,7 +303,8 @@ export function ОПроекте(_: ПропсыЭкрана<'оПроекте'>
       <ПредупреждениеИИИзКонтента />
 
       <Раздел значок="коран" заголовок={т('линия')}>
-        <Пункты пункты={[т('линия1'), т('линия2'), т('линия3'), т('линия4')]} />
+        {/* Шрифт Корана (владелец 28.11.2026): одна строка — шрифт и подстройка знаков только при показе. */}
+        <Пункты пункты={[т('линия1'), т('линия2'), т('линия3'), т('линияШрифт'), т('линия4')]} />
       </Раздел>
 
       <Раздел значок="замок" заголовок={т('приватность')} testID="о-проекте-приватность">

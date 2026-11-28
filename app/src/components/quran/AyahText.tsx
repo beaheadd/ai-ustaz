@@ -19,13 +19,17 @@
  *   первоеСлово — текст является частью аята: номер его первого слова в аяте (для замечаний и «аят-слово-N»).
  *   Текст выделяется и копируется (selectable); lang="ar" dir="rtl". Пока шрифт не загружен — прозрачен.
  * Нативно (Android/iOS) группы — вложенные <Text> без nowrap (перенос по словам; проверить на устройстве — TODO).
+ * Шрифт — выбор человека (components/quran/QuranFont.tsx, владелец 28.11.2026): «Мединский мусхаф» рисует строки через
+ *   кусокКорана (подстройка показа, исходный текст — в data-o: копирование и сверки берут его); резка на группы и слова —
+ *   по исходной строке, до подстройки.
  */
 import { createElement, useMemo, type ReactNode } from 'react';
 import { Platform, Text, type TextStyle } from 'react-native';
 import { useРазмерАрабского } from '../../quran/fontSize';
 import { группыТокенов, разборАята } from '../../quran/text';
 import type { УровеньЗамечания } from '../../speech/answer';
-import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов, useТема } from '../../theme';
+import { useТема } from '../../theme';
+import { кусокКорана, useШрифтКорана } from './QuranFont';
 
 const ВЕБ = Platform.OS === 'web';
 /** Атрибуты HTML для react-native-web (Text их поддерживает, в типах RN их нет). */
@@ -46,7 +50,7 @@ export type СвойстваТекстаАята = {
 export function ТекстАята({ текст, кегль: свой, часть = null, замечания, подписьСлова, выравнивание = 'right', первоеСлово = 1, testID }: СвойстваТекстаАята) {
   const { цвет, радиус } = useТема();
   const выбор = useРазмерАрабского();
-  const шрифтГотов = useАрабскийШрифтГотов();
+  const шрифт = useШрифтКорана();
   const кегль = свой ?? выбор.кегль;
   const межстрочный = Math.round(кегль * 1.8);
   const токены = useMemo(() => разборАята(текст), [текст]);
@@ -72,10 +76,10 @@ export function ТекстАята({ текст, кегль: свой, част�
         };
         внутри.push(
           ВЕБ
-            ? createElement('span', { key: i, 'data-testid': `аят-слово-${номер}`, title: подписьСлова?.(номер), style: стиль }, т.текст)
+            ? createElement('span', { key: i, 'data-testid': `аят-слово-${номер}`, title: подписьСлова?.(номер), style: стиль }, кусокКорана(шрифт, т.текст))
             : (
                 <Text key={i} testID={`аят-слово-${номер}`} accessibilityLabel={подписьСлова?.(номер)} style={стиль as TextStyle}>
-                  {т.текст}
+                  {кусокКорана(шрифт, т.текст)}
                 </Text>
               ),
         );
@@ -89,16 +93,18 @@ export function ТекстАята({ текст, кегль: свой, част�
       if (typeof д === 'string' && typeof последний === 'string') склеено[склеено.length - 1] = последний + д;
       else склеено.push(д);
     }
+    // Подстройка для мединского шрифта — после склейки: пробел и знак остаются в одном узле.
+    const показ = склеено.map((д, к) => (typeof д === 'string' ? кусокКорана(шрифт, д, 'к' + к) : д));
     const стильГруппы = {
       ...(ВЕБ ? { whiteSpace: 'nowrap' } : null),
       ...(часть === null ? null : вЧасти ? { backgroundColor: цвет.поверхностьАкцент, borderRadius: радиус.s } : { color: цвет.текстВторой }),
     };
     дети.push(
       ВЕБ
-        ? createElement('span', { key: 'г' + г, 'data-group': '', style: стильГруппы }, ...склеено)
+        ? createElement('span', { key: 'г' + г, 'data-group': '', style: стильГруппы }, ...показ)
         : (
             <Text key={'г' + г} style={стильГруппы as TextStyle}>
-              {склеено}
+              {показ}
             </Text>
           ),
     );
@@ -114,13 +120,13 @@ export function ТекстАята({ текст, кегль: свой, част�
       style={{
         flex: 1,
         minWidth: 0,
-        fontFamily: ШРИФТ_АРАБСКИЙ,
+        fontFamily: шрифт.семейство,
         fontSize: кегль,
         lineHeight: межстрочный,
         color: цвет.арабский,
         textAlign: выравнивание,
         writingDirection: 'rtl',
-        opacity: шрифтГотов ? 1 : 0,
+        opacity: шрифт.готов ? 1 : 0,
       }}
     >
       {дети}

@@ -19,6 +19,9 @@
  *   (e2e-quran сверяет); номер конца аята — ОТДЕЛЬНЫЙ элемент data-end (user-select none, не часть строки Корана).
  *   Знак остановки не отрывается от слова (группы nowrap, как в <ТекстАята>). Кусок цвета — целая буква со знаками.
  * testID: мусхаф, мусхаф-сура-<н>, мусхаф-бисмилла-<н>, мусхаф-текст-<н>. Атрибуты: data-ayah, data-end, data-t (код).
+ * Шрифт — выбор человека (components/quran/QuranFont.tsx, владелец 28.11.2026). «Мединский мусхаф»: строку режут по
+ *   исходному тексту (группы, куски цвета), подстройка показа — к каждому куску после разреза (кусокКорана; исходный —
+ *   в data-o). Кусок цвета — целая буква со знаками, поэтому татвиль и его ٰ всегда в одном куске.
  */
 import { createElement, useEffect, useState, type ReactNode } from 'react';
 import { Platform, Text, View, type TextStyle } from 'react-native';
@@ -29,8 +32,10 @@ import type { РазметкаСуры } from '../../quran/mushaf';
 import { загрузитьРазметкуСуры } from '../../quran/mushafData';
 import { кускиТекста, отрезкиВерны, разобратьРазметку, ЦВЕТА_ТАДЖВИДА, ФОН_НОЧИ, ФОН_СТРАНИЦЫ, ЧЕРНИЛА_НОЧИ, ЧЕРНИЛА_СТРАНИЦЫ, type Отрезок } from '../../quran/tajweed';
 import { диапазоныГрупп } from '../../quran/text';
-import { ШРИФТ_АРАБСКИЙ, useАрабскийШрифтГотов } from '../../theme';
+import { ШРИФТ_АРАБСКИЙ } from '../../theme';
 import { Path, Svg } from '../primitives/svg';
+import { кускиДляKfgqpc } from '../../quran/displayKfgqpc';
+import { кусокКорана, useШрифтКорана, type ШрифтКоранаСейчас } from './QuranFont';
 
 const СЛОВАРЬ = создатьСловарь({
   ru: { конец: 'конец аята {а}' },
@@ -107,12 +112,14 @@ function узел(ключ: string | number, свойства: Record<string, un
 }
 
 /** Текст аята (или бисмиллы) — группы «слово + знаки остановки» nowrap, внутри — куски цвета таджвида. */
-function детиАята(текст: string, отрезки: readonly Отрезок[] | null, цвета: Readonly<Record<string, string>> | null, конец: ReactNode | null): ReactNode[] {
+function детиАята(шрифт: ШрифтКоранаСейчас, текст: string, отрезки: readonly Отрезок[] | null, цвета: Readonly<Record<string, string>> | null, конец: ReactNode | null): ReactNode[] {
   const группы = диапазоныГрупп(текст);
   const р: ReactNode[] = [];
   группы.forEach(([а, б], г) => {
-    const куски = отрезки && цвета ? кускиТекста(текст, отрезки, а, б) : [{ текст: текст.slice(а, б), код: null }];
-    const дети: ReactNode[] = куски.map((к, i) => (к.код && цвета ? узел(i, { 'data-t': к.код }, { color: цвета[к.код] }, [к.текст]) : к.текст));
+    const сырые = отрезки && цвета ? кускиТекста(текст, отрезки, а, б) : [{ текст: текст.slice(а, б), код: null }];
+    // Мединский шрифт: мадд на «ـٰ» красится вместе с буквой перед ним (quran/displayKfgqpc.ts кускиДляKfgqpc).
+    const куски = шрифт.мединский ? кускиДляKfgqpc(сырые) : сырые;
+    const дети: ReactNode[] = куски.map((к, i) => (к.код && цвета ? узел(i, { 'data-t': к.код }, { color: цвета[к.код] }, [кусокКорана(шрифт, к.текст)]) : кусокКорана(шрифт, к.текст, i)));
     if (конец && г === группы.length - 1) дети.push(конец);
     р.push(узел('г' + г, { 'data-group': '' }, ВЕБ ? { whiteSpace: 'nowrap' } : null, дети));
     if (г < группы.length - 1) р.push(' ');
@@ -132,6 +139,7 @@ export function КартушСуры({ имя, н, п }: { имя: string; н: n
     <View testID={'мусхаф-сура-' + н} style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
       {конец(true)}
       <View style={{ flex: 1, height: 44, borderTopWidth: 1.5, borderBottomWidth: 1.5, borderColor: п.рамка, backgroundColor: п.поле, alignItems: 'center', justifyContent: 'center' }}>
+        {/* Имя суры — не текст Корана: всегда Amiri Quran (в KFGQPC нет U+0622 из «آل عمران»). */}
         <Text {...((ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object)} style={{ fontFamily: ШРИФТ_АРАБСКИЙ, fontSize: 24, lineHeight: 40, color: п === ПАЛИТРЫ_МУСХАФА.ночь ? п.чернила : п.рамка2 }}>
           {имя}
         </Text>
@@ -163,7 +171,7 @@ export function ПотокМусхафа({ сура, с, по, цвета, но�
   const т = useСловарь(СЛОВАРЬ);
   const { кегль: кегльЧеловека } = useРазмерАрабского();
   const кегль = свойКегль ?? кегльЧеловека;
-  const шрифтГотов = useАрабскийШрифтГотов();
+  const шрифт = useШрифтКорана();
   const п = ночь ? ПАЛИТРЫ_МУСХАФА.ночь : ПАЛИТРЫ_МУСХАФА.бумага;
   const палитра = цвета ? (ночь ? ЦВЕТА_ТАДЖВИДА.ночь : ЦВЕТА_ТАДЖВИДА.страница) : null;
   const межстрочный = Math.round(кегль * 1.9);
@@ -171,14 +179,14 @@ export function ПотокМусхафа({ сура, с, по, цвета, но�
   const центр = сура.сура === 1;
   const абзац = (выравнивание: 'justify' | 'center') => ({
     margin: 0,
-    fontFamily: ШРИФТ_АРАБСКИЙ,
+    fontFamily: шрифт.семейство,
     fontSize: кегль,
     lineHeight: межстрочный + 'px',
     color: п.чернила,
     textAlign: выравнивание,
     textAlignLast: выравнивание === 'center' ? 'center' : 'right',
     direction: 'rtl',
-    opacity: шрифтГотов ? 1 : 0,
+    opacity: шрифт.готов ? 1 : 0,
     overflowWrap: 'normal',
   });
 
@@ -202,7 +210,7 @@ export function ПотокМусхафа({ сура, с, по, цвета, но�
         строкой
           ? { backgroundColor: фон, borderRadius: 6, cursor: 'pointer', boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' }
           : { display: 'block', marginBottom: '0.15em', backgroundColor: фон, borderRadius: 6, cursor: 'pointer', boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' },
-        детиАята(сура.аяты[а - 1].текст, цвета?.аяты[а - 1] ?? null, палитра, конец),
+        детиАята(шрифт, сура.аяты[а - 1].текст, цвета?.аяты[а - 1] ?? null, палитра, конец),
       ),
     );
     if (а < по) аяты.push(' '); // между блоками пробел не виден; в режиме «строкой» — обычный пробел между аятами
@@ -218,12 +226,12 @@ export function ПотокМусхафа({ сура, с, по, цвета, но�
     <View testID="мусхаф" style={{ gap: 4 }}>
       {с === 1 ? <КартушСуры имя={сура.имя} н={сура.сура} п={п} /> : null}
       {с === 1 && сура.бисмилла && ВЕБ
-        ? createElement('p', { lang: 'ar', dir: 'rtl', 'data-testid': 'мусхаф-бисмилла-' + сура.сура, style: абзац('center') }, ...детиАята(сура.бисмилла, цвета?.бисмилла ?? null, палитра, null))
+        ? createElement('p', { lang: 'ar', dir: 'rtl', 'data-testid': 'мусхаф-бисмилла-' + сура.сура, style: абзац('center') }, ...детиАята(шрифт, сура.бисмилла, цвета?.бисмилла ?? null, палитра, null))
         : null}
       {ВЕБ ? (
         createElement('p', { lang: 'ar', dir: 'rtl', 'data-testid': 'мусхаф-текст-' + сура.сура, onClick: нажатие, style: абзац(центр ? 'center' : 'justify') }, ...аяты)
       ) : (
-        <Text style={{ fontFamily: ШРИФТ_АРАБСКИЙ, fontSize: кегль, lineHeight: межстрочный, color: п.чернила, textAlign: центр ? 'center' : 'justify', writingDirection: 'rtl' }}>{аяты}</Text>
+        <Text style={{ fontFamily: шрифт.семейство, fontSize: кегль, lineHeight: межстрочный, color: п.чернила, textAlign: центр ? 'center' : 'justify', writingDirection: 'rtl' }}>{аяты}</Text>
       )}
     </View>
   );

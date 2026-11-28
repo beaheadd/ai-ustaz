@@ -209,7 +209,11 @@ export async function спроситьСквозной(браузер, порт,
     await с.э('устаз-аят').waitFor({ timeout: 8000 });
     проверить(JSON.stringify(с.запросы[0]) === JSON.stringify({ q: 'Как читается аят 2:255?', lang: 'ru' }), 'пример → запрос ровно { q, lang }');
     await с.стр.waitForFunction(() => document.querySelector('[data-testid="устаз-аят"] [data-testid="таджвид-аята-текст"]'), null, { timeout: 15000 });
-    const аятТекст = await с.стр.evaluate(() => document.querySelector('[data-testid="устаз-аят"] [data-testid="таджвид-аята-текст"]').textContent);
+    const аятТекст = await с.стр.evaluate(() => {
+      const к = document.querySelector('[data-testid="устаз-аят"] [data-testid="таджвид-аята-текст"]').cloneNode(true);
+      к.querySelectorAll('[data-o]').forEach((х) => х.replaceWith(х.getAttribute('data-o'))); // мединский шрифт: исходный текст
+      return к.textContent;
+    });
     проверить(аятТекст === данные.сура(2).аяты[254].текст, '«как читается 2:255»: аят из своей копии Tanzil побайтно, с цветами таджвида (правило 1)');
     проверить((await с.есть('устаз-аят-слушать')) && (await с.есть('устаз-открыть-2-255')), '«Слушать чтеца» и «Открыть 2:255 в Коране»');
     await с.снимок('chat-ayah-ru');

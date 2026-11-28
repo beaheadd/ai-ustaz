@@ -220,8 +220,48 @@
       "прочитано": "2026-11-18"
     },
     {
+      "id": "kfgqpc-hafs",
+      "что": "Шрифт текста Корана «Мединский мусхаф» — по умолчанию (владелец 28.11.2026: «Поставь выбор шрифта, по умолчанию — этот. Пусть наш тоже будет»; «Да, с подстройкой»)",
+      "название": "KFGQPC HAFS Uthmanic Script, версия 3.0 — King Fahd Glorious Quran Printing Complex",
+      "лицензия": "KFGQPC EULA: бесплатно использовать, копировать и распространять; нельзя продавать и изменять",
+      "ссылка": "qurancomplex.gov.sa/fonts/hafs",
+      "атрибуция": "Шрифт: KFGQPC Hafs (Комплекс короля Фахда по печати Священного Корана, Медина), версия 3.0.",
+      "условия": "Permission is hereby granted, Free of Cost, to any person obtaining a copy of this Font accompanying this license, the rights to Use, Copy, Distribute, subject to the following conditions:\n\n1.    The Font Software cannot be Sold, Modified, Altered, Translated, Reverse Engineered, Decompiled, Disassembled, Reproduced or Attempted to discover the Source Code of this Font in no means.\n\n— EULA в самом шрифте (поле name 13), полный текст — licenses/fonts/KFGQPC-Hafs-EULA.txt; прочитано 28.11.2026",
+      "прочитано": "2026-11-28",
+      "загружено": "2026-11-28",
+      "выгрузки": [
+        {
+          "вид": "zip",
+          "файл": "hafs-3.0.zip",
+          "адрес": "qurancomplex.gov.sa/files/fonts/hafs-3.0.zip",
+          "версия": "3.0",
+          "sha256": "db6329e457b912e012160ec1eaa5cf15bd2116f47ea0f466a6c8951ea5f95c29",
+          "байт": 847170,
+          "примечание": "sha256 совпадает с указанным на странице Комплекса; внутри — KFGQPC Hafs V30.ttf и .docx с текстом Корана Комплекса (текст не используется)"
+        },
+        {
+          "вид": "ttf",
+          "файл": "KFGQPC Hafs V30.ttf",
+          "путь": "app/src/assets/fonts/kfgqpc-hafs-3.0.ttf",
+          "sha256": "c9dd7e71a454565b13d89e5e6f2663a918acb0a20a23eea31eccb32a3aeec47a",
+          "байт": 301356,
+          "примечание": "нативная сборка (iOS/Android), без изменений"
+        },
+        {
+          "вид": "woff",
+          "файл": "hafs-3.0.woff",
+          "адрес": "qurancomplex.gov.sa/fonts/hafs-3.0.woff",
+          "путь": "app/public/fonts/kfgqpc-hafs-3.0.0ad10c288ee500cf25b4.woff",
+          "sha256": "0ad10c288ee500cf25b4d6542966f2b36807272c6cf836c65218d32818585775",
+          "байт": 148488,
+          "примечание": "веб: WOFF, который раздаёт сам Комплекс, без изменений (таблицы шрифта побайтно равны TTF из архива, кроме служебной head); в woff2 не перепаковываем — условия запрещают изменять"
+        }
+      ],
+      "примечание": "Шрифт построен под кодировку текста самого Комплекса; наш текст — Tanzil (правило 1). Подстройка ТОЛЬКО ПРИ ОТРИСОВКЕ этим шрифтом (app/src/quran/displayKfgqpc.ts, утверждена владельцем 28.11.2026, ЖДЁТ ПРОВЕРКИ УСТАЗА): U+0652→U+06E1, U+06DF→U+0652, U+06EA→U+065C, U+06EB→U+06EC, татвиль перед U+0670 не рисуется. Текст в хранилище и данные не меняются; копирование, «Сообщить об ошибке», поиск, чат и речевой сервис берут исходный текст. Файл шрифта в сборке сверяет check-dist (sha256), подстройку — scripts/test-quran-font.mjs по всем 6236 аятам."
+    },
+    {
       "id": "amiri-quran",
-      "что": "Шрифт арабского текста",
+      "что": "Шрифт арабского текста: буквы, слоги и учебные слова; Коран — при выборе «Классический» (владелец 28.11.2026)",
       "название": "Amiri Quran (@expo-google-fonts/amiri-quran 0.4.1)",
       "лицензия": "SIL Open Font License 1.1 (шрифт); MIT (пакет)",
       "ссылка": "github.com/aliftype/amiri",

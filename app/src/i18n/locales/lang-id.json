@@ -533,6 +533,7 @@
    "разработано": "Dikembangkan di Kazakhstan.",
    "линия2": "Bacaan — riwayat Hafs dari 'Ashim (melalui jalur asy-Syathibiyyah). Saat pemeriksaan suara hadir, variasi bacaan yang sah akan dihitung benar.",
    "линия3": "Teks Al-Qur'an — hanya kata demi kata dari basis data terverifikasi Tanzil Uthmani v1.1.",
+   "линияШрифт": "Fon: KFGQPC Hafs (Kompleks Raja Fahd); penyesuaian tanda untuk fon hanya saat ditampilkan.",
    "линия4": "Penjelasan kesalahan — hanya dari basis aturan dan templat AI Ustaz (masih draf, diperiksa ustaz). Tidak yakin — tidak menegur.",
    "приватность": "Privasi prototipe",
    "приватность1": "Tanpa login. Di aiustaz.pro aplikasi hanya mengirim ke servernya sendiri di Kazakhstan: statistik anonim (layar mana yang dibuka dan berapa lama — tanpa nama, telepon, atau lokasi; bisa dimatikan di “Lainnya”) dan, jika Anda menyalakan notifikasi, langganan tanpa koordinat. Kami tidak pernah membagikan atau menjual data.",
@@ -1437,6 +1438,11 @@
    "идёт": "Memperbarui…",
    "подсказка": "Versi baru terbuka; kemajuan Anda tetap tersimpan",
    "скрыть": "Sembunyikan sampai pembaruan berikutnya"
+  },
+  "components/quran/QuranFontPicker": {
+   "подпись": "Fon Al-Qur'an",
+   "мединский": "Mushaf Madinah",
+   "классический": "Klasik"
   }
  }
 }

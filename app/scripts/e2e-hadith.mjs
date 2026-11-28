@@ -216,7 +216,7 @@ export async function хадисыСквозной(браузер, база, { �
       const е = document.querySelector('[data-testid="хадис-арабский"]');
       return { lang: е.getAttribute('lang'), dir: е.getAttribute('dir'), шрифт: getComputedStyle(е).fontFamily };
     });
-    п.проверить(стиль.lang === 'ar' && стиль.dir === 'rtl' && !/Amiri/i.test(стиль.шрифт), `арабский: lang="ar", dir="rtl", шрифт не Коран (${стиль.шрифт.slice(0, 40)}…)`);
+    п.проверить(стиль.lang === 'ar' && стиль.dir === 'rtl' && !/Amiri|KFGQPC/i.test(стиль.шрифт), `арабский: lang="ar", dir="rtl", шрифт не Коран (${стиль.шрифт.slice(0, 40)}…)`);
     п.проверить(!АРАБСКИЙ.test(await стр.title()) && (await стр.title()).startsWith('Хадис №'), `title «${await стр.title()}» — без арабского`);
     // Разъяснение — целиком по нажатию.
     п.проверить(!(await п.есть('хадис-разъяснение-текст')), 'разъяснение свёрнуто');

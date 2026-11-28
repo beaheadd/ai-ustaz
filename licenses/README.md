@@ -5,7 +5,7 @@
 
 - `app-web-bundle.txt` — каждый пакет, попавший в веб-бандл, с версией и полным текстом лицензии.
   Создаёт `app/scripts/gen-licenses.mjs` (`npm run licenses` в `app/`), руками не править.
-- `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`; источник — в первой строке «# …»).
+- `fonts/` — тексты лицензий своих файлов шрифтов не из npm (`Inter-OFL.txt`, `KFGQPC-Hafs-EULA.txt`; источник — в первой строке «# …»).
 - `data/` — атрибуция своих данных не из npm: `GeoNames-CC-BY-4.0.txt` (координаты мест для времени намаза; шапка «# …» — источник), `Tanzil-Metadata-CC-BY-3.0.txt` (страницы мусхафа, 20.11.2026), `HadeethEnc-terms.txt` (хадисы аль-Бухари с переводом — условия HadeethEnc.com дословно, 21.11.2026), `AlQuranCloud-terms.txt` (аудио чтения Корана потоком с cdn.islamic.network — разделы условий AlQuran Cloud о записях дословно, 27.11.2026).
 - `server/` — тексты лицензий пакетов сервера уведомлений (раздел «Сервер AI Ustaz» ниже).
 - `upstream/` — тексты MIT для пакетов, у которых в npm нет файла LICENSE (источник с тегом — в шапке файла):
@@ -22,6 +22,7 @@
 | MIT (23) | react, react-dom, scheduler, react-native-web, @react-native/js-polyfills, @react-native/normalize-colors, metro-runtime, expo, expo-asset, expo-font, expo-modules-core, @expo/cli (шаблон страницы и рантайм), @react-native-async-storage/async-storage, @babel/runtime, fbjs, invariant, inline-style-prefixer, css-in-js-utils, postcss-value-parser, styleq, merge-options, is-plain-obj, adhan 4.4.6 (batoulapps/adhan-js — расчёт времени намаза на устройстве, без изменений; 19.11.2026) |
 | BSD-3-Clause (1) | hyphenate-style-name |
 | MIT (пакет) + SIL OFL 1.1 (шрифт) (1) | @expo-google-fonts/amiri-quran — шрифт Amiri Quran идёт в сборку файлом `.ttf` |
+| KFGQPC EULA (1) | KFGQPC HAFS Uthmanic Script 3.0 — шрифт «Мединский мусхаф» (Комплекс короля Фахда, 28.11.2026): бесплатно использовать, копировать, распространять; не продавать и не изменять. Веб — WOFF Комплекса без изменений (`app/public/fonts/`, статика, не JS), нативно — TTF из архива. Текст — `licenses/fonts/KFGQPC-Hafs-EULA.txt`, sha256 — `content/sources.json` («kfgqpc-hafs») |
 | SIL OFL 1.1 (1) | Inter 4.001 — шрифт интерфейса, своё подмножество (`app/src/assets/fonts/inter-400/600.woff2`, нативно `.ttf`) из `@expo-google-fonts/inter@0.4.2`; без Reserved Font Name, поэтому подмножество без переименования. Текст — `licenses/fonts/Inter-OFL.txt`, скрипт — `tools/fonts/subset_ui_font.py` (дизайн-система 19.11.2026) |
 
 Только в нативной сборке (в веб-бандл не попадает): `react-native-svg` 15.16.0 (MIT) — SVG значков, эмблемы и орнамента на iOS/Android; на вебе те же компоненты рисуют обычные `<svg>` браузера (`app/src/components/primitives/svg.web.tsx`).

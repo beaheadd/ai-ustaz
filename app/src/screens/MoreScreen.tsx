@@ -42,6 +42,7 @@ import { useНастройкиУведомлений } from '../notify/store';
 import { useПоддержкаУведомлений } from '../notify/useNotify';
 import { РазмерАрабского } from '../components/quran/ArabicSize';
 import { ВыборВидаЧтения } from '../components/quran/ReadingViewPicker';
+import { ВыборШрифтаКорана } from '../components/quran/QuranFontPicker';
 import { СкачанноеЧтение } from '../components/quran/AudioDownload';
 import { ВыборЧтеца } from '../components/quran/ReciterPicker';
 import { статистикаВключена, задатьСтатистику } from '../stats/stats';
@@ -316,6 +317,8 @@ export function Ещё(_: ПропсыЭкрана<'ещё'>) {
         </View>
         {/* Размер арабского текста Корана (ревью 19.11.2026; тот же выбор — А− / А+ в шапке суры). */}
         <РазмерАрабского testID="ещё-размер-арабского" />
+        {/* Шрифт Корана (владелец 28.11.2026); тот же выбор — в меню вида суры. */}
+        <ВыборШрифтаКорана testID="ещё-шрифт-корана" />
         {/* Вид чтения Корана (владелец 20.11.2026: «3–4 варианта … чтобы человек выбрал»); тот же выбор — в шапке суры. */}
         <ВыборВидаЧтения />
         {/* Чтец Корана (владелец 27.11.2026); тот же выбор — в меню вида суры. */}

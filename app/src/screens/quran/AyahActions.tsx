@@ -31,7 +31,9 @@ import { useРазметкаСуры } from '../../quran/mushafData';
 import type { СураКорана } from '../../quran/data';
 import { КОДЫ_ТАДЖВИДА, кускиТекста, отрезкиВерны, ПРАВИЛА_ТАДЖВИДА, разобратьРазметку, ЦВЕТА_ТАДЖВИДА, type КодТаджвида } from '../../quran/tajweed';
 import { useЗакладка } from '../../quran/useBookmark';
-import { ШИРИНА_КОЛОНКИ, ШРИФТ_АРАБСКИЙ, useТема } from '../../theme';
+import { ШИРИНА_КОЛОНКИ, useТема } from '../../theme';
+import { кусокКорана, useШрифтКорана } from '../../components/quran/QuranFont';
+import { кускиДляKfgqpc } from '../../quran/displayKfgqpc';
 import { поставитьЗакладку } from './common';
 import { сообщитьОбОшибке } from '../../feedback/core';
 
@@ -158,6 +160,8 @@ export function ТаджвидАята({ сура, аят }: { сура: Сур�
   const разметка = useРазметкаСуры(сура.сура);
   const текст = сура.аяты[аят - 1].текст;
   const палитра = тёмная ? ЦВЕТА_ТАДЖВИДА.ночь : ЦВЕТА_ТАДЖВИДА.страница;
+  // Шрифт Корана (владелец 28.11.2026): куски режутся по исходной строке, подстройка мединского — к каждому куску.
+  const шрифт = useШрифтКорана();
 
   const данные = useMemo(() => {
     if (разметка.состояние !== 'есть') return null;
@@ -196,14 +200,16 @@ export function ТаджвидАята({ сура, аят }: { сура: Сур�
       </Текст>
     );
   }
-  const куски = кускиТекста(текст, данные.отрезки);
-  const стильАр = { fontFamily: ШРИФТ_АРАБСКИЙ, fontSize: 28, lineHeight: 52, color: цвет.текст, textAlign: 'right' as const, writingDirection: 'rtl' as const };
+  const сырые = кускиТекста(текст, данные.отрезки);
+  // Мединский шрифт: мадд на «ـٰ» красится вместе с буквой перед ним (quran/displayKfgqpc.ts кускиДляKfgqpc).
+  const куски = шрифт.мединский ? кускиДляKfgqpc(сырые) : сырые;
+  const стильАр = { fontFamily: шрифт.семейство, opacity: шрифт.готов ? 1 : 0, fontSize: 28, lineHeight: 52, color: цвет.текст, textAlign: 'right' as const, writingDirection: 'rtl' as const };
   // Вложенные <Text> — на вебе это строчные span внутри одного абзаца (как в мусхафе): буквы не разрываются.
   const раскрашенный: ReactNode = (
     <Text testID="таджвид-аята-текст" {...((ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object)} style={стильАр}>
       {куски.map((к, i) => (
         <Text key={i} style={к.код ? { color: палитра[к.код] } : undefined}>
-          {к.текст}
+          {кусокКорана(шрифт, к.текст)}
         </Text>
       ))}
     </Text>
@@ -230,8 +236,8 @@ export function ТаджвидАята({ сура, аят }: { сура: Сур�
                     {т('гдеВстречается')}
                   </Текст>
                   {слова.map((с, i) => (
-                    <Text key={i} {...((ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object)} style={{ fontFamily: ШРИФТ_АРАБСКИЙ, fontSize: 20, lineHeight: 34, color: палитра[код] }}>
-                      {с}
+                    <Text key={i} {...((ВЕБ ? { lang: 'ar', dir: 'rtl' } : {}) as object)} style={{ fontFamily: шрифт.семейство, opacity: шрифт.готов ? 1 : 0, fontSize: 20, lineHeight: 34, color: палитра[код] }}>
+                      {кусокКорана(шрифт, с)}
                     </Text>
                   ))}
                 </View>

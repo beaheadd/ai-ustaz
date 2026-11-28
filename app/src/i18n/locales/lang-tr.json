@@ -533,6 +533,7 @@
    "разработано": "Kazakistan'da geliştirildi.",
    "линия2": "Kıraat — Âsım'dan Hafs rivayeti (Şâtıbiyye tarikiyle). Sesli kontrol geldiğinde caiz kıraat vecihleri doğru sayılacak.",
    "линия3": "Kur'an metni — yalnızca doğrulanmış Tanzil Uthmani v1.1 veritabanından, harfiyen.",
+   "линияШрифт": "Yazı tipi: KFGQPC Hafs (Kral Fahd Kompleksi); işaretlerin yazı tipine uyarlanması yalnızca gösterimde.",
    "линия4": "Hataların açıklamaları — yalnızca AI Ustaz kural ve şablon tabanından (şimdilik taslak, hoca inceliyor). Emin değilsek kınamayız.",
    "приватность": "Prototipin gizliliği",
    "приватность1": "Giriş yok. aiustaz.pro'da uygulama yalnızca Kazakistan'daki kendi sunucusuna gönderir: anonim istatistik (hangi ekranların ne kadar süre açıldığı — ad, telefon ve konum yok; “Diğer”den kapatılabilir) ve bildirimleri açtıysanız koordinatsız bir abonelik. Verileri asla paylaşmaz ve satmayız.",
@@ -1437,6 +1438,11 @@
    "идёт": "Güncelleniyor…",
    "подсказка": "Yeni sürüm açılır; ilerlemeniz korunur",
    "скрыть": "Sonraki güncellemeye kadar gizle"
+  },
+  "components/quran/QuranFontPicker": {
+   "подпись": "Kur'an yazı tipi",
+   "мединский": "Medine Mushafı",
+   "классический": "Klasik"
   }
  }
 }

@@ -217,6 +217,17 @@
   ]
  },
  {
+  "пакет": "KFGQPC HAFS Uthmanic Script — шрифт «Мединский мусхаф», Комплекс короля Фахда (app/public/fonts, без изменений)",
+  "версия": "3.0",
+  "лицензия": "KFGQPC EULA (бесплатно; без продажи и изменений)",
+  "тексты": [
+   {
+    "файл": "licenses/fonts/KFGQPC-Hafs-EULA.txt",
+    "текст": "ELECTRONIC END-USER LICENSE AGREEMENT\n\nBy installing this Font You accept all the terms and conditions of this Agreement.\n\nCopyright (c) 2010 by King Fahd Glorious Quran Printing Complex (KFGQPC), AlMadinah AlMunawarrah, Kingdom of Saudi Arabia. All Rights Reserved. KFGQPC retains full title and ownership of this Typeface both as artwork and font software. This Agreement does not grant you any intellectual property rights in the Font.\n\nPermission is hereby granted, Free of Cost, to any person obtaining a copy of this Font accompanying this license, the rights to Use, Copy, Distribute, subject to the following conditions:\n\n1.    The Font Software cannot be Sold, Modified, Altered, Translated, Reverse Engineered, Decompiled, Disassembled, Reproduced or Attempted to discover the Source Code of this Font in no means.\n\n2.    The Font Software is provided \"AS IS\", and KFGQPC makes no warranties as to its use or performance, fitness for a particular purpose. KFGQPC does not and cannot warrant the performance or results you may obtain by using the Font. In no event shall KFGQPC be liable for any Claims, Damages or other Liability, including any Damages, arising from, out of the use or inability to use the Font or from other dealings in the Font.\n\nThe digitally signed machine readable Typeface(Font) licensed to you is copyrighted, (2010), King Fahd Glorious Quran Printing Complex.\nISBN: 978-603-8010-15-0, Accession No. 1430/7278\nAll rights reserved. This Font is the property of King Fahd Glorious Quran Printing Complex, and may not be reproduced, modified without the express written approval of King Fahd Glorious Quran Printing Complex."
+   }
+  ]
+ },
+ {
   "пакет": "merge-options",
   "версия": "3.0.4",
   "лицензия": "MIT",
@@ -246,6 +257,17 @@
    {
     "файл": "LICENSE",
     "текст": "Copyright (c) Bogdan Chadkin <trysound@yandex.ru>\n\nPermission is hereby granted, free of charge, to any person\nobtaining a copy of this software and associated documentation\nfiles (the \"Software\"), to deal in the Software without\nrestriction, including without limitation the rights to use,\ncopy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the\nSoftware is furnished to do so, subject to the following\nconditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES\nOF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT\nHOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\nWHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\nOTHER DEALINGS IN THE SOFTWARE."
+   }
+  ]
+ },
+ {
+  "пакет": "quran-align, Collin Fair (пословные тайминги чтения — app/public/quran-words)",
+  "версия": "release-2016-11-24",
+  "лицензия": "CC-BY-4.0",
+  "тексты": [
+   {
+    "файл": "licenses/data/quran-align-CC-BY-4.0.txt",
+    "текст": "Пословные тайминги чтения (подсветка слова, которое читает кари): quran-align, Collin Fair — github.com/cpfair/quran-align.\nЛицензия: Creative Commons Attribution 4.0 International (CC BY 4.0) — creativecommons.org/licenses/by/4.0/\n\nЧто изменено. Взяты только записи чтецов, чьи файлы совпали с нашими по длительности; номера слов переведены в\nсчёт слов нашей копии Корана (знаки остановки, ۞ и ۩ словами не считаются); слова, которые не были разделены, делят\nобщий отрезок поровну, пропущенные — промежуток между соседями; в первых аятах сур тайминги сдвинуты на длительность\nбисмиллы, если она есть в нашем файле; время округлено до 10 мс. Аяты, где счёт слов не сошёлся, — без таймингов.\n\nДанные предоставляются «как есть», без каких-либо гарантий (CC BY 4.0, раздел 5)."
    }
   ]
  },

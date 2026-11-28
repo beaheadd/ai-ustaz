@@ -676,6 +676,26 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ==============================================================================
+KFGQPC HAFS Uthmanic Script — шрифт «Мединский мусхаф», Комплекс короля Фахда (app/public/fonts, без изменений)@3.0 — KFGQPC EULA (бесплатно; без продажи и изменений)
+==============================================================================
+--- licenses/fonts/KFGQPC-Hafs-EULA.txt ---
+ELECTRONIC END-USER LICENSE AGREEMENT
+
+By installing this Font You accept all the terms and conditions of this Agreement.
+
+Copyright (c) 2010 by King Fahd Glorious Quran Printing Complex (KFGQPC), AlMadinah AlMunawarrah, Kingdom of Saudi Arabia. All Rights Reserved. KFGQPC retains full title and ownership of this Typeface both as artwork and font software. This Agreement does not grant you any intellectual property rights in the Font.
+
+Permission is hereby granted, Free of Cost, to any person obtaining a copy of this Font accompanying this license, the rights to Use, Copy, Distribute, subject to the following conditions:
+
+1.    The Font Software cannot be Sold, Modified, Altered, Translated, Reverse Engineered, Decompiled, Disassembled, Reproduced or Attempted to discover the Source Code of this Font in no means.
+
+2.    The Font Software is provided "AS IS", and KFGQPC makes no warranties as to its use or performance, fitness for a particular purpose. KFGQPC does not and cannot warrant the performance or results you may obtain by using the Font. In no event shall KFGQPC be liable for any Claims, Damages or other Liability, including any Damages, arising from, out of the use or inability to use the Font or from other dealings in the Font.
+
+The digitally signed machine readable Typeface(Font) licensed to you is copyrighted, (2010), King Fahd Glorious Quran Printing Complex.
+ISBN: 978-603-8010-15-0, Accession No. 1430/7278
+All rights reserved. This Font is the property of King Fahd Glorious Quran Printing Complex, and may not be reproduced, modified without the express written approval of King Fahd Glorious Quran Printing Complex.
+
+==============================================================================
 merge-options@3.0.4 — MIT
 ==============================================================================
 --- license ---
@@ -753,6 +773,20 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+quran-align, Collin Fair (пословные тайминги чтения — app/public/quran-words)@release-2016-11-24 — CC-BY-4.0
+==============================================================================
+--- licenses/data/quran-align-CC-BY-4.0.txt ---
+Пословные тайминги чтения (подсветка слова, которое читает кари): quran-align, Collin Fair — github.com/cpfair/quran-align.
+Лицензия: Creative Commons Attribution 4.0 International (CC BY 4.0) — creativecommons.org/licenses/by/4.0/
+
+Что изменено. Взяты только записи чтецов, чьи файлы совпали с нашими по длительности; номера слов переведены в
+счёт слов нашей копии Корана (знаки остановки, ۞ и ۩ словами не считаются); слова, которые не были разделены, делят
+общий отрезок поровну, пропущенные — промежуток между соседями; в первых аятах сур тайминги сдвинуты на длительность
+бисмиллы, если она есть в нашем файле; время округлено до 10 мс. Аяты, где счёт слов не сошёлся, — без таймингов.
+
+Данные предоставляются «как есть», без каких-либо гарантий (CC BY 4.0, раздел 5).
 
 ==============================================================================
 react@19.3.0 — MIT
