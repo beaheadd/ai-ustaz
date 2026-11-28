@@ -126,6 +126,11 @@ export async function статистикаСквозной(браузер, { п�
     // 2. Настройки из админки: скрытый и проверенный хадисы.
     // Под нагрузкой полного прогона настройки после перезагрузки приходят позже — ждём их, а не время.
     await подождать(стр, () => журнал.настройки.length >= 2, 15000);
+    // После перезагрузки на #/quran/sura?n=2 приложение восстанавливает стек глубокой ссылки (главная → Коран → сура,
+    // по записи в истории на уровень). Сменить адрес раньше — гонка: восстановление возвращало суру, и «хадис 1751»
+    // изредка не открывался (отладка 28.11.2026: адрес снова #/quran/sura?n=2). Ждём экран суры и тишину истории.
+    await стр.getByTestId('экран-сура').first().waitFor({ state: 'visible', timeout: 20000 });
+    await стр.waitForFunction(() => new Promise((готово) => { const д = history.length; setTimeout(() => готово(history.length === д), 700); }), null, { timeout: 15000 });
     await стр.evaluate((id) => { location.hash = '#/hadith/item?n=' + id; }, скрытый);
     const нетХадиса = await стр.getByTestId('хадис-нет').first().waitFor({ state: 'visible', timeout: 20000 }).then(() => true, () => false);
     if (!нетХадиса) console.log('    отладка: ' + (await стр.evaluate(() => location.hash + ' | настройки: ' + (localStorage.getItem('aiustaz:content-config.v1') || '—').slice(0, 200) + ' | ' + document.body.innerText.slice(0, 300))));
