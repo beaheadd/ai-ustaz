@@ -473,8 +473,8 @@ export async function закятСквозной(браузер, база) {
     await п.э('закят-валюта-поиск').waitFor({ timeout: 5000 });
     const всего = await стр.locator('[data-testid^="закят-валюта-"][role="radio"]').count();
     п.проверить(всего === 154, `в списке все 154 валюты ISO 4217 (${всего})`);
-    const первые = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="закят-валюта-"][role="radio"]')].slice(0, 3).map((е) => е.getAttribute('data-testid').slice(13)));
-    п.проверить(JSON.stringify(первые) === JSON.stringify(['KZT', 'USD', 'EUR']), `сверху — выбранная, USD, EUR (${первые})`);
+    const первые = await стр.evaluate(() => [...document.querySelectorAll('[data-testid^="закят-валюта-"][role="radio"]')].slice(0, 5).map((е) => е.getAttribute('data-testid').slice(13)));
+    п.проверить(JSON.stringify(первые) === JSON.stringify(['KZT', 'UZS', 'RUB', 'USD', 'EUR']), `сверху — KZT, UZS, RUB, USD, EUR (владелец 28.11.2026; ${первые})`);
     п.проверить((await п.атр('закят-валюта-KZT', 'aria-checked')) === 'true', 'выбранная отмечена (aria-checked)');
     await п.э('закят-валюта-поиск').fill('usd');
     п.проверить((await стр.locator('[data-testid^="закят-валюта-"][role="radio"]').count()) === 1 && (await п.есть('закят-валюта-USD')), 'поиск «usd» — только USD');
